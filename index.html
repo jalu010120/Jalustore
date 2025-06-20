@@ -2,186 +2,391 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JaluStore - Sky Webshop Style</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>JaluStore - Hearts Shop</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
   <style>
-    :root {
-      --bg-color: #fff6f9;
-      --text-color: #4e4e4e;
-      --card-bg: #ffffff;
-      --btn-bg: #ffa3b1;
-      --btn-hover: #ff7f9f;
-      --footer-color: #a67f8e;
-    }
-    body.dark {
-      --bg-color: #2d2d3a;
-      --text-color: #f0e9f3;
-      --card-bg: #39384c;
-      --btn-bg: #ff8fa3;
-      --btn-hover: #ff5e7a;
-      --footer-color: #cbb4c0;
+    /* Reset & dasar */
+    * {
+      box-sizing: border-box;
+      margin: 0; padding: 0;
     }
     body {
       font-family: 'Poppins', sans-serif;
-      background: var(--bg-color);
-      color: var(--text-color);
-      margin: 0;
-      padding: 1rem;
-      transition: background 0.4s, color 0.4s;
+      background: #f0f4f8;
+      color: #333;
+      transition: background-color 0.4s, color 0.4s;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
-    h1 { text-align: center; }
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
+    /* Dark mode */
+    body.dark-mode {
+      background: #121212;
+      color: #eee;
+    }
+
+    /* Navbar */
+    nav {
+      background: #00cec9;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    nav .logo {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: white;
+      user-select: none;
+    }
+    nav .menu {
+      display: flex;
       gap: 1rem;
-      margin-top: 2rem;
     }
-    .card {
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(12px);
-      border-radius: 16px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-      padding: 1.5rem;
-      text-align: center;
-      transition: transform 0.4s ease, box-shadow 0.3s ease, background 0.3s;
-    }
-    .product-desc {
-      font-size: 0.85rem;
-      margin: 0.5rem 0;
-    }
-    .btn-cart, .btn-order {
-      margin-top: 0.5rem;
-      padding: 10px 16px;
-      border: none;
+    nav .menu a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
       border-radius: 8px;
-      background: var(--btn-bg);
-      color: white;
-      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+    nav .menu a:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
       cursor: pointer;
     }
-    .btn-cart:hover, .btn-order:hover {
-      background: var(--btn-hover);
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background: white;
+      border-radius: 2px;
+      transition: 0.3s;
     }
-    .chat-bubble {
-      position: fixed;
-      bottom: 90px;
-      right: 20px;
-      background: var(--btn-bg);
+
+    /* Mobile menu hidden by default */
+    .menu-mobile {
+      display: none;
+      flex-direction: column;
+      background: #00cec9;
+      position: absolute;
+      top: 60px;
+      right: 1.5rem;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .menu-mobile a {
+      padding: 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      font-weight: 600;
       color: white;
-      padding: 12px 16px;
-      border-radius: 16px 16px 0 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      cursor: pointer;
-      z-index: 999;
-      font-size: 0.9rem;
+      text-decoration: none;
     }
-    .top-checkout {
-      position: fixed;
-      top: 100px;
-      right: 20px;
-      background: var(--btn-bg);
-      color: white;
-      padding: 10px 14px;
-      border-radius: 10px;
-      font-weight: bold;
-      cursor: pointer;
-      z-index: 998;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    .menu-mobile a:last-child {
+      border-bottom: none;
     }
-    footer {
+
+    /* Produk container */
+    .container {
+      flex: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      justify-content: center;
+    }
+    .product {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      padding: 1rem;
+      flex: 1 1 100%;
+      max-width: 280px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .product:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.2);
+    }
+    .product img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      transition: transform 0.3s;
+    }
+    .product:hover img {
+      transform: scale(1.05);
+    }
+    .product h3 {
+      margin-bottom: 0.5rem;
+      font-weight: 700;
       text-align: center;
-      margin-top: 3rem;
-      color: var(--footer-color);
-      font-size: 0.8rem;
+    }
+    .price {
+      font-weight: 600;
+      color: #00b894;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+    .btn-order {
+      background: #00cec9;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      width: 100%;
+      user-select: none;
+    }
+    .btn-order:hover {
+      background: #00b07f;
+    }
+
+    /* Dark mode adjustments */
+    body.dark-mode .product {
+      background: #1f1f1f;
+      box-shadow: 0 4px 20px rgba(255,255,255,0.1);
+    }
+    body.dark-mode .price {
+      color: #55efc4;
+    }
+    body.dark-mode .btn-order {
+      background: #1dd1a1;
+    }
+    body.dark-mode .btn-order:hover {
+      background: #10ac84;
+    }
+    body.dark-mode nav {
+      background: #10ac84;
+    }
+    body.dark-mode .menu-mobile {
+      background: #10ac84;
+    }
+
+    /* Dark mode toggle */
+    .toggle-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      user-select: none;
+      color: white;
+    }
+    .toggle-switch {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      background: rgba(255,255,255,0.5);
+      border-radius: 24px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .toggle-switch::before {
+      content: '';
+      position: absolute;
+      top: 2px; left: 2px;
+      width: 20px; height: 20px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.3s;
+    }
+    .toggle-switch.active {
+      background: #16a085;
+    }
+    .toggle-switch.active::before {
+      transform: translateX(20px);
+    }
+
+    /* Responsive */
+    @media (min-width: 600px) {
+      .product {
+        flex: 1 1 calc(50% - 20px);
+        max-width: none;
+      }
+    }
+    @media (min-width: 900px) {
+      .product {
+        flex: 1 1 calc(33.333% - 20px);
+      }
     }
     @media (max-width: 768px) {
-      .btn-cart, .btn-order {
-        font-size: 0.85rem;
-        padding: 8px 12px;
+      .menu {
+        display: none;
+      }
+      .hamburger {
+        display: flex;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Banner Promo -->
-  <div style="position: fixed; top: 0; width: 100%; background: linear-gradient(90deg, #ffa3b1, #ffe1e9); color: #4e4e4e; text-align: center; padding: 0.5rem 1rem; font-weight: bold; font-size: 0.9rem; z-index: 10000;">
-    🎉 Promo Flash Sale! Semua Heart Diskon 10% hari ini! 🎉
-  </div>
 
-  <h1>JaluStore 💖 Sky Heart Shop</h1>
+  <nav>
+    <div class="logo">JaluStore</div>
 
-  <!-- Filter Produk -->
-  <div style="text-align:center; margin: 2rem auto;">
-    <label>Filter jumlah Heart: </label>
-    <select onchange="filterProducts(this.value)">
-      <option value="all">Semua</option>
-      <option value="low">≤ 300</option>
-      <option value="mid">301 - 600</option>
-      <option value="high">> 600</option>
-    </select>
-  </div>
-
-  <!-- Produk -->
-  <div class="products">
-    <div class="card">
-      <h2>80 + 20 Heart</h2>
-      <p class="product-desc">Paket pemula cocok untuk pertama kali coba beli.</p>
-      <p>Rp10.000 / RM3 / $0.65</p>
-      <button class="btn-cart">+ Keranjang</button>
+    <div class="menu">
+      <a href="#products">Produk</a>
+      <a href="https://wa.me/6285189014747?text=Halo%20Admin,%20saya%20mau%20tanya%20cara%20beli" target="_blank" rel="noopener">Tanya Admin</a>
+      <a href="#cara-beli">Cara Beli</a>
     </div>
-    <div class="card">
-      <h2>200 + 30 Heart</h2>
-      <p class="product-desc">Paket hemat harian, cocok untuk kebutuhan kecil.</p>
-      <p>Rp22.000 / RM6.5 / $1.40</p>
-      <button class="btn-cart">+ Keranjang</button>
+
+    <div class="toggle-wrapper">
+      <label for="darkToggle" style="color:white;">Dark Mode</label>
+      <div id="darkToggle" class="toggle-switch" role="switch" tabindex="0" aria-checked="false"></div>
     </div>
-    <div class="card">
-      <h2>800 + 150 Heart</h2>
-      <p class="product-desc">Paket Sultan! Diskon besar dan stok banyak.</p>
-      <p>Rp78.000 / RM22.5 / $5.10</p>
-      <button class="btn-cart">+ Keranjang</button>
+
+    <div class="hamburger" aria-label="Menu" role="button" tabindex="0" aria-expanded="false">
+      <div></div>
+      <div></div>
+      <div></div>
     </div>
+
+  </nav>
+
+  <div class="menu-mobile" aria-hidden="true">
+    <a href="#products">Produk</a>
+    <a href="https://wa.me/6285189014747?text=Halo%20Admin,%20saya%20mau%20tanya%20cara%20beli" target="_blank" rel="noopener">Tanya Admin</a>
+    <a href="#cara-beli">Cara Beli</a>
   </div>
 
-  <!-- Checkout Tombol -->
-  <div class="top-checkout" onclick="checkoutCart()">🛒 Checkout</div>
+  <main>
+    <section id="products" class="container" aria-label="Daftar produk Hearts">
 
-  <!-- Chat Bubble Admin -->
-  <div class="chat-bubble" onclick="window.open('https://wa.me/6285189014747?text=Halo%20Admin%2C%20saya%20mau%20tanya%20tentang%20pemesanan%20Heart', '_blank')">
-    ❓ Tanya Admin
-  </div>
+      <!-- Produk 1 -->
+      <article class="product" tabindex="0" aria-labelledby="prod1-title" aria-describedby="prod1-price">
+        <img src="https://wallpapercave.com/wp/wp7353627.jpg" alt="Gambar Heart 80+20" />
+        <h3 id="prod1-title">80+20 Hearts</h3>
+        <p id="prod1-price" class="price">RM 3 / Rp 10.000</p>
+        <button class="btn-order" onclick="orderWA('80+20 Hearts', 'RM 3 / Rp 10.000')">Order via WhatsApp</button>
+      </article>
 
-  <!-- Google Translate -->
-  <div id="google_translate_element" style="position: fixed; bottom: 20px; left: 20px; z-index:999;"></div>
-  <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+      <!-- Produk 2 -->
+      <article class="product" tabindex="0" aria-labelledby="prod2-title" aria-describedby="prod2-price">
+        <img src="https://wallpapercave.com/wp/wp7353627.jpg" alt="Gambar Heart 200+30" />
+        <h3 id="prod2-title">200+30 Hearts</h3>
+        <p id="prod2-price" class="price">RM 6.5 / Rp 22.000</p>
+        <button class="btn-order" onclick="orderWA('200+30 Hearts', 'RM 6.5 / Rp 22.000')">Order via WhatsApp</button>
+      </article>
+
+      <!-- Produk 3 -->
+      <article class="product" tabindex="0" aria-labelledby="prod3-title" aria-describedby="prod3-price">
+        <img src="https://wallpapercave.com/wp/wp7353627.jpg" alt="Gambar Heart 300+40" />
+        <h3 id="prod3-title">300+40 Hearts</h3>
+        <p id="prod3-price" class="price">RM 9.5 / Rp 32.000</p>
+        <button class="btn-order" onclick="orderWA('300+40 Hearts', 'RM 9.5 / Rp 32.000')">Order via WhatsApp</button>
+      </article>
+
+      <!-- Produk 4 -->
+      <article class="product" tabindex="0" aria-labelledby="prod4-title" aria-describedby="prod4-price">
+        <img src="https://wallpapercave.com/wp/wp7353627.jpg" alt="Gambar Heart 400+50" />
+        <h3 id="prod4-title">400+50 Hearts</h3>
+        <p id="prod4-price" class="price">RM 12 / Rp 42.000</p>
+        <button class="btn-order" onclick="orderWA('400+50 Hearts', 'RM 12 / Rp 42.000')">Order via WhatsApp</button>
+      </article>
+
+      <!-- Produk 5 -->
+      <article class="product" tabindex="0" aria-labelledby="prod5-title" aria-describedby="prod5-price">
+        <img src="https://wallpapercave.com/wp/wp7353627.jpg" alt="Gambar Heart 500+70" />
+        <h3 id="prod5-title">500+70 Hearts</h3>
+        <p id="prod5-price" class="price">RM 15 / Rp 52.000</p>
+        <button class="btn-order" onclick="orderWA('500+70 Hearts', 'RM 15 / Rp 52.000')">Order via WhatsApp</button>
+      </article>
+
+      <!-- Produk 6 -->
+      <article class="product" tabindex="0" aria-labelledby="prod6-title" aria-describedby="prod6-price">
+        <img src="https://wallpapercave.com/wp/wp7353627.jpg" alt="Gambar Heart 600+90" />
+        <h3 id="prod6-title">600+90 Hearts</h3>
+        <p id="prod6-price" class="price">RM 17.5 / Rp 60.000</p>
+        <button class="btn-order" onclick="orderWA('600+90 Hearts', 'RM 17.5 / Rp 60.000')">Order via WhatsApp</button>
+      </article>
+
+      <!-- Produk 7 -->
+      <article class="product" tabindex="0" aria-labelledby="prod7-title" aria-describedby="prod7-price">
+        <img src="https://wallpapercave.com/wp/wp7353627.jpg" alt="Gambar Heart 700+120" />
+        <h3 id="prod7-title">700+120 Hearts</h3>
+        <p id="prod7-price" class="price">RM 20 / Rp 70.000</p>
+        <button class="btn-order" onclick="orderWA('700+120 Hearts', 'RM 20 / Rp 70.000')">Order via WhatsApp</button>
+      </article>
+
+      <!-- Produk 8 -->
+      <article class="product" tabindex="0" aria-labelledby="prod8-title" aria-describedby="prod8-price">
+        <img src="https://wallpapercave.com/wp/wp7353627.jpg" alt="Gambar Heart 800+150" />
+        <h3 id="prod8-title">800+150 Hearts</h3>
+        <p id="prod8-price" class="price">RM 22.5 / Rp 78.000</p>
+        <button class="btn-order" onclick="orderWA('800+150 Hearts', 'RM 22.5 / Rp 78.000')">Order via WhatsApp</button>
+      </article>
+
+    </section>
+
+    <section id="cara-beli" style="max-width:900px;margin:2rem auto;padding:1rem 2rem;">
+      <h2>Cara Beli</h2>
+      <ol>
+        <li>Pilih produk yang kamu inginkan</li>
+        <li>Klik tombol <strong>Order via WhatsApp</strong></li>
+        <li>Kirim pesan dan konfirmasi ke admin</li>
+        <li>Transfer pembayaran sesuai metode yang disepakati</li>
+        <li>Tunggu konfirmasi dan produk dikirim</li>
+      </ol>
+    </section>
+
+  </main>
+
   <script>
-    function googleTranslateElementInit() {
-      new google.translate.TranslateElement({
-        pageLanguage: 'id',
-        includedLanguages: 'id,en,ms',
-        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-      }, 'google_translate_element');
+    // Dark mode toggle
+    const toggle = document.getElementById('darkToggle');
+    toggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      toggle.classList.toggle('active');
+      const isActive = toggle.classList.contains('active');
+      toggle.setAttribute('aria-checked', isActive);
+      localStorage.setItem('darkMode', isActive);
+    });
+
+    // Restore dark mode from localStorage
+    if (localStorage.getItem('darkMode') === 'true') {
+      document.body.classList.add('dark-mode');
+      toggle.classList.add('active');
+      toggle.setAttribute('aria-checked', 'true');
     }
 
-    function filterProducts(level) {
-      const cards = document.querySelectorAll('.card');
-      cards.forEach(card => {
-        const title = card.querySelector('h2').innerText;
-        const total = parseInt(title);
-        if (level === 'all') card.style.display = 'block';
-        else if (level === 'low' && total <= 300) card.style.display = 'block';
-        else if (level === 'mid' && total > 300 && total <= 600) card.style.display = 'block';
-        else if (level === 'high' && total > 600) card.style.display = 'block';
-        else card.style.display = 'none';
-      });
-    }
+    // Hamburger menu toggle
+    const hamburger = document.querySelector('.hamburger');
+    const menuMobile = document.querySelector('.menu-mobile');
+    hamburger.addEventListener('click', () => {
+      const isOpen = menuMobile.style.display === 'flex';
+      menuMobile.style.display = isOpen ? 'none' : 'flex';
+      hamburger.setAttribute('aria-expanded', !isOpen);
+    });
+    hamburger.addEventListener('keypress', e => {
+      if(e.key === 'Enter') hamburger.click();
+    });
 
-    function checkoutCart() {
-      alert('Checkout via WhatsApp belum dihubungkan sepenuhnya. Akan segera tersedia!');
+    // Order WA function
+    function orderWA(productName, productPrice) {
+      const phone = '6285189014747'; // nomor admin WA internasional tanpa tanda +
+      const message = encodeURIComponent(`Halo Admin, saya mau order produk *${productName}* dengan harga *${productPrice}*.`);
+      const url = `https://wa.me/${phone}?text=${message}`;
+      window.open(url, '_blank');
     }
   </script>
-
-  <footer>© 2025 JaluStore. Powered by Sky & Love 💕</footer>
 </body>
-</html>
+  </html>
