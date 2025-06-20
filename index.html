@@ -18,6 +18,7 @@
       color: white;
       text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
       transition: background 0.3s, color 0.3s;
+      overflow-x: hidden;
     }
     .dark-mode {
       background: #121212 !important;
@@ -30,6 +31,7 @@
       min-height: 100vh;
       padding: 20px;
       animation: fadeIn 1s ease-in;
+      position: relative;
     }
     header {
       text-align: center;
@@ -126,6 +128,18 @@
     @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
     @keyframes fadeInUp { from {transform: translateY(20px); opacity: 0;} to {transform: translateY(0); opacity: 1;} }
     @keyframes slideDown { from {transform: translateY(-20px); opacity: 0;} to {transform: translateY(0); opacity: 1;} }
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: url('https://i.ibb.co/yBh4PZL/heart-icon.png') no-repeat center center / contain;
+      animation: float 6s infinite ease-in;
+      opacity: 0.7;
+    }
+    @keyframes float {
+      0% {transform: translateY(0) scale(1); opacity: 1;}
+      100% {transform: translateY(-800px) scale(1.5); opacity: 0;}
+    }
   </style>
 </head>
 <body>
@@ -133,92 +147,97 @@
     <header>
       <h1>JaluStore</h1>
       <p id="tagline">Jual Heart Sky: Children of the Light</p>
-    </header><div class="controls">
-  <button onclick="switchLang('id')">🇮🇩 Bahasa</button>
-  <button onclick="switchLang('en')">🇬🇧 English</button>
-  <button onclick="toggleDarkMode()">🌓 Mode</button>
-</div>
-
-<div class="admin-buttons">
-  <a href="https://wa.me/6285189014747?text=Halo%20admin%2C%20saya%20mau%20tanya%20cara%20beli" target="_blank">💬 Tanya Admin</a>
-  <a href="#cara-beli">📌 Cara Beli</a>
-</div>
-
-<div class="produk">
-  <img src="https://i.ibb.co/G2mMH1K/skyheart.png" alt="Heart Sky">
-  <h2 id="judul-produk">Daftar Paket Heart Sky</h2>
-  <p id="deskripsi">Semua paket sudah termasuk bonus Heart. Kirim cepat, aman & terpercaya 💫</p>
-  <table id="list-paket">
-    <thead>
-      <tr><th>❤️ Paket</th><th>IDR</th><th>RM</th><th>USD</th></tr>
-    </thead>
-    <tbody>
-      <tr><td>80 + 20</td><td>Rp10.000</td><td>RM 3.00</td><td>$0.65</td></tr>
-      <tr><td>200 + 30</td><td>Rp22.000</td><td>RM 6.50</td><td>$1.40</td></tr>
-      <tr><td>300 + 40</td><td>Rp32.000</td><td>RM 9.50</td><td>$2.05</td></tr>
-      <tr><td>400 + 50</td><td>Rp42.000</td><td>RM 12.00</td><td>$2.70</td></tr>
-      <tr><td>500 + 70</td><td>Rp52.000</td><td>RM 15.00</td><td>$3.35</td></tr>
-      <tr><td>600 + 90</td><td>Rp60.000</td><td>RM 17.50</td><td>$3.90</td></tr>
-      <tr><td>700 + 120</td><td>Rp70.000</td><td>RM 20.00</td><td>$4.60</td></tr>
-      <tr><td>800 + 150</td><td>Rp78.000</td><td>RM 22.50</td><td>$5.10</td></tr>
-    </tbody>
-  </table>
-  <div class="rating">
-    <span class="star">★</span>
-    <span class="star">★</span>
-    <span class="star">★</span>
-    <span class="star">★</span>
-    <span class="star">☆</span>
-  </div>
-  <a href="https://wa.me/6285189014747" class="btn-beli" id="tombol-beli">Order via WhatsApp</a>
-</div>
-
-<div id="cara-beli" class="produk">
-  <h2 id="judul-cara">Cara Beli</h2>
-  <ol id="langkah">
-    <li>Klik tombol WhatsApp</li>
-    <li>Ketik: <b>Paket 300</b> atau sesuai pilihan kamu</li>
-    <li>Admin akan respon & konfirmasi</li>
-    <li>Bayar via e-wallet atau transfer</li>
-    <li>Heart akan dikirim cepat ke akun kamu</li>
-  </ol>
-</div>
-
-<footer>
-  &copy; 2025 JaluStore | Sky Items Store
-</footer>
-
-  </div>  <script>
-    function switchLang(lang) {
-      if (lang === 'en') {
-        document.getElementById('tagline').innerText = 'Selling Heart Sky: Children of the Light';
-        document.getElementById('judul-produk').innerText = 'Heart Sky Packages';
-        document.getElementById('deskripsi').innerText = 'All packages include bonus Hearts. Fast delivery, safe & trusted 💫';
-        document.getElementById('tombol-beli').innerText = 'Order via WhatsApp';
-        document.getElementById('judul-cara').innerText = 'How to Order';
-        document.getElementById('langkah').innerHTML = `
-          <li>Click the WhatsApp button</li>
-          <li>Type: <b>Package 300</b> or your choice</li>
-          <li>Admin will reply & confirm</li>
-          <li>Pay via e-wallet or bank transfer</li>
-          <li>Hearts will be delivered fast to your account</li>`;
-      } else {
-        document.getElementById('tagline').innerText = 'Jual Heart Sky: Children of the Light';
-        document.getElementById('judul-produk').innerText = 'Daftar Paket Heart Sky';
-        document.getElementById('deskripsi').innerText = 'Semua paket sudah termasuk bonus Heart. Kirim cepat, aman & terpercaya 💫';
-        document.getElementById('tombol-beli').innerText = 'Order via WhatsApp';
-        document.getElementById('judul-cara').innerText = 'Cara Beli';
-        document.getElementById('langkah').innerHTML = `
-          <li>Klik tombol WhatsApp</li>
-          <li>Ketik: <b>Paket 300</b> atau sesuai pilihan kamu</li>
-          <li>Admin akan respon & konfirmasi</li>
-          <li>Bayar via e-wallet atau transfer</li>
-          <li>Heart akan dikirim cepat ke akun kamu</li>`;
+    </header>
+    <div class="controls">
+      <button onclick="switchLang('id')">🇮🇩 Bahasa</button>
+      <button onclick="switchLang('en')">🇬🇧 English</button>
+      <button onclick="toggleDarkMode()">🌓 Mode</button>
+    </div>
+    <div class="admin-buttons">
+      <a href="https://wa.me/6285189014747?text=Halo%20admin%2C%20saya%20mau%20tanya%20cara%20beli" target="_blank">💬 Tanya Admin</a>
+      <a href="#cara-beli">📌 Cara Beli</a>
+    </div>
+    <div class="produk">
+      <img src="https://i.ibb.co/G2mMH1K/skyheart.png" alt="Heart Sky">
+      <h2 id="judul-produk">Daftar Paket Heart Sky</h2>
+      <p id="deskripsi">Semua paket sudah termasuk bonus Heart. Kirim cepat, aman & terpercaya 💫</p>
+      <table id="list-paket">
+        <thead>
+          <tr><th>❤️ Paket</th><th>IDR</th><th>RM</th><th>USD</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>80 + 20</td><td>Rp10.000</td><td>RM 3.00</td><td>$0.65</td></tr>
+          <tr><td>200 + 30</td><td>Rp22.000</td><td>RM 6.50</td><td>$1.40</td></tr>
+          <tr><td>300 + 40</td><td>Rp32.000</td><td>RM 9.50</td><td>$2.05</td></tr>
+          <tr><td>400 + 50</td><td>Rp42.000</td><td>RM 12.00</td><td>$2.70</td></tr>
+          <tr><td>500 + 70</td><td>Rp52.000</td><td>RM 15.00</td><td>$3.35</td></tr>
+          <tr><td>600 + 90</td><td>Rp60.000</td><td>RM 17.50</td><td>$3.90</td></tr>
+          <tr><td>700 + 120</td><td>Rp70.000</td><td>RM 20.00</td><td>$4.60</td></tr>
+          <tr><td>800 + 150</td><td>Rp78.000</td><td>RM 22.50</td><td>$5.10</td></tr>
+        </tbody>
+      </table>
+      <div class="rating">
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">☆</span>
+      </div>
+      <a href="https://wa.me/6285189014747" class="btn-beli" id="tombol-beli">Order via WhatsApp</a>
+    </div>
+    <div id="cara-beli" class="produk">
+      <h2 id="judul-cara">Cara Beli</h2>
+      <ol id="langkah">
+        <li>Klik tombol WhatsApp</li>
+        <li>Ketik: <b>Paket 300</b> atau sesuai pilihan kamu</li>
+        <li>Admin akan respon & konfirmasi</li>
+        <li>Bayar via e-wallet atau transfer</li>
+        <li>Heart akan dikirim cepat ke akun kamu</li>
+      </ol>
+    </div>
+    <footer>
+      &copy; 2025 JaluStore | Sky Items Store
+    </footer>
+    <script>
+      function createHeart() {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.style.left = Math.random() * window.innerWidth + 'px';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 6000);
       }
+      setInterval(createHeart, 800);function switchLang(lang) {
+    if (lang === 'en') {
+      document.getElementById('tagline').innerText = 'Selling Heart Sky: Children of the Light';
+      document.getElementById('judul-produk').innerText = 'Heart Sky Packages';
+      document.getElementById('deskripsi').innerText = 'All packages include bonus Hearts. Fast delivery, safe & trusted 💫';
+      document.getElementById('tombol-beli').innerText = 'Order via WhatsApp';
+      document.getElementById('judul-cara').innerText = 'How to Order';
+      document.getElementById('langkah').innerHTML = `
+        <li>Click the WhatsApp button</li>
+        <li>Type: <b>Package 300</b> or your choice</li>
+        <li>Admin will reply & confirm</li>
+        <li>Pay via e-wallet or bank transfer</li>
+        <li>Hearts will be delivered fast to your account</li>`;
+    } else {
+      document.getElementById('tagline').innerText = 'Jual Heart Sky: Children of the Light';
+      document.getElementById('judul-produk').innerText = 'Daftar Paket Heart Sky';
+      document.getElementById('deskripsi').innerText = 'Semua paket sudah termasuk bonus Heart. Kirim cepat, aman & terpercaya 💫';
+      document.getElementById('tombol-beli').innerText = 'Order via WhatsApp';
+      document.getElementById('judul-cara').innerText = 'Cara Beli';
+      document.getElementById('langkah').innerHTML = `
+        <li>Klik tombol WhatsApp</li>
+        <li>Ketik: <b>Paket 300</b> atau sesuai pilihan kamu</li>
+        <li>Admin akan respon & konfirmasi</li>
+        <li>Bayar via e-wallet atau transfer</li>
+        <li>Heart akan dikirim cepat ke akun kamu</li>`;
     }
+  }
+  function toggleDarkMode() {
+    document.body.classList.toggle("dark-mode");
+  }
+</script>
 
-    function toggleDarkMode() {
-      document.body.classList.toggle("dark-mode");
-    }
-  </script></body>
+  </div>
+</body>
 </html>
