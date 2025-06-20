@@ -1,55 +1,56 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JaluStore</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JaluStore - Sky Items</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f6f6f6;
       margin: 0;
-      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://i.ibb.co/ZJ7bTbw/sky-bg.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
     }
 
-    header {
-      background-color: #2d2dff;
-      color: white;
-      text-align: center;
+    .overlay {
+      background: rgba(0,0,0,0.6);
+      min-height: 100vh;
       padding: 20px;
     }
 
-    .container {
-      padding: 15px;
+    header {
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 36px;
     }
 
     .produk {
-      background-color: white;
-      padding: 15px;
-      margin-bottom: 15px;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
     }
 
     .produk img {
       width: 100%;
+      max-width: 300px;
       border-radius: 10px;
-    }
-
-    .produk h3 {
-      margin-top: 10px;
-      margin-bottom: 5px;
-    }
-
-    .produk p {
-      margin: 0 0 10px;
+      display: block;
+      margin: 0 auto 10px;
     }
 
     .btn-beli {
       display: inline-block;
-      background-color: #ff5c5c;
-      color: white;
+      margin-top: 10px;
       padding: 10px 15px;
+      background: #ff5c5c;
+      color: white;
       border-radius: 5px;
       text-decoration: none;
       font-weight: bold;
@@ -57,38 +58,30 @@
 
     footer {
       text-align: center;
-      font-size: 13px;
-      color: #999;
-      margin: 20px 0;
+      margin-top: 40px;
+      font-size: 14px;
+      color: #ccc;
     }
   </style>
 </head>
 <body>
-
-  <header>
-    <h1>JaluStore</h1>
-    <p>Toko Online Murah Meriah</p>
-  </header>
-
-  <div class="container">
-    <div class="produk">
-      <img src="https://via.placeholder.com/300x200" alt="Produk 1">
-      <h3>Kaos Oversize Hitam</h3>
-      <p>Harga: Rp95.000</p>
-      <a href="https://wa.me/6281234567890" class="btn-beli">Beli via WhatsApp</a>
-    </div>
+  <div class="overlay">
+    <header>
+      <h1>JaluStore</h1>
+      <p>Jual Heart Sky: Children of the Light</p>
+    </header>
 
     <div class="produk">
-      <img src="https://via.placeholder.com/300x200" alt="Produk 2">
-      <h3>Celana Cargo Cream</h3>
-      <p>Harga: Rp120.000</p>
-      <a href="https://wa.me/6281234567890" class="btn-beli">Beli via WhatsApp</a>
+      <img src="https://i.ibb.co/G2mMH1K/skyheart.png" alt="Heart Sky">
+      <h2>Heart Sky</h2>
+      <p>Kirim cepat, aman, dan terpercaya ⭐</p>
+      <p>Harga menyesuaikan kurs (IDR / USD / MYR)</p>
+      <a href="https://wa.me/6281234567890" class="btn-beli">Order via WhatsApp</a>
     </div>
+
+    <footer>
+      &copy; 2025 JaluStore | Sky Items Store
+    </footer>
   </div>
-
-  <footer>
-    &copy; 2025 JaluStore. All rights reserved.
-  </footer>
-
 </body>
 </html>
