@@ -1,243 +1,107 @@
-<!DOCTYPE html><html lang="id">
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JaluStore - Sky Items</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JaluStore - Sky Webshop Style</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    html {
-      scroll-behavior: smooth;
-    }
     body {
       margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: url('https://wallpapercave.com/wp/wp7353627.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color: white;
-      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-      transition: background 0.3s, color 0.3s;
-      overflow-x: hidden;
-    }
-    .dark-mode {
-      background: #121212 !important;
-      background-image: none !important;
-      color: #f0f0f0;
-      text-shadow: none;
-    }
-    .overlay {
-      background: rgba(0, 0, 0, 0.6);
-      min-height: 100vh;
-      padding: 20px;
-      animation: fadeIn 1s ease-in;
-      position: relative;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to bottom, #e6f0ff, #ffffff);
+      color: #333;
     }
     header {
-      text-align: center;
-      padding: 20px 0;
-      animation: slideDown 1s ease-out;
-    }
-    h1 {
-      margin: 0;
-      font-size: 36px;
-    }
-    .controls, .admin-buttons {
-      text-align: center;
-      margin: 10px 0;
-    }
-    .controls button, .admin-buttons a {
-      margin: 5px;
-      padding: 8px 14px;
-      background-color: #ffffff33;
-      border: none;
-      border-radius: 6px;
-      color: white;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
-    .controls button:hover, .admin-buttons a:hover {
-      background-color: #ffffff55;
-      transform: scale(1.05);
-    }
-    .produk {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 20px;
-      animation: fadeInUp 0.8s ease-in;
-      transition: transform 0.3s ease;
-    }
-    .produk:hover {
-      transform: scale(1.02);
-    }
-    .produk img {
-      width: 100%;
-      max-width: 300px;
-      border-radius: 10px;
-      display: block;
-      margin: 0 auto 10px;
-    }
-    .btn-beli {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 10px 15px;
-      background: #ff5c5c;
-      color: white;
-      border-radius: 5px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: transform 0.3s ease;
-    }
-    .btn-beli:hover {
-      transform: scale(1.1);
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      color: white;
-      margin-top: 10px;
-    }
-    th, td {
-      text-align: left;
-      padding: 8px;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-    }
-    .rating {
+      background-color: #ffffffaa;
+      padding: 1rem 2rem;
       display: flex;
-      justify-content: center;
-      gap: 5px;
-      margin-top: 15px;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(10px);
     }
-    .star {
-      font-size: 24px;
-      color: gold;
-      text-shadow: 0 0 3px rgba(255,255,255,0.4);
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    .language-toggle, .theme-toggle {
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-weight: bold;
+      margin-left: 1rem;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 1rem;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: scale(1.03);
+    }
+    .card img {
+      width: 100px;
+      height: auto;
+      margin-bottom: 1rem;
+    }
+    .price {
+      font-weight: bold;
+      color: #3366cc;
     }
     footer {
       text-align: center;
-      margin-top: 40px;
-      font-size: 14px;
-      color: #ccc;
-    }
-    .dark-mode .produk { background: #1e1e1e; }
-    .dark-mode footer { color: #888; }
-    .dark-mode .controls button, .dark-mode .admin-buttons a { background-color: #333; color: #f0f0f0; }
-    @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
-    @keyframes fadeInUp { from {transform: translateY(20px); opacity: 0;} to {transform: translateY(0); opacity: 1;} }
-    @keyframes slideDown { from {transform: translateY(-20px); opacity: 0;} to {transform: translateY(0); opacity: 1;} }
-    .heart {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: url('https://i.ibb.co/yBh4PZL/heart-icon.png') no-repeat center center / contain;
-      animation: float 6s infinite ease-in;
-      opacity: 0.7;
-    }
-    @keyframes float {
-      0% {transform: translateY(0) scale(1); opacity: 1;}
-      100% {transform: translateY(-800px) scale(1.5); opacity: 0;}
+      padding: 2rem;
+      font-size: 0.9rem;
+      color: #666;
     }
   </style>
 </head>
 <body>
-  <div class="overlay">
-    <header>
-      <h1>JaluStore</h1>
-      <p id="tagline">Jual Heart Sky: Children of the Light</p>
-    </header>
-    <div class="controls">
-      <button onclick="switchLang('id')">🇮🇩 Bahasa</button>
-      <button onclick="switchLang('en')">🇬🇧 English</button>
-      <button onclick="toggleDarkMode()">🌓 Mode</button>
+  <header>
+    <h1>JaluStore</h1>
+    <div>
+      <button class="language-toggle">🇮🇩 ID</button>
+      <button class="theme-toggle">🌓</button>
     </div>
-    <div class="admin-buttons">
-      <a href="https://wa.me/6285189014747?text=Halo%20admin%2C%20saya%20mau%20tanya%20cara%20beli" target="_blank">💬 Tanya Admin</a>
-      <a href="#cara-beli">📌 Cara Beli</a>
+  </header>
+  <main class="products">
+    <div class="card">
+      <img src="https://i.ibb.co/G2mMH1K/skyheart.png" alt="Heart Pack">
+      <h2>80 + 20 Heart</h2>
+      <p class="price">Rp10.000 / RM3 / $0.65</p>
     </div>
-    <div class="produk">
-      <img src="https://i.ibb.co/G2mMH1K/skyheart.png" alt="Heart Sky">
-      <h2 id="judul-produk">Daftar Paket Heart Sky</h2>
-      <p id="deskripsi">Semua paket sudah termasuk bonus Heart. Kirim cepat, aman & terpercaya 💫</p>
-      <table id="list-paket">
-        <thead>
-          <tr><th>❤️ Paket</th><th>IDR</th><th>RM</th><th>USD</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>80 + 20</td><td>Rp10.000</td><td>RM 3.00</td><td>$0.65</td></tr>
-          <tr><td>200 + 30</td><td>Rp22.000</td><td>RM 6.50</td><td>$1.40</td></tr>
-          <tr><td>300 + 40</td><td>Rp32.000</td><td>RM 9.50</td><td>$2.05</td></tr>
-          <tr><td>400 + 50</td><td>Rp42.000</td><td>RM 12.00</td><td>$2.70</td></tr>
-          <tr><td>500 + 70</td><td>Rp52.000</td><td>RM 15.00</td><td>$3.35</td></tr>
-          <tr><td>600 + 90</td><td>Rp60.000</td><td>RM 17.50</td><td>$3.90</td></tr>
-          <tr><td>700 + 120</td><td>Rp70.000</td><td>RM 20.00</td><td>$4.60</td></tr>
-          <tr><td>800 + 150</td><td>Rp78.000</td><td>RM 22.50</td><td>$5.10</td></tr>
-        </tbody>
-      </table>
-      <div class="rating">
-        <span class="star">★</span>
-        <span class="star">★</span>
-        <span class="star">★</span>
-        <span class="star">★</span>
-        <span class="star">☆</span>
-      </div>
-      <a href="https://wa.me/6285189014747" class="btn-beli" id="tombol-beli">Order via WhatsApp</a>
+    <div class="card">
+      <img src="https://i.ibb.co/G2mMH1K/skyheart.png" alt="Heart Pack">
+      <h2>200 + 30 Heart</h2>
+      <p class="price">Rp22.000 / RM6.5 / $1.40</p>
     </div>
-    <div id="cara-beli" class="produk">
-      <h2 id="judul-cara">Cara Beli</h2>
-      <ol id="langkah">
-        <li>Klik tombol WhatsApp</li>
-        <li>Ketik: <b>Paket 300</b> atau sesuai pilihan kamu</li>
-        <li>Admin akan respon & konfirmasi</li>
-        <li>Bayar via e-wallet atau transfer</li>
-        <li>Heart akan dikirim cepat ke akun kamu</li>
-      </ol>
+    <div class="card">
+      <img src="https://i.ibb.co/G2mMH1K/skyheart.png" alt="Heart Pack">
+      <h2>500 + 70 Heart</h2>
+      <p class="price">Rp52.000 / RM15 / $3.35</p>
     </div>
-    <footer>
-      &copy; 2025 JaluStore | Sky Items Store
-    </footer>
-    <script>
-      function createHeart() {
-        const heart = document.createElement('div');
-        heart.classList.add('heart');
-        heart.style.left = Math.random() * window.innerWidth + 'px';
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 6000);
-      }
-      setInterval(createHeart, 800);function switchLang(lang) {
-    if (lang === 'en') {
-      document.getElementById('tagline').innerText = 'Selling Heart Sky: Children of the Light';
-      document.getElementById('judul-produk').innerText = 'Heart Sky Packages';
-      document.getElementById('deskripsi').innerText = 'All packages include bonus Hearts. Fast delivery, safe & trusted 💫';
-      document.getElementById('tombol-beli').innerText = 'Order via WhatsApp';
-      document.getElementById('judul-cara').innerText = 'How to Order';
-      document.getElementById('langkah').innerHTML = `
-        <li>Click the WhatsApp button</li>
-        <li>Type: <b>Package 300</b> or your choice</li>
-        <li>Admin will reply & confirm</li>
-        <li>Pay via e-wallet or bank transfer</li>
-        <li>Hearts will be delivered fast to your account</li>`;
-    } else {
-      document.getElementById('tagline').innerText = 'Jual Heart Sky: Children of the Light';
-      document.getElementById('judul-produk').innerText = 'Daftar Paket Heart Sky';
-      document.getElementById('deskripsi').innerText = 'Semua paket sudah termasuk bonus Heart. Kirim cepat, aman & terpercaya 💫';
-      document.getElementById('tombol-beli').innerText = 'Order via WhatsApp';
-      document.getElementById('judul-cara').innerText = 'Cara Beli';
-      document.getElementById('langkah').innerHTML = `
-        <li>Klik tombol WhatsApp</li>
-        <li>Ketik: <b>Paket 300</b> atau sesuai pilihan kamu</li>
-        <li>Admin akan respon & konfirmasi</li>
-        <li>Bayar via e-wallet atau transfer</li>
-        <li>Heart akan dikirim cepat ke akun kamu</li>`;
-    }
-  }
-  function toggleDarkMode() {
-    document.body.classList.toggle("dark-mode");
-  }
-</script>
-
-  </div>
+    <div class="card">
+      <img src="https://i.ibb.co/G2mMH1K/skyheart.png" alt="Heart Pack">
+      <h2>800 + 150 Heart</h2>
+      <p class="price">Rp78.000 / RM22.5 / $5.10</p>
+    </div>
+  </main>
+  <footer>
+    &copy; 2025 JaluStore. Inspired by Sky Webshop.
+  </footer>
 </body>
 </html>
