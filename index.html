@@ -1,90 +1,169 @@
-<!DOCTYPE html><html lang="id">
+<!DOCTYPE html>
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Skykid Jalustore - Produk</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skykid Jalustore</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
   <style>
+    :root {
+      --main: #00c4cc; /* Warna utama */
+      --bg-dark: #1e1e1e;
+      --bg-light: #f5f5f5;
+      --accent: #f06d6d;
+      --font-family: 'Poppins', sans-serif;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to bottom, #0e1425, #1a213b);
-      color: #fff;
-      margin: 0; padding: 0;
+      font-family: var(--font-family);
+      background: var(--bg-dark);
+      color: white;
     }
+
     header {
-      padding: 1.2rem; text-align: center; font-size: 1.6rem;
-      background: linear-gradient(45deg, #aee2ff, #d5baff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-weight: bold;
-    }
-    .container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.7);
       padding: 1rem;
+      text-align: center;
+      z-index: 10;
     }
-    .product-detail {
-      background: rgba(255,255,255,0.05);
-      padding: 1rem; border-radius: 12px;
-      backdrop-filter: blur(8px);
+
+    header h1 {
+      color: #fff;
+      font-size: 2.5rem;
+      font-weight: 600;
+    }
+
+    #products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 6rem;
+      padding: 2rem;
+    }
+
+    .product-card {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1.5rem;
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      cursor: pointer;
       text-align: center;
     }
-    .product-detail img {
-      width: 120px; height: 120px;
+
+    .product-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
-    .product-detail h2 {
-      margin: 1rem 0 0.5rem;
+
+    .product-card img {
+      width: 100px;
+      height: 100px;
     }
-    .product-detail p {
-      font-size: 1rem; margin-bottom: 1rem;
+
+    .product-card h3 {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      color: #fff;
     }
-    .input-group {
-      margin: 1rem 0;
-    }
-    input[type="text"] {
-      padding: 0.5rem; width: 100%;
-      border-radius: 8px; border: none;
-    }
-    button {
-      background: #4ade80; color: #000;
-      padding: 0.7rem 1.5rem; border: none;
-      border-radius: 8px; font-weight: bold;
-      cursor: pointer;
-    }
-    footer {
-      margin-top: 2rem; text-align: center; font-size: 0.8rem;
+
+    .product-card p {
+      font-size: 1rem;
       color: #aaa;
+    }
+
+    .cta-button {
+      background: var(--main);
+      color: white;
+      padding: 0.7rem 1.2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .cta-button:hover {
+      background: var(--accent);
+    }
+
+    footer {
+      background: var(--bg-dark);
+      padding: 1.5rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #aaa;
+      margin-top: 4rem;
+    }
+
+    /* Animations */
+    .aurora {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at top, rgba(255, 255, 255, 0.15), transparent);
+      z-index: -1;
+      animation: aurora 20s infinite linear;
+    }
+
+    @keyframes aurora {
+      0% {transform: translate(0, 0);}
+      50% {transform: translate(-50px, 50px);}
+      100% {transform: translate(0, 0);}
+    }
+
+    /* Responsiveness */
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      .product-card h3 {
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
 <body>
-  <header>Skykid Jalustore</header>
-  <div class="container">
-    <div class="product-detail">
-      <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="heart">
-      <h2 id="productName">Produk</h2>
-      <p id="productPrice">Harga</p>
-      <div class="input-group">
-        <label for="kode">Masukkan Kode Friend:</label><br>
-        <input type="text" id="kode" placeholder="Contoh: ABC123456">
-      </div>
-      <button onclick="kirimPesan()">Checkout via WhatsApp</button>
+  <div class="aurora"></div>
+  <header>
+    <h1>Skykid Jalustore</h1>
+  </header>
+
+  <div id="products">
+    <div class="product-card">
+      <img src="https://via.placeholder.com/150" alt="product1" />
+      <h3>80+20 Heart</h3>
+      <p>Rp 10.000</p>
+      <a href="product.html?name=80+20 Heart&price=Rp 10.000" class="cta-button">Lihat Detail</a>
     </div>
-  </div>  <footer>
-    &copy; 2025 Skykid Jalustore. All rights reserved.
-  </footer>  <script>
-    const params = new URLSearchParams(window.location.search);
-    const name = params.get('name');
-    const price = params.get('price');
+    <div class="product-card">
+      <img src="https://via.placeholder.com/150" alt="product2" />
+      <h3>200+30 Heart</h3>
+      <p>Rp 22.000</p>
+      <a href="product.html?name=200+30 Heart&price=Rp 22.000" class="cta-button">Lihat Detail</a>
+    </div>
+    <!-- Tambahkan produk lainnya -->
+  </div>
 
-    document.getElementById('productName').innerText = name;
-    document.getElementById('productPrice').innerText = price;
+  <footer>
+    &copy; 2025 Skykid Jalustore | All Rights Reserved
+  </footer>
 
-    function kirimPesan() {
-      const kode = document.getElementById('kode').value;
-      if (!kode) return alert('Masukkan kode friend terlebih dahulu.');
-
-      const text = `Saya ingin membeli produk:\n- ${name}\nHarga: ${price}\nKode Friend: ${kode}`;
-      const url = `https://wa.me/6285189014747?text=${encodeURIComponent(text)}`;
-      window.open(url, '_blank');
-    }
-  </script></body>
+  <script>
+    // Placeholder for future dynamic content, like fetching from API
+  </script>
+</body>
 </html>
