@@ -40,14 +40,16 @@
       margin-bottom: 1rem;
     }
     header h1 {
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: var(--primary);
-      text-shadow: 0 0 6px #84dfff;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 0.5rem 1rem;
-      border-radius: 12px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 0.6rem 1.2rem;
+      border-radius: 16px;
       display: inline-block;
+      text-shadow: 0 0 6px #84dfff, 0 0 12px #84dfff;
+      box-shadow: 0 0 12px rgba(132, 223, 255, 0.3);
+      backdrop-filter: blur(2px);
     }
     .cart-btn {
       position: fixed;
@@ -271,6 +273,24 @@
         li.textContent = `${item.name} - ${item.price}`;
         cartItems.appendChild(li);
       });
+      if (cart.length > 0) {
+        const checkoutBtn = document.createElement("button");
+        checkoutBtn.className = "buy";
+        checkoutBtn.textContent = "Checkout";
+        checkoutBtn.onclick = checkout;
+        cartItems.appendChild(checkoutBtn);
+      }
+    }
+
+    function checkout() {
+      alert(
+        '💳 Metode Pembayaran:\n' +
+        '- DANA / GOPAY / SHOPEEPAY: 085189014747 (JALU PRAYITNO)\n' +
+        '- BRI: 581901033689531 (JALU PRAYITNO)\n' +
+        '- SEABANK: 901885494225 (JALU PRAYITNO)\n' +
+        '- SCAN QRIS tersedia di halaman utama.\n\n' +
+        'Setelah bayar, kirim bukti & kode friend ke WA: 085189014747 📩'
+      );
     }
 
     function toggleCart() {
