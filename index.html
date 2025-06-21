@@ -1,159 +1,90 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Skykid Jalustore</title>
+  <title>Skykid Jalustore - Produk</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
   <style>
-    :root {
-      --main: #aee2ff;
-      --bg: linear-gradient(to bottom, #0e1425, #1a213b);
-      --font: 'Poppins', sans-serif;
-      --blur: rgba(255,255,255,0.05);
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: var(--font); background: var(--bg); color: #fff;
-      overflow-x: hidden;
-    }
-    .aurora {
-      position: fixed; width: 100%; height: 100%; z-index: -1;
-      background: radial-gradient(ellipse at top, rgba(255,255,255,0.02), transparent),
-                  radial-gradient(ellipse at bottom, rgba(180,200,255,0.05), transparent);
-      animation: move 15s infinite linear;
-    }
-    @keyframes move {
-      0% {transform: translate(0,0);}
-      50% {transform: translate(-10px, 10px);}
-      100% {transform: translate(0,0);}
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom, #0e1425, #1a213b);
+      color: #fff;
+      margin: 0; padding: 0;
     }
     header {
-      padding: 1.5rem; text-align: center; font-size: 2rem;
+      padding: 1.2rem; text-align: center; font-size: 1.6rem;
       background: linear-gradient(45deg, #aee2ff, #d5baff);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       font-weight: bold;
     }
-    .toolbar {
-      display: flex; justify-content: center; gap: 1rem; margin-bottom: 1rem;
-      flex-wrap: wrap;
+    .container {
+      padding: 1rem;
     }
-    .toolbar button {
-      background: var(--main); color: #000; border: none;
-      padding: 0.6rem 1.2rem; border-radius: 10px;
-      cursor: pointer; font-family: var(--font); font-weight: bold;
+    .product-detail {
+      background: rgba(255,255,255,0.05);
+      padding: 1rem; border-radius: 12px;
+      backdrop-filter: blur(8px);
+      text-align: center;
     }
-    #products {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 1rem; padding: 1rem;
+    .product-detail img {
+      width: 120px; height: 120px;
     }
-    .product-card {
-      background: var(--blur); border-radius: 16px; padding: 1rem;
-      text-align: center; backdrop-filter: blur(10px);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      position: relative; transition: 0.3s;
+    .product-detail h2 {
+      margin: 1rem 0 0.5rem;
     }
-    .product-card:hover { transform: scale(1.03); }
-    .product-card img { width: 72px; height: 72px; }
-    .product-card h3 { margin: 0.5rem 0; font-size: 1rem; }
-    .product-card p { font-size: 0.9rem; }
-    .product-card button {
-      background: var(--main); color: #000; padding: 0.4rem 0.8rem;
-      border: none; border-radius: 8px; cursor: pointer;
+    .product-detail p {
+      font-size: 1rem; margin-bottom: 1rem;
     }
-    .shimmer {
-      position: absolute; top: 0; left: -100%; height: 100%; width: 100%;
-      background: linear-gradient(to right, transparent, rgba(255,255,255,0.07), transparent);
-      animation: shimmer 3s infinite;
+    .input-group {
+      margin: 1rem 0;
     }
-    @keyframes shimmer { 100% {left: 100%;} }
-    #cart, #checkout {
-      margin: 2rem 1rem; padding: 1rem; background: var(--blur); border-radius: 12px;
-      backdrop-filter: blur(10px);
+    input[type="text"] {
+      padding: 0.5rem; width: 100%;
+      border-radius: 8px; border: none;
     }
-    #checkout button {
-      background: #4ade80; color: #000; padding: 0.7rem 1.5rem;
-      border: none; border-radius: 10px; font-weight: bold;
+    button {
+      background: #4ade80; color: #000;
+      padding: 0.7rem 1.5rem; border: none;
+      border-radius: 8px; font-weight: bold;
       cursor: pointer;
     }
-    @media screen and (max-width: 360px) {
-      header { font-size: 1.5rem; }
-      .product-card h3 { font-size: 0.9rem; }
-      .toolbar { flex-direction: column; align-items: center; }
+    footer {
+      margin-top: 2rem; text-align: center; font-size: 0.8rem;
+      color: #aaa;
     }
   </style>
 </head>
 <body>
-  <div class="aurora"></div>
   <header>Skykid Jalustore</header>
+  <div class="container">
+    <div class="product-detail">
+      <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="heart">
+      <h2 id="productName">Produk</h2>
+      <p id="productPrice">Harga</p>
+      <div class="input-group">
+        <label for="kode">Masukkan Kode Friend:</label><br>
+        <input type="text" id="kode" placeholder="Contoh: ABC123456">
+      </div>
+      <button onclick="kirimPesan()">Checkout via WhatsApp</button>
+    </div>
+  </div>  <footer>
+    &copy; 2025 Skykid Jalustore. All rights reserved.
+  </footer>  <script>
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get('name');
+    const price = params.get('price');
 
-  <div class="toolbar">
-    <button onclick="window.location.href='https://wa.me/6285189014747'">Tanya Admin</button>
-    <button onclick="alert('1. Pilih produk\n2. Masukkan kode friend\n3. Kirim ke WA Admin\n4. Bayar sesuai metode')">Cara Beli</button>
-  </div>
+    document.getElementById('productName').innerText = name;
+    document.getElementById('productPrice').innerText = price;
 
-  <section id="products"></section>
+    function kirimPesan() {
+      const kode = document.getElementById('kode').value;
+      if (!kode) return alert('Masukkan kode friend terlebih dahulu.');
 
-  <section id="cart">
-    <h2>🛒 Keranjang Anda</h2>
-    <ul id="cart-items"></ul>
-  </section>
-
-  <section id="checkout" style="display: none;">
-    <button onclick="checkoutOrder()">Checkout Sekarang</button>
-  </section>
-
-  <script>
-    const products = [
-      { name: '80+20 Heart', price: 'Rp 10.000' },
-      { name: '200+30 Heart', price: 'Rp 22.000' },
-      { name: '300+40 Heart', price: 'Rp 32.000' },
-      { name: '400+50 Heart', price: 'Rp 42.000' },
-      { name: '500+70 Heart', price: 'Rp 52.000' },
-      { name: '600+90 Heart', price: 'Rp 60.000' },
-      { name: '700+120 Heart', price: 'Rp 70.000' },
-      { name: '800+150 Heart', price: 'Rp 78.000' }
-    ];
-
-    const cart = [];
-    const cartList = document.getElementById('cart-items');
-    const checkoutBox = document.getElementById('checkout');
-    const productContainer = document.getElementById('products');
-
-    function updateCart() {
-      cartList.innerHTML = '';
-      cart.forEach(item => {
-        const li = document.createElement('li');
-        li.textContent = `${item.name} - ${item.price}`;
-        cartList.appendChild(li);
-      });
-      checkoutBox.style.display = cart.length ? 'block' : 'none';
+      const text = `Saya ingin membeli produk:\n- ${name}\nHarga: ${price}\nKode Friend: ${kode}`;
+      const url = `https://wa.me/6285189014747?text=${encodeURIComponent(text)}`;
+      window.open(url, '_blank');
     }
-
-    function checkoutOrder() {
-      if (cart.length === 0) {
-        alert('Keranjang kosong!');
-        return;
-      }
-      let msg = 'Saya ingin memesan:\n';
-      cart.forEach(i => { msg += `- ${i.name} (${i.price})\n`; });
-      window.open(`https://wa.me/6285189014747?text=${encodeURIComponent(msg)}`, '_blank');
-    }
-
-    products.forEach(p => {
-      const card = document.createElement('div');
-      card.className = 'product-card';
-      card.innerHTML = `
-        <div class="shimmer"></div>
-        <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="heart" loading="lazy" />
-        <h3>${p.name}</h3>
-        <p>${p.price}</p>
-        <button onclick='cart.push(${JSON.stringify(p)}); updateCart();'>Tambah ke Keranjang</button>
-      `;
-      productContainer.appendChild(card);
-    });
-
-    updateCart();
-  </script>
-</body>
+  </script></body>
 </html>
