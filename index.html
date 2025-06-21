@@ -1,197 +1,149 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Skykid Jalustore</title>
-<!-- Font Awesome CDN untuk icon -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-<style>
-  body {
-    margin: 0; 
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #ffe3f1, #c5e4f6);
-    color: #333;
-  }
-  header {
-    padding: 1rem;
-    text-align: center;
-    font-weight: 700;
-    font-size: 1.8rem;
-    color: #d6336c;
-    text-shadow: 1px 1px 3px #fff;
-  }
-  #products {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    padding: 0 1rem 2rem 1rem;
-  }
-  .product-card {
-    background: rgba(255 255 255 / 0.6);
-    border-radius: 12px;
-    box-shadow: 0 3px 10px rgb(214 51 108 / 0.3);
-    padding: 0.8rem;
-    text-align: center;
-    transition: transform 0.3s ease;
-  }
-  .product-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 14px rgb(214 51 108 / 0.5);
-  }
-  .product-card img {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-    margin-bottom: 0.6rem;
-  }
-  .product-card h3 {
-    margin: 0.2rem 0;
-    color: #b2224f;
-    font-weight: 700;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 6px;
-  }
-  .product-card h3 .fa-heart {
-    color: #e63946;
-  }
-  .product-card p {
-    margin: 0.1rem 0;
-    font-size: 0.9rem;
-  }
-  button {
-    margin-top: 0.6rem;
-    background: #d6336c;
-    color: #fff;
-    border: none;
-    padding: 0.5rem 0.8rem;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background-color 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    justify-content: center;
-  }
-  button:hover {
-    background: #a3294f;
-  }
-  @media (max-width: 480px) {
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Skykid Jalustore</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --main: #aee2ff;
+      --bg: linear-gradient(to bottom, #0e1425, #1a213b);
+      --font: 'Poppins', sans-serif;
+      --blur: rgba(255,255,255,0.05);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font); background: var(--bg); color: #fff;
+      overflow-x: hidden;
+    }
+    .aurora {
+      position: fixed; width: 100%; height: 100%; z-index: -1;
+      background: radial-gradient(ellipse at top, rgba(255,255,255,0.02), transparent),
+                  radial-gradient(ellipse at bottom, rgba(180,200,255,0.05), transparent);
+      animation: move 15s infinite linear;
+    }
+    @keyframes move {
+      0% {transform: translate(0,0);}
+      50% {transform: translate(-10px, 10px);}
+      100% {transform: translate(0,0);}
+    }
+    header {
+      padding: 1.5rem; text-align: center; font-size: 2rem;
+      background: linear-gradient(45deg, #aee2ff, #d5baff);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      font-weight: bold;
+    }
+    .toolbar {
+      display: flex; justify-content: center; gap: 1rem; margin-bottom: 1rem;
+    }
+    .toolbar button {
+      background: var(--main); color: #000; border: none;
+      padding: 0.6rem 1.2rem; border-radius: 10px;
+      cursor: pointer; font-family: var(--font); font-weight: bold;
+    }
     #products {
-      grid-template-columns: 1fr;
-      gap: 16px;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem; padding: 1rem;
     }
-    .product-card img {
-      width: 80px;
-      height: 80px;
+    .product-card {
+      background: var(--blur); border-radius: 16px; padding: 1rem;
+      text-align: center; backdrop-filter: blur(10px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      position: relative; transition: 0.3s;
     }
-  }
-</style>
+    .product-card:hover { transform: scale(1.03); }
+    .product-card img { width: 72px; height: 72px; }
+    .product-card h3 { margin: 0.5rem 0; font-size: 1rem; }
+    .product-card p { font-size: 0.9rem; }
+    .product-card button {
+      background: var(--main); color: #000; padding: 0.4rem 0.8rem;
+      border: none; border-radius: 8px; cursor: pointer;
+    }
+    .shimmer {
+      position: absolute; top: 0; left: -100%; height: 100%; width: 100%;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.07), transparent);
+      animation: shimmer 3s infinite;
+    }
+    @keyframes shimmer { 100% {left: 100%;} }
+    #cart, #checkout {
+      margin: 2rem; padding: 1rem; background: var(--blur); border-radius: 12px;
+      backdrop-filter: blur(10px);
+    }
+    #checkout button {
+      background: #4ade80; color: #000; padding: 0.7rem 1.5rem;
+      border: none; border-radius: 10px; font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
+  <div class="aurora"></div>
+  <header>Skykid Jalustore</header>
 
-<header>Skykid Jalustore</header>
-
-<section id="products">
-
-  <div class="product-card">
-    <img src="https://cdn.pixabay.com/photo/2021/03/01/14/12/heart-6061959_960_720.png" alt="80+20 Heart" />
-    <h3><i class="fa-solid fa-heart"></i> 80+20 Heart</h3>
-    <p>Rp 10.000</p>
-    <p>RM 3</p>
-    <p>$0.65</p>
-    <button onclick="addToCart('80+20 Heart', 10000)">
-      <i class="fa-solid fa-cart-shopping"></i> Tambah ke Keranjang
-    </button>
+  <div class="toolbar">
+    <button onclick="window.location.href='https://wa.me/6285189014747'">Tanya Admin</button>
+    <button onclick="alert('1. Pilih produk → 2. Masukkan kode friend → 3. Kirim ke WA Admin → 4. Bayar sesuai metode.')">Cara Beli</button>
   </div>
 
-  <div class="product-card">
-    <img src="https://cdn.pixabay.com/photo/2021/03/01/14/12/heart-6061959_960_720.png" alt="200+30 Heart" />
-    <h3><i class="fa-solid fa-heart"></i> 200+30 Heart</h3>
-    <p>Rp 22.000</p>
-    <p>RM 6.5</p>
-    <p>$1.40</p>
-    <button onclick="addToCart('200+30 Heart', 22000)">
-      <i class="fa-solid fa-cart-shopping"></i> Tambah ke Keranjang
-    </button>
-  </div>
+  <section id="products"></section>
 
-  <div class="product-card">
-    <img src="https://cdn.pixabay.com/photo/2021/03/01/14/12/heart-6061959_960_720.png" alt="300+40 Heart" />
-    <h3><i class="fa-solid fa-heart"></i> 300+40 Heart</h3>
-    <p>Rp 32.000</p>
-    <p>RM 9.5</p>
-    <p>$2.05</p>
-    <button onclick="addToCart('300+40 Heart', 32000)">
-      <i class="fa-solid fa-cart-shopping"></i> Tambah ke Keranjang
-    </button>
-  </div>
+  <section id="cart">
+    <h2>🛒 Keranjang Anda</h2>
+    <ul id="cart-items"></ul>
+  </section>
 
-  <div class="product-card">
-    <img src="https://cdn.pixabay.com/photo/2021/03/01/14/12/heart-6061959_960_720.png" alt="400+50 Heart" />
-    <h3><i class="fa-solid fa-heart"></i> 400+50 Heart</h3>
-    <p>Rp 42.000</p>
-    <p>RM 12</p>
-    <p>$2.70</p>
-    <button onclick="addToCart('400+50 Heart', 42000)">
-      <i class="fa-solid fa-cart-shopping"></i> Tambah ke Keranjang
-    </button>
-  </div>
+  <section id="checkout">
+    <button onclick="checkoutOrder()">Checkout Sekarang</button>
+  </section>
 
-  <div class="product-card">
-    <img src="https://cdn.pixabay.com/photo/2021/03/01/14/12/heart-6061959_960_720.png" alt="500+70 Heart" />
-    <h3><i class="fa-solid fa-heart"></i> 500+70 Heart</h3>
-    <p>Rp 52.000</p>
-    <p>RM 15</p>
-    <p>$3.35</p>
-    <button onclick="addToCart('500+70 Heart', 52000)">
-      <i class="fa-solid fa-cart-shopping"></i> Tambah ke Keranjang
-    </button>
-  </div>
+  <script>
+    const products = [
+      { name: '80+20 Heart', price: 'Rp 10.000' },
+      { name: '200+30 Heart', price: 'Rp 22.000' },
+      { name: '300+40 Heart', price: 'Rp 32.000' },
+      { name: '400+50 Heart', price: 'Rp 42.000' },
+      { name: '500+70 Heart', price: 'Rp 52.000' },
+      { name: '600+90 Heart', price: 'Rp 60.000' },
+      { name: '700+120 Heart', price: 'Rp 70.000' },
+      { name: '800+150 Heart', price: 'Rp 78.000' }
+    ];
 
-  <div class="product-card">
-    <img src="https://cdn.pixabay.com/photo/2021/03/01/14/12/heart-6061959_960_720.png" alt="600+90 Heart" />
-    <h3><i class="fa-solid fa-heart"></i> 600+90 Heart</h3>
-    <p>Rp 60.000</p>
-    <p>RM 17.5</p>
-    <p>$3.90</p>
-    <button onclick="addToCart('600+90 Heart', 60000)">
-      <i class="fa-solid fa-cart-shopping"></i> Tambah ke Keranjang
-    </button>
-  </div>
+    const cart = [];
+    const cartList = document.getElementById('cart-items');
+    const productContainer = document.getElementById('products');
 
-  <div class="product-card">
-    <img src="https://cdn.pixabay.com/photo/2021/03/01/14/12/heart-6061959_960_720.png" alt="700+120 Heart" />
-    <h3><i class="fa-solid fa-heart"></i> 700+120 Heart</h3>
-    <p>Rp 70.000</p>
-    <p>RM 20</p>
-    <p>$4.60</p>
-    <button onclick="addToCart('700+120 Heart', 70000)">
-      <i class="fa-solid fa-cart-shopping"></i> Tambah ke Keranjang
-    </button>
-  </div>
+    function updateCart() {
+      cartList.innerHTML = '';
+      cart.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.name} - ${item.price}`;
+        cartList.appendChild(li);
+      });
+    }
 
-  <div class="product-card">
-    <img src="https://cdn.pixabay.com/photo/2021/03/01/14/12/heart-6061959_960_720.png" alt="800+150 Heart" />
-    <h3><i class="fa-solid fa-heart"></i> 800+150 Heart</h3>
-    <p>Rp 78.000</p>
-    <p>RM 22.5</p>
-    <p>$5.10</p>
-    <button onclick="addToCart('800+150 Heart', 78000)">
-      <i class="fa-solid fa-cart-shopping"></i> Tambah ke Keranjang
-    </button>
-  </div>
+    function checkoutOrder() {
+      if (cart.length === 0) {
+        alert('Keranjang kosong!');
+        return;
+      }
+      let msg = 'Saya ingin memesan:\\n';
+      cart.forEach(i => { msg += `- ${i.name} (${i.price})\\n`; });
+      window.open(`https://wa.me/6285189014747?text=${encodeURIComponent(msg)}`, '_blank');
+    }
 
-</section>
-
-<script>
-  function addToCart(name, price) {
-    alert(name + ' berhasil ditambahkan ke keranjang dengan harga Rp ' + price.toLocaleString());
-  }
-</script>
-
+    products.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.innerHTML = `
+        <div class=\"shimmer\"></div>
+        <img src=\"https://cdn-icons-png.flaticon.com/512/833/833472.png\" alt=\"heart\" />
+        <h3>${p.name}</h3>
+        <p>${p.price}</p>
+        <button onclick='cart.push(${JSON.stringify(p)}); updateCart();'>Tambah ke Keranjang</button>
+      `;
+      productContainer.appendChild(card);
+    });
+  </script>
 </body>
 </html>
