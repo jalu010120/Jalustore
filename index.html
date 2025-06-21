@@ -1,310 +1,193 @@
-<!DOCTYPE html><html lang="id">
+<!DOCTYPE html>
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Skykid JaluStore</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet"/>
   <style>
-    :root {
-      --bg: #0d1b2a;
-      --primary: #84dfff;
-      --card: rgba(255, 255, 255, 0.15);
-      --border: #2f3e46;
-      --text: #ffffff;
-    }
-    * {
-      box-sizing: border-box;
-      margin: 0; padding: 0;
-      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
-    }
     body {
-      background: url('https://wallpapercave.com/wp/wp7353627.jpg') no-repeat center center fixed;
-      background-size: cover;
-      padding: 1rem;
-      color: var(--text);
-      position: relative;
+      margin: 0;
+      background: linear-gradient(to bottom, #00111a, #000);
+      font-family: 'Poppins', sans-serif;
       overflow-x: hidden;
     }
-    .overlay {
+    .lang-switcher {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.45);
-      backdrop-filter: blur(6px);
-      z-index: 0;
+      top: 1rem;
+      left: 1rem;
+      z-index: 9999;
     }
-    header {
+    .lang-switcher button {
+      padding: 6px 12px;
+      margin-right: 6px;
+      border-radius: 6px;
+      background: #fff;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .modal {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+    .modal-content {
+      background: #1a1a1a;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      max-width: 400px;
+      width: 90%;
+    }
+    .modal-content h2 {
+      color: white;
       text-align: center;
       margin-bottom: 1rem;
     }
-    header h1 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #ffffff;
-      background: rgba(0, 0, 0, 0.5);
-      padding: 0.6rem 1.2rem;
-      border-radius: 16px;
-      display: inline-block;
-      text-shadow: 0 0 6px #84dfff, 0 0 12px #84dfff;
-      box-shadow: 0 0 12px rgba(132, 223, 255, 0.3);
-      backdrop-filter: blur(2px);
-    }
-    .cart-btn {
-      position: fixed;
-      top: 1rem;
-      right: 1rem;
-      background: var(--primary);
-      color: #000;
-      padding: 0.4rem 0.8rem;
-      border-radius: 12px;
-      font-weight: 600;
-      z-index: 10;
-      cursor: pointer;
-      box-shadow: 0 0 10px #84dfff80;
-    }
-    .cart-count {
-      background: #fff;
-      color: #000;
-      border-radius: 999px;
-      padding: 0 6px;
-      font-size: 0.8rem;
-      margin-left: 5px;
-    }
-    .cart-modal {
-      position: fixed;
-      top: 20%;
-      right: 1rem;
-      background: var(--card);
-      border: 1px solid var(--border);
-      padding: 1rem;
-      border-radius: 12px;
-      max-width: 300px;
-      backdrop-filter: blur(10px);
-      z-index: 20;
-      display: none;
-    }
-    .cart-modal h2 {
-      font-size: 1rem;
-      margin-bottom: 0.5rem;
-      color: var(--primary);
-    }
-    .cart-modal ul {
-      list-style: none;
-    }
-    .cart-modal li {
-      font-size: 0.9rem;
-      margin-bottom: 4px;
-    }
-    .cart-modal .close {
-      background: none;
-      border: none;
-      color: #fff;
-      font-size: 1rem;
-      float: right;
-      cursor: pointer;
-    }
-    .product-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      max-width: 500px;
-      margin: auto;
-      z-index: 4;
-      position: relative;
-    }
-    .product {
-      display: flex;
-      align-items: center;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 1rem;
-      gap: 1rem;
-      backdrop-filter: blur(8px);
-      transition: transform 0.3s;
-      position: relative;
-      overflow: hidden;
-    }
-    .product:hover {
-      transform: translateY(-4px);
-    }
-    .product img {
-      width: 56px;
-      height: 56px;
-    }
-    .info {
-      flex: 1;
-    }
-    .info h3 {
-      font-size: 1rem;
-      margin-bottom: 4px;
-    }
-    .info p {
-      font-size: 0.85rem;
-      color: #ddd;
-    }
-    .buy {
-      background: var(--primary);
-      color: #000;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 10px;
-      font-size: 0.85rem;
-      cursor: pointer;
-    }
-    .aurora {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      background: radial-gradient(ellipse at center, rgba(132,223,255,0.2) 0%, rgba(13,27,42,0) 70%);
-      animation: pulse 5s infinite;
-      z-index: 0;
-    }
-    @keyframes pulse {
-      0% {opacity: 0.4;}
-      50% {opacity: 0.6;}
-      100% {opacity: 0.4;}
-    }
-    .cloud {
-      position: fixed;
-      width: 250px;
-      height: 120px;
-      background: rgba(255, 255, 255, 0.06);
-      border-radius: 120px;
-      filter: blur(18px);
-      animation: cloudmove 120s linear infinite;
-      z-index: 1;
-    }
-    .cloud:nth-child(1) { top: 15%; left: -300px; animation-delay: 0s; }
-    .cloud:nth-child(2) { top: 25%; left: -250px; animation-delay: 15s; }
-    .cloud:nth-child(3) { top: 40%; left: -280px; animation-delay: 30s; }
-    .cloud:nth-child(4) { top: 60%; left: -320px; animation-delay: 45s; }
-    @keyframes cloudmove {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(150vw); }
-    }
-    .particles {
-      position: fixed;
-      top: 0;
-      left: 0;
+    .modal-content input {
       width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 2;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      border: none;
     }
-    .star {
-      position: absolute;
-      width: 2px;
-      height: 2px;
-      background: white;
-      border-radius: 50%;
-      animation: twinkle 2s infinite ease-in-out;
+    .modal-content button {
+      width: 100%;
+      padding: 0.6rem;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
     }
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.1; }
-      50% { opacity: 1; }
+    .login-btn {
+      background: #84dfff;
+      color: #000;
+    }
+    .admin-btn {
+      background: #ff4e4e;
+      color: #fff;
+    }
+    .modal-content p {
+      color: gray;
+      text-align: center;
+      font-size: 0.85rem;
     }
   </style>
 </head>
 <body>
-  <div class="aurora"></div>
-  <div class="cloud"></div>
-  <div class="cloud"></div>
-  <div class="cloud"></div>
-  <div class="cloud"></div>
-  <div class="particles" id="particles"></div>
-  <div class="overlay"></div>  <div class="cart-btn" onclick="toggleCart()">🛒 Keranjang <span class="cart-count" id="cartCount">0</span></div>
-  <div class="cart-modal" id="cartModal">
-    <button class="close" onclick="toggleCart()">✖</button>
-    <h2>Keranjang</h2>
-    <ul id="cartItems"></ul>
-  </div>  <header>
-    <h1>🕊️ Skykid JaluStore</h1>
-  </header>
-  <div class="product-list" id="productList"></div>  <script>
-    const products = [
-      { name: '80+20 Heart', price: 'Rp 10.000', sku: 'SKYKID80' },
-      { name: '200+30 Heart', price: 'Rp 22.000', sku: 'SKYKID200' },
-      { name: '300+40 Heart', price: 'Rp 32.000', sku: 'SKYKID300' },
-      { name: '400+50 Heart', price: 'Rp 42.000', sku: 'SKYKID400' },
-      { name: '500+70 Heart', price: 'Rp 52.000', sku: 'SKYKID500' },
-      { name: '600+90 Heart', price: 'Rp 60.000', sku: 'SKYKID600' },
-      { name: '700+120 Heart', price: 'Rp 70.000', sku: 'SKYKID700' },
-      { name: '800+150 Heart', price: 'Rp 78.000', sku: 'SKYKID800' }
-    ];
 
-    const list = document.getElementById("productList");
-    const cartModal = document.getElementById("cartModal");
-    const cartCount = document.getElementById("cartCount");
-    const cartItems = document.getElementById("cartItems");
-    let cart = [];
+<div class="lang-switcher">
+  <button onclick="changeLang('id')">🇮🇩 ID</button>
+  <button onclick="changeLang('en')">🇺🇸 EN</button>
+</div>
 
-    products.forEach(p => {
-      const div = document.createElement("div");
-      div.className = "product";
-      div.innerHTML = `
-        <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="Heart">
-        <div class="info">
-          <h3>${p.name}</h3>
-          <p>${p.price}</p>
-          <p><small>SKU: ${p.sku}</small></p>
-        </div>
-        <button class="buy" onclick="addToCart('${p.name}', '${p.price}')">Beli</button>
-        <div class="shimmer"></div>
-      `;
-      list.appendChild(div);
-    });
+<div id="loginModal" class="modal">
+  <div class="modal-content">
+    <h2 id="loginTitle">Masuk ke JaluStore</h2>
+    <input id="emailInput" type="email" placeholder="Email kamu" />
+    <input id="friendCodeInput" type="text" placeholder="Kode teman (opsional)" />
+    <button class="login-btn" onclick="submitLogin()" id="loginBtn">Masuk</button>
+    <p id="adminHint">Admin? <span onclick="showAdminLogin()" style="color: #84dfff; cursor: pointer;" id="loginHere">Login di sini</span></p>
+  </div>
+</div>
 
-    function addToCart(name, price) {
-      cart.push({ name, price });
-      updateCart();
+<div id="adminModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <h2 id="adminTitle">Admin Login</h2>
+    <input id="adminPass" type="password" placeholder="Password admin" />
+    <button class="admin-btn" onclick="submitAdmin()" id="adminLoginBtn">Login Admin</button>
+  </div>
+</div>
+
+<script>
+  const LANGUAGES = {
+    id: {
+      loginTitle: "Masuk ke JaluStore",
+      emailPlaceholder: "Email kamu",
+      friendCodePlaceholder: "Kode teman (opsional)",
+      loginBtn: "Masuk",
+      adminHint: "Admin?",
+      loginHere: "Login di sini",
+      adminTitle: "Login Admin",
+      adminPassPlaceholder: "Password admin",
+      adminLoginBtn: "Login Admin",
+      emailAlert: "Masukkan email yang valid",
+      welcome: (email) => `Selamat datang, ${email}!`,
+      wrongPassword: "Password salah",
+      loginSuccess: "Login admin berhasil!"
+    },
+    en: {
+      loginTitle: "Login to JaluStore",
+      emailPlaceholder: "Your email",
+      friendCodePlaceholder: "Friend code (optional)",
+      loginBtn: "Login",
+      adminHint: "Admin?",
+      loginHere: "Login here",
+      adminTitle: "Admin Login",
+      adminPassPlaceholder: "Admin password",
+      adminLoginBtn: "Login Admin",
+      emailAlert: "Please enter a valid email",
+      welcome: (email) => `Welcome, ${email}!`,
+      wrongPassword: "Wrong password",
+      loginSuccess: "Admin login successful!"
     }
+  }
 
-    function updateCart() {
-      cartCount.innerText = cart.length;
-      cartItems.innerHTML = '';
-      cart.forEach(item => {
-        const li = document.createElement("li");
-        li.textContent = `${item.name} - ${item.price}`;
-        cartItems.appendChild(li);
-      });
-      if (cart.length > 0) {
-        const checkoutBtn = document.createElement("button");
-        checkoutBtn.className = "buy";
-        checkoutBtn.textContent = "Checkout";
-        checkoutBtn.onclick = checkout;
-        cartItems.appendChild(checkoutBtn);
-      }
-    }
+  let currentLang = 'id';
 
-    function checkout() {
-      alert(
-        '💳 Metode Pembayaran:\n' +
-        '- DANA / GOPAY / SHOPEEPAY: 085189014747 (JALU PRAYITNO)\n' +
-        '- BRI: 581901033689531 (JALU PRAYITNO)\n' +
-        '- SEABANK: 901885494225 (JALU PRAYITNO)\n' +
-        '- SCAN QRIS tersedia di halaman utama.\n\n' +
-        'Setelah bayar, kirim bukti & kode friend ke WA: 085189014747 📩'
-      );
-    }
+  function changeLang(lang) {
+    currentLang = lang;
+    const t = LANGUAGES[lang];
+    document.getElementById("loginTitle").innerText = t.loginTitle;
+    document.getElementById("emailInput").placeholder = t.emailPlaceholder;
+    document.getElementById("friendCodeInput").placeholder = t.friendCodePlaceholder;
+    document.getElementById("loginBtn").innerText = t.loginBtn;
+    document.getElementById("adminHint").innerHTML = `${t.adminHint} <span onclick="showAdminLogin()" style="color: #84dfff; cursor: pointer;">${t.loginHere}</span>`;
+    document.getElementById("adminTitle").innerText = t.adminTitle;
+    document.getElementById("adminPass").placeholder = t.adminPassPlaceholder;
+    document.getElementById("adminLoginBtn").innerText = t.adminLoginBtn;
+  }
 
-    function toggleCart() {
-      cartModal.style.display = cartModal.style.display === 'block' ? 'none' : 'block';
-    }
+  function submitLogin() {
+    const email = document.getElementById('emailInput').value;
+    const kode = document.getElementById('friendCodeInput').value;
+    if (!email.includes('@')) return alert(LANGUAGES[currentLang].emailAlert);
+    localStorage.setItem('buyer_email', email);
+    localStorage.setItem('friend_code', kode);
+    document.getElementById('loginModal').style.display = 'none';
+    alert(LANGUAGES[currentLang].welcome(email));
+  }
 
-    const particles = document.getElementById("particles");
-    for (let i = 0; i < 100; i++) {
-      const star = document.createElement("div");
-      star.className = "star";
-      star.style.top = `${Math.random() * 100}%`;
-      star.style.left = `${Math.random() * 100}%`;
-      star.style.animationDelay = `${Math.random() * 2}s`;
-      particles.appendChild(star);
+  function submitAdmin() {
+    const pass = document.getElementById('adminPass').value;
+    if (pass === 'adminjalustore') {
+      localStorage.setItem('admin_mode', 'true');
+      alert(LANGUAGES[currentLang].loginSuccess);
+      document.getElementById('adminModal').style.display = 'none';
+    } else {
+      alert(LANGUAGES[currentLang].wrongPassword);
     }
-  </script></body>
+  }
+
+  function showAdminLogin() {
+    document.getElementById('loginModal').style.display = 'none';
+    document.getElementById('adminModal').style.display = 'flex';
+  }
+
+  window.onload = () => {
+    const email = localStorage.getItem('buyer_email');
+    if (!email) {
+      document.getElementById('loginModal').style.display = 'flex';
+    }
+  }
+</script>
+
+</body>
 </html>
