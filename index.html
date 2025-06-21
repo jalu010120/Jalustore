@@ -1,210 +1,119 @@
-<!DOCTYPE html><html lang="id">
+<!DOCTYPE html>
+<html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sky Heart Store - JaluStore</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JaluStore Sky Heart</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --bg: #f9f9fb;
-      --card-bg: #ffffff;
+      --bg: #f5f7ff;
       --primary: #5263ff;
-      --text: #333;
+      --card: #fff;
       --border: #e0e0e0;
+      --text: #333;
     }
     * {
-      margin: 0;
-      padding: 0;
       box-sizing: border-box;
+      margin: 0; padding: 0;
       font-family: 'Inter', sans-serif;
     }
     body {
       background: var(--bg);
+      padding: 1rem;
       color: var(--text);
-      min-height: 100vh;
-      padding-bottom: 80px;
     }
     header {
-      position: sticky;
-      top: 0;
-      background: var(--bg);
-      padding: 1rem;
-      border-bottom: 1px solid var(--border);
       text-align: center;
-      z-index: 10;
+      margin-bottom: 1rem;
     }
     header h1 {
-      font-size: 1.25rem;
-      font-weight: 700;
+      font-size: 1.2rem;
+      font-weight: 600;
       color: var(--primary);
     }
     .product-list {
-      padding: 1rem;
-      display: grid;
-      grid-template-columns: 1fr;
+      display: flex;
+      flex-direction: column;
       gap: 1rem;
       max-width: 500px;
       margin: auto;
     }
-    .card {
-      background: var(--card-bg);
+    .product {
+      display: flex;
+      align-items: center;
+      background: var(--card);
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      gap: 1rem;
     }
-    .card img {
+    .product img {
       width: 56px;
       height: 56px;
     }
-    .card-content {
+    .info {
       flex: 1;
-      margin-left: 1rem;
     }
-    .card-content h3 {
+    .info h3 {
       font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 0.25rem;
+      margin-bottom: 4px;
     }
-    .card-content p {
-      font-size: 0.875rem;
+    .info p {
+      font-size: 0.85rem;
       color: #666;
     }
-    .btn {
+    .buy {
       background: var(--primary);
       color: #fff;
       border: none;
       padding: 0.5rem 1rem;
       border-radius: 10px;
-      font-size: 0.875rem;
+      font-size: 0.85rem;
       cursor: pointer;
-    }
-    .cart-btn {
-      position: fixed;
-      bottom: 1rem;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--primary);
-      color: white;
-      padding: 0.75rem 1.5rem;
-      border: none;
-      border-radius: 50px;
-      font-size: 1rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      z-index: 100;
-    }
-    .cart-modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 20;
-    }
-    .cart-content {
-      background: #fff;
-      padding: 1rem;
-      border-radius: 16px;
-      width: 90%;
-      max-width: 350px;
-    }
-    .cart-items {
-      max-height: 200px;
-      overflow-y: auto;
-      font-size: 0.9rem;
-      margin-bottom: 1rem;
-    }
-    .qris {
-      width: 100%;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-    }
-    .copy-code {
-      background: #eee;
-      padding: 0.5rem;
-      border-radius: 10px;
-      text-align: center;
-      cursor: pointer;
-      margin-bottom: 1rem;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>JaluStore Sky Heart Shop</h1>
-  </header>  <div class="product-list" id="productList"></div><button class="cart-btn" onclick="openCart()">🛒 Keranjang <span id="cartCount">0</span></button>
+    <h1>🕊️ JaluStore Sky Heart</h1>
+  </header>
 
-  <div class="cart-modal" id="cartModal">
-    <div class="cart-content">
-      <h3>Keranjang</h3>
-      <div class="cart-items" id="cartItems"></div>
-      <img class="qris" src="https://drive.google.com/uc?id=1a1q6Wf_UgFtNJZ0MfATUsoG2WVXfZeHf" alt="QRIS">
-      <div class="copy-code" onclick="copyFriendCode()">🔗 Copy Friend Code</div>
-      <a id="checkoutBtn" class="btn" target="_blank">Checkout WhatsApp</a>
-      <button class="btn" style="background:#ddd; color:#000; margin-top:0.5rem" onclick="closeCart()">Tutup</button>
-    </div>
-  </div>  <script>
+  <div class="product-list" id="productList"></div>
+
+  <script>
     const products = [
-      { name:'80+20 Heart', price:'Rp 10.000', code:'SKY80' },
-      { name:'200+30 Heart', price:'Rp 22.000', code:'SKY200' },
-      { name:'300+40 Heart', price:'Rp 32.000', code:'SKY300' },
-      { name:'400+50 Heart', price:'Rp 42.000', code:'SKY400' },
-      { name:'500+70 Heart', price:'Rp 52.000', code:'SKY500' },
-      { name:'600+90 Heart', price:'Rp 60.000', code:'SKY600' },
-      { name:'700+120 Heart', price:'Rp 70.000', code:'SKY700' },
-      { name:'800+150 Heart', price:'Rp 78.000', code:'SKY800' }
+      { name: '80+20 Heart', price: 'Rp 10.000', sku: 'SKY80' },
+      { name: '200+30 Heart', price: 'Rp 22.000', sku: 'SKY200' },
+      { name: '300+40 Heart', price: 'Rp 32.000', sku: 'SKY300' },
+      { name: '400+50 Heart', price: 'Rp 42.000', sku: 'SKY400' },
+      { name: '500+70 Heart', price: 'Rp 52.000', sku: 'SKY500' },
+      { name: '600+90 Heart', price: 'Rp 60.000', sku: 'SKY600' },
+      { name: '700+120 Heart', price: 'Rp 70.000', sku: 'SKY700' },
+      { name: '800+150 Heart', price: 'Rp 78.000', sku: 'SKY800' }
     ];
 
-    const productList = document.getElementById('productList');
+    const list = document.getElementById("productList");
     products.forEach(p => {
-      const div = document.createElement('div');
-      div.className = 'card';
+      const div = document.createElement("div");
+      div.className = "product";
       div.innerHTML = `
         <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="Heart">
-        <div class="card-content">
+        <div class="info">
           <h3>${p.name}</h3>
           <p>${p.price}</p>
-          <p>Kode: ${p.code}</p>
-          <button class="btn" onclick="addToCart('${p.name}','${p.price}','${p.code}')">+ Keranjang</button>
+          <p><small>SKU: ${p.sku}</small></p>
         </div>
+        <button class="buy" onclick="order('${p.name}','${p.sku}')">Beli</button>
       `;
-      productList.appendChild(div);
+      list.appendChild(div);
     });
 
-    let cart = JSON.parse(localStorage.getItem('jaluCart') || '[]');
-    function updateCartCount() {
-      document.getElementById('cartCount').textContent = cart.length;
+    function order(name, sku) {
+      const text = `Halo Admin, saya mau beli:\n- ${name}\nKode: ${sku}`;
+      const wa = `https://wa.me/6285189014747?text=${encodeURIComponent(text)}`;
+      window.open(wa, '_blank');
     }
-    function addToCart(name, price, code) {
-      cart.push({ name, price, code });
-      localStorage.setItem('jaluCart', JSON.stringify(cart));
-      updateCartCount();
-      alert(name + ' ditambahkan!');
-    }
-    function openCart() {
-      const container = document.getElementById('cartItems');
-      container.innerHTML = '';
-      let waText = 'Halo min, saya ingin membeli:%0A';
-      cart.forEach((item, i) => {
-        container.innerHTML += `<p>${i+1}. ${item.name} - ${item.price}</p>`;
-        waText += `- ${item.name} (${item.code}) - ${item.price}%0A`;
-      });
-      document.getElementById('checkoutBtn').href = `https://wa.me/6285189014747?text=${waText}`;
-      document.getElementById('cartModal').style.display = 'flex';
-    }
-    function closeCart() {
-      document.getElementById('cartModal').style.display = 'none';
-    }
-    function copyFriendCode() {
-      navigator.clipboard.writeText('123456789');
-      alert('Friend Code disalin!');
-    }
-    updateCartCount();
-  </script></body>
+  </script>
+</body>
 </html>
