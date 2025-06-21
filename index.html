@@ -4,6 +4,8 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Skykid Jalustore</title>
+<!-- Font Awesome CDN untuk icon -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 <style>
   body {
     margin: 0; 
@@ -47,6 +49,13 @@
     margin: 0.2rem 0;
     color: #b2224f;
     font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+  }
+  .product-card h3 .fa-heart {
+    color: #e63946;
   }
   .product-card p {
     margin: 0.1rem 0;
@@ -62,6 +71,10 @@
     cursor: pointer;
     font-weight: 600;
     transition: background-color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    justify-content: center;
   }
   button:hover {
     background: #a3294f;
@@ -86,74 +99,90 @@
 
   <div class="product-card">
     <img src="https://cdn.pixabay.com/photo/2021/03/01/14/12/heart-6061959_960_720.png" alt="80+20 Heart" />
-    <h3>80+20 Heart</h3>
+    <h3><i class="fa-solid fa-heart"></i> 80+20 Heart</h3>
     <p>Rp 10.000</p>
     <p>RM 3</p>
     <p>$0.65</p>
-    <button onclick="addToCart('80+20 Heart', 10000)">Tambah ke Keranjang</button>
+    <button onclick="addToCart('80+20 Heart', 10000)">
+      <i class="fa-solid fa-cart-shopping"></i> Tambah ke Keranjang
+    </button>
   </div>
 
   <div class="product-card">
     <img src="https://cdn.pixabay.com/photo/2021/03/01/14/12/heart-6061959_960_720.png" alt="200+30 Heart" />
-    <h3>200+30 Heart</h3>
+    <h3><i class="fa-solid fa-heart"></i> 200+30 Heart</h3>
     <p>Rp 22.000</p>
     <p>RM 6.5</p>
     <p>$1.40</p>
-    <button onclick="addToCart('200+30 Heart', 22000)">Tambah ke Keranjang</button>
+    <button onclick="addToCart('200+30 Heart', 22000)">
+      <i class="fa-solid fa-cart-shopping"></i> Tambah ke Keranjang
+    </button>
   </div>
 
   <div class="product-card">
     <img src="https://cdn.pixabay.com/photo/2021/03/01/14/12/heart-6061959_960_720.png" alt="300+40 Heart" />
-    <h3>300+40 Heart</h3>
+    <h3><i class="fa-solid fa-heart"></i> 300+40 Heart</h3>
     <p>Rp 32.000</p>
     <p>RM 9.5</p>
     <p>$2.05</p>
-    <button onclick="addToCart('300+40 Heart', 32000)">Tambah ke Keranjang</button>
+    <button onclick="addToCart('300+40 Heart', 32000)">
+      <i class="fa-solid fa-cart-shopping"></i> Tambah ke Keranjang
+    </button>
   </div>
 
   <div class="product-card">
     <img src="https://cdn.pixabay.com/photo/2021/03/01/14/12/heart-6061959_960_720.png" alt="400+50 Heart" />
-    <h3>400+50 Heart</h3>
+    <h3><i class="fa-solid fa-heart"></i> 400+50 Heart</h3>
     <p>Rp 42.000</p>
     <p>RM 12</p>
     <p>$2.70</p>
-    <button onclick="addToCart('400+50 Heart', 42000)">Tambah ke Keranjang</button>
+    <button onclick="addToCart('400+50 Heart', 42000)">
+      <i class="fa-solid fa-cart-shopping"></i> Tambah ke Keranjang
+    </button>
   </div>
 
   <div class="product-card">
     <img src="https://cdn.pixabay.com/photo/2021/03/01/14/12/heart-6061959_960_720.png" alt="500+70 Heart" />
-    <h3>500+70 Heart</h3>
+    <h3><i class="fa-solid fa-heart"></i> 500+70 Heart</h3>
     <p>Rp 52.000</p>
     <p>RM 15</p>
     <p>$3.35</p>
-    <button onclick="addToCart('500+70 Heart', 52000)">Tambah ke Keranjang</button>
+    <button onclick="addToCart('500+70 Heart', 52000)">
+      <i class="fa-solid fa-cart-shopping"></i> Tambah ke Keranjang
+    </button>
   </div>
 
   <div class="product-card">
     <img src="https://cdn.pixabay.com/photo/2021/03/01/14/12/heart-6061959_960_720.png" alt="600+90 Heart" />
-    <h3>600+90 Heart</h3>
+    <h3><i class="fa-solid fa-heart"></i> 600+90 Heart</h3>
     <p>Rp 60.000</p>
     <p>RM 17.5</p>
     <p>$3.90</p>
-    <button onclick="addToCart('600+90 Heart', 60000)">Tambah ke Keranjang</button>
+    <button onclick="addToCart('600+90 Heart', 60000)">
+      <i class="fa-solid fa-cart-shopping"></i> Tambah ke Keranjang
+    </button>
   </div>
 
   <div class="product-card">
     <img src="https://cdn.pixabay.com/photo/2021/03/01/14/12/heart-6061959_960_720.png" alt="700+120 Heart" />
-    <h3>700+120 Heart</h3>
+    <h3><i class="fa-solid fa-heart"></i> 700+120 Heart</h3>
     <p>Rp 70.000</p>
     <p>RM 20</p>
     <p>$4.60</p>
-    <button onclick="addToCart('700+120 Heart', 70000)">Tambah ke Keranjang</button>
+    <button onclick="addToCart('700+120 Heart', 70000)">
+      <i class="fa-solid fa-cart-shopping"></i> Tambah ke Keranjang
+    </button>
   </div>
 
   <div class="product-card">
     <img src="https://cdn.pixabay.com/photo/2021/03/01/14/12/heart-6061959_960_720.png" alt="800+150 Heart" />
-    <h3>800+150 Heart</h3>
+    <h3><i class="fa-solid fa-heart"></i> 800+150 Heart</h3>
     <p>Rp 78.000</p>
     <p>RM 22.5</p>
     <p>$5.10</p>
-    <button onclick="addToCart('800+150 Heart', 78000)">Tambah ke Keranjang</button>
+    <button onclick="addToCart('800+150 Heart', 78000)">
+      <i class="fa-solid fa-cart-shopping"></i> Tambah ke Keranjang
+    </button>
   </div>
 
 </section>
@@ -161,7 +190,6 @@
 <script>
   function addToCart(name, price) {
     alert(name + ' berhasil ditambahkan ke keranjang dengan harga Rp ' + price.toLocaleString());
-    // Nanti bisa lo tambah fitur simpan ke localStorage / backend
   }
 </script>
 
