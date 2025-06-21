@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -7,11 +6,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --bg: #f5f7ff;
-      --primary: #5263ff;
-      --card: #fff;
-      --border: #e0e0e0;
-      --text: #333;
+      --bg: #0d1b2a;
+      --primary: #84dfff;
+      --card: rgba(255, 255, 255, 0.15);
+      --border: #2f3e46;
+      --text: #ffffff;
     }
     * {
       box-sizing: border-box;
@@ -19,18 +18,21 @@
       font-family: 'Inter', sans-serif;
     }
     body {
-      background: var(--bg);
+      background: linear-gradient(180deg, #020024 0%, #0d1b2a 50%, #000000 100%);
       padding: 1rem;
       color: var(--text);
+      position: relative;
+      overflow-x: hidden;
     }
     header {
       text-align: center;
       margin-bottom: 1rem;
     }
     header h1 {
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       font-weight: 600;
       color: var(--primary);
+      text-shadow: 0 0 8px #84dfff;
     }
     .product-list {
       display: flex;
@@ -38,6 +40,8 @@
       gap: 1rem;
       max-width: 500px;
       margin: auto;
+      z-index: 2;
+      position: relative;
     }
     .product {
       display: flex;
@@ -47,6 +51,13 @@
       border-radius: 16px;
       padding: 1rem;
       gap: 1rem;
+      backdrop-filter: blur(8px);
+      transition: transform 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .product:hover {
+      transform: translateY(-4px);
     }
     .product img {
       width: 56px;
@@ -61,27 +72,96 @@
     }
     .info p {
       font-size: 0.85rem;
-      color: #666;
+      color: #ddd;
     }
     .buy {
       background: var(--primary);
-      color: #fff;
+      color: #000;
       border: none;
       padding: 0.5rem 1rem;
       border-radius: 10px;
       font-size: 0.85rem;
       cursor: pointer;
     }
+    .aurora {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      background: radial-gradient(ellipse at center, rgba(132,223,255,0.2) 0%, rgba(13,27,42,0) 70%);
+      animation: pulse 5s infinite;
+      z-index: 0;
+    }
+    @keyframes pulse {
+      0% {opacity: 0.4;}
+      50% {opacity: 0.6;}
+      100% {opacity: 0.4;}
+    }
+    .shimmer {
+      background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      animation: shimmer 2.5s infinite;
+    }
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    .cloud {
+      position: fixed;
+      top: 10%;
+      left: -200px;
+      width: 200px;
+      height: 120px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 100px;
+      animation: cloud 60s linear infinite;
+      z-index: 1;
+      filter: blur(20px);
+    }
+    .cloud:nth-child(2) { top: 20%; animation-delay: 15s; }
+    .cloud:nth-child(3) { top: 30%; animation-delay: 30s; }
+    @keyframes cloud {
+      0% { left: -200px; }
+      100% { left: 110%; }
+    }
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 2s infinite ease-in-out;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.1; }
+      50% { opacity: 1; }
+    }
   </style>
 </head>
 <body>
-  <header>
+  <div class="aurora"></div>
+  <div class="particles" id="particles"></div>
+  <div class="cloud"></div>
+  <div class="cloud"></div>
+  <div class="cloud"></div>  <header>
     <h1>🕊️ JaluStore Sky Heart</h1>
   </header>
-
-  <div class="product-list" id="productList"></div>
-
-  <script>
+  <div class="product-list" id="productList"></div>  <script>
     const products = [
       { name: '80+20 Heart', price: 'Rp 10.000', sku: 'SKY80' },
       { name: '200+30 Heart', price: 'Rp 22.000', sku: 'SKY200' },
@@ -105,6 +185,7 @@
           <p><small>SKU: ${p.sku}</small></p>
         </div>
         <button class="buy" onclick="order('${p.name}','${p.sku}')">Beli</button>
+        <div class="shimmer"></div>
       `;
       list.appendChild(div);
     });
@@ -114,6 +195,16 @@
       const wa = `https://wa.me/6285189014747?text=${encodeURIComponent(text)}`;
       window.open(wa, '_blank');
     }
-  </script>
-</body>
+
+    // Tambahkan partikel bintang berkedip
+    const particles = document.getElementById("particles");
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement("div");
+      star.className = "star";
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.animationDelay = `${Math.random() * 2}s`;
+      particles.appendChild(star);
+    }
+  </script></body>
 </html>
