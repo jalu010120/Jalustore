@@ -36,6 +36,7 @@
     }
     .toolbar {
       display: flex; justify-content: center; gap: 1rem; margin-bottom: 1rem;
+      flex-wrap: wrap;
     }
     .toolbar button {
       background: var(--main); color: #000; border: none;
@@ -43,7 +44,7 @@
       cursor: pointer; font-family: var(--font); font-weight: bold;
     }
     #products {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
       gap: 1rem; padding: 1rem;
     }
     .product-card {
@@ -67,13 +68,18 @@
     }
     @keyframes shimmer { 100% {left: 100%;} }
     #cart, #checkout {
-      margin: 2rem; padding: 1rem; background: var(--blur); border-radius: 12px;
+      margin: 2rem 1rem; padding: 1rem; background: var(--blur); border-radius: 12px;
       backdrop-filter: blur(10px);
     }
     #checkout button {
       background: #4ade80; color: #000; padding: 0.7rem 1.5rem;
       border: none; border-radius: 10px; font-weight: bold;
       cursor: pointer;
+    }
+    @media screen and (max-width: 360px) {
+      header { font-size: 1.5rem; }
+      .product-card h3 { font-size: 0.9rem; }
+      .toolbar { flex-direction: column; align-items: center; }
     }
   </style>
 </head>
@@ -83,7 +89,7 @@
 
   <div class="toolbar">
     <button onclick="window.location.href='https://wa.me/6285189014747'">Tanya Admin</button>
-    <button onclick="alert('1. Pilih produk → 2. Masukkan kode friend → 3. Kirim ke WA Admin → 4. Bayar sesuai metode.')">Cara Beli</button>
+    <button onclick="alert('1. Pilih produk\n2. Masukkan kode friend\n3. Kirim ke WA Admin\n4. Bayar sesuai metode')">Cara Beli</button>
   </div>
 
   <section id="products"></section>
@@ -93,7 +99,7 @@
     <ul id="cart-items"></ul>
   </section>
 
-  <section id="checkout">
+  <section id="checkout" style="display: none;">
     <button onclick="checkoutOrder()">Checkout Sekarang</button>
   </section>
 
@@ -111,6 +117,7 @@
 
     const cart = [];
     const cartList = document.getElementById('cart-items');
+    const checkoutBox = document.getElementById('checkout');
     const productContainer = document.getElementById('products');
 
     function updateCart() {
@@ -120,6 +127,7 @@
         li.textContent = `${item.name} - ${item.price}`;
         cartList.appendChild(li);
       });
+      checkoutBox.style.display = cart.length ? 'block' : 'none';
     }
 
     function checkoutOrder() {
@@ -127,8 +135,8 @@
         alert('Keranjang kosong!');
         return;
       }
-      let msg = 'Saya ingin memesan:\\n';
-      cart.forEach(i => { msg += `- ${i.name} (${i.price})\\n`; });
+      let msg = 'Saya ingin memesan:\n';
+      cart.forEach(i => { msg += `- ${i.name} (${i.price})\n`; });
       window.open(`https://wa.me/6285189014747?text=${encodeURIComponent(msg)}`, '_blank');
     }
 
@@ -136,14 +144,16 @@
       const card = document.createElement('div');
       card.className = 'product-card';
       card.innerHTML = `
-        <div class=\"shimmer\"></div>
-        <img src=\"https://cdn-icons-png.flaticon.com/512/833/833472.png\" alt=\"heart\" />
+        <div class="shimmer"></div>
+        <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="heart" loading="lazy" />
         <h3>${p.name}</h3>
         <p>${p.price}</p>
         <button onclick='cart.push(${JSON.stringify(p)}); updateCart();'>Tambah ke Keranjang</button>
       `;
       productContainer.appendChild(card);
     });
+
+    updateCart();
   </script>
 </body>
 </html>
