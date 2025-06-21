@@ -43,7 +43,65 @@
       font-size: 1.3rem;
       font-weight: 600;
       color: var(--primary);
-      text-shadow: 0 0 8px #84dfff;
+      text-shadow: 0 0 6px #84dfff;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 0.5rem 1rem;
+      border-radius: 12px;
+      display: inline-block;
+    }
+    .cart-btn {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: var(--primary);
+      color: #000;
+      padding: 0.4rem 0.8rem;
+      border-radius: 12px;
+      font-weight: 600;
+      z-index: 10;
+      cursor: pointer;
+      box-shadow: 0 0 10px #84dfff80;
+    }
+    .cart-count {
+      background: #fff;
+      color: #000;
+      border-radius: 999px;
+      padding: 0 6px;
+      font-size: 0.8rem;
+      margin-left: 5px;
+    }
+    .cart-modal {
+      position: fixed;
+      top: 20%;
+      right: 1rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      border-radius: 12px;
+      max-width: 300px;
+      backdrop-filter: blur(10px);
+      z-index: 20;
+      display: none;
+    }
+    .cart-modal h2 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+    }
+    .cart-modal ul {
+      list-style: none;
+    }
+    .cart-modal li {
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+    .cart-modal .close {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1rem;
+      float: right;
+      cursor: pointer;
     }
     .product-list {
       display: flex;
@@ -110,19 +168,6 @@
       50% {opacity: 0.6;}
       100% {opacity: 0.4;}
     }
-    .shimmer {
-      background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
-      height: 100%;
-      width: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      animation: shimmer 2.5s infinite;
-    }
-    @keyframes shimmer {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
-    }
     .cloud {
       position: fixed;
       width: 250px;
@@ -133,26 +178,10 @@
       animation: cloudmove 120s linear infinite;
       z-index: 1;
     }
-    .cloud:nth-child(1) {
-      top: 15%;
-      left: -300px;
-      animation-delay: 0s;
-    }
-    .cloud:nth-child(2) {
-      top: 25%;
-      left: -250px;
-      animation-delay: 15s;
-    }
-    .cloud:nth-child(3) {
-      top: 40%;
-      left: -280px;
-      animation-delay: 30s;
-    }
-    .cloud:nth-child(4) {
-      top: 60%;
-      left: -320px;
-      animation-delay: 45s;
-    }
+    .cloud:nth-child(1) { top: 15%; left: -300px; animation-delay: 0s; }
+    .cloud:nth-child(2) { top: 25%; left: -250px; animation-delay: 15s; }
+    .cloud:nth-child(3) { top: 40%; left: -280px; animation-delay: 30s; }
+    .cloud:nth-child(4) { top: 60%; left: -320px; animation-delay: 45s; }
     @keyframes cloudmove {
       0% { transform: translateX(0); }
       100% { transform: translateX(150vw); }
@@ -187,7 +216,12 @@
   <div class="cloud"></div>
   <div class="cloud"></div>
   <div class="particles" id="particles"></div>
-  <div class="overlay"></div>  <header>
+  <div class="overlay"></div>  <div class="cart-btn" onclick="toggleCart()">🛒 Keranjang <span class="cart-count" id="cartCount">0</span></div>
+  <div class="cart-modal" id="cartModal">
+    <button class="close" onclick="toggleCart()">✖</button>
+    <h2>Keranjang</h2>
+    <ul id="cartItems"></ul>
+  </div>  <header>
     <h1>🕊️ Skykid JaluStore</h1>
   </header>
   <div class="product-list" id="productList"></div>  <script>
@@ -203,6 +237,11 @@
     ];
 
     const list = document.getElementById("productList");
+    const cartModal = document.getElementById("cartModal");
+    const cartCount = document.getElementById("cartCount");
+    const cartItems = document.getElementById("cartItems");
+    let cart = [];
+
     products.forEach(p => {
       const div = document.createElement("div");
       div.className = "product";
@@ -213,16 +252,29 @@
           <p>${p.price}</p>
           <p><small>SKU: ${p.sku}</small></p>
         </div>
-        <button class="buy" onclick="order('${p.name}','${p.sku}')">Beli</button>
+        <button class="buy" onclick="addToCart('${p.name}', '${p.price}')">Beli</button>
         <div class="shimmer"></div>
       `;
       list.appendChild(div);
     });
 
-    function order(name, sku) {
-      const text = `Halo Admin, saya mau beli:\n- ${name}\nKode: ${sku}`;
-      const wa = `https://wa.me/6285189014747?text=${encodeURIComponent(text)}`;
-      window.open(wa, '_blank');
+    function addToCart(name, price) {
+      cart.push({ name, price });
+      updateCart();
+    }
+
+    function updateCart() {
+      cartCount.innerText = cart.length;
+      cartItems.innerHTML = '';
+      cart.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = `${item.name} - ${item.price}`;
+        cartItems.appendChild(li);
+      });
+    }
+
+    function toggleCart() {
+      cartModal.style.display = cartModal.style.display === 'block' ? 'none' : 'block';
     }
 
     const particles = document.getElementById("particles");
