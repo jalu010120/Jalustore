@@ -1,191 +1,219 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Skykid JaluStore</title>
-  <style>
-    body {
-      margin: 0;
-      background: linear-gradient(to bottom, #00111a, #000);
-      font-family: 'Poppins', sans-serif;
-      overflow-x: hidden;
-    }
-    .lang-switcher {
-      position: fixed;
-      top: 1rem;
-      left: 1rem;
-      z-index: 9999;
-    }
-    .lang-switcher button {
-      padding: 6px 12px;
-      margin-right: 6px;
-      border-radius: 6px;
-      background: #fff;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .modal {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: rgba(0,0,0,0.85);
-      backdrop-filter: blur(8px);
-      z-index: 100;
-    }
-    .modal-content {
-      background: #1a1a1a;
-      padding: 2rem;
-      border-radius: 16px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.5);
-      max-width: 400px;
-      width: 90%;
-    }
-    .modal-content h2 {
-      color: white;
-      text-align: center;
-      margin-bottom: 1rem;
-    }
-    .modal-content input {
-      width: 100%;
-      padding: 0.5rem;
-      margin-bottom: 1rem;
-      border-radius: 8px;
-      border: none;
-    }
-    .modal-content button {
-      width: 100%;
-      padding: 0.6rem;
-      border-radius: 10px;
-      font-weight: bold;
-      cursor: pointer;
-      border: none;
-    }
-    .login-btn {
-      background: #84dfff;
-      color: #000;
-    }
-    .admin-btn {
-      background: #ff4e4e;
-      color: #fff;
-    }
-    .modal-content p {
-      color: gray;
-      text-align: center;
-      font-size: 0.85rem;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Skykid Jalustore</title>
+<style>
+  body {
+    margin: 0; padding: 0; background: #1b1b1b; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  nav {
+    position: fixed; top: 0; width: 100%; background: #111a; backdrop-filter: blur(10px); padding: 0.8rem 1rem; display: flex; justify-content: space-between; align-items: center; z-index: 9999;
+  }
+  nav span { font-weight: bold; font-size: 1.3rem; }
+  nav a { color: white; text-decoration: none; margin-left: 1rem; cursor: pointer; }
+  nav a:hover { text-decoration: underline; }
+  main {
+    margin-top: 4.5rem; padding: 1rem; max-width: 480px; margin-left: auto; margin-right: auto;
+  }
+  .product-card {
+    background: #22222288; backdrop-filter: blur(10px); border-radius: 16px; padding: 1rem; margin-bottom: 1.5rem; text-align: center;
+  }
+  .product-card img {
+    max-width: 100%; border-radius: 12px;
+  }
+  button {
+    margin-top: 0.7rem; padding: 10px 16px; font-weight: bold; border: none; border-radius: 12px; cursor: pointer;
+  }
+  .btn-gold { background: #ffd700; color: #000; }
+  .btn-pink { background: #ff9ff3; color: #000; }
+  #cartButton {
+    position: fixed; bottom: 1rem; right: 1rem; background: #84dfff; border: none; border-radius: 50%; width: 52px; height: 52px; font-size: 1.8rem; cursor: pointer; box-shadow: 0 4px 12px rgb(0 0 0 / 0.3);
+  }
+  #cartContainer {
+    position: fixed; bottom: 5.5rem; right: 1rem; background: #111a; backdrop-filter: blur(12px); border-radius: 16px; padding: 1rem; max-width: 320px; color: white; display: none; z-index: 9999;
+  }
+  #cartContainer ul {
+    list-style: none; padding-left: 0; max-height: 150px; overflow-y: auto; margin: 0 0 1rem 0;
+  }
+  #cartContainer li {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;
+  }
+  #cartContainer li span.remove {
+    cursor: pointer; color: #f66; font-weight: bold;
+  }
+  #checkoutModal {
+    display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 10000;
+  }
+  #checkoutModal .modal-content {
+    background: #222; padding: 20px; border-radius: 12px; color: white; max-width: 360px; width: 90%;
+  }
+  #checkoutModal input {
+    width: 100%; padding: 8px; margin-bottom: 12px; border-radius: 8px; border: none;
+  }
+  #checkoutModal button {
+    width: 100%; padding: 12px 20px; font-weight: bold; border-radius: 10px; border: none; cursor: pointer;
+  }
+  #checkoutModal .btn-pay { background: #84dfff; color: #000; }
+  #checkoutModal .btn-cancel { background: #555; color: white; margin-top: 8px; }
+</style>
 </head>
 <body>
 
-<div class="lang-switcher">
-  <button onclick="changeLang('id')">🇮🇩 ID</button>
-  <button onclick="changeLang('en')">🇺🇸 EN</button>
-</div>
-
-<div id="loginModal" class="modal">
-  <div class="modal-content">
-    <h2 id="loginTitle">Masuk ke JaluStore</h2>
-    <input id="emailInput" type="email" placeholder="Email kamu" />
-    <input id="friendCodeInput" type="text" placeholder="Kode teman (opsional)" />
-    <button class="login-btn" onclick="submitLogin()" id="loginBtn">Masuk</button>
-    <p id="adminHint">Admin? <span onclick="showAdminLogin()" style="color: #84dfff; cursor: pointer;" id="loginHere">Login di sini</span></p>
+<nav>
+  <span>Skykid Jalustore</span>
+  <div>
+    <a href="#products" onclick="scrollToSection('products')">Produk</a>
+    <a href="#" onclick="toggleCart()">Keranjang</a>
   </div>
+</nav>
+
+<main>
+  <section id="products">
+    <div class="product-card">
+      <img src="https://cdn.pixabay.com/photo/2021/03/01/14/12/heart-6061959_960_720.png" alt="80+20 Heart" />
+      <h3>80+20 Heart</h3>
+      <p>Rp10.000</p>
+      <button class="btn-gold" onclick="addToCart('80+20 Heart', 10000)">Tambah ke Keranjang</button>
+    </div>
+
+    <div class="product-card">
+      <img src="https://cdn.pixabay.com/photo/2021/03/01/14/12/heart-6061959_960_720.png" alt="300+40 Heart" />
+      <h3>300+40 Heart</h3>
+      <p>Rp32.000</p>
+      <button class="btn-pink" onclick="addToCart('300+40 Heart', 32000)">Tambah ke Keranjang</button>
+    </div>
+  </section>
+</main>
+
+<!-- Tombol Keranjang -->
+<button id="cartButton" onclick="toggleCart()">🛒</button>
+
+<!-- Keranjang -->
+<div id="cartContainer">
+  <h3>Keranjang</h3>
+  <ul id="cartList"></ul>
+  <p><strong>Total: </strong><span id="cartTotal">Rp0</span></p>
+  <button onclick="showCheckoutModal()" style="background:#84dfff; border:none; padding:10px; border-radius:10px; font-weight:bold; width:100%; cursor:pointer;">Checkout</button>
 </div>
 
-<div id="adminModal" class="modal" style="display:none;">
+<!-- Modal Checkout -->
+<div id="checkoutModal">
   <div class="modal-content">
-    <h2 id="adminTitle">Admin Login</h2>
-    <input id="adminPass" type="password" placeholder="Password admin" />
-    <button class="admin-btn" onclick="submitAdmin()" id="adminLoginBtn">Login Admin</button>
+    <h2>Checkout</h2>
+    <label for="buyerName">Nama:</label><br />
+    <input type="text" id="buyerName" placeholder="Nama lengkap" /><br />
+
+    <label for="buyerEmail">Email:</label><br />
+    <input type="email" id="buyerEmail" placeholder="Email aktif" /><br />
+
+    <label for="friendCode">Kode Teman (opsional):</label><br />
+    <input type="text" id="friendCode" placeholder="Kode teman jika ada" /><br />
+
+    <p><strong>Total Produk:</strong> <span id="checkoutTotal"></span></p>
+
+    <button class="btn-pay" onclick="submitCheckout()">Bayar</button>
+    <button class="btn-cancel" onclick="closeCheckout()">Batal</button>
   </div>
 </div>
 
 <script>
-  const LANGUAGES = {
-    id: {
-      loginTitle: "Masuk ke JaluStore",
-      emailPlaceholder: "Email kamu",
-      friendCodePlaceholder: "Kode teman (opsional)",
-      loginBtn: "Masuk",
-      adminHint: "Admin?",
-      loginHere: "Login di sini",
-      adminTitle: "Login Admin",
-      adminPassPlaceholder: "Password admin",
-      adminLoginBtn: "Login Admin",
-      emailAlert: "Masukkan email yang valid",
-      welcome: (email) => `Selamat datang, ${email}!`,
-      wrongPassword: "Password salah",
-      loginSuccess: "Login admin berhasil!"
-    },
-    en: {
-      loginTitle: "Login to JaluStore",
-      emailPlaceholder: "Your email",
-      friendCodePlaceholder: "Friend code (optional)",
-      loginBtn: "Login",
-      adminHint: "Admin?",
-      loginHere: "Login here",
-      adminTitle: "Admin Login",
-      adminPassPlaceholder: "Admin password",
-      adminLoginBtn: "Login Admin",
-      emailAlert: "Please enter a valid email",
-      welcome: (email) => `Welcome, ${email}!`,
-      wrongPassword: "Wrong password",
-      loginSuccess: "Admin login successful!"
+  let cart = [];
+
+  function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function addToCart(name, price) {
+    cart.push({ name, price });
+    updateCart();
+  }
+
+  function updateCart() {
+    const list = document.getElementById('cartList');
+    const totalElem = document.getElementById('cartTotal');
+    list.innerHTML = '';
+    let total = 0;
+    cart.forEach((item, index) => {
+      total += item.price;
+      const li = document.createElement('li');
+      li.textContent = `${item.name} - Rp${item.price.toLocaleString()}`;
+      const removeBtn = document.createElement('span');
+      removeBtn.textContent = '❌';
+      removeBtn.className = 'remove';
+      removeBtn.onclick = () => {
+        cart.splice(index, 1);
+        updateCart();
+      };
+      li.appendChild(removeBtn);
+      list.appendChild(li);
+    });
+    totalElem.textContent = 'Rp' + total.toLocaleString();
+    document.getElementById('cartContainer').style.display = cart.length ? 'block' : 'none';
+    document.getElementById('checkoutTotal').textContent = cart.length ? cart.reduce((a,b) => a + b.price,0).toLocaleString('id-ID', { style:'currency', currency:'IDR' }) : 'Rp0';
+  }
+
+  function toggleCart() {
+    const cartBox = document.getElementById('cartContainer');
+    cartBox.style.display = cartBox.style.display === 'block' ? 'none' : 'block';
+  }
+
+  function showCheckoutModal() {
+    if (cart.length === 0) {
+      alert('Keranjang kosong!');
+      return;
     }
+    document.getElementById('checkoutModal').style.display = 'flex';
   }
 
-  let currentLang = 'id';
-
-  function changeLang(lang) {
-    currentLang = lang;
-    const t = LANGUAGES[lang];
-    document.getElementById("loginTitle").innerText = t.loginTitle;
-    document.getElementById("emailInput").placeholder = t.emailPlaceholder;
-    document.getElementById("friendCodeInput").placeholder = t.friendCodePlaceholder;
-    document.getElementById("loginBtn").innerText = t.loginBtn;
-    document.getElementById("adminHint").innerHTML = `${t.adminHint} <span onclick="showAdminLogin()" style="color: #84dfff; cursor: pointer;">${t.loginHere}</span>`;
-    document.getElementById("adminTitle").innerText = t.adminTitle;
-    document.getElementById("adminPass").placeholder = t.adminPassPlaceholder;
-    document.getElementById("adminLoginBtn").innerText = t.adminLoginBtn;
+  function closeCheckout() {
+    document.getElementById('checkoutModal').style.display = 'none';
   }
 
-  function submitLogin() {
-    const email = document.getElementById('emailInput').value;
-    const kode = document.getElementById('friendCodeInput').value;
-    if (!email.includes('@')) return alert(LANGUAGES[currentLang].emailAlert);
-    localStorage.setItem('buyer_email', email);
-    localStorage.setItem('friend_code', kode);
-    document.getElementById('loginModal').style.display = 'none';
-    alert(LANGUAGES[currentLang].welcome(email));
-  }
+  // Ganti dengan URL Web Apps Google Script kamu nanti
+  const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/xxxxxxx/exec';
 
-  function submitAdmin() {
-    const pass = document.getElementById('adminPass').value;
-    if (pass === 'adminjalustore') {
-      localStorage.setItem('admin_mode', 'true');
-      alert(LANGUAGES[currentLang].loginSuccess);
-      document.getElementById('adminModal').style.display = 'none';
-    } else {
-      alert(LANGUAGES[currentLang].wrongPassword);
+  function submitCheckout() {
+    const name = document.getElementById('buyerName').value.trim();
+    const email = document.getElementById('buyerEmail').value.trim();
+    const friendCode = document.getElementById('friendCode').value.trim();
+    const total = cart.reduce((sum, item) => sum + item.price, 0);
+    const produk = cart.map(item => item.name).join(', ');
+
+    if (!name || !email) {
+      alert('Mohon isi nama dan email dengan benar!');
+      return;
     }
-  }
 
-  function showAdminLogin() {
-    document.getElementById('loginModal').style.display = 'none';
-    document.getElementById('adminModal').style.display = 'flex';
-  }
+    const data = {
+      nama: name,
+      email: email,
+      kode: friendCode,
+      produk: produk,
+      total: total,
+    };
 
-  window.onload = () => {
-    const email = localStorage.getItem('buyer_email');
-    if (!email) {
-      document.getElementById('loginModal').style.display = 'flex';
-    }
+    fetch(GOOGLE_SHEET_URL, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => res.text())
+      .then((text) => {
+        if (text === 'success') {
+          alert('Checkout berhasil! Terima kasih sudah belanja di Skykid Jalustore 🥳');
+          cart = [];
+          updateCart();
+          closeCheckout();
+        } else {
+          alert('Gagal mengirim data, coba lagi nanti.');
+        }
+      })
+      .catch(() => alert('Error jaringan, coba ulangi.'));
+
   }
 </script>
 
