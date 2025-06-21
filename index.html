@@ -87,10 +87,8 @@
   </section>
 </main>
 
-<!-- Tombol Keranjang -->
 <button id="cartButton" onclick="toggleCart()">🛒</button>
 
-<!-- Keranjang -->
 <div id="cartContainer">
   <h3>Keranjang</h3>
   <ul id="cartList"></ul>
@@ -98,7 +96,6 @@
   <button onclick="showCheckoutModal()" style="background:#84dfff; border:none; padding:10px; border-radius:10px; font-weight:bold; width:100%; cursor:pointer;">Checkout</button>
 </div>
 
-<!-- Modal Checkout -->
 <div id="checkoutModal">
   <div class="modal-content">
     <h2>Checkout</h2>
@@ -171,9 +168,6 @@
     document.getElementById('checkoutModal').style.display = 'none';
   }
 
-  // Ganti dengan URL Web Apps Google Script kamu nanti
-  const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/xxxxxxx/exec';
-
   function submitCheckout() {
     const name = document.getElementById('buyerName').value.trim();
     const email = document.getElementById('buyerEmail').value.trim();
@@ -186,34 +180,14 @@
       return;
     }
 
-    const data = {
-      nama: name,
-      email: email,
-      kode: friendCode,
-      produk: produk,
-      total: total,
-    };
+    const waNumber = '085189014747'; // Nomor WhatsApp kamu
+    const message = encodeURIComponent(
+      `Halo Admin, saya mau pesan:%0A` +
+      `Nama: ${name}%0AEmail: ${email}%0AProduk: ${produk}%0ATotal: Rp${total.toLocaleString()}%0AKode Teman: ${friendCode || '-'}`
+    );
 
-    fetch(GOOGLE_SHEET_URL, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((res) => res.text())
-      .then((text) => {
-        if (text === 'success') {
-          alert('Checkout berhasil! Terima kasih sudah belanja di Skykid Jalustore 🥳');
-          cart = [];
-          updateCart();
-          closeCheckout();
-        } else {
-          alert('Gagal mengirim data, coba lagi nanti.');
-        }
-      })
-      .catch(() => alert('Error jaringan, coba ulangi.'));
-
+    window.open(`https://wa.me/${waNumber}?text=${message}`, '_blank');
+    closeCheckout();
   }
 </script>
 
