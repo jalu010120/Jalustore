@@ -2,168 +2,90 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Skykid Jalustore</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <title>Laporan Pengiriman Heart - JaluStore</title>
   <style>
-    :root {
-      --main: #00c4cc; /* Warna utama */
-      --bg-dark: #1e1e1e;
-      --bg-light: #f5f5f5;
-      --accent: #f06d6d;
-      --font-family: 'Poppins', sans-serif;
-    }
-    
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
-      font-family: var(--font-family);
-      background: var(--bg-dark);
-      color: white;
-    }
-
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      padding: 1rem;
-      text-align: center;
-      z-index: 10;
-    }
-
-    header h1 {
-      color: #fff;
-      font-size: 2.5rem;
-      font-weight: 600;
-    }
-
-    #products {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 2rem;
-      margin-top: 6rem;
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
       padding: 2rem;
+      color: #333;
     }
-
-    .product-card {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 1.5rem;
-      border-radius: 12px;
-      backdrop-filter: blur(10px);
-      transition: all 0.3s ease;
-      cursor: pointer;
-      text-align: center;
+    h1 {
+      color: #111;
     }
-
-    .product-card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    .section {
+      margin-bottom: 2rem;
     }
-
-    .product-card img {
-      width: 100px;
-      height: 100px;
-    }
-
-    .product-card h3 {
-      margin-top: 1rem;
-      font-size: 1.2rem;
-      color: #fff;
-    }
-
-    .product-card p {
-      font-size: 1rem;
-      color: #aaa;
-    }
-
-    .cta-button {
-      background: var(--main);
-      color: white;
-      padding: 0.7rem 1.2rem;
+    .entry {
+      background: #fff;
+      padding: 1rem;
+      margin: 0.3rem 0;
       border-radius: 8px;
-      text-decoration: none;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .status-done {
+      color: green;
+      font-weight: bold;
+    }
+    .status-fail {
+      color: red;
+      font-weight: bold;
+    }
+    .section-title {
+      background: #007bff;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
       display: inline-block;
-      margin-top: 1rem;
-      transition: all 0.3s ease;
+      margin-bottom: 1rem;
     }
-
-    .cta-button:hover {
-      background: var(--accent);
-    }
-
-    footer {
-      background: var(--bg-dark);
-      padding: 1.5rem;
-      text-align: center;
-      font-size: 0.8rem;
-      color: #aaa;
-      margin-top: 4rem;
-    }
-
-    /* Animations */
-    .aurora {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(ellipse at top, rgba(255, 255, 255, 0.15), transparent);
-      z-index: -1;
-      animation: aurora 20s infinite linear;
-    }
-
-    @keyframes aurora {
-      0% {transform: translate(0, 0);}
-      50% {transform: translate(-50px, 50px);}
-      100% {transform: translate(0, 0);}
-    }
-
-    /* Responsiveness */
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 2rem;
-      }
-
-      .product-card h3 {
-        font-size: 1rem;
-      }
+    .name {
+      font-weight: bold;
+      font-size: 1.1rem;
     }
   </style>
 </head>
 <body>
-  <div class="aurora"></div>
-  <header>
-    <h1>Skykid Jalustore</h1>
-  </header>
+  <h1>📦 Laporan Pengiriman Heart - <em>JaluStore</em></h1>
 
-  <div id="products">
-    <div class="product-card">
-      <img src="https://via.placeholder.com/150" alt="product1" />
-      <h3>80+20 Heart</h3>
-      <p>Rp 10.000</p>
-      <a href="product.html?name=80+20 Heart&price=Rp 10.000" class="cta-button">Lihat Detail</a>
-    </div>
-    <div class="product-card">
-      <img src="https://via.placeholder.com/150" alt="product2" />
-      <h3>200+30 Heart</h3>
-      <p>Rp 22.000</p>
-      <a href="product.html?name=200+30 Heart&price=Rp 22.000" class="cta-button">Lihat Detail</a>
-    </div>
-    <!-- Tambahkan produk lainnya -->
+  <div class="section">
+    <div class="section-title">Sesi: 22</div>
+    <div class="entry"><div class="name">Angel</div><div>Order: 450</div><div>Send: 260</div><div>Status: <span class="status-fail">❌</span></div></div>
+    <div class="entry"><div class="name">Husna</div><div>Order: 450</div><div>Send: 257</div><div>Status: <span class="status-fail">❌</span></div></div>
+    <div class="entry"><div class="name">Mursyid</div><div>Order: 320</div><div>Send: 30</div><div>Status: <span class="status-fail">❌</span></div></div>
+    <div class="entry"><div class="name">Sam</div><div>Order: 210</div><div>Send: 213</div><div>Status: <span class="status-done">✅</span></div></div>
+    <div class="entry"><div class="name">Erwin</div><div>Order: 210</div><div>Send: 213</div><div>Status: <span class="status-done">✅</span></div></div>
+    <div class="entry"><div class="name">Nanda</div><div>Order: 210</div><div>Send: 180</div></div>
+    <div class="entry"><div class="name">Alvin</div><div>Order: 210</div><div>Send: 140</div></div>
+    <div class="entry"><div class="name">Ira</div><div>Order: 150</div><div>Send: 80</div></div>
+    <div class="entry"><div class="name">Kael</div><div>Order: 120</div><div>Send: 60</div></div>
+    <div class="entry"><div class="name">Angel2</div><div>Order: 600</div><div>Send: 200</div><div>Status: <span class="status-fail">❌</span></div></div>
   </div>
 
-  <footer>
-    &copy; 2025 Skykid Jalustore | All Rights Reserved
-  </footer>
+  <div class="section">
+    <div class="section-title">Sesi: S2</div>
+    <div class="entry"><div class="name">Ayu</div><div>Order: 1000</div><div>Send: 980</div></div>
+    <div class="entry"><div class="name">Anna</div><div>Order: 600</div><div>Send: 559</div></div>
+    <div class="entry"><div class="name">Moon</div><div>Order: 530</div><div>Send: 208</div></div>
+    <div class="entry"><div class="name">Hira</div><div>Order: 360</div><div>Send: 127</div></div>
+    <div class="entry"><div class="name">Sea</div><div>Order: 150</div><div>Send: 92</div></div>
+    <div class="entry"><div class="name">Zee</div><div>Order: 150</div><div>Send: 102</div></div>
+    <div class="entry"><div class="name">Joy</div><div>Order: 320</div><div>Send: 160</div></div>
+    <div class="entry"><div class="name">Xen</div><div>Order: 210</div><div>Send: 160</div></div>
+    <div class="entry"><div class="name">Harbie</div><div>Order: 200</div><div>Send: 80</div></div>
+    <div class="entry"><div class="name">Aze</div><div>Order: 570</div><div>Send: 40</div></div>
+    <div class="entry"><div class="name">Sena</div><div>Order: 570</div><div>Send: 40</div></div>
+  </div>
 
-  <script>
-    // Placeholder for future dynamic content, like fetching from API
-  </script>
+  <div class="section">
+    <div class="section-title">Sesi: S3</div>
+    <div class="entry"><div class="name">Lusi</div><div>Order: 600</div><div>Send: 570</div></div>
+    <div class="entry"><div class="name">Kiki</div><div>Order: 450</div><div>Send: 384</div></div>
+    <div class="entry"><div class="name">Tobias</div><div>Order: 500</div><div>Send: 235</div><div>Status: <span class="status-fail">❌</span></div></div>
+    <div class="entry"><div class="name">Luna</div><div>Order: 800</div><div>Send: 600</div><div>Status: <span class="status-fail">❌</span></div></div>
+    <div class="entry"><div class="name">Ney</div><div>Order: 3540</div><div>Send: 2790</div></div>
+    <div class="entry"><div class="name">Araba</div><div>Order: 150</div><div>Send: 75</div><div>Status: <span class="status-fail">❌</span></div></div>
+  </div>
+
 </body>
 </html>
