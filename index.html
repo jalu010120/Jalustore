@@ -6,14 +6,13 @@
   <style>
     * { box-sizing: border-box; }
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
       margin: 0;
       padding: 0;
       background: url('https://thatskyshop.com/cdn/shop/files/Page-thatskywallpaper-Portrait-13.jpg?v=1711607986&width=750') no-repeat center center fixed;
       background-size: cover;
       color: #fff;
       backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
     }
     .overlay {
       background-color: rgba(0, 0, 0, 0.6);
@@ -58,20 +57,14 @@
     .status {
       font-weight: bold;
     }
-    .done {
-      color: #2ecc71;
-    }
-    .fail {
-      color: #e74c3c;
-    }
+    .done { color: #2ecc71; }
+    .fail { color: #e74c3c; }
   </style>
   <script>
     function updateTime() {
       const now = new Date();
       const waktu = now.toLocaleString('id-ID', {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
+        hour: '2-digit', minute: '2-digit', second: '2-digit'
       });
       document.getElementById('live-time').textContent = '⏰ Live Jam: ' + waktu;
     }
@@ -88,38 +81,39 @@
       <div class="slot-title">Slot 1</div>
       <div class="card"><div class="name">Angel</div><div>Order: 450</div><div>Send: 260</div><div class="status fail">Status: ❌</div></div>
       <div class="card"><div class="name">Husna</div><div>Order: 450</div><div>Send: 257</div><div class="status fail">Status: ❌</div></div>
-      <div class="card"><div class="name">Mursyid</div><div>Order: 320</div><div>Send: 40</div></div>
-      <div class="card"><div class="name">Nanda</div><div>Order: 210</div><div>Send: 180</div></div>
-      <div class="card"><div class="name">Alvin</div><div>Order: 210</div><div>Send: 140</div></div>
-      <div class="card"><div class="name">Ira</div><div>Order: 150</div><div>Send: 80</div></div>
-      <div class="card"><div class="name">Kael</div><div>Order: 120</div><div>Send: 60</div></div>
-      <div class="card"><div class="name">Angel2</div><div>Order: 600</div><div>Send: 200</div><div class="status fail">Status: ❌</div></div>
-      <div class="card"><div class="name">Aelia</div><div>Order: 100</div><div>Send: 20</div></div>
+      <div class="card"><div class="name">Mursyid</div><div>Order: 320</div><div>Send: 40</div><div class="status fail">Status: ❌</div></div>
+      <div class="card"><div class="name">Nanda</div><div>Order: 210</div><div>Send: 180</div><div class="status fail">Status: ❌</div></div>
+      <div class="card"><div class="name">Alvin</div><div>Order: 210</div><div>Send: 160</div></div>
+      <div class="card"><div class="name">Ira</div><div>Order: 150</div><div>Send: 100</div></div>
+      <div class="card"><div class="name">Kael</div><div>Order: 120</div><div>Send: 80</div></div>
+      <div class="card"><div class="name">Angel2</div><div>Order: 600</div><div>Send: 220</div></div>
+      <div class="card"><div class="name">Aelia</div><div>Order: 100</div><div>Send: 40</div></div>
+      <div class="card"><div class="name">Tsabyy</div><div>Order: 100</div><div>Send: 20</div></div>
     </div>
 
     <div class="slot">
       <div class="slot-title">Slot 2</div>
-      <div class="card"><div class="name">Ayu</div><div>Order: 1000</div><div>Send: 980</div></div>
-      <div class="card"><div class="name">Anna</div><div>Order: 600</div><div>Send: 559</div></div>
-      <div class="card"><div class="name">Moon</div><div>Order: 530</div><div>Send: 208</div></div>
-      <div class="card"><div class="name">Hira</div><div>Order: 360</div><div>Send: 138</div></div>
-      <div class="card"><div class="name">Sea</div><div>Order: 150</div><div>Send: 92</div></div>
-      <div class="card"><div class="name">Zee</div><div>Order: 150</div><div>Send: 102</div></div>
-      <div class="card"><div class="name">Joy</div><div>Order: 320</div><div>Send: 160</div></div>
-      <div class="card"><div class="name">Xen</div><div>Order: 210</div><div>Send: 160</div></div>
-      <div class="card"><div class="name">Harbie</div><div>Order: 200</div><div>Send: 80</div></div>
-      <div class="card"><div class="name">Aze</div><div>Order: 570</div><div>Send: 40</div></div>
-      <div class="card"><div class="name">Sena</div><div>Order: 570</div><div>Send: 40</div></div>
-      <div class="card"><div class="name">Raine</div><div>Order: 100</div><div>Send: 20</div></div>
+      <div class="card"><div class="name">Ayu</div><div>Order: 1000</div><div>Send: 980</div><div class="status fail">Status: ❌</div></div>
+      <div class="card"><div class="name">Anna</div><div>Order: 600</div><div>Send: 568</div></div>
+      <div class="card"><div class="name">Moon</div><div>Order: 530</div><div>Send: 217</div></div>
+      <div class="card"><div class="name">Hira</div><div>Order: 360</div><div>Send: 158</div></div>
+      <div class="card"><div class="name">Sea</div><div>Order: 150</div><div>Send: 101</div></div>
+      <div class="card"><div class="name">Zee</div><div>Order: 150</div><div>Send: 111</div></div>
+      <div class="card"><div class="name">Joy</div><div>Order: 320</div><div>Send: 180</div></div>
+      <div class="card"><div class="name">Xen</div><div>Order: 210</div><div>Send: 180</div></div>
+      <div class="card"><div class="name">Harbie</div><div>Order: 200</div><div>Send: 100</div></div>
+      <div class="card"><div class="name">Aze</div><div>Order: 570</div><div>Send: 60</div></div>
+      <div class="card"><div class="name">Sena</div><div>Order: 570</div><div>Send: 60</div></div>
+      <div class="card"><div class="name">Raine</div><div>Order: 100</div><div>Send: 40</div></div>
     </div>
 
     <div class="slot">
       <div class="slot-title">Slot 3</div>
-      <div class="card"><div class="name">Lusi</div><div>Order: 600</div><div>Send: 570</div></div>
-      <div class="card"><div class="name">Kiki</div><div>Order: 450</div><div>Send: 384</div></div>
+      <div class="card"><div class="name">Lusi</div><div>Order: 600</div><div>Send: 585</div></div>
+      <div class="card"><div class="name">Kiki</div><div>Order: 450</div><div>Send: 384</div><div class="status fail">Status: ❌</div></div>
       <div class="card"><div class="name">Tobias</div><div>Order: 500</div><div>Send: 235</div><div class="status fail">Status: ❌</div></div>
-      <div class="card"><div class="name">Luna</div><div>Order: 800</div><div>Send: 600</div><div class="status fail">Status: ❌</div></div>
-      <div class="card"><div class="name">Ney</div><div>Order: 3540</div><div>Send: 2790</div></div>
+      <div class="card"><div class="name">Luna</div><div>Order: 800</div><div>Send: 615</div></div>
+      <div class="card"><div class="name">Ney</div><div>Order: 3540</div><div>Send: 2805</div></div>
       <div class="card"><div class="name">Araba</div><div>Order: 150</div><div>Send: 75</div><div class="status fail">Status: ❌</div></div>
     </div>
 
