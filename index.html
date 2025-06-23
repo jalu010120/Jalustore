@@ -20,6 +20,12 @@
       min-height: 100vh;
       padding: 2rem;
     }
+    #live-time {
+      text-align: center;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: #ccc;
+    }
     h1 {
       text-align: center;
       color: #f8f8f8;
@@ -59,9 +65,23 @@
       color: #e74c3c;
     }
   </style>
+  <script>
+    function updateTime() {
+      const now = new Date();
+      const waktu = now.toLocaleString('id-ID', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
+      document.getElementById('live-time').textContent = '⏰ Live Jam: ' + waktu;
+    }
+    setInterval(updateTime, 1000);
+    window.onload = updateTime;
+  </script>
 </head>
 <body>
   <div class="overlay">
+    <div id="live-time"></div>
     <h1>📦 Laporan Pengiriman Heart - <em>JaluStore</em></h1>
 
     <div class="slot">
@@ -89,6 +109,7 @@
       <div class="card"><div class="name">Harbie</div><div>Order: 200</div><div>Send: 80</div></div>
       <div class="card"><div class="name">Aze</div><div>Order: 570</div><div>Send: 40</div></div>
       <div class="card"><div class="name">Sena</div><div>Order: 570</div><div>Send: 40</div></div>
+      <div class="card"><div class="name">Raine</div><div>Order: 100</div><div>Send: 20</div></div>
     </div>
 
     <div class="slot">
