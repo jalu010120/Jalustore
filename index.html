@@ -3,101 +3,109 @@
   <meta charset="UTF-8" />
   <title>Dashboard Pengiriman Heart - JaluStore</title>
   <style>
-    * { box-sizing: border-box; transition: background 0.3s, color 0.3s; }
+    * { box-sizing: border-box; }
     body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0; padding: 0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      margin: 0;
+      padding: 0;
       background: url('https://thatskyshop.com/cdn/shop/files/Page-thatskywallpaper-Portrait-13.jpg?v=1711607986&width=750') no-repeat center center fixed;
-      background-size: cover; color: #fff; backdrop-filter: blur(6px);
+      background-size: cover;
+      color: #fff;
+      backdrop-filter: blur(6px);
+      transition: background 0.5s, color 0.5s;
     }
-    body.light { background: #f1f1f1; color: #333; backdrop-filter: none; }
+    .dark-mode {
+      background: #111 !important;
+      color: #f8f8f8;
+    }
     .overlay {
-      background-color: rgba(0,0,0,0.6);
-      min-height: 100vh; padding: 2rem;
+      background-color: rgba(0, 0, 0, 0.6);
+      min-height: 100vh;
+      padding: 2rem;
     }
-    body.light .overlay { background-color: rgba(255,255,255,0.8); }
-    #live-time { text-align:center; font-size:1.2rem; margin-bottom:1rem; color:#ccc; }
-    body.light #live-time { color: #666; }
-    h1 { text-align:center; margin-bottom:2rem; text-shadow:2px 2px 6px rgba(0,0,0,0.7); }
-    body.light h1 { color: #444; text-shadow:none; }
-    .slot { margin-bottom:3rem; }
+    #live-time {
+      text-align: center;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: #ccc;
+    }
+    h1 {
+      text-align: center;
+      color: #f8f8f8;
+      margin-bottom: 2rem;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+    }
+    .toggle-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 999;
+    }
+    .toggle-button {
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
+      border: none;
+      padding: 0.7rem 1.2rem;
+      color: white;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    .slot {
+      margin-bottom: 3rem;
+    }
     .slot-title {
-      font-size:1.5rem; font-weight:700;
-      background: linear-gradient(90deg, #007bff,#00c6ff);
-      padding:.75rem 1rem; border-radius:6px; margin-bottom:1rem;
-      color:#fff;
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #007bff, #00c6ff);
+      color: white;
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
+      margin-bottom: 1rem;
     }
     .card {
       background: rgba(255,255,255,0.1);
-      border:1px solid rgba(255,255,255,0.2);
-      padding:1rem; margin:.5rem 0; border-radius:10px;
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 1rem;
+      margin: 0.5rem 0;
+      border-radius: 10px;
     }
-    body.light .card {
-      background: #fff; border:1px solid #ddd; color:#333;
+    .card .name {
+      font-weight: 600;
+      font-size: 1.2rem;
     }
-    .card .name { font-weight:600; font-size:1.2rem; }
-    .status { font-weight:bold; }
-    .done { color:#2ecc71; }
-    .fail { color:#e74c3c; }
-    .toggle-container {
-      position: fixed; top:20px; left:20px;
+    .status {
+      font-weight: bold;
     }
-    .toggle-switch {
-      position: relative; width:50px; height:26px;
-    }
-    .toggle-switch input { opacity:0; width:0; height:0; }
-    .slider {
-      position: absolute; cursor: pointer;
-      top: 0; left:0; right:0; bottom:0;
-      background-color: #ccc;
-      border-radius:34px;
-      transition: .4s;
-    }
-    .slider:before {
-      position: absolute; content:"";
-      height:22px; width:22px;
-      left:2px; bottom:2px;
-      background-color:white;
-      border-radius:50%;
-      transition: .4s;
-    }
-    input:checked + .slider {
-      background-color: #2196F3;
-    }
-    input:checked + .slider:before {
-      transform: translateX(24px);
-    }
+    .done { color: #2ecc71; }
+    .fail { color: #e74c3c; }
   </style>
   <script>
     function updateTime() {
       const now = new Date();
       const waktu = now.toLocaleString('id-ID', {
-        hour:'2-digit',minute:'2-digit',second:'2-digit'
+        hour: '2-digit', minute: '2-digit', second: '2-digit'
       });
       document.getElementById('live-time').textContent = '⏰ Live Jam: ' + waktu;
-    }
-    function toggleMode(el) {
-      document.body.classList.toggle('light', el.checked);
-    }
-    window.onload = () => {
-      setInterval(updateTime,1000);
-      updateTime();
-    };
+    }function toggleDarkMode() {
+  document.body.classList.toggle('dark-mode');
+}
+
+setInterval(updateTime, 1000);
+window.onload = updateTime;
+
   </script>
 </head>
 <body>
-  <div class="toggle-container">
-    <label class="toggle-switch">
-      <input type="checkbox" onchange="toggleMode(this)">
-      <span class="slider"></span>
-    </label>
-  </div>
   <div class="overlay">
+    <div class="toggle-container">
+      <button class="toggle-button" onclick="toggleDarkMode()">🌓 Dark Mode</button>
+    </div>
     <div id="live-time"></div>
     <h1>📦 Laporan Pengiriman Heart - <em>JaluStore</em></h1><div class="slot">
   <div class="slot-title">Slot 1</div>
-  <div class="card"><div class="name">Angel</div><div>Order: 450</div><div>Send: 260</div><div class="status fail">❌</div></div>
-  <div class="card"><div class="name">Husna</div><div>Order: 450</div><div>Send: 257</div><div class="status fail">❌</div></div>
+  <div class="card"><div class="name">Angel</div><div>Order: 450</div><div>Send: 260</div><div class="status fail">Status: ❌</div></div>
+  <div class="card"><div class="name">Husna</div><div>Order: 450</div><div>Send: 257</div><div class="status fail">Status: ❌</div></div>
   <div class="card"><div class="name">Mursyid</div><div>Order: 320</div><div>Send: 50</div></div>
   <div class="card"><div class="name">Nanda</div><div>Order: 210</div><div>Send: 200</div></div>
   <div class="card"><div class="name">Alvin</div><div>Order: 210</div><div>Send: 180</div></div>
@@ -106,6 +114,7 @@
   <div class="card"><div class="name">Angel2</div><div>Order: 600</div><div>Send: 240</div></div>
   <div class="card"><div class="name">Aelia</div><div>Order: 100</div><div>Send: 60</div></div>
   <div class="card"><div class="name">Tsabyy</div><div>Order: 100</div><div>Send: 40</div></div>
+  <div class="card"><div class="name">Fida</div><div>Order: 100</div><div>Send: 20</div></div>
 </div>
 
 <div class="slot">
@@ -114,8 +123,8 @@
   <div class="card"><div class="name">Anna</div><div>Order: 600</div><div>Send: 577</div></div>
   <div class="card"><div class="name">Moon</div><div>Order: 530</div><div>Send: 226</div></div>
   <div class="card"><div class="name">Hira</div><div>Order: 360</div><div>Send: 178</div></div>
-  <div class="card"><div class="name">Sea</div><div>Order: 150</div><div>Send: 101</div><div class="status fail">❌</div></div>
-  <div class="card"><div class="name">Zee</div><div>Order: 150</div><div>Send: 111</div><div class="status fail">❌</div></div>
+  <div class="card"><div class="name">Sea</div><div>Order: 150</div><div>Send: 101</div><div class="status fail">Status: ❌</div></div>
+  <div class="card"><div class="name">Zee</div><div>Order: 150</div><div>Send: 111</div><div class="status fail">Status: ❌</div></div>
   <div class="card"><div class="name">Joy</div><div>Order: 320</div><div>Send: 200</div></div>
   <div class="card"><div class="name">Xen</div><div>Order: 210</div><div>Send: 200</div></div>
   <div class="card"><div class="name">Harbie</div><div>Order: 200</div><div>Send: 120</div></div>
@@ -126,18 +135,18 @@
 
 <div class="slot">
   <div class="slot-title">Slot 3</div>
-  <div class="card"><div class="name">Kiki</div><div>Order: 450</div><div>Send: 384</div><div class="status fail">❌</div></div>
-  <div class="card"><div class="name">Tobias</div><div>Order: 500</div><div>Send: 235</div><div class="status fail">❌</div></div>
-  <div class="card"><div class="name">Luna</div><div>Order: 800</div><div>Send: 615</div><div class="status fail">❌</div></div>
-  <div class="card"><div class="name">Ney</div><div>Order: 3540</div><div>Send: 2805</div><div class="status fail">❌</div></div>
-  <div class="card"><div class="name">Araba</div><div>Order: 150</div><div>Send: 75</div><div class="status fail">❌</div></div>
+  <div class="card"><div class="name">Kiki</div><div>Order: 450</div><div>Send: 384</div><div class="status fail">Status: ❌</div></div>
+  <div class="card"><div class="name">Tobias</div><div>Order: 500</div><div>Send: 235</div><div class="status fail">Status: ❌</div></div>
+  <div class="card"><div class="name">Luna</div><div>Order: 800</div><div>Send: 615</div><div class="status fail">Status: ❌</div></div>
+  <div class="card"><div class="name">Ney</div><div>Order: 3540</div><div>Send: 2805</div><div class="status fail">Status: ❌</div></div>
+  <div class="card"><div class="name">Araba</div><div>Order: 150</div><div>Send: 75</div><div class="status fail">Status: ❌</div></div>
 </div>
 
 <div class="slot">
   <div class="slot-title">🗂️ Riwayat Orderan (Selesai ✅)</div>
-  <div class="card"><div class="name">Lusi</div><div>Order: 600</div><div>Send: 600</div><div class="status done">✅</div></div>
-  <div class="card"><div class="name">Sam</div><div>Order: 210</div><div>Send: 213</div><div class="status done">✅</div></div>
-  <div class="card"><div class="name">Erwin</div><div>Order: 210</div><div>Send: 213</div><div class="status done">✅</div></div>
+  <div class="card"><div class="name">Lusi</div><div>Order: 600</div><div>Send: 600</div><div class="status done">Status: ✅</div></div>
+  <div class="card"><div class="name">Sam</div><div>Order: 210</div><div>Send: 213</div><div class="status done">Status: ✅</div></div>
+  <div class="card"><div class="name">Erwin</div><div>Order: 210</div><div>Send: 213</div><div class="status done">Status: ✅</div></div>
 </div>
 
   </div>
