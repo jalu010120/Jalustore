@@ -1,86 +1,84 @@
 <!DOCTYPE html><html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Admin Panel - Jalustore</title>
+  <title>Data Pengiriman - Jalustore</title>
   <style>
     body {
-      background: #1a1a1a;
-      color: white;
-      font-family: 'Segoe UI', sans-serif;
+      background: #f1f1f1;
+      color: #333;
+      font-family: Arial, sans-serif;
       padding: 20px;
     }
     h1 {
       text-align: center;
+      margin-bottom: 30px;
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
+    .section {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    th, td {
-      border: 1px solid #444;
-      padding: 10px;
-      text-align: center;
+    .section h2 {
+      margin-top: 0;
+      color: #444;
     }
-    input[type="number"] {
-      width: 80px;
-      background: #222;
-      color: white;
-      border: 1px solid #555;
-      padding: 4px;
-      border-radius: 5px;
+    .buyer {
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
     }
-    button {
-      background: #3498db;
-      color: white;
-      padding: 6px 12px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
+    .buyer:last-child {
+      border-bottom: none;
+    }
+    .label {
+      font-weight: bold;
+    }
+    .done {
+      color: green;
+      font-weight: bold;
+    }
+    .notdone {
+      color: red;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <h1>📋 Admin Panel - Edit Orderan Buyer</h1>  <table id="adminTableWrap">
-    <thead>
-      <tr>
-        <th>Nama</th>
-        <th>Order</th>
-        <th>Send</th>
-        <th>Edit</th>
-      </tr>
-    </thead>
-    <tbody id="adminTable"></tbody>
-  </table>  <script>
-    let buyers = JSON.parse(localStorage.getItem("buyersData")) || {
-      "Angel": { order: 450, send: 260 },
-      "Hira": { order: 360, send: 158 },
-      "Moon": { order: 530, send: 217 }
-    };
-
-    function renderTable() {
-      const tbody = document.getElementById("adminTable");
-      tbody.innerHTML = "";
-      Object.entries(buyers).forEach(([name, data]) => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td>${name}</td>
-          <td><input type="number" value="${data.order}" id="order_${name}"></td>
-          <td><input type="number" value="${data.send}" id="send_${name}"></td>
-          <td><button onclick="save('${name}')">Simpan</button></td>
-        `;
-        tbody.appendChild(row);
-      });
-    }
-
-    function save(name) {
-      const orderVal = parseInt(document.getElementById(`order_${name}`).value);
-      const sendVal = parseInt(document.getElementById(`send_${name}`).value);
-      buyers[name] = { order: orderVal, send: sendVal };
-      localStorage.setItem("buyersData", JSON.stringify(buyers));
-      alert(`✅ Data ${name} telah diperbarui.`);
-    }
-
-    renderTable();
-  </script></body>
+  <h1>📦 Data Pengiriman Jalustore</h1>  <div class="section">
+    <h2>Slot: 23 (Juni 2025)</h2>
+    <div class="buyer"><span class="label">Angel:</span> 450 / 260 <span class="notdone">❌</span></div>
+    <div class="buyer"><span class="label">Husna:</span> 450 / 257 <span class="notdone">❌</span></div>
+    <div class="buyer"><span class="label">Mursyid:</span> 320 / 40 <span class="notdone">❌</span></div>
+    <div class="buyer"><span class="label">Nanda:</span> 210 / 180 <span class="notdone">❌</span></div>
+    <div class="buyer"><span class="label">Alvin:</span> 210 / 160</div>
+    <div class="buyer"><span class="label">Ira:</span> 150 / 100</div>
+    <div class="buyer"><span class="label">Kael:</span> 120 / 80</div>
+    <div class="buyer"><span class="label">Angel2:</span> 600 / 220</div>
+    <div class="buyer"><span class="label">Aelia:</span> 100 / 40</div>
+    <div class="buyer"><span class="label">Tsabyy:</span> 100 / 20</div>
+  </div>  <div class="section">
+    <h2>Slot: S2</h2>
+    <div class="buyer"><span class="label">Ayu:</span> 1000 / 980 <span class="notdone">❌</span></div>
+    <div class="buyer"><span class="label">Anna:</span> 600 / 568</div>
+    <div class="buyer"><span class="label">Moon:</span> 530 / 217</div>
+    <div class="buyer"><span class="label">Hira:</span> 360 / 158</div>
+    <div class="buyer"><span class="label">Sea:</span> 150 / 101</div>
+    <div class="buyer"><span class="label">Zee:</span> 150 / 111</div>
+    <div class="buyer"><span class="label">Joy:</span> 320 / 180</div>
+    <div class="buyer"><span class="label">Xen:</span> 210 / 180</div>
+    <div class="buyer"><span class="label">Harbie:</span> 200 / 100</div>
+    <div class="buyer"><span class="label">Aze:</span> 570 / 60</div>
+    <div class="buyer"><span class="label">Sena:</span> 570 / 60</div>
+    <div class="buyer"><span class="label">Raine:</span> 100 / 40</div>
+  </div>  <div class="section">
+    <h2>Slot: S3</h2>
+    <div class="buyer"><span class="label">Lusi:</span> 600 / 585</div>
+    <div class="buyer"><span class="label">Kiki:</span> 450 / 384 <span class="notdone">❌</span></div>
+    <div class="buyer"><span class="label">Tobias:</span> 500 / 235 <span class="notdone">❌</span></div>
+    <div class="buyer"><span class="label">Luna:</span> 800 / 615</div>
+    <div class="buyer"><span class="label">Ney:</span> 3540 / 2805</div>
+    <div class="buyer"><span class="label">Araba:</span> 150 / 75 <span class="notdone">❌</span></div>
+  </div>
+</body>
 </html>
