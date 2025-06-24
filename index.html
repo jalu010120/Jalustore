@@ -1,157 +1,196 @@
-<!DOCTYPE html>
-<html lang="id">
+<!-- Admin Panel + Buyer Login/Register System - Jalustore --><!DOCTYPE html><html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <title>Dashboard Pengiriman Heart - JaluStore</title>
+  <meta charset="UTF-8">
+  <title>Panel Jalustore</title>
   <style>
-    * { box-sizing: border-box; }
     body {
-      font-family: 'Segoe UI', Tahoma, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: url('https://thatskyshop.com/cdn/shop/files/Page-thatskywallpaper-Portrait-13.jpg?v=1711607986&width=750') no-repeat center center fixed;
-      background-size: cover;
-      color: #fff;
-      backdrop-filter: blur(6px);
-    }
-    .overlay {
-      background-color: rgba(0, 0, 0, 0.6);
-      min-height: 100vh;
-      padding: 2rem;
-    }
-    #live-time {
-      text-align: center;
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-      color: #ccc;
-    }
-    h1 {
-      text-align: center;
-      color: #f8f8f8;
-      margin-bottom: 1.5rem;
-    }
-    .slot {
-      margin-bottom: 2.5rem;
-    }
-    .slot-title {
-      font-size: 1.3rem;
-      font-weight: 700;
-      background: linear-gradient(90deg, #007bff, #00c6ff);
+      background: #1a1a1a;
       color: white;
-      padding: 0.6rem 1rem;
-      border-radius: 6px;
-      margin-bottom: 1rem;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 20px;
     }
-    .card {
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.2);
-      padding: 0.8rem;
-      margin: 0.4rem 0;
-      border-radius: 10px;
-    }
-    .card .name {
-      font-weight: 600;
-      font-size: 1.1rem;
-    }
-    .status {
-      font-weight: bold;
-    }
-    .done { color: #2ecc71; }
-    .fail { color: #e74c3c; }
-
-    #friday-claim {
+    h1, h2 {
       text-align: center;
-      margin-bottom: 1.5rem;
     }
-    #claimBtn {
-      padding: 10px 20px;
-      font-size: 1rem;
-      background-color: #f39c12;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #444;
+      padding: 10px;
+      text-align: center;
+    }
+    input[type="number"], input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 6px;
+      background: #222;
+      color: white;
+      border: 1px solid #555;
+      border-radius: 5px;
+    }
+    button {
+      background: #3498db;
+      color: white;
+      padding: 6px 12px;
       border: none;
-      border-radius: 8px;
-      color: #fff;
-      cursor: default;
-      transition: all 0.3s ease;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .login-box {
+      max-width: 300px;
+      margin: 20px auto;
+      padding: 15px;
+      background: #2c2c2c;
+      border-radius: 10px;
+      text-align: center;
+    }
+    #logoutBtn {
+      display: block;
+      margin: 10px auto;
+      background: crimson;
+    }
+    .hidden {
+      display: none;
     }
   </style>
-  <script>
-    function updateTime() {
-      const now = new Date();
-      const waktu = now.toLocaleString('id-ID', {
-        hour: '2-digit', minute: '2-digit', second: '2-digit'
-      });
-      document.getElementById('live-time').textContent = '⏰ Live Jam: ' + waktu;
-
-      const claimBtn = document.getElementById('claimBtn');
-      if (now.getDay() === 5) {
-        claimBtn.style.opacity = '1';
-        claimBtn.style.cursor = 'pointer';
-        claimBtn.textContent = '🎁 Klaim Sekarang - 5 Heart!';
-      } else {
-        claimBtn.style.opacity = '0.5';
-        claimBtn.style.cursor = 'not-allowed';
-        claimBtn.textContent = '🎁 Claim hanya hari Jumat';
-      }
-    }
-    setInterval(updateTime, 1000);
-    window.onload = updateTime;
-  </script>
 </head>
 <body>
-  <div class="overlay">
-    <div id="live-time"></div>
-    <div id="friday-claim">
-      <button id="claimBtn">🎁 Claim Jumat: 5 Heart</button>
-    </div>
+  <h1>📋 Jalustore Panel</h1>  <div class="login-box" id="loginSection">
+    <h2>Login</h2>
+    <input type="text" id="loginUser" placeholder="Nama">
+    <input type="password" id="loginPass" placeholder="Password">
+    <button onclick="loginUser()">Login</button>
+    <p><a href="#" onclick="showRegister()">Daftar</a> | <a href="#" onclick="showReset()">Ubah Password</a></p>
+    <div id="loginMsg"></div>
+  </div>  <div class="login-box hidden" id="registerSection">
+    <h2>Daftar Buyer</h2>
+    <input type="text" id="regUser" placeholder="Nama">
+    <input type="password" id="regPass" placeholder="Password">
+    <button onclick="registerUser()">Daftar</button>
+    <p><a href="#" onclick="showLogin()">Kembali ke Login</a></p>
+    <div id="regMsg"></div>
+  </div>  <div class="login-box hidden" id="resetSection">
+    <h2>Ubah Password</h2>
+    <input type="text" id="resetUser" placeholder="Nama">
+    <input type="password" id="resetOldPass" placeholder="Password Lama">
+    <input type="password" id="resetNewPass" placeholder="Password Baru">
+    <button onclick="resetPassword()">Ubah</button>
+    <p><a href="#" onclick="showLogin()">Kembali ke Login</a></p>
+    <div id="resetMsg"></div>
+  </div><button id="logoutBtn" onclick="logout()" style="display:none">Logout</button>
 
-    <h1>📦 Laporan Pengiriman Heart - <em>JaluStore</em></h1>
+  <table style="display:none" id="adminTableWrap">
+    <thead>
+      <tr>
+        <th>Nama</th>
+        <th>Order</th>
+        <th>Send</th>
+        <th>Edit</th>
+      </tr>
+    </thead>
+    <tbody id="adminTable"></tbody>
+  </table>  <script>
+    const ADMIN_USER = "jalustore";
+    const ADMIN_PASS = "store125800";
 
-    <div class="slot">
-      <div class="slot-title">Slot 1</div>
-      <div class="card"><div class="name">Angel</div><div>Order: 450</div><div>Send: 260</div><div class="status fail">Status: ❌</div></div>
-      <div class="card"><div class="name">Husna</div><div>Order: 450</div><div>Send: 257</div><div class="status fail">Status: ❌</div></div>
-      <div class="card"><div class="name">Mursyid</div><div>Order: 320</div><div>Send: 40</div><div class="status fail">Status: ❌</div></div>
-      <div class="card"><div class="name">Nanda</div><div>Order: 210</div><div>Send: 180</div><div class="status fail">Status: ❌</div></div>
-      <div class="card"><div class="name">Alvin</div><div>Order: 210</div><div>Send: 160</div></div>
-      <div class="card"><div class="name">Ira</div><div>Order: 150</div><div>Send: 100</div></div>
-      <div class="card"><div class="name">Kael</div><div>Order: 120</div><div>Send: 80</div></div>
-      <div class="card"><div class="name">Angel2</div><div>Order: 600</div><div>Send: 220</div></div>
-      <div class="card"><div class="name">Aelia</div><div>Order: 100</div><div>Send: 40</div></div>
-      <div class="card"><div class="name">Tsabyy</div><div>Order: 100</div><div>Send: 20</div></div>
-    </div>
+    let buyers = JSON.parse(localStorage.getItem("buyersData")) || {};
 
-    <div class="slot">
-      <div class="slot-title">Slot 2</div>
-      <div class="card"><div class="name">Ayu</div><div>Order: 1000</div><div>Send: 980</div><div class="status fail">Status: ❌</div></div>
-      <div class="card"><div class="name">Anna</div><div>Order: 600</div><div>Send: 568</div></div>
-      <div class="card"><div class="name">Moon</div><div>Order: 530</div><div>Send: 217</div></div>
-      <div class="card"><div class="name">Hira</div><div>Order: 360</div><div>Send: 158</div></div>
-      <div class="card"><div class="name">Sea</div><div>Order: 150</div><div>Send: 101</div></div>
-      <div class="card"><div class="name">Zee</div><div>Order: 150</div><div>Send: 111</div></div>
-      <div class="card"><div class="name">Joy</div><div>Order: 320</div><div>Send: 180</div></div>
-      <div class="card"><div class="name">Xen</div><div>Order: 210</div><div>Send: 180</div></div>
-      <div class="card"><div class="name">Harbie</div><div>Order: 200</div><div>Send: 100</div></div>
-      <div class="card"><div class="name">Aze</div><div>Order: 570</div><div>Send: 60</div></div>
-      <div class="card"><div class="name">Sena</div><div>Order: 570</div><div>Send: 60</div></div>
-      <div class="card"><div class="name">Raine</div><div>Order: 100</div><div>Send: 40</div></div>
-    </div>
+    function showRegister() {
+      document.getElementById("loginSection").classList.add("hidden");
+      document.getElementById("registerSection").classList.remove("hidden");
+      document.getElementById("resetSection").classList.add("hidden");
+    }
 
-    <div class="slot">
-      <div class="slot-title">Slot 3</div>
-      <div class="card"><div class="name">Lusi</div><div>Order: 600</div><div>Send: 585</div></div>
-      <div class="card"><div class="name">Kiki</div><div>Order: 450</div><div>Send: 384</div><div class="status fail">Status: ❌</div></div>
-      <div class="card"><div class="name">Tobias</div><div>Order: 500</div><div>Send: 235</div><div class="status fail">Status: ❌</div></div>
-      <div class="card"><div class="name">Luna</div><div>Order: 800</div><div>Send: 615</div></div>
-      <div class="card"><div class="name">Ney</div><div>Order: 3540</div><div>Send: 2805</div></div>
-      <div class="card"><div class="name">Araba</div><div>Order: 150</div><div>Send: 75</div><div class="status fail">Status: ❌</div></div>
-    </div>
+    function showReset() {
+      document.getElementById("loginSection").classList.add("hidden");
+      document.getElementById("registerSection").classList.add("hidden");
+      document.getElementById("resetSection").classList.remove("hidden");
+    }
 
-    <div class="slot">
-      <div class="slot-title">🗂️ Riwayat Orderan (Selesai ✅)</div>
-      <div class="card"><div class="name">Sam</div><div>Order: 210</div><div>Send: 213</div><div class="status done">Status: ✅</div></div>
-      <div class="card"><div class="name">Erwin</div><div>Order: 210</div><div>Send: 213</div><div class="status done">Status: ✅</div></div>
-    </div>
+    function showLogin() {
+      document.getElementById("loginSection").classList.remove("hidden");
+      document.getElementById("registerSection").classList.add("hidden");
+      document.getElementById("resetSection").classList.add("hidden");
+    }
 
-  </div>
-</body>
+    function registerUser() {
+      const u = document.getElementById("regUser").value;
+      const p = document.getElementById("regPass").value;
+      if (buyers[u]) {
+        document.getElementById("regMsg").innerText = "❌ Nama sudah terdaftar.";
+      } else {
+        buyers[u] = { order: 0, send: 0, pass: p };
+        localStorage.setItem("buyersData", JSON.stringify(buyers));
+        document.getElementById("regMsg").innerText = "✅ Registrasi berhasil.";
+      }
+    }
+
+    function resetPassword() {
+      const u = document.getElementById("resetUser").value;
+      const oldPass = document.getElementById("resetOldPass").value;
+      const newPass = document.getElementById("resetNewPass").value;
+      if (buyers[u] && buyers[u].pass === oldPass) {
+        buyers[u].pass = newPass;
+        localStorage.setItem("buyersData", JSON.stringify(buyers));
+        document.getElementById("resetMsg").innerText = "✅ Password diperbarui.";
+      } else {
+        document.getElementById("resetMsg").innerText = "❌ Nama atau password lama salah.";
+      }
+    }
+
+    function loginUser() {
+      const u = document.getElementById("loginUser").value;
+      const p = document.getElementById("loginPass").value;
+
+      if (u === ADMIN_USER && p === ADMIN_PASS) {
+        showAdminPanel();
+        return;
+      }
+
+      if (buyers[u] && buyers[u].pass === p) {
+        alert(`Selamat datang, ${u}!`);
+        document.getElementById("loginSection").style.display = "none";
+        document.getElementById("logoutBtn").style.display = "block";
+      } else {
+        document.getElementById("loginMsg").innerText = "❌ Nama atau password salah.";
+      }
+    }
+
+    function logout() {
+      location.reload();
+    }
+
+    function showAdminPanel() {
+      document.getElementById("loginSection").style.display = "none";
+      document.getElementById("adminTableWrap").style.display = "table";
+      document.getElementById("logoutBtn").style.display = "block";
+      renderTable();
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById("adminTable");
+      tbody.innerHTML = "";
+      Object.entries(buyers).forEach(([name, data]) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${name}</td>
+          <td><input type="number" value="${data.order}" id="order_${name}"></td>
+          <td><input type="number" value="${data.send}" id="send_${name}"></td>
+          <td><button onclick="save('${name}')">Simpan</button></td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function save(name) {
+      const orderVal = parseInt(document.getElementById(`order_${name}`).value);
+      const sendVal = parseInt(document.getElementById(`send_${name}`).value);
+      buyers[name].order = orderVal;
+      buyers[name].send = sendVal;
+      localStorage.setItem("buyersData", JSON.stringify(buyers));
+      alert(`✅ Data ${name} telah diperbarui.`);
+    }
+  </script></body>
 </html>
