@@ -1,202 +1,155 @@
-<!DOCTYPE html><html lang="id">
+<!DOCTYPE html>
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
   <title>Dashboard Pengiriman Heart - JaluStore</title>
   <style>
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; transition: background 0.3s, color 0.3s; }
     body {
-      font-family: 'Segoe UI', Tahoma, sans-serif;
-      margin: 0;
-      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0; padding: 0;
       background: url('https://thatskyshop.com/cdn/shop/files/Page-thatskywallpaper-Portrait-13.jpg?v=1711607986&width=750') no-repeat center center fixed;
-      background-color: #0d0d0d;
-      background-size: cover;
-      color: #e0e0e0;
-      backdrop-filter: blur(8px);
+      background-size: cover; color: #fff; backdrop-filter: blur(6px);
     }
+    body.light { background: #f1f1f1; color: #333; backdrop-filter: none; }
     .overlay {
-      background-color: rgba(0, 0, 0, 0.85);
-      min-height: 100vh;
-      padding: 2rem;
+      background-color: rgba(0,0,0,0.6);
+      min-height: 100vh; padding: 2rem;
     }
-    #live-time {
-      text-align: center;
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-      color: #ccc;
-    }
-    h1 {
-      text-align: center;
-      color: #f8f8f8;
-      margin-bottom: 2rem;
-      text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
-    }
-    .slot {
-      margin-bottom: 3rem;
-    }
+    body.light .overlay { background-color: rgba(255,255,255,0.8); }
+    #live-time { text-align:center; font-size:1.2rem; margin-bottom:1rem; color:#ccc; }
+    body.light #live-time { color: #666; }
+    h1 { text-align:center; margin-bottom:2rem; text-shadow:2px 2px 6px rgba(0,0,0,0.7); }
+    body.light h1 { color: #444; text-shadow:none; }
+    .slot { margin-bottom:3rem; }
     .slot-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      background: linear-gradient(90deg, #ff0055, #ff5500);
-      color: white;
-      padding: 0.75rem 1rem;
-      border-radius: 6px;
-      margin-bottom: 1rem;
-      text-shadow: 1px 1px 3px #000;
+      font-size:1.5rem; font-weight:700;
+      background: linear-gradient(90deg, #007bff,#00c6ff);
+      padding:.75rem 1rem; border-radius:6px; margin-bottom:1rem;
+      color:#fff;
     }
     .card {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.15);
-      padding: 1rem;
-      margin: 0.5rem 0;
-      border-radius: 10px;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      background: rgba(255,255,255,0.1);
+      border:1px solid rgba(255,255,255,0.2);
+      padding:1rem; margin:.5rem 0; border-radius:10px;
     }
-    .card:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 15px rgba(255,255,255,0.1);
+    body.light .card {
+      background: #fff; border:1px solid #ddd; color:#333;
     }
-    .card .name {
-      font-weight: 600;
-      font-size: 1.2rem;
+    .card .name { font-weight:600; font-size:1.2rem; }
+    .status { font-weight:bold; }
+    .done { color:#2ecc71; }
+    .fail { color:#e74c3c; }
+
+    /* Toggle Switch */
+    .toggle-container {
+      position: fixed; top:20px; left:20px;
     }
-    .status {
-      font-weight: bold;
+    .toggle-switch {
+      position: relative; width:50px; height:26px;
     }
-    .done { color: #2ecc71; }
-    .fail { color: #e74c3c; }
-    #admin-login-btn {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: linear-gradient(135deg, #00c6ff, #007bff);
-      color: #fff;
-      padding: 0.7rem 1.2rem;
-      border: none;
-      border-radius: 12px;
-      font-weight: bold;
-      font-size: 0.95rem;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0, 198, 255, 0.4);
-      transition: all 0.3s ease;
-      z-index: 999;
+    .toggle-switch input { opacity:0; width:0; height:0; }
+    .slider {
+      position: absolute; cursor: pointer;
+      top: 0; left:0; right:0; bottom:0;
+      background-color: #ccc;
+      border-radius:34px;
+      transition: .4s;
     }
-    #admin-login-btn:hover {
-      background: linear-gradient(135deg, #007bff, #00c6ff);
-      box-shadow: 0 0 20px rgba(0, 198, 255, 0.7);
-      transform: scale(1.05);
+    .slider:before {
+      position: absolute; content:"";
+      height:22px; width:22px;
+      left:2px; bottom:2px;
+      background-color:white;
+      border-radius:50%;
+      transition: .4s;
     }
-    .admin-panel {
-      margin: 2rem 0;
-      padding: 1rem;
-      background: rgba(20,20,20,0.9);
-      border-radius: 8px;
-      border: 1px solid rgba(255,255,255,0.1);
+    input:checked + .slider {
+      background-color: #2196F3;
     }
-    .admin-panel input {
-      background: #111;
-      color: #f0f0f0;
-      border: 1px solid #333;
-      padding: 0.5rem;
-      margin-bottom: 0.5rem;
-      width: 100%;
-    }
-    .admin-panel button {
-      background: #ff5500;
-      color: white;
-      border: none;
-      padding: 0.5rem;
-      font-weight: bold;
-      width: 100%;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .admin-panel button:hover {
-      background: #ff7700;
-      box-shadow: 0 0 10px #ff7700;
+    input:checked + .slider:before {
+      transform: translateX(24px);
     }
   </style>
   <script>
     function updateTime() {
       const now = new Date();
       const waktu = now.toLocaleString('id-ID', {
-        hour: '2-digit', minute: '2-digit', second: '2-digit'
+        hour:'2-digit',minute:'2-digit',second:'2-digit'
       });
       document.getElementById('live-time').textContent = '⏰ Live Jam: ' + waktu;
     }
-    setInterval(updateTime, 1000);
-    window.onload = updateTime;function showAdminPanel() {
-  const username = prompt("Masukkan username admin:");
-  const password = prompt("Masukkan password admin:");
-  if(username === "jalustore" && password === "store125800") {
-    document.getElementById("admin-panel").style.display = "block";
-  } else {
-    alert("Login gagal. Coba lagi.");
-  }
-}
-
+    function toggleMode(el) {
+      document.body.classList.toggle('light', el.checked);
+    }
+    window.onload = () => {
+      setInterval(updateTime,1000);
+      updateTime();
+    };
   </script>
 </head>
 <body>
+  <div class="toggle-container">
+    <label class="toggle-switch">
+      <input type="checkbox" onchange="toggleMode(this)">
+      <span class="slider"></span>
+    </label>
+  </div>
+
   <div class="overlay">
-    <button id="admin-login-btn" onclick="showAdminPanel()">🔐 Admin Panel</button>
     <div id="live-time"></div>
-    <h1>📦 Laporan Pengiriman Heart - <em>JaluStore</em></h1><div id="admin-panel" class="admin-panel" style="display:none">
-  <h3>Edit Pengiriman Manual</h3>
-  <input type="text" placeholder="Nama Buyer (case-sensitive)" id="editName">
-  <input type="number" placeholder="Jumlah Kirim Baru" id="editSend">
-  <button onclick="alert('Fitur edit masih manual. Edit langsung di HTML dulu ya.')">Update</button>
-</div>
-
-<!-- SLOT 1 -->
-<div class="slot">
-  <div class="slot-title">Slot 1</div>
-  <div class="card"><div class="name">Angel</div><div>Order: 450</div><div>Send: 260</div><div class="status fail">Status: ❌</div></div>
-  <div class="card"><div class="name">Husna</div><div>Order: 450</div><div>Send: 257</div><div class="status fail">Status: ❌</div></div>
-  <div class="card"><div class="name">Mursyid</div><div>Order: 320</div><div>Send: 40</div><div class="status fail">Status: ❌</div></div>
-  <div class="card"><div class="name">Nanda</div><div>Order: 210</div><div>Send: 180</div><div class="status fail">Status: ❌</div></div>
-  <div class="card"><div class="name">Alvin</div><div>Order: 210</div><div>Send: 160</div></div>
-  <div class="card"><div class="name">Ira</div><div>Order: 150</div><div>Send: 100</div></div>
-  <div class="card"><div class="name">Kael</div><div>Order: 120</div><div>Send: 80</div></div>
-  <div class="card"><div class="name">Angel2</div><div>Order: 600</div><div>Send: 220</div></div>
-  <div class="card"><div class="name">Aelia</div><div>Order: 100</div><div>Send: 40</div></div>
-  <div class="card"><div class="name">Tsabyy</div><div>Order: 100</div><div>Send: 20</div></div>
-</div>
-
-<!-- SLOT 2 -->
-<div class="slot">
-  <div class="slot-title">Slot 2</div>
-  <div class="card"><div class="name">Ayu</div><div>Order: 1000</div><div>Send: 980</div><div class="status fail">Status: ❌</div></div>
-  <div class="card"><div class="name">Anna</div><div>Order: 600</div><div>Send: 568</div></div>
-  <div class="card"><div class="name">Moon</div><div>Order: 530</div><div>Send: 217</div></div>
-  <div class="card"><div class="name">Hira</div><div>Order: 360</div><div>Send: 158</div></div>
-  <div class="card"><div class="name">Sea</div><div>Order: 150</div><div>Send: 101</div></div>
-  <div class="card"><div class="name">Zee</div><div>Order: 150</div><div>Send: 111</div></div>
-  <div class="card"><div class="name">Joy</div><div>Order: 320</div><div>Send: 180</div></div>
-  <div class="card"><div class="name">Xen</div><div>Order: 210</div><div>Send: 180</div></div>
-  <div class="card"><div class="name">Harbie</div><div>Order: 200</div><div>Send: 100</div></div>
-  <div class="card"><div class="name">Aze</div><div>Order: 570</div><div>Send: 60</div></div>
-  <div class="card"><div class="name">Sena</div><div>Order: 570</div><div>Send: 60</div></div>
-  <div class="card"><div class="name">Raine</div><div>Order: 100</div><div>Send: 40</div></div>
-</div>
-
-<!-- SLOT 3 -->
-<div class="slot">
-  <div class="slot-title">Slot 3</div>
-  <div class="card"><div class="name">Lusi</div><div>Order: 600</div><div>Send: 585</div></div>
-  <div class="card"><div class="name">Kiki</div><div>Order: 450</div><div>Send: 384</div><div class="status fail">Status: ❌</div></div>
-  <div class="card"><div class="name">Tobias</div><div>Order: 500</div><div>Send: 235</div><div class="status fail">Status: ❌</div></div>
-  <div class="card"><div class="name">Luna</div><div>Order: 800</div><div>Send: 615</div></div>
-  <div class="card"><div class="name">Ney</div><div>Order: 3540</div><div>Send: 2805</div></div>
-  <div class="card"><div class="name">Araba</div><div>Order: 150</div><div>Send: 75</div><div class="status fail">Status: ❌</div></div>
-</div>
-
-<!-- DONE ORDER -->
-<div class="slot">
-  <div class="slot-title">🗂️ Riwayat Orderan (Selesai ✅)</div>
-  <div class="card"><div class="name">Sam</div><div>Order: 210</div><div>Send: 213</div><div class="status done">Status: ✅</div></div>
-  <div class="card"><div class="name">Erwin</div><div>Order: 210</div><div>Send: 213</div><div class="status done">Status: ✅</div></div>
-</div>
+    <h1>📦 Laporan Pengiriman Heart - <em>JaluStore</em></h1>
+    
+    <!-- Slot 1 -->
+    <div class="slot">
+      <div class="slot-title">Slot 1</div>
+      <!-- Buyer cards -->
+      <div class="card"><div class="name">Angel</div><div>Order: 450</div><div>Send: 260</div><div class="status fail">❌</div></div>
+      <div class="card"><div class="name">Husna</div><div>Order: 450</div><div>Send: 257</div><div class="status fail">❌</div></div>
+      <div class="card"><div class="name">Mursyid</div><div>Order: 320</div><div>Send: 40</div><div class="status fail">❌</div></div>
+      <div class="card"><div class="name">Nanda</div><div>Order: 210</div><div>Send: 180</div><div class="status fail">❌</div></div>
+      <div class="card"><div class="name">Alvin</div><div>Order: 210</div><div>Send: 160</div></div>
+      <div class="card"><div class="name">Ira</div><div>Order: 150</div><div>Send: 100</div></div>
+      <div class="card"><div class="name">Kael</div><div>Order: 120</div><div>Send: 80</div></div>
+      <div class="card"><div class="name">Angel2</div><div>Order: 600</div><div>Send: 220</div></div>
+      <div class="card"><div class="name">Aelia</div><div>Order: 100</div><div>Send: 40</div></div>
+      <div class="card"><div class="name">Tsabyy</div><div>Order: 100</div><div>Send: 20</div></div>
+    </div>
+    
+    <!-- Slot 2 -->
+    <div class="slot">
+      <div class="slot-title">Slot 2</div>
+      <div class="card"><div class="name">Ayu</div><div>Order: 1000</div><div>Send: 980</div><div class="status fail">❌</div></div>
+      <div class="card"><div class="name">Anna</div><div>Order: 600</div><div>Send: 568</div></div>
+      <div class="card"><div class="name">Moon</div><div>Order: 530</div><div>Send: 217</div></div>
+      <div class="card"><div class="name">Hira</div><div>Order: 360</div><div>Send: 158</div></div>
+      <div class="card"><div class="name">Sea</div><div>Order: 150</div><div>Send: 101</div></div>
+      <div class="card"><div class="name">Zee</div><div>Order: 150</div><div>Send: 111</div></div>
+      <div class="card"><div class="name">Joy</div><div>Order: 320</div><div>Send: 180</div></div>
+      <div class="card"><div class="name">Xen</div><div>Order: 210</div><div>Send: 180</div></div>
+      <div class="card"><div class="name">Harbie</div><div>Order: 200</div><div>Send: 100</div></div>
+      <div class="card"><div class="name">Aze</div><div>Order: 570</div><div>Send: 60</div></div>
+      <div class="card"><div class="name">Sena</div><div>Order: 570</div><div>Send: 60</div></div>
+      <div class="card"><div class="name">Raine</div><div>Order: 100</div><div>Send: 40</div></div>
+    </div>
+    
+    <!-- Slot 3 -->
+    <div class="slot">
+      <div class="slot-title">Slot 3</div>
+      <div class="card"><div class="name">Lusi</div><div>Order: 600</div><div>Send: 585</div></div>
+      <div class="card"><div class="name">Kiki</div><div>Order: 450</div><div>Send: 384</div><div class="status fail">❌</div></div>
+      <div class="card"><div class="name">Tobias</div><div>Order: 500</div><div>Send: 235</div><div class="status fail">❌</div></div>
+      <div class="card"><div class="name">Luna</div><div>Order: 800</div><div>Send: 615</div></div>
+      <div class="card"><div class="name">Ney</div><div>Order: 3540</div><div>Send: 2805</div></div>
+      <div class="card"><div class="name">Araba</div><div>Order: 150</div><div>Send: 75</div><div class="status fail">❌</div></div>
+    </div>
+    
+    <!-- Riwayat -->
+    <div class="slot">
+      <div class="slot-title">🗂️ Riwayat Orderan (Selesai ✅)</div>
+      <div class="card"><div class="name">Sam</div><div>Order: 210</div><div>Send: 213</div><div class="status done">✅</div></div>
+      <div class="card"><div class="name">Erwin</div><div>Order: 210</div><div>Send: 213</div><div class="status done">✅</div></div>
+    </div>
 
   </div>
 </body>
