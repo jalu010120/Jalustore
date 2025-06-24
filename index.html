@@ -1,7 +1,7 @@
-<!-- Admin Panel + Buyer Login/Register System - Jalustore --><!DOCTYPE html><html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Panel Jalustore</title>
+  <title>Admin Panel - Jalustore</title>
   <style>
     body {
       background: #1a1a1a;
@@ -9,7 +9,7 @@
       font-family: 'Segoe UI', sans-serif;
       padding: 20px;
     }
-    h1, h2 {
+    h1 {
       text-align: center;
     }
     table {
@@ -22,12 +22,12 @@
       padding: 10px;
       text-align: center;
     }
-    input[type="number"], input[type="text"], input[type="password"] {
-      width: 100%;
-      padding: 6px;
+    input[type="number"] {
+      width: 80px;
       background: #222;
       color: white;
       border: 1px solid #555;
+      padding: 4px;
       border-radius: 5px;
     }
     button {
@@ -38,50 +38,10 @@
       border-radius: 5px;
       cursor: pointer;
     }
-    .login-box {
-      max-width: 300px;
-      margin: 20px auto;
-      padding: 15px;
-      background: #2c2c2c;
-      border-radius: 10px;
-      text-align: center;
-    }
-    #logoutBtn {
-      display: block;
-      margin: 10px auto;
-      background: crimson;
-    }
-    .hidden {
-      display: none;
-    }
   </style>
 </head>
 <body>
-  <h1>📋 Jalustore Panel</h1>  <div class="login-box" id="loginSection">
-    <h2>Login</h2>
-    <input type="text" id="loginUser" placeholder="Nama">
-    <input type="password" id="loginPass" placeholder="Password">
-    <button onclick="loginUser()">Login</button>
-    <p><a href="#" onclick="showRegister()">Daftar</a> | <a href="#" onclick="showReset()">Ubah Password</a></p>
-    <div id="loginMsg"></div>
-  </div>  <div class="login-box hidden" id="registerSection">
-    <h2>Daftar Buyer</h2>
-    <input type="text" id="regUser" placeholder="Nama">
-    <input type="password" id="regPass" placeholder="Password">
-    <button onclick="registerUser()">Daftar</button>
-    <p><a href="#" onclick="showLogin()">Kembali ke Login</a></p>
-    <div id="regMsg"></div>
-  </div>  <div class="login-box hidden" id="resetSection">
-    <h2>Ubah Password</h2>
-    <input type="text" id="resetUser" placeholder="Nama">
-    <input type="password" id="resetOldPass" placeholder="Password Lama">
-    <input type="password" id="resetNewPass" placeholder="Password Baru">
-    <button onclick="resetPassword()">Ubah</button>
-    <p><a href="#" onclick="showLogin()">Kembali ke Login</a></p>
-    <div id="resetMsg"></div>
-  </div><button id="logoutBtn" onclick="logout()" style="display:none">Logout</button>
-
-  <table style="display:none" id="adminTableWrap">
+  <h1>📋 Admin Panel - Edit Orderan Buyer</h1>  <table id="adminTableWrap">
     <thead>
       <tr>
         <th>Nama</th>
@@ -92,82 +52,11 @@
     </thead>
     <tbody id="adminTable"></tbody>
   </table>  <script>
-    const ADMIN_USER = "jalustore";
-    const ADMIN_PASS = "store125800";
-
-    let buyers = JSON.parse(localStorage.getItem("buyersData")) || {};
-
-    function showRegister() {
-      document.getElementById("loginSection").classList.add("hidden");
-      document.getElementById("registerSection").classList.remove("hidden");
-      document.getElementById("resetSection").classList.add("hidden");
-    }
-
-    function showReset() {
-      document.getElementById("loginSection").classList.add("hidden");
-      document.getElementById("registerSection").classList.add("hidden");
-      document.getElementById("resetSection").classList.remove("hidden");
-    }
-
-    function showLogin() {
-      document.getElementById("loginSection").classList.remove("hidden");
-      document.getElementById("registerSection").classList.add("hidden");
-      document.getElementById("resetSection").classList.add("hidden");
-    }
-
-    function registerUser() {
-      const u = document.getElementById("regUser").value;
-      const p = document.getElementById("regPass").value;
-      if (buyers[u]) {
-        document.getElementById("regMsg").innerText = "❌ Nama sudah terdaftar.";
-      } else {
-        buyers[u] = { order: 0, send: 0, pass: p };
-        localStorage.setItem("buyersData", JSON.stringify(buyers));
-        document.getElementById("regMsg").innerText = "✅ Registrasi berhasil.";
-      }
-    }
-
-    function resetPassword() {
-      const u = document.getElementById("resetUser").value;
-      const oldPass = document.getElementById("resetOldPass").value;
-      const newPass = document.getElementById("resetNewPass").value;
-      if (buyers[u] && buyers[u].pass === oldPass) {
-        buyers[u].pass = newPass;
-        localStorage.setItem("buyersData", JSON.stringify(buyers));
-        document.getElementById("resetMsg").innerText = "✅ Password diperbarui.";
-      } else {
-        document.getElementById("resetMsg").innerText = "❌ Nama atau password lama salah.";
-      }
-    }
-
-    function loginUser() {
-      const u = document.getElementById("loginUser").value;
-      const p = document.getElementById("loginPass").value;
-
-      if (u === ADMIN_USER && p === ADMIN_PASS) {
-        showAdminPanel();
-        return;
-      }
-
-      if (buyers[u] && buyers[u].pass === p) {
-        alert(`Selamat datang, ${u}!`);
-        document.getElementById("loginSection").style.display = "none";
-        document.getElementById("logoutBtn").style.display = "block";
-      } else {
-        document.getElementById("loginMsg").innerText = "❌ Nama atau password salah.";
-      }
-    }
-
-    function logout() {
-      location.reload();
-    }
-
-    function showAdminPanel() {
-      document.getElementById("loginSection").style.display = "none";
-      document.getElementById("adminTableWrap").style.display = "table";
-      document.getElementById("logoutBtn").style.display = "block";
-      renderTable();
-    }
+    let buyers = JSON.parse(localStorage.getItem("buyersData")) || {
+      "Angel": { order: 450, send: 260 },
+      "Hira": { order: 360, send: 158 },
+      "Moon": { order: 530, send: 217 }
+    };
 
     function renderTable() {
       const tbody = document.getElementById("adminTable");
@@ -187,10 +76,11 @@
     function save(name) {
       const orderVal = parseInt(document.getElementById(`order_${name}`).value);
       const sendVal = parseInt(document.getElementById(`send_${name}`).value);
-      buyers[name].order = orderVal;
-      buyers[name].send = sendVal;
+      buyers[name] = { order: orderVal, send: sendVal };
       localStorage.setItem("buyersData", JSON.stringify(buyers));
       alert(`✅ Data ${name} telah diperbarui.`);
     }
+
+    renderTable();
   </script></body>
 </html>
