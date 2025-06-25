@@ -1,580 +1,154 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Laporan Pengiriman Heart - JaluStore</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <!-- Font Awesome -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
-  <!-- Google Fonts (Montserrat) -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <title>Dashboard Pengiriman Heart - JaluStore</title>
   <style>
-    :root {
-      --warna-utama: #4a90e2;
-      --warna-sekunder: #b0bec5;
-      --warna-sukses: #2ecc71;
-      --warna-gagal: #e74c3c;
-      --teks-terang: #333;
-      --latar-kartu: #f9f9f9;
-    }
-
-    * {
-      box-sizing: border-box;
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
       margin: 0;
       padding: 0;
+      background: url('https://thatskyshop.com/cdn/shop/files/Page-thatskywallpaper-Portrait-13.jpg?v=1711607986&width=750') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      backdrop-filter: blur(6px);
+      transition: background 0.5s, color 0.5s;
     }
-
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background-color: #e0e7ff;
-      color: var(--teks-terang);
+    .dark-mode {
+      background: #111 !important;
+      color: #f8f8f8;
+    }
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.6);
       min-height: 100vh;
-      overflow-x: hidden;
+      padding: 2rem;
     }
-
-    .lapisan {
-      background: #ffffff;
-      min-height: 100vh;
-      padding: 2rem 1rem;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .navbar {
-      background: #4a90e2;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    }
-
-    .navbar .logo {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: #ffffff;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .navbar .kotak-pencarian {
-      max-width: 300px;
-    }
-
-    .navbar .tombol-mode {
-      background: #ffffff;
-      border: 1px solid #4a90e2;
-      padding: 0.5rem 1rem;
-      color: #4a90e2;
-      font-weight: 600;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .navbar .tombol-mode:hover {
-      background: #4a90e2;
-      color: #ffffff;
-    }
-
-    .header {
+    #live-time {
       text-align: center;
-      margin: 2rem 0;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: #ccc;
     }
-
-    .header h1 {
-      font-size: 2.2rem;
-      font-weight: 700;
-      color: #333;
-      margin-bottom: 0.5rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .header h1 em {
-      color: #4a90e2;
-    }
-
-    #jam-langsung {
-      font-size: 1rem;
-      color: #666;
+    h1 {
       text-align: center;
+      color: #f8f8f8;
       margin-bottom: 2rem;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
     }
-
-    .kontrol-filter {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
+    .toggle-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 999;
     }
-
-    .tombol-urutkan {
-      background: #f9f9f9;
-      border: 1px solid #ddd;
-      padding: 0.5rem 1rem;
-      color: #333;
-      border-radius: 6px;
+    .toggle-button {
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
+      border: none;
+      padding: 0.7rem 1.2rem;
+      color: white;
+      font-weight: bold;
+      border-radius: 8px;
       cursor: pointer;
-      transition: background 0.3s;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     }
-
-    .tombol-urutkan:hover {
-      background: #4a90e2;
-      color: #ffffff;
-    }
-
-    .statistik {
-      background: #f9f9f9;
-      border: 1px solid #ddd;
-      padding: 1rem;
-      border-radius: 8px;
-      margin-bottom: 1.5rem;
-      text-align: center;
-    }
-
-    .grafik-container {
-      background: #ffffff;
-      border: 1px solid #ddd;
-      padding: 1rem;
-      border-radius: 8px;
-      margin-bottom: 2rem;
-      height: 300px;
-    }
-
     .slot {
       margin-bottom: 3rem;
     }
-
-    .judul-slot {
+    .slot-title {
       font-size: 1.5rem;
-      font-weight: 600;
-      background: #4a90e2;
-      color: #ffffff;
-      padding: 0.75rem 1.5rem;
-      border-radius: 8px;
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #007bff, #00c6ff);
+      color: white;
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
+      margin-bottom: 1rem;
     }
-
-    .kontainer-kartu {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .kartu {
-      background: var(--latar-kartu);
-      border: 1px solid #ddd;
-      padding: 1.5rem;
-      border-radius: 12px;
-      transition: transform 0.3s, box-shadow 0.3s;
-      cursor: pointer;
-    }
-
-    .kartu:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .kartu .nama {
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: #4a90e2;
-      margin-bottom: 0.5rem;
-    }
-
-    .kartu .info {
-      font-size: 0.95rem;
-      color: #666;
-      margin-bottom: 0.3rem;
-    }
-
-    .kartu .status {
-      font-weight: 600;
-      font-size: 1rem;
-      margin-top: 0.5rem;
-    }
-
-    .sukses {
-      color: var(--warna-sukses);
-    }
-
-    .gagal {
-      color: var(--warna-gagal);
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 1000;
-    }
-
-    .modal-content {
-      background: #ffffff;
-      border: 1px solid #ddd;
-      padding: 2rem;
-      border-radius: 10px;
-      width: 90%;
-      max-width: 500px;
-      margin: 10% auto;
-      text-align: center;
-    }
-
-    .modal-content .close {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: #666;
-    }
-
-    .game-container {
-      background: #ffffff;
-      border: 1px solid #ddd;
+    .card {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
       padding: 1rem;
-      border-radius: 8px;
-      margin-bottom: 2rem;
-      text-align: center;
-      position: relative;
+      margin: 0.5rem 0;
+      border-radius: 10px;
     }
-
-    #gameCanvas {
-      border: 1px solid #ddd;
-      background: #87ceeb;
-    }
-
-    #score {
-      font-size: 1.2rem;
+    .card .name {
       font-weight: 600;
-      margin-top: 0.5rem;
+      font-size: 1.2rem;
     }
-
-    @media (max-width: 768px) {
-      .navbar {
-        flex-direction: column;
-        gap: 1rem;
-      }
-
-      .navbar .kotak-pencarian {
-        max-width: 100%;
-      }
-
-      .header h1 {
-        font-size: 1.8rem;
-      }
-
-      .kontainer-kartu {
-        grid-template-columns: 1fr;
-      }
-
-      .kontrol-filter {
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-
-      .grafik-container {
-        height: 200px;
-      }
-
-      .game-container {
-        height: 200px;
-      }
+    .status {
+      font-weight: bold;
     }
+    .done { color: #2ecc71; }
+    .fail { color: #e74c3c; }
   </style>
+  <script>
+    function updateTime() {
+      const now = new Date();
+      const waktu = now.toLocaleString('id-ID', {
+        hour: '2-digit', minute: '2-digit', second: '2-digit'
+      });
+      document.getElementById('live-time').textContent = '⏰ Live Jam: ' + waktu;
+    }function toggleDarkMode() {
+  document.body.classList.toggle('dark-mode');
+}
+
+setInterval(updateTime, 1000);
+window.onload = updateTime;
+
+  </script>
 </head>
 <body>
-  <!-- Navbar -->
-  <nav class="navbar">
-    <a href="#" class="logo"><i class="fas fa-heart"></i> JaluStore</a>
-    <div class="d-flex align-items-center gap-2">
-      <input type="text" id="inputPencarian" class="form-control kotak-pencarian" placeholder="Cari nama..." oninput="cariKartu()" />
-      <button class="tombol-mode" onclick="ubahModeGelap()"><i class="fas fa-moon"></i> Mode Gelap</button>
+  <div class="overlay">
+    <div class="toggle-container">
+      <button class="toggle-button" onclick="toggleDarkMode()">🌓 Dark Mode</button>
     </div>
-  </nav>
+    <div id="live-time"></div>
+    <h1>📦 Laporan Pengiriman Heart - <em>JaluStore</em></h1><div class="slot">
+  <div class="slot-title">Slot 1</div>
+  <div class="card"><div class="name">Angel</div><div>Order: 450</div><div>Send: 260</div><div class="status fail">Status: ❌</div></div>
+  <div class="card"><div class="name">Husna</div><div>Order: 450</div><div>Send: 257</div><div class="status fail">Status: ❌</div></div>
+  <div class="card"><div class="name">Mursyid</div><div>Order: 320</div><div>Send: 50</div></div>
+  <div class="card"><div class="name">Nanda</div><div>Order: 210</div><div>Send: 200</div></div>
+  <div class="card"><div class="name">Alvin</div><div>Order: 210</div><div>Send: 180</div></div>
+  <div class="card"><div class="name">Ira</div><div>Order: 150</div><div>Send: 120</div></div>
+  <div class="card"><div class="name">Kael</div><div>Order: 120</div><div>Send: 100</div></div>
+  <div class="card"><div class="name">Angel2</div><div>Order: 600</div><div>Send: 240</div></div>
+  <div class="card"><div class="name">Aelia</div><div>Order: 100</div><div>Send: 60</div></div>
+  <div class="card"><div class="name">Tsabyy</div><div>Order: 100</div><div>Send: 40</div></div>
+  <div class="card"><div class="name">Fida</div><div>Order: 100</div><div>Send: 20</div></div>
+</div>
 
-  <!-- Lapisan -->
-  <div class="lapisan">
-    <!-- Header -->
-    <div class="header">
-      <h1><i class="fas fa-heart"></i> Laporan Pengiriman Heart - <em>JaluStore</em></h1>
-    </div>
+<div class="slot">
+  <div class="slot-title">Slot 2</div>
+  <div class="card"><div class="name">Ayu</div><div>Order: 1000</div><div>Send: 989</div></div>
+  <div class="card"><div class="name">Anna</div><div>Order: 600</div><div>Send: 577</div></div>
+  <div class="card"><div class="name">Moon</div><div>Order: 530</div><div>Send: 226</div></div>
+  <div class="card"><div class="name">Hira</div><div>Order: 360</div><div>Send: 178</div></div>
+  <div class="card"><div class="name">Sea</div><div>Order: 150</div><div>Send: 101</div><div class="status fail">Status: ❌</div></div>
+  <div class="card"><div class="name">Zee</div><div>Order: 150</div><div>Send: 111</div><div class="status fail">Status: ❌</div></div>
+  <div class="card"><div class="name">Joy</div><div>Order: 320</div><div>Send: 200</div></div>
+  <div class="card"><div class="name">Xen</div><div>Order: 210</div><div>Send: 200</div></div>
+  <div class="card"><div class="name">Harbie</div><div>Order: 200</div><div>Send: 120</div></div>
+  <div class="card"><div class="name">Aze</div><div>Order: 570</div><div>Send: 80</div></div>
+  <div class="card"><div class="name">Sena</div><div>Order: 570</div><div>Send: 80</div></div>
+  <div class="card"><div class="name">Raine</div><div>Order: 100</div><div>Send: 60</div></div>
+</div>
 
-    <!-- Jam Langsung -->
-    <div id="jam-langsung"></div>
+<div class="slot">
+  <div class="slot-title">Slot 3</div>
+  <div class="card"><div class="name">Kiki</div><div>Order: 450</div><div>Send: 384</div><div class="status fail">Status: ❌</div></div>
+  <div class="card"><div class="name">Tobias</div><div>Order: 500</div><div>Send: 235</div><div class="status fail">Status: ❌</div></div>
+  <div class="card"><div class="name">Luna</div><div>Order: 800</div><div>Send: 615</div><div class="status fail">Status: ❌</div></div>
+  <div class="card"><div class="name">Ney</div><div>Order: 3540</div><div>Send: 2805</div><div class="status fail">Status: ❌</div></div>
+  <div class="card"><div class="name">Araba</div><div>Order: 150</div><div>Send: 75</div><div class="status fail">Status: ❌</div></div>
+</div>
 
-    <!-- Grafik -->
-    <div class="grafik-container">
-      <canvas id="grafikPengiriman"></canvas>
-    </div>
+<div class="slot">
+  <div class="slot-title">🗂️ Riwayat Orderan (Selesai ✅)</div>
+  <div class="card"><div class="name">Lusi</div><div>Order: 600</div><div>Send: 600</div><div class="status done">Status: ✅</div></div>
+  <div class="card"><div class="name">Sam</div><div>Order: 210</div><div>Send: 213</div><div class="status done">Status: ✅</div></div>
+  <div class="card"><div class="name">Erwin</div><div>Order: 210</div><div>Send: 213</div><div class="status done">Status: ✅</div></div>
+</div>
 
-    <!-- Game Mini -->
-    <div class="game-container">
-      <h3>Game Mini: Terbang Mengumpulkan Cahaya</h3>
-      <canvas id="gameCanvas" width="400" height="200"></canvas>
-      <div id="score">Skor: 0</div>
-      <button id="startGame" onclick="startGame()">Mulai Game</button>
-      <p>Gunakan panah atas untuk terbang dan kumpulkan cahaya!</p>
-    </div>
-
-    <!-- Slot -->
-    <div class="slot">
-      <div class="judul-slot"><i class="fas fa-clipboard-list"></i> Slot 1</div>
-      <div class="statistik">Total Order: <span id="total-order-slot1">0</span> | Total Terkirim: <span id="total-terkirim-slot1">0</span></div>
-      <div class="kontrol-filter">
-        <button class="tombol-urutkan" onclick="urutkanKartu('asc', 'slot1')">Urutkan (Naik)</button>
-        <button class="tombol-urutkan" onclick="urutkanKartu('desc', 'slot1')">Urutkan (Turun)</button>
-      </div>
-      <div class="kontainer-kartu" id="kontainer-kartu-slot1">
-        <div class="kartu" data-nama="Angel" data-order="450" data-terkirim="260" data-status="gagal" onclick="tampilModal(this)">
-          <div class="nama">Angel</div>
-          <div class="info">Order: 450</div>
-          <div class="info">Terkirim: 260</div>
-          <div class="status gagal">Status: ❌</div>
-        </div>
-        <div class="kartu" data-nama="Husna" data-order="450" data-terkirim="257" data-status="gagal" onclick="tampilModal(this)">
-          <div class="nama">Husna</div>
-          <div class="info">Order: 450</div>
-          <div class="info">Terkirim: 257</div>
-          <div class="status gagal">Status: ❌</div>
-        </div>
-        <div class="kartu" data-nama="Mursyid" data-order="320" data-terkirim="50" data-status="" onclick="tampilModal(this)">
-          <div class="nama">Mursyid</div>
-          <div class="info">Order: 320</div>
-          <div class="info">Terkirim: 50</div>
-        </div>
-        <div class="kartu" data-nama="Nanda" data-order="210" data-terkirim="200" data-status="" onclick="tampilModal(this)">
-          <div class="nama">Nanda</div>
-          <div class="info">Order: 210</div>
-          <div class="info">Terkirim: 200</div>
-        </div>
-        <div class="kartu" data-nama="Alvin" data-order="210" data-terkirim="180" data-status="" onclick="tampilModal(this)">
-          <div class="nama">Alvin</div>
-          <div class="info">Order: 210</div>
-          <div class="info">Terkirim: 180</div>
-        </div>
-        <div class="kartu" data-nama="Ira" data-order="150" data-terkirim="120" data-status="" onclick="tampilModal(this)">
-          <div class="nama">Ira</div>
-          <div class="info">Order: 150</div>
-          <div class="info">Terkirim: 120</div>
-        </div>
-        <div class="kartu" data-nama="Kael" data-order="120" data-terkirim="100" data-status="" onclick="tampilModal(this)">
-          <div class="nama">Kael</div>
-          <div class="info">Order: 120</div>
-          <div class="info">Terkirim: 100</div>
-        </div>
-        <div class="kartu" data-nama="Angel2" data-order="600" data-terkirim="240" data-status="" onclick="tampilModal(this)">
-          <div class="nama">Angel2</div>
-          <div class="info">Order: 600</div>
-          <div class="info">Terkirim: 240</div>
-        </div>
-        <div class="kartu" data-nama="Aelia" data-order="100" data-terkirim="60" data-status="" onclick="tampilModal(this)">
-          <div class="nama">Aelia</div>
-          <div class="info">Order: 100</div>
-          <div class="info">Terkirim: 60</div>
-        </div>
-        <div class="kartu" data-nama="Tsabyy" data-order="100" data-terkirim="40" data-status="" onclick="tampilModal(this)">
-          <div class="nama">Tsabyy</div>
-          <div class="info">Order: 100</div>
-          <div class="info">Terkirim: 40</div>
-        </div>
-        <div class="kartu" data-nama="Fida" data-order="100" data-terkirim="20" data-status="" onclick="tampilModal(this)">
-          <div class="nama">Fida</div>
-          <div class="info">Order: 100</div>
-          <div class="info">Terkirim: 20</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="slot">
-      <div class="judul-slot"><i class="fas fa-clipboard-list"></i> Slot 2</div>
-      <div class="statistik">Total Order: <span id="total-order-slot2">0</span> | Total Terkirim: <span id="total-terkirim-slot2">0</span></div>
-      <div class="kontrol-filter">
-        <button class="tombol-urutkan" onclick="urutkanKartu('asc', 'slot2')">Urutkan (Naik)</button>
-        <button class="tombol-urutkan" onclick="urutkanKartu('desc', 'slot2')">Urutkan (Turun)</button>
-      </div>
-      <div class="kontainer-kartu" id="kontainer-kartu-slot2">
-        <div class="kartu" data-nama="Ayu" data-order="1000" data-terkirim="989" data-status="" onclick="tampilModal(this)">
-          <div class="nama">Ayu</div>
-          <div class="info">Order: 1000</div>
-          <div class="info">Terkirim: 989</div>
-        </div>
-        <div class="kartu" data-nama="Anna" data-order="600" data-terkirim="577" data-status="" onclick="tampilModal(this)">
-          <div class="nama">Anna</div>
-          <div class="info">Order: 600</div>
-          <div class="info">Terkirim: 577</div>
-        </div>
-        <div class="kartu" data-nama="Moon" data-order="530" data-terkirim="226" data-status="" onclick="tampilModal(this)">
-          <div class="nama">Moon</div>
-          <div class="info">Order: 530</div>
-          <div class="info">Terkirim: 226</div>
-        </div>
-        <div class="kartu" data-nama="Hira" data-order="360" data-terkirim="178" data-status="" onclick="tampilModal(this)">
-          <div class="nama">Hira</div>
-          <div class="info">Order: 360</div>
-          <div class="info">Terkirim: 178</div>
-        </div>
-        <div class="kartu" data-nama="Sea" data-order="150" data-terkirim="101" data-status="gagal" onclick="tampilModal(this)">
-          <div class="nama">Sea</div>
-          <div class="info">Order: 150</div>
-          <div class="info">Terkirim: 101</div>
-          <div class="status gagal">Status: ❌</div>
-        </div>
-        <div class="kartu" data-nama="Zee" data-order="150" data-terkirim="111" data-status="gagal" onclick="tampilModal(this)">
-          <div class="nama">Zee</div>
-          <div class="info">Order: 150</div>
-          <div class="info">Terkirim: 111</div>
-          <div class="status gagal">Status: ❌</div>
-        </div>
-        <div class="kartu" data-nama="Joy" data-order="320" data-terkirim="200" data-status="" onclick="tampilModal(this)">
-          <div class="nama">Joy</div>
-          <div class="info">Order: 320</div>
-          <div class="info">Terkirim: 200</div>
-        </div>
-        <div class="kartu" data-nama="Xen" data-order="210" data-terkirim="200" data-status="" onclick="tampilModal(this)">
-          <div class="nama">Xen</div>
-          <div class="info">Order: 210</div>
-          <div class="info">Terkirim: 200</div>
-        </div>
-        <div class="kartu" data-nama="Harbie" data-order="200" data-terkirim="120" data-status="" onclick="tampilModal(this)">
-          <div class="nama">Harbie</div>
-          <div class="info">Order: 200</div>
-          <div class="info">Terkirim: 120</div>
-        </div>
-        <div class="kartu" data-nama="Aze" data-order="570" data-terkirim="80" data-status="" onclick="tampilModal(this)">
-          <div class="nama">Aze</div>
-          <div class="info">Order: 570</div>
-          <div class="info">Terkirim: 80</div>
-        </div>
-        <div class="kartu" data-nama="Sena" data-order="570" data-terkirim="80" data-status="" onclick="tampilModal(this)">
-          <div class="nama">Sena</div>
-          <div class="info">Order: 570</div>
-          <div class="info">Terkirim: 80</div>
-        </div>
-        <div class="kartu" data-nama="Raine" data-order="100" data-terkirim="60" data-status="" onclick="tampilModal(this)">
-          <div class="nama">Raine</div>
-          <div class="info">Order: 100</div>
-          <div class="info">Terkirim: 60</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="slot">
-      <div class="judul-slot"><i class="fas fa-clipboard-list"></i> Slot 3</div>
-      <div class="statistik">Total Order: <span id="total-order-slot3">0</span> | Total Terkirim: <span id="total-terkirim-slot3">0</span></div>
-      <div class="kontrol-filter">
-        <button class="tombol-urutkan" onclick="urutkanKartu('asc', 'slot3')">Urutkan (Naik)</button>
-        <button class="tombol-urutkan" onclick="urutkanKartu('desc', 'slot3')">Urutkan (Turun)</button>
-      </div>
-      <div class="kontainer-kartu" id="kontainer-kartu-slot3">
-        <div class="kartu" data-nama="Kiki" data-order="450" data-terkirim="384" data-status="gagal" onclick="tampilModal(this)">
-          <div class="nama">Kiki</div>
-          <div class="info">Order: 450</div>
-          <div class="info">Terkirim: 384</div>
-          <div class="status gagal">Status: ❌</div>
-        </div>
-        <div class="kartu" data-nama="Tobias" data-order="500" data-terkirim="235" data-status="gagal" onclick="tampilModal(this)">
-          <div class="nama">Tobias</div>
-          <div class="info">Order: 500</div>
-          <div class="info">Terkirim: 235</div>
-          <div class="status gagal">Status: ❌</div>
-        </div>
-        <div class="kartu" data-nama="Luna" data-order="800" data-terkirim="615" data-status="gagal" onclick="tampilModal(this)">
-          <div class="nama">Luna</div>
-          <div class="info">Order: 800</div>
-          <div class="info">Terkirim: 615</div>
-          <div class="status gagal">Status: ❌</div>
-        </div>
-        <div class="kartu" data-nama="Ney" data-order="3540" data-terkirim="2805" data-status="gagal" onclick="tampilModal(this)">
-          <div class="nama">Ney</div>
-          <div class="info">Order: 3540</div>
-          <div class="info">Terkirim: 2805</div>
-          <div class="status gagal">Status: ❌</div>
-        </div>
-        <div class="kartu" data-nama="Araba" data-order="150" data-terkirim="75" data-status="gagal" onclick="tampilModal(this)">
-          <div class="nama">Araba</div>
-          <div class="info">Order: 150</div>
-          <div class="info">Terkirim: 75</div>
-          <div class="status gagal">Status: ❌</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="slot">
-      <div class="judul-slot"><i class="fas fa-check-circle"></i> Riwayat Orderan (Selesai ✅)</div>
-      <div class="statistik">Total Order: <span id="total-order-slot4">0</span> | Total Terkirim: <span id="total-terkirim-slot4">0</span></div>
-      <div class="kontrol-filter">
-        <button class="tombol-urutkan" onclick="urutkanKartu('asc', 'slot4')">Urutkan (Naik)</button>
-        <button class="tombol-urutkan" onclick="urutkanKartu('desc', 'slot4')">Urutkan (Turun)</button>
-      </div>
-      <div class="kontainer-kartu" id="kontainer-kartu-slot4">
-        <div class="kartu" data-nama="Lusi" data-order="600" data-terkirim="600" data-status="sukses" onclick="tampilModal(this)">
-          <div class="nama">Lusi</div>
-          <div class="info">Order: 600</div>
-          <div class="info">Terkirim: 600</div>
-          <div class="status sukses">Status: ✅</div>
-        </div>
-        <div class="kartu" data-nama="Sam" data-order="210" data-terkirim="213" data-status="sukses" onclick="tampilModal(this)">
-          <div class="nama">Sam</div>
-          <div class="info">Order: 210</div>
-          <div class="info">Terkirim: 213</div>
-          <div class="status sukses">Status: ✅</div>
-        </div>
-        <div class="kartu" data-nama="Erwin" data-order="210" data-terkirim="213" data-status="sukses" onclick="tampilModal(this)">
-          <div class="nama">Erwin</div>
-          <div class="info">Order: 210</div>
-          <div class="info">Terkirim: 213</div>
-          <div class="status sukses">Status: ✅</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal -->
-    <div id="modal" class="modal">
-      <div class="modal-content">
-        <span class="close" onclick="tutupModal()">×</span>
-        <h2 id="modal-nama"></h2>
-        <p id="modal-order"></p>
-        <p id="modal-terkirim"></p>
-        <p id="modal-status"></p>
-        <p id="modal-tanggal"></p>
-        <p id="modal-catatan">Catatan: Pengiriman sedang diproses</p>
-      </div>
-    </div>
   </div>
-
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    let grafik;
-
-    // Perbarui Jam Langsung
-    function perbaruiJam() {
-      const sekarang = new Date();
-      const waktu = sekarang.toLocaleString('id-ID', {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-      });
-      document.getElementById('jam-langsung').textContent = `⏰ Jam Langsung: ${waktu} WIB, ${sekarang.toLocaleDateString('id-ID', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' })}`;
-      document.getElementById('modal-tanggal').textContent = `Tanggal: ${sekarang.toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' })}`;
-    }
-
-    //
+</body>
+</html>
