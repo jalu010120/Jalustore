@@ -1,154 +1,371 @@
-<!DOCTYPE html><html lang="id">
+<!DOCTYPE html>
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard Pengiriman Heart - JaluStore</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
   <style>
-    * { box-sizing: border-box; }
+    :root {
+      --primary-color: #007bff;
+      --secondary-color: #6c757d;
+      --success-color: #28a745;
+      --danger-color: #dc3545;
+      --bg-light: #f8f9fa;
+      --bg-dark: #1a1d20;
+      --text-dark: #212529;
+      --text-light: #fff;
+    }
+
+    * {
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+
     body {
-      font-family: 'Segoe UI', Tahoma, sans-serif;
+      font-family: 'Poppins', sans-serif;
       margin: 0;
-      padding: 0;
-      background: url('https://thatskyshop.com/cdn/shop/files/Page-thatskywallpaper-Portrait-13.jpg?v=1711607986&width=750') no-repeat center center fixed;
+      background: url('https://thatskywallpaper.com/wp-content/uploads/2023/11/ThatSkyGame_Wallpaper_1080p_013-scaled.jpg') no-repeat center center fixed;
       background-size: cover;
-      color: #fff;
-      backdrop-filter: blur(6px);
-      transition: background 0.5s, color 0.5s;
-    }
-    .dark-mode {
-      background: #111 !important;
-      color: #f8f8f8;
-    }
-    .overlay {
-      background-color: rgba(0, 0, 0, 0.6);
+      color: var(--text-light);
       min-height: 100vh;
-      padding: 2rem;
+      overflow-x: hidden;
     }
-    #live-time {
-      text-align: center;
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-      color: #ccc;
+
+    .dark-mode {
+      background: var(--bg-dark) !important;
+      color: var(--text-light);
     }
-    h1 {
-      text-align: center;
-      color: #f8f8f8;
+
+    .overlay {
+      background: rgba(0, 0, 0, 0.65);
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    .sidebar {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 250px;
+      padding: 1.5rem;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+    }
+
+    .sidebar.active {
+      transform: translateX(0);
+    }
+
+    .sidebar .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-light);
       margin-bottom: 2rem;
-      text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
     }
-    .toggle-container {
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      margin-bottom: 1rem;
+    }
+
+    .sidebar ul li a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .sidebar ul li a:hover {
+      color: var(--primary-color);
+    }
+
+    .sidebar-toggle {
       position: fixed;
       top: 20px;
-      right: 20px;
+      left: 20px;
       z-index: 999;
-    }
-    .toggle-button {
-      background: linear-gradient(45deg, #6a11cb, #2575fc);
+      background: var(--primary-color);
       border: none;
-      padding: 0.7rem 1.2rem;
-      color: white;
-      font-weight: bold;
-      border-radius: 8px;
+      color: var(--text-light);
+      padding: 0.5rem;
+      border-radius: 5px;
       cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      margin-bottom: 2rem;
+      border-radius: 10px;
+    }
+
+    .header h1 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin: 0;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .search-bar {
+      max-width: 300px;
+    }
+
+    #live-time {
+      font-size: 1rem;
+      color: #ccc;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
     .slot {
       margin-bottom: 3rem;
     }
+
     .slot-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      background: linear-gradient(90deg, #007bff, #00c6ff);
-      color: white;
-      padding: 0.75rem 1rem;
-      border-radius: 6px;
-      margin-bottom: 1rem;
-    }
-    .card {
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.2);
-      padding: 1rem;
-      margin: 0.5rem 0;
-      border-radius: 10px;
-    }
-    .card .name {
+      font-size: 1.4rem;
       font-weight: 600;
-      font-size: 1.2rem;
+      background: linear-gradient(90deg, var(--primary-color), #00c6ff);
+      color: var(--text-light);
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
-    .status {
-      font-weight: bold;
+
+    .card {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      border-radius: 12px;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-    .done { color: #2ecc71; }
-    .fail { color: #e74c3c; }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .card .name {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--text-light);
+    }
+
+    .card .status {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .done {
+      color: var(--success-color);
+    }
+
+    .fail {
+      color: var(--danger-color);
+    }
+
+    .toggle-button {
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
+      border: none;
+      padding: 0.6rem 1.2rem;
+      color: var(--text-light);
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .toggle-button:hover {
+      background: linear-gradient(45deg, #2575fc, #6a11cb);
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 200px;
+      }
+
+      .header h1 {
+        font-size: 1.5rem;
+      }
+
+      .search-bar {
+        max-width: 100%;
+      }
+
+      .card {
+        padding: 1rem;
+      }
+    }
   </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <div class="logo">JaluStore</div>
+    <ul>
+      <li><a href="#"><i class="fas fa-home"></i> Dashboard</a></li>
+      <li><a href="#"><i class="fas fa-box"></i> Orders</a></li>
+      <li><a href="#"><i class="fas fa-users"></i> Customers</a></li>
+      <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+    </ul>
+  </div>
+
+  <!-- Sidebar Toggle Button -->
+  <button class="sidebar-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+
+  <div class="overlay">
+    <!-- Header -->
+    <div class="header">
+      <h1><i class="fas fa-truck"></i> Laporan Pengiriman Heart - <em>JaluStore</em></h1>
+      <div class="d-flex align-items-center gap-2">
+        <input type="text" id="searchInput" class="form-control search-bar" placeholder="Cari nama..." oninput="searchCards()" />
+        <button class="toggle-button" onclick="toggleDarkMode()"><i class="fas fa-moon"></i> Dark Mode</button>
+      </div>
+    </div>
+
+    <!-- Live Time -->
+    <div id="liveTime"></div>
+
+    <!-- Slots -->
+    <div class="slot">
+      <div class="slot-title"><i class="fas fa-clipboard-list"></i> Slot 1-2</div>
+      <div>
+
+      <!-- Slot 1 -->
+      <div class="card" data-name="Angel">
+        <div class="name">Angel</div>
+        <div>Order: 450</div>
+        <div>Send: 260</div>
+        <div class="status fail">Status: ❌</div>
+      </div>
+      <div class="card" data-name="Husna">
+        <div class="name">Husna</div>
+        <div>Order: 450</div>
+        <div>Send: 257</div>
+        <div class="status fail">Status: ❌</div>
+      </div>
+      <div class="card" data-name="Mursyid">
+        <div class="name">Mursyid</div>
+        <div>Order: 320</div>
+        <div>Send: 50</div>
+      </div>
+      <div class="card" data-name="Nanda">
+        <div class="name">Nanda</div>
+        <div>Order: 210</div>
+        <div>Send: 200</div>
+      </div>
+      <div> Add more cards as needed... </div>
+      <div class="card" data-name="Ayu">
+        <div class="name">Ayu</div>
+        <div>Order: 1000</div>
+        <div>Send: 989</div>
+      </div>
+      <div class="card" data-name="Anna">
+        <div class="name">Anna</div>
+        <div>Order: 600</div>
+        <div>Send: 577</div>
+      </div>
+      <!-- Add more cards as needed... -->
+
+    <div class="slot">
+      <div class="slot-title"><i class="fas fa-clipboard-list"></i> Slot 3</div>
+      <div class="card" data-name="Kiki">
+        <div class="name">Kiki</div>
+        <div>Order: 450</div>
+        <div>Send: 384</div>
+        <div class="status fail">Status: ❌</div>
+      </div>
+      <div class="card" data-name="Tobias">
+        <div class="name">Tobias</div>
+        <div>Order: 500</div>
+        <div>Send: 235</div>
+        <div class="status fail">Status: ❌</div>
+      </div>
+      <!-- Add more cards as needed... -->
+    </div>
+
+    <div class="slot">
+      <div class="slot-title"><i class="fas fa-check-circle"></i> Riwayat Orderan (Selesai ✅)</div>
+      <div class="card" data-name="Lusi">
+        <div class="name">Lusi</div>
+        <div>Order: 600</div>
+        <div>Send: 600</div>
+        <div class="status done">Status: ✅</div>
+      </div>
+      <div class="card" data-name="Sam">
+        <div class="name">Sam</div>
+        <div>Order: 210</div>
+        <div>Send: 213</div>
+        <div class="status done">Status: ✅</div>
+      </div>
+      <!-- Add more cards as needed... -->
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
+    // Update Live Time
     function updateTime() {
       const now = new Date();
       const waktu = now.toLocaleString('id-ID', {
-        hour: '2-digit', minute: '2-digit', second: '2-digit'
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
       });
-      document.getElementById('live-time').textContent = '⏰ Live Jam: ' + waktu;
-    }function toggleDarkMode() {
-  document.body.classList.toggle('dark-mode');
-}
+      document.getElementById('liveTime').textContent = `⏰ Live Jam: ${waktu}`;
+    }
 
-setInterval(updateTime, 1000);
-window.onload = updateTime;
+    // Toggle Dark Mode
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+    }
 
+    // Toggle Sidebar
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('active');
+    }
+
+    // Search Cards
+    function searchCards() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      const cards = document.querySelectorAll('.card');
+      cards.forEach((card) => {
+        const name = card.getAttribute('data-name').toLowerCase();
+        card.style.display = name.includes(input) ? 'block' : 'none';
+      });
+    }
+
+    // Initialize
+    setInterval(updateTime, 1000);
+    window.onload = () => {
+      updateTime();
+      if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+      }
+    };
   </script>
-</head>
-<body>
-  <div class="overlay">
-    <div class="toggle-container">
-      <button class="toggle-button" onclick="toggleDarkMode()">🌓 Dark Mode</button>
-    </div>
-    <div id="live-time"></div>
-    <h1>📦 Laporan Pengiriman Heart - <em>JaluStore</em></h1><div class="slot">
-  <div class="slot-title">Slot 1</div>
-  <div class="card"><div class="name">Angel</div><div>Order: 450</div><div>Send: 260</div><div class="status fail">Status: ❌</div></div>
-  <div class="card"><div class="name">Husna</div><div>Order: 450</div><div>Send: 257</div><div class="status fail">Status: ❌</div></div>
-  <div class="card"><div class="name">Mursyid</div><div>Order: 320</div><div>Send: 50</div></div>
-  <div class="card"><div class="name">Nanda</div><div>Order: 210</div><div>Send: 200</div></div>
-  <div class="card"><div class="name">Alvin</div><div>Order: 210</div><div>Send: 180</div></div>
-  <div class="card"><div class="name">Ira</div><div>Order: 150</div><div>Send: 120</div></div>
-  <div class="card"><div class="name">Kael</div><div>Order: 120</div><div>Send: 100</div></div>
-  <div class="card"><div class="name">Angel2</div><div>Order: 600</div><div>Send: 240</div></div>
-  <div class="card"><div class="name">Aelia</div><div>Order: 100</div><div>Send: 60</div></div>
-  <div class="card"><div class="name">Tsabyy</div><div>Order: 100</div><div>Send: 40</div></div>
-  <div class="card"><div class="name">Fida</div><div>Order: 100</div><div>Send: 20</div></div>
-</div>
-
-<div class="slot">
-  <div class="slot-title">Slot 2</div>
-  <div class="card"><div class="name">Ayu</div><div>Order: 1000</div><div>Send: 989</div></div>
-  <div class="card"><div class="name">Anna</div><div>Order: 600</div><div>Send: 577</div></div>
-  <div class="card"><div class="name">Moon</div><div>Order: 530</div><div>Send: 226</div></div>
-  <div class="card"><div class="name">Hira</div><div>Order: 360</div><div>Send: 178</div></div>
-  <div class="card"><div class="name">Sea</div><div>Order: 150</div><div>Send: 101</div><div class="status fail">Status: ❌</div></div>
-  <div class="card"><div class="name">Zee</div><div>Order: 150</div><div>Send: 111</div><div class="status fail">Status: ❌</div></div>
-  <div class="card"><div class="name">Joy</div><div>Order: 320</div><div>Send: 200</div></div>
-  <div class="card"><div class="name">Xen</div><div>Order: 210</div><div>Send: 200</div></div>
-  <div class="card"><div class="name">Harbie</div><div>Order: 200</div><div>Send: 120</div></div>
-  <div class="card"><div class="name">Aze</div><div>Order: 570</div><div>Send: 80</div></div>
-  <div class="card"><div class="name">Sena</div><div>Order: 570</div><div>Send: 80</div></div>
-  <div class="card"><div class="name">Raine</div><div>Order: 100</div><div>Send: 60</div></div>
-</div>
-
-<div class="slot">
-  <div class="slot-title">Slot 3</div>
-  <div class="card"><div class="name">Kiki</div><div>Order: 450</div><div>Send: 384</div><div class="status fail">Status: ❌</div></div>
-  <div class="card"><div class="name">Tobias</div><div>Order: 500</div><div>Send: 235</div><div class="status fail">Status: ❌</div></div>
-  <div class="card"><div class="name">Luna</div><div>Order: 800</div><div>Send: 615</div><div class="status fail">Status: ❌</div></div>
-  <div class="card"><div class="name">Ney</div><div>Order: 3540</div><div>Send: 2805</div><div class="status fail">Status: ❌</div></div>
-  <div class="card"><div class="name">Araba</div><div>Order: 150</div><div>Send: 75</div><div class="status fail">Status: ❌</div></div>
-</div>
-
-<div class="slot">
-  <div class="slot-title">🗂️ Riwayat Orderan (Selesai ✅)</div>
-  <div class="card"><div class="name">Lusi</div><div>Order: 600</div><div>Send: 600</div><div class="status done">Status: ✅</div></div>
-  <div class="card"><div class="name">Sam</div><div>Order: 210</div><div>Send: 213</div><div class="status done">Status: ✅</div></div>
-  <div class="card"><div class="name">Erwin</div><div>Order: 210</div><div>Send: 213</div><div class="status done">Status: ✅</div></div>
-</div>
-
-  </div>
 </body>
-</html>
+    </html>
