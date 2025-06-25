@@ -10,13 +10,14 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     :root {
       --warna-utama: #4a90e2;
       --warna-sekunder: #b0bec5;
       --warna-sukses: #2ecc71;
       --warna-gagal: #e74c3c;
-      --latar-gelap: #0a0e1a;
       --teks-terang: #e0e7ff;
       --latar-kartu: rgba(255, 255, 255, 0.05);
     }
@@ -30,9 +31,8 @@
 
     body {
       font-family: 'Montserrat', sans-serif;
-      background: linear-gradient(180deg, #0a0e1a, #1e2746);
+      background: url('https://thatskyshop.com/cdn/shop/files/Page-thatskywallpaper-Portrait-10.png?v=1704243404&width=750') no-repeat center center fixed;
       background-size: cover;
-      background-attachment: fixed;
       color: var(--teks-terang);
       min-height: 100vh;
       overflow-x: hidden;
@@ -40,7 +40,7 @@
     }
 
     .mode-gelap {
-      background: linear-gradient(180deg, #1e2746, #0a0e1a) !important;
+      background: linear-gradient(180deg, rgba(10, 14, 26, 0.7), rgba(30, 39, 70, 0.7)) !important;
     }
 
     .lapisan {
@@ -120,6 +120,58 @@
       margin-bottom: 2rem;
     }
 
+    .kontrol-filter {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .tombol-filter {
+      background: var(--latar-kartu);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.5rem 1rem;
+      color: var(--teks-terang);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .tombol-filter:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .tombol-urutkan {
+      background: var(--latar-kartu);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.5rem 1rem;
+      color: var(--teks-terang);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .tombol-urutkan:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .statistik {
+      background: var(--latar-kartu);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .grafik-container {
+      background: var(--latar-kartu);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      height: 300px;
+    }
+
     .slot {
       margin-bottom: 3rem;
       animation: muncul 0.5s ease-in;
@@ -187,6 +239,38 @@
       color: var(--warna-gagal);
     }
 
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: var(--latar-kartu);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 2rem;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 500px;
+      margin: 10% auto;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+
+    .modal-content .close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--teks-terang);
+    }
+
     @keyframes muncul {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -208,6 +292,15 @@
 
       .kontainer-kartu {
         grid-template-columns: 1fr;
+      }
+
+      .kontrol-filter {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .grafik-container {
+        height: 200px;
       }
     }
   </style>
@@ -232,63 +325,76 @@
     <!-- Jam Langsung -->
     <div id="jam-langsung"></div>
 
+    <!-- Grafik -->
+    <div class="grafik-container">
+      <canvas id="grafikPengiriman"></canvas>
+    </div>
+
     <!-- Slot -->
     <div class="slot">
       <div class="judul-slot"><i class="fas fa-clipboard-list"></i> Slot 1</div>
-      <div class="kontainer-kartu">
-        <div class="kartu" data-nama="Angel">
+      <div class="statistik">Total Order: <span id="total-order-slot1">0</span> | Total Terkirim: <span id="total-terkirim-slot1">0</span></div>
+      <div class="kontrol-filter">
+        <button class="tombol-filter" onclick="filterStatus('all', 'slot1')">Semua</button>
+        <button class="tombol-filter" onclick="filterStatus('sukses', 'slot1')">Sukses</button>
+        <button class="tombol-filter" onclick="filterStatus('gagal', 'slot1')">Gagal</button>
+        <button class="tombol-urutkan" onclick="urutkanKartu('asc', 'slot1')">Urutkan (Naik)</button>
+        <button class="tombol-urutkan" onclick="urutkanKartu('desc', 'slot1')">Urutkan (Turun)</button>
+      </div>
+      <div class="kontainer-kartu" id="kontainer-kartu-slot1">
+        <div class="kartu" data-nama="Angel" data-order="450" data-terkirim="260" data-status="gagal" onclick="tampilModal(this)">
           <div class="nama">Angel</div>
           <div class="info">Order: 450</div>
           <div class="info">Terkirim: 260</div>
           <div class="status gagal">Status: ❌</div>
         </div>
-        <div class="kartu" data-nama="Husna">
+        <div class="kartu" data-nama="Husna" data-order="450" data-terkirim="257" data-status="gagal" onclick="tampilModal(this)">
           <div class="nama">Husna</div>
           <div class="info">Order: 450</div>
           <div class="info">Terkirim: 257</div>
           <div class="status gagal">Status: ❌</div>
         </div>
-        <div class="kartu" data-nama="Mursyid">
+        <div class="kartu" data-nama="Mursyid" data-order="320" data-terkirim="50" data-status="" onclick="tampilModal(this)">
           <div class="nama">Mursyid</div>
           <div class="info">Order: 320</div>
           <div class="info">Terkirim: 50</div>
         </div>
-        <div class="kartu" data-nama="Nanda">
+        <div class="kartu" data-nama="Nanda" data-order="210" data-terkirim="200" data-status="" onclick="tampilModal(this)">
           <div class="nama">Nanda</div>
           <div class="info">Order: 210</div>
           <div class="info">Terkirim: 200</div>
         </div>
-        <div class="kartu" data-nama="Alvin">
+        <div class="kartu" data-nama="Alvin" data-order="210" data-terkirim="180" data-status="" onclick="tampilModal(this)">
           <div class="nama">Alvin</div>
           <div class="info">Order: 210</div>
           <div class="info">Terkirim: 180</div>
         </div>
-        <div class="kartu" data-nama="Ira">
+        <div class="kartu" data-nama="Ira" data-order="150" data-terkirim="120" data-status="" onclick="tampilModal(this)">
           <div class="nama">Ira</div>
           <div class="info">Order: 150</div>
           <div class="info">Terkirim: 120</div>
         </div>
-        <div class="kartu" data-nama="Kael">
+        <div class="kartu" data-nama="Kael" data-order="120" data-terkirim="100" data-status="" onclick="tampilModal(this)">
           <div class="nama">Kael</div>
           <div class="info">Order: 120</div>
           <div class="info">Terkirim: 100</div>
         </div>
-        <div class="kartu" data-nama="Angel2">
+        <div class="kartu" data-nama="Angel2" data-order="600" data-terkirim="240" data-status="" onclick="tampilModal(this)">
           <div class="nama">Angel2</div>
           <div class="info">Order: 600</div>
           <div class="info">Terkirim: 240</div>
         </div>
-        <div class="kartu" data-nama="Aelia">
+        <div class="kartu" data-nama="Aelia" data-order="100" data-terkirim="60" data-status="" onclick="tampilModal(this)">
           <div class="nama">Aelia</div>
           <div class="info">Order: 100</div>
           <div class="info">Terkirim: 60</div>
         </div>
-        <div class="kartu" data-nama="Tsabyy">
+        <div class="kartu" data-nama="Tsabyy" data-order="100" data-terkirim="40" data-status="" onclick="tampilModal(this)">
           <div class="nama">Tsabyy</div>
           <div class="info">Order: 100</div>
           <div class="info">Terkirim: 40</div>
         </div>
-        <div class="kartu" data-nama="Fida">
+        <div class="kartu" data-nama="Fida" data-order="100" data-terkirim="20" data-status="" onclick="tampilModal(this)">
           <div class="nama">Fida</div>
           <div class="info">Order: 100</div>
           <div class="info">Terkirim: 20</div>
@@ -298,65 +404,73 @@
 
     <div class="slot">
       <div class="judul-slot"><i class="fas fa-clipboard-list"></i> Slot 2</div>
-      <div class="kontainer-kartu">
-        <div class="kartu" data-nama="Ayu">
+      <div class="statistik">Total Order: <span id="total-order-slot2">0</span> | Total Terkirim: <span id="total-terkirim-slot2">0</span></div>
+      <div class="kontrol-filter">
+        <button class="tombol-filter" onclick="filterStatus('all', 'slot2')">Semua</button>
+        <button class="tombol-filter" onclick="filterStatus('sukses', 'slot2')">Sukses</button>
+        <button class="tombol-filter" onclick="filterStatus('gagal', 'slot2')">Gagal</button>
+        <button class="tombol-urutkan" onclick="urutkanKartu('asc', 'slot2')">Urutkan (Naik)</button>
+        <button class="tombol-urutkan" onclick="urutkanKartu('desc', 'slot2')">Urutkan (Turun)</button>
+      </div>
+      <div class="kontainer-kartu" id="kontainer-kartu-slot2">
+        <div class="kartu" data-nama="Ayu" data-order="1000" data-terkirim="989" data-status="" onclick="tampilModal(this)">
           <div class="nama">Ayu</div>
           <div class="info">Order: 1000</div>
           <div class="info">Terkirim: 989</div>
         </div>
-        <div class="kartu" data-nama="Anna">
+        <div class="kartu" data-nama="Anna" data-order="600" data-terkirim="577" data-status="" onclick="tampilModal(this)">
           <div class="nama">Anna</div>
           <div class="info">Order: 600</div>
           <div class="info">Terkirim: 577</div>
         </div>
-        <div class="kartu" data-nama="Moon">
+        <div class="kartu" data-nama="Moon" data-order="530" data-terkirim="226" data-status="" onclick="tampilModal(this)">
           <div class="nama">Moon</div>
           <div class="info">Order: 530</div>
           <div class="info">Terkirim: 226</div>
         </div>
-        <div class="kartu" data-nama="Hira">
+        <div class="kartu" data-nama="Hira" data-order="360" data-terkirim="178" data-status="" onclick="tampilModal(this)">
           <div class="nama">Hira</div>
           <div class="info">Order: 360</div>
           <div class="info">Terkirim: 178</div>
         </div>
-        <div class="kartu" data-nama="Sea">
+        <div class="kartu" data-nama="Sea" data-order="150" data-terkirim="101" data-status="gagal" onclick="tampilModal(this)">
           <div class="nama">Sea</div>
           <div class="info">Order: 150</div>
           <div class="info">Terkirim: 101</div>
           <div class="status gagal">Status: ❌</div>
         </div>
-        <div class="kartu" data-nama="Zee">
+        <div class="kartu" data-nama="Zee" data-order="150" data-terkirim="111" data-status="gagal" onclick="tampilModal(this)">
           <div class="nama">Zee</div>
           <div class="info">Order: 150</div>
           <div class="info">Terkirim: 111</div>
           <div class="status gagal">Status: ❌</div>
         </div>
-        <div class="kartu" data-nama="Joy">
+        <div class="kartu" data-nama="Joy" data-order="320" data-terkirim="200" data-status="" onclick="tampilModal(this)">
           <div class="nama">Joy</div>
           <div class="info">Order: 320</div>
           <div class="info">Terkirim: 200</div>
         </div>
-        <div class="kartu" data-nama="Xen">
+        <div class="kartu" data-nama="Xen" data-order="210" data-terkirim="200" data-status="" onclick="tampilModal(this)">
           <div class="nama">Xen</div>
           <div class="info">Order: 210</div>
           <div class="info">Terkirim: 200</div>
         </div>
-        <div class="kartu" data-nama="Harbie">
+        <div class="kartu" data-nama="Harbie" data-order="200" data-terkirim="120" data-status="" onclick="tampilModal(this)">
           <div class="nama">Harbie</div>
           <div class="info">Order: 200</div>
           <div class="info">Terkirim: 120</div>
         </div>
-        <div class="kartu" data-nama="Aze">
+        <div class="kartu" data-nama="Aze" data-order="570" data-terkirim="80" data-status="" onclick="tampilModal(this)">
           <div class="nama">Aze</div>
           <div class="info">Order: 570</div>
           <div class="info">Terkirim: 80</div>
         </div>
-        <div class="kartu" data-nama="Sena">
+        <div class="kartu" data-nama="Sena" data-order="570" data-terkirim="80" data-status="" onclick="tampilModal(this)">
           <div class="nama">Sena</div>
           <div class="info">Order: 570</div>
           <div class="info">Terkirim: 80</div>
         </div>
-        <div class="kartu" data-nama="Raine">
+        <div class="kartu" data-nama="Raine" data-order="100" data-terkirim="60" data-status="" onclick="tampilModal(this)">
           <div class="nama">Raine</div>
           <div class="info">Order: 100</div>
           <div class="info">Terkirim: 60</div>
@@ -366,34 +480,42 @@
 
     <div class="slot">
       <div class="judul-slot"><i class="fas fa-clipboard-list"></i> Slot 3</div>
-      <div class="kontainer-kartu">
-        <div class="kartu" data-nama="Kiki">
+      <div class="statistik">Total Order: <span id="total-order-slot3">0</span> | Total Terkirim: <span id="total-terkirim-slot3">0</span></div>
+      <div class="kontrol-filter">
+        <button class="tombol-filter" onclick="filterStatus('all', 'slot3')">Semua</button>
+        <button class="tombol-filter" onclick="filterStatus('sukses', 'slot3')">Sukses</button>
+        <button class="tombol-filter" onclick="filterStatus('gagal', 'slot3')">Gagal</button>
+        <button class="tombol-urutkan" onclick="urutkanKartu('asc', 'slot3')">Urutkan (Naik)</button>
+        <button class="tombol-urutkan" onclick="urutkanKartu('desc', 'slot3')">Urutkan (Turun)</button>
+      </div>
+      <div class="kontainer-kartu" id="kontainer-kartu-slot3">
+        <div class="kartu" data-nama="Kiki" data-order="450" data-terkirim="384" data-status="gagal" onclick="tampilModal(this)">
           <div class="nama">Kiki</div>
           <div class="info">Order: 450</div>
           <div class="info">Terkirim: 384</div>
           <div class="status gagal">Status: ❌</div>
         </div>
-        <div class="kartu" data-nama="Tobias">
+        <div class="kartu" data-nama="Tobias" data-order="500" data-terkirim="235" data-status="gagal" onclick="tampilModal(this)">
           <div class="nama">Tobias</div>
           <div class="info">Order: 500</div>
           <div class="info">Terkirim: 235</div>
           <div class="status gagal">Status: ❌</div>
         </div>
-        <div class="kartu" data-nama="Luna">
+        <div class="kartu" data-nama="Luna" data-order="800" data-terkirim="615" data-status="gagal" onclick="tampilModal(this)">
           <div class="nama">Luna</div>
           <div class="info">Order: 800</div>
           <div class="info">Terkirim: 615</div>
           <div class="status gagal">Status: ❌</div>
         </div>
-        <div class="kartu" data-nama="Ney">
+        <div class="kartu" data-nama="Ney" data-order="3540" data-terkirim="2805" data-status="gagal" onclick="tampilModal(this)">
           <div class="nama">Ney</div>
           <div class="info">Order: 3540</div>
           <div class="info">Terkirim: 2805</div>
           <div class="status gagal">Status: ❌</div>
         </div>
-        <div class="kartu" data-nama="Araba">
+        <div class="kartu" data-nama="Araba" data-order="150" data-terkirim="75" data-status="gagal" onclick="tampilModal(this)">
           <div class="nama">Araba</div>
-          <div class="info">Order: 255</div>
+          <div class="info">Order: 150</div>
           <div class="info">Terkirim: 75</div>
           <div class="status gagal">Status: ❌</div>
         </div>
@@ -402,67 +524,21 @@
 
     <div class="slot">
       <div class="judul-slot"><i class="fas fa-check-circle"></i> Riwayat Orderan (Selesai ✅)</div>
-      <div class="kontainer-kartu">
-        <div class="kartu" data-nama="Lusi">
+      <div class="statistik">Total Order: <span id="total-order-slot4">0</span> | Total Terkirim: <span id="total-terkirim-slot4">0</span></div>
+      <div class="kontrol-filter">
+        <button class="tombol-filter" onclick="filterStatus('all', 'slot4')">Semua</button>
+        <button class="tombol-filter" onclick="filterStatus('sukses', 'slot4')">Sukses</button>
+        <button class="tombol-filter" onclick="filterStatus('gagal', 'slot4')">Gagal</button>
+        <button class="tombol-urutkan" onclick="urutkanKartu('asc', 'slot4')">Urutkan (Naik)</button>
+        <button class="tombol-urutkan" onclick="urutkanKartu('desc', 'slot4')">Urutkan (Turun)</button>
+      </div>
+      <div class="kontainer-kartu" id="kontainer-kartu-slot4">
+        <div class="kartu" data-nama="Lusi" data-order="600" data-terkirim="600" data-status="sukses" onclick="tampilModal(this)">
           <div class="nama">Lusi</div>
           <div class="info">Order: 600</div>
           <div class="info">Terkirim: 600</div>
           <div class="status sukses">Status: ✅</div>
         </div>
-        <div class="kartu" data-nama="Sam">
+        <div class="kartu" data-nama="Sam" data-order="210" data-terkirim="213" data-status="sukses" onclick="tampilModal(this)">
           <div class="nama">Sam</div>
-          <div class="info">Order: 210</div>
-          <div class="info">Terkirim: 213</div>
-          <div class="status sukses">Status: ✅</div>
-        </div>
-        <div class="kartu" data-nama="Erwin">
-          <div class="nama">Erwin</div>
-          <div class="info">Order: 210</div>
-          <div class="info">Terkirim: 213</div>
-          <div class="status sukses">Status: ✅</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    // Perbarui Jam Langsung
-    function perbaruiJam() {
-      const sekarang = new Date();
-      const waktu = sekarang.toLocaleString('id-ID', {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-      });
-      document.getElementById('jam-langsung').textContent = `⏰ Jam Langsung: ${waktu}`;
-    }
-
-    // Ubah Mode Gelap
-    function ubahModeGelap() {
-      document.body.classList.toggle('mode-gelap');
-      localStorage.setItem('modeGelap', document.body.classList.contains('mode-gelap'));
-    }
-
-    // Cari Kartu
-    function cariKartu() {
-      const input = document.getElementById('inputPencarian').value.toLowerCase();
-      const kartu = document.querySelectorAll('.kartu');
-      kartu.forEach((k) => {
-        const nama = k.getAttribute('data-nama').toLowerCase();
-        k.style.display = nama.includes(input) ? 'block' : 'none';
-      });
-    }
-
-    // Inisialisasi
-    setInterval(perbaruiJam, 1000);
-    window.onload = () => {
-      perbaruiJam();
-      if (localStorage.getItem('modeGelap') === 'true') {
-        document.body.classList.add('mode-gelap');
-      }
-    };
-  </script>
-</body>
-</html>
+            
