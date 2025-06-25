@@ -3,23 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Laporan Pengiriman Heart - JaluStore</title>
+  <title>Laporan Quest Heart - JaluStore</title>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
+  <!-- Google Fonts (Gaming Style: Orbitron) -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     :root {
-      --warna-utama: #4a90e2;
-      --warna-sekunder: #b0bec5;
-      --warna-sukses: #2ecc71;
-      --warna-gagal: #e74c3c;
-      --teks-terang: #e0e7ff;
-      --latar-kartu: rgba(255, 255, 255, 0.05);
+      --warna-neon-biru: #00d4ff;
+      --warna-neon-ungu: #a100ff;
+      --warna-neon-merah: #ff2e63;
+      --teks-glow: #e0f7ff;
+      --latar-kartu: rgba(10, 10, 20, 0.8);
     }
 
     * {
@@ -30,29 +29,33 @@
     }
 
     body {
-      font-family: 'Montserrat', sans-serif;
-      background: url('https://thatskyshop.com/cdn/shop/files/Page-thatskywallpaper-Portrait-10.png?v=1704243404&width=750') no-repeat center center fixed;
+      font-family: 'Orbitron', sans-serif;
+      background: url('https://img.freepik.com/free-vector/fantasy-landscape-background-with-mountains-rivers_12194344-562.jpg?w=1380&t=st=1719317468~exp=1719318068~hmac=3c8f3e1e8a5f5b0a0e9b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f') no-repeat center center fixed;
       background-size: cover;
-      color: var(--teks-terang);
+      color: var(--teks-glow);
       min-height: 100vh;
       overflow-x: hidden;
       position: relative;
+      animation: fadeIn 1s ease-in;
     }
 
     .mode-gelap {
-      background: linear-gradient(180deg, rgba(10, 14, 26, 0.7), rgba(30, 39, 70, 0.7)) !important;
+      background: linear-gradient(180deg, rgba(5, 5, 10, 0.9), rgba(15, 15, 30, 0.9)) !important;
     }
 
     .lapisan {
-      background: rgba(10, 14, 26, 0.7);
-      backdrop-filter: blur(8px);
+      background: rgba(10, 10, 20, 0.7);
+      backdrop-filter: blur(10px);
       min-height: 100vh;
       padding: 2rem 1rem;
+      border: 2px solid var(--warna-neon-biru);
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
     }
 
     .navbar {
-      background: rgba(10, 14, 26, 0.9);
-      backdrop-filter: blur(10px);
+      background: rgba(10, 10, 20, 0.9);
+      backdrop-filter: blur(15px);
       position: sticky;
       top: 0;
       z-index: 1000;
@@ -60,135 +63,134 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      border-bottom: 2px solid var(--warna-neon-ungu);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
     }
 
     .navbar .logo {
-      font-size: 1.8rem;
+      font-size: 2rem;
       font-weight: 700;
-      color: var(--warna-utama);
+      color: var(--warna-neon-biru);
       text-decoration: none;
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      text-shadow: 0 0 10px var(--warna-neon-biru), 0 0 20px var(--warna-neon-ungu);
     }
 
     .navbar .kotak-pencarian {
       max-width: 300px;
+      background: var(--latar-kartu);
+      border: 1px solid var(--warna-neon-biru);
+      color: var(--teks-glow);
     }
 
     .navbar .tombol-mode {
-      background: linear-gradient(45deg, #4a90e2, #7b4fe4);
-      border: none;
-      padding: 0.5rem 1rem;
-      color: var(--teks-terang);
-      font-weight: 600;
-      border-radius: 6px;
+      background: linear-gradient(45deg, var(--warna-neon-biru), var(--warna-neon-ungu));
+      border: 1px solid var(--warna-neon-merah);
+      padding: 0.7rem 1.5rem;
+      color: var(--teks-glow);
+      font-weight: 700;
+      border-radius: 8px;
       cursor: pointer;
-      transition: transform 0.2s;
+      transition: transform 0.3s, box-shadow 0.3s;
     }
 
     .navbar .tombol-mode:hover {
-      transform: scale(1.05);
+      transform: scale(1.1);
+      box-shadow: 0 0 15px var(--warna-neon-merah);
     }
 
     .header {
       text-align: center;
       margin: 2rem 0;
+      text-shadow: 0 0 15px var(--warna-neon-biru);
     }
 
     .header h1 {
-      font-size: 2.2rem;
+      font-size: 2.5rem;
       font-weight: 700;
-      color: var(--teks-terang);
-      text-shadow: 0 0 10px rgba(74, 144, 226, 0.5);
-      margin-bottom: 0.5rem;
+      color: var(--teks-glow);
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 0.5rem;
+      animation: pulse 2s infinite;
     }
 
     .header h1 em {
-      color: var(--warna-utama);
+      color: var(--warna-neon-ungu);
     }
 
     #jam-langsung {
-      font-size: 1rem;
-      color: var(--warna-sekunder);
+      font-size: 1.2rem;
+      color: var(--warna-neon-merah);
       text-align: center;
       margin-bottom: 2rem;
+      text-shadow: 0 0 5px var(--warna-neon-merah);
     }
 
     .kontrol-filter {
       display: flex;
       gap: 1rem;
       margin-bottom: 1.5rem;
+      flex-wrap: wrap;
     }
 
-    .tombol-filter {
+    .tombol-filter, .tombol-urutkan {
       background: var(--latar-kartu);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 0.5rem 1rem;
-      color: var(--teks-terang);
+      border: 1px solid var(--warna-neon-biru);
+      padding: 0.6rem 1.2rem;
+      color: var(--teks-glow);
       border-radius: 6px;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: transform 0.3s, box-shadow 0.3s;
+      font-weight: 600;
     }
 
-    .tombol-filter:hover {
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    .tombol-urutkan {
-      background: var(--latar-kartu);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 0.5rem 1rem;
-      color: var(--teks-terang);
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .tombol-urutkan:hover {
-      background: rgba(255, 255, 255, 0.1);
+    .tombol-filter:hover, .tombol-urutkan:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 10px var(--warna-neon-biru);
     }
 
     .statistik {
       background: var(--latar-kartu);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--warna-neon-ungu);
       padding: 1rem;
       border-radius: 8px;
       margin-bottom: 1.5rem;
       text-align: center;
+      box-shadow: 0 0 10px rgba(161, 0, 255, 0.3);
     }
 
     .grafik-container {
       background: var(--latar-kartu);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 2px solid var(--warna-neon-ungu);
       padding: 1rem;
-      border-radius: 8px;
+      border-radius: 10px;
       margin-bottom: 2rem;
-      height: 300px;
+      height: 350px;
+      box-shadow: 0 0 20px rgba(161, 0, 255, 0.5);
     }
 
     .slot {
       margin-bottom: 3rem;
-      animation: muncul 0.5s ease-in;
+      animation: slideIn 0.8s ease-out;
     }
 
     .judul-slot {
-      font-size: 1.5rem;
-      font-weight: 600;
-      background: linear-gradient(90deg, var(--warna-utama), #7b4fe4);
-      color: var(--teks-terang);
-      padding: 0.75rem 1.5rem;
-      border-radius: 8px;
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--warna-neon-biru), var(--warna-neon-ungu));
+      color: var(--teks-glow);
+      padding: 1rem 1.5rem;
+      border-radius: 10px;
       margin-bottom: 1.5rem;
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      border: 2px solid var(--warna-neon-merah);
     }
 
     .kontainer-kartu {
@@ -199,44 +201,95 @@
 
     .kartu {
       background: var(--latar-kartu);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 2px solid var(--warna-neon-biru);
       padding: 1.5rem;
       border-radius: 12px;
       backdrop-filter: blur(10px);
       transition: transform 0.3s, box-shadow 0.3s;
       cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kartu::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, var(--warna-neon-ungu), transparent);
+      animation: rotateGlow 4s linear infinite;
+      z-index: 0;
     }
 
     .kartu:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(74, 144, 226, 0.3);
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 10px 30px var(--warna-neon-biru);
     }
 
     .kartu .nama {
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: var(--warna-utama);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--warna-neon-biru);
       margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 1;
     }
 
     .kartu .info {
-      font-size: 0.95rem;
-      color: var(--teks-terang);
+      font-size: 1rem;
+      color: var(--teks-glow);
       margin-bottom: 0.3rem;
+      position: relative;
+      z-index: 1;
     }
 
     .kartu .status {
-      font-weight: 600;
-      font-size: 1rem;
+      font-weight: 700;
+      font-size: 1.1rem;
       margin-top: 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .kartu .progress-bar {
+      width: 100%;
+      height: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+      margin-top: 0.5rem;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+
+    .kartu .progress {
+      height: 100%;
+      background: linear-gradient(90deg, var(--warna-neon-biru), var(--warna-neon-ungu));
+      border-radius: 5px;
+      transition: width 0.5s ease;
+      position: relative;
+    }
+
+    .kartu .progress-text {
+      font-size: 0.9rem;
+      color: var(--teks-glow);
+      position: absolute;
+      top: -1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      text-shadow: 0 0 5px var(--warna-neon-biru);
     }
 
     .sukses {
-      color: var(--warna-sukses);
+      color: var(--warna-neon-merah);
+      text-shadow: 0 0 5px var(--warna-neon-merah);
     }
 
     .gagal {
-      color: var(--warna-gagal);
+      color: var(--warna-neon-ungu);
+      text-shadow: 0 0 5px var(--warna-neon-ungu);
     }
 
     .modal {
@@ -246,35 +299,43 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.8);
       z-index: 1000;
+      backdrop-filter: blur(5px);
     }
 
     .modal-content {
       background: var(--latar-kartu);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 2px solid var(--warna-neon-biru);
       padding: 2rem;
-      border-radius: 10px;
+      border-radius: 15px;
       width: 90%;
       max-width: 500px;
       margin: 10% auto;
       text-align: center;
-      backdrop-filter: blur(10px);
+      box-shadow: 0 0 30px var(--warna-neon-ungu);
+      animation: popIn 0.5s ease-out;
     }
 
     .modal-content .close {
       position: absolute;
       top: 1rem;
       right: 1rem;
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       cursor: pointer;
-      color: var(--teks-terang);
+      color: var(--warna-neon-merah);
+      transition: transform 0.3s;
     }
 
-    @keyframes muncul {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .modal-content .close:hover {
+      transform: rotate(90deg) scale(1.2);
     }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+    @keyframes rotateGlow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
     @media (max-width: 768px) {
       .navbar {
@@ -287,7 +348,7 @@
       }
 
       .header h1 {
-        font-size: 1.8rem;
+        font-size: 2rem;
       }
 
       .kontainer-kartu {
@@ -300,7 +361,7 @@
       }
 
       .grafik-container {
-        height: 200px;
+        height: 250px;
       }
     }
   </style>
@@ -308,10 +369,10 @@
 <body>
   <!-- Navbar -->
   <nav class="navbar">
-    <a href="#" class="logo"><i class="fas fa-heart"></i> JaluStore</a>
+    <a href="#" class="logo"><i class="fas fa-sword"></i> JaluStore RPG</a>
     <div class="d-flex align-items-center gap-2">
-      <input type="text" id="inputPencarian" class="form-control kotak-pencarian" placeholder="Cari nama..." oninput="cariKartu()" />
-      <button class="tombol-mode" onclick="ubahModeGelap()"><i class="fas fa-moon"></i> Mode Gelap</button>
+      <input type="text" id="inputPencarian" class="form-control kotak-pencarian" placeholder="Cari Pahlawan..." oninput="cariKartu()" />
+      <button class="tombol-mode" onclick="ubahModeGelap()"><i class="fas fa-moon"></i> Night Mode</button>
     </div>
   </nav>
 
@@ -319,7 +380,7 @@
   <div class="lapisan">
     <!-- Header -->
     <div class="header">
-      <h1><i class="fas fa-heart"></i> Laporan Pengiriman Heart - <em>JaluStore</em></h1>
+      <h1><i class="fas fa-shield-alt"></i> Laporan Quest Heart - <em>JaluStore</em></h1>
     </div>
 
     <!-- Jam Langsung -->
@@ -332,213 +393,182 @@
 
     <!-- Slot -->
     <div class="slot">
-      <div class="judul-slot"><i class="fas fa-clipboard-list"></i> Slot 1</div>
-      <div class="statistik">Total Order: <span id="total-order-slot1">0</span> | Total Terkirim: <span id="total-terkirim-slot1">0</span></div>
+      <div class="judul-slot"><i class="fas fa-dungeon"></i> Quest Tier 1</div>
+      <div class="statistik">Total Quests: <span id="total-order-slot1">0</span> | Completed: <span id="total-terkirim-slot1">0</span></div>
       <div class="kontrol-filter">
-        <button class="tombol-filter" onclick="filterStatus('all', 'slot1')">Semua</button>
-        <button class="tombol-filter" onclick="filterStatus('sukses', 'slot1')">Sukses</button>
-        <button class="tombol-filter" onclick="filterStatus('gagal', 'slot1')">Gagal</button>
-        <button class="tombol-urutkan" onclick="urutkanKartu('asc', 'slot1')">Urutkan (Naik)</button>
-        <button class="tombol-urutkan" onclick="urutkanKartu('desc', 'slot1')">Urutkan (Turun)</button>
+        <button class="tombol-filter" onclick="filterStatus('all', 'slot1')">All Quests</button>
+        <button class="tombol-filter" onclick="filterStatus('sukses', 'slot1')">Victories</button>
+        <button class="tombol-filter" onclick="filterStatus('gagal', 'slot1')">Failures</button>
+        <button class="tombol-urutkan" onclick="urutkanKartu('asc', 'slot1')">Sort (Low)</button>
+        <button class="tombol-urutkan" onclick="urutkanKartu('desc', 'slot1')">Sort (High)</button>
       </div>
       <div class="kontainer-kartu" id="kontainer-kartu-slot1">
         <div class="kartu" data-nama="Angel" data-order="450" data-terkirim="260" data-status="gagal" onclick="tampilModal(this)">
           <div class="nama">Angel</div>
-          <div class="info">Order: 450</div>
-          <div class="info">Terkirim: 260</div>
-          <div class="status gagal">Status: ❌</div>
+          <div class="info">Quests: 450</div>
+          <div class="info">Completed: 260</div>
+          <div class="status gagal">Status: Failed ❌</div>
+          <div class="progress-bar">
+            <div class="progress" style="width: 57.78%"></div>
+            <div class="progress-text">Level: 57.78%</div>
+          </div>
         </div>
         <div class="kartu" data-nama="Husna" data-order="450" data-terkirim="257" data-status="gagal" onclick="tampilModal(this)">
           <div class="nama">Husna</div>
-          <div class="info">Order: 450</div>
-          <div class="info">Terkirim: 257</div>
-          <div class="status gagal">Status: ❌</div>
+          <div class="info">Quests: 450</div>
+          <div class="info">Completed: 257</div>
+          <div class="status gagal">Status: Failed ❌</div>
+          <div class="progress-bar">
+            <div class="progress" style="width: 57.11%"></div>
+            <div class="progress-text">Level: 57.11%</div>
+          </div>
         </div>
         <div class="kartu" data-nama="Mursyid" data-order="320" data-terkirim="50" data-status="" onclick="tampilModal(this)">
           <div class="nama">Mursyid</div>
-          <div class="info">Order: 320</div>
-          <div class="info">Terkirim: 50</div>
+          <div class="info">Quests: 320</div>
+          <div class="info">Completed: 50</div>
+          <div class="progress-bar">
+            <div class="progress" style="width: 15.63%"></div>
+            <div class="progress-text">Level: 15.63%</div>
+          </div>
         </div>
         <div class="kartu" data-nama="Nanda" data-order="210" data-terkirim="200" data-status="" onclick="tampilModal(this)">
           <div class="nama">Nanda</div>
-          <div class="info">Order: 210</div>
-          <div class="info">Terkirim: 200</div>
+          <div class="info">Quests: 210</div>
+          <div class="info">Completed: 200</div>
+          <div class="progress-bar">
+            <div class="progress" style="width: 95.24%"></div>
+            <div class="progress-text">Level: 95.24%</div>
+          </div>
         </div>
         <div class="kartu" data-nama="Alvin" data-order="210" data-terkirim="180" data-status="" onclick="tampilModal(this)">
           <div class="nama">Alvin</div>
-          <div class="info">Order: 210</div>
-          <div class="info">Terkirim: 180</div>
+          <div class="info">Quests: 210</div>
+          <div class="info">Completed: 180</div>
+          <div class="progress-bar">
+            <div class="progress" style="width: 85.71%"></div>
+            <div class="progress-text">Level: 85.71%</div>
+          </div>
         </div>
         <div class="kartu" data-nama="Ira" data-order="150" data-terkirim="120" data-status="" onclick="tampilModal(this)">
           <div class="nama">Ira</div>
-          <div class="info">Order: 150</div>
-          <div class="info">Terkirim: 120</div>
+          <div class="info">Quests: 150</div>
+          <div class="info">Completed: 120</div>
+          <div class="progress-bar">
+            <div class="progress" style="width: 80.00%"></div>
+            <div class="progress-text">Level: 80.00%</div>
+          </div>
         </div>
         <div class="kartu" data-nama="Kael" data-order="120" data-terkirim="100" data-status="" onclick="tampilModal(this)">
           <div class="nama">Kael</div>
-          <div class="info">Order: 120</div>
-          <div class="info">Terkirim: 100</div>
+          <div class="info">Quests: 120</div>
+          <div class="info">Completed: 100</div>
+          <div class="progress-bar">
+            <div class="progress" style="width: 83.33%"></div>
+            <div class="progress-text">Level: 83.33%</div>
+          </div>
         </div>
         <div class="kartu" data-nama="Angel2" data-order="600" data-terkirim="240" data-status="" onclick="tampilModal(this)">
           <div class="nama">Angel2</div>
-          <div class="info">Order: 600</div>
-          <div class="info">Terkirim: 240</div>
+          <div class="info">Quests: 600</div>
+          <div class="info">Completed: 240</div>
+          <div class="progress-bar">
+            <div class="progress" style="width: 40.00%"></div>
+            <div class="progress-text">Level: 40.00%</div>
+          </div>
         </div>
         <div class="kartu" data-nama="Aelia" data-order="100" data-terkirim="60" data-status="" onclick="tampilModal(this)">
           <div class="nama">Aelia</div>
-          <div class="info">Order: 100</div>
-          <div class="info">Terkirim: 60</div>
+          <div class="info">Quests: 100</div>
+          <div class="info">Completed: 60</div>
+          <div class="progress-bar">
+            <div class="progress" style="width: 60.00%"></div>
+            <div class="progress-text">Level: 60.00%</div>
+          </div>
         </div>
         <div class="kartu" data-nama="Tsabyy" data-order="100" data-terkirim="40" data-status="" onclick="tampilModal(this)">
           <div class="nama">Tsabyy</div>
-          <div class="info">Order: 100</div>
-          <div class="info">Terkirim: 40</div>
+          <div class="info">Quests: 100</div>
+          <div class="info">Completed: 40</div>
+          <div class="progress-bar">
+            <div class="progress" style="width: 40.00%"></div>
+            <div class="progress-text">Level: 40.00%</div>
+          </div>
         </div>
         <div class="kartu" data-nama="Fida" data-order="100" data-terkirim="20" data-status="" onclick="tampilModal(this)">
           <div class="nama">Fida</div>
-          <div class="info">Order: 100</div>
-          <div class="info">Terkirim: 20</div>
+          <div class="info">Quests: 100</div>
+          <div class="info">Completed: 20</div>
+          <div class="progress-bar">
+            <div class="progress" style="width: 20.00%"></div>
+            <div class="progress-text">Level: 20.00%</div>
+          </div>
         </div>
       </div>
     </div>
 
     <div class="slot">
-      <div class="judul-slot"><i class="fas fa-clipboard-list"></i> Slot 2</div>
-      <div class="statistik">Total Order: <span id="total-order-slot2">0</span> | Total Terkirim: <span id="total-terkirim-slot2">0</span></div>
+      <div class="judul-slot"><i class="fas fa-dungeon"></i> Quest Tier 2</div>
+      <div class="statistik">Total Quests: <span id="total-order-slot2">0</span> | Completed: <span id="total-terkirim-slot2">0</span></div>
       <div class="kontrol-filter">
-        <button class="tombol-filter" onclick="filterStatus('all', 'slot2')">Semua</button>
-        <button class="tombol-filter" onclick="filterStatus('sukses', 'slot2')">Sukses</button>
-        <button class="tombol-filter" onclick="filterStatus('gagal', 'slot2')">Gagal</button>
-        <button class="tombol-urutkan" onclick="urutkanKartu('asc', 'slot2')">Urutkan (Naik)</button>
-        <button class="tombol-urutkan" onclick="urutkanKartu('desc', 'slot2')">Urutkan (Turun)</button>
+        <button class="tombol-filter" onclick="filterStatus('all', 'slot2')">All Quests</button>
+        <button class="tombol-filter" onclick="filterStatus('sukses', 'slot2')">Victories</button>
+        <button class="tombol-filter" onclick="filterStatus('gagal', 'slot2')">Failures</button>
+        <button class="tombol-urutkan" onclick="urutkanKartu('asc', 'slot2')">Sort (Low)</button>
+        <button class="tombol-urutkan" onclick="urutkanKartu('desc', 'slot2')">Sort (High)</button>
       </div>
       <div class="kontainer-kartu" id="kontainer-kartu-slot2">
         <div class="kartu" data-nama="Ayu" data-order="1000" data-terkirim="989" data-status="" onclick="tampilModal(this)">
           <div class="nama">Ayu</div>
-          <div class="info">Order: 1000</div>
-          <div class="info">Terkirim: 989</div>
+          <div class="info">Quests: 1000</div>
+          <div class="info">Completed: 989</div>
+          <div class="progress-bar">
+            <div class="progress" style="width: 98.90%"></div>
+            <div class="progress-text">Level: 98.90%</div>
+          </div>
         </div>
         <div class="kartu" data-nama="Anna" data-order="600" data-terkirim="577" data-status="" onclick="tampilModal(this)">
           <div class="nama">Anna</div>
-          <div class="info">Order: 600</div>
-          <div class="info">Terkirim: 577</div>
+          <div class="info">Quests: 600</div>
+          <div class="info">Completed: 577</div>
+          <div class="progress-bar">
+            <div class="progress" style="width: 96.17%"></div>
+            <div class="progress-text">Level: 96.17%</div>
+          </div>
         </div>
         <div class="kartu" data-nama="Moon" data-order="530" data-terkirim="226" data-status="" onclick="tampilModal(this)">
           <div class="nama">Moon</div>
-          <div class="info">Order: 530</div>
-          <div class="info">Terkirim: 226</div>
+          <div class="info">Quests: 530</div>
+          <div class="info">Completed: 226</div>
+          <div class="progress-bar">
+            <div class="progress" style="width: 42.64%"></div>
+            <div class="progress-text">Level: 42.64%</div>
+          </div>
         </div>
         <div class="kartu" data-nama="Hira" data-order="360" data-terkirim="178" data-status="" onclick="tampilModal(this)">
           <div class="nama">Hira</div>
-          <div class="info">Order: 360</div>
-          <div class="info">Terkirim: 178</div>
+          <div class="info">Quests: 360</div>
+          <div class="info">Completed: 178</div>
+          <div class="progress-bar">
+            <div class="progress" style="width: 49.44%"></div>
+            <div class="progress-text">Level: 49.44%</div>
+          </div>
         </div>
         <div class="kartu" data-nama="Sea" data-order="150" data-terkirim="101" data-status="gagal" onclick="tampilModal(this)">
           <div class="nama">Sea</div>
-          <div class="info">Order: 150</div>
-          <div class="info">Terkirim: 101</div>
-          <div class="status gagal">Status: ❌</div>
+          <div class="info">Quests: 150</div>
+          <div class="info">Completed: 101</div>
+          <div class="status gagal">Status: Failed ❌</div>
+          <div class="progress-bar">
+            <div class="progress" style="width: 67.33%"></div>
+            <div class="progress-text">Level: 67.33%</div>
+          </div>
         </div>
         <div class="kartu" data-nama="Zee" data-order="150" data-terkirim="111" data-status="gagal" onclick="tampilModal(this)">
           <div class="nama">Zee</div>
-          <div class="info">Order: 150</div>
-          <div class="info">Terkirim: 111</div>
-          <div class="status gagal">Status: ❌</div>
-        </div>
-        <div class="kartu" data-nama="Joy" data-order="320" data-terkirim="200" data-status="" onclick="tampilModal(this)">
-          <div class="nama">Joy</div>
-          <div class="info">Order: 320</div>
-          <div class="info">Terkirim: 200</div>
-        </div>
-        <div class="kartu" data-nama="Xen" data-order="210" data-terkirim="200" data-status="" onclick="tampilModal(this)">
-          <div class="nama">Xen</div>
-          <div class="info">Order: 210</div>
-          <div class="info">Terkirim: 200</div>
-        </div>
-        <div class="kartu" data-nama="Harbie" data-order="200" data-terkirim="120" data-status="" onclick="tampilModal(this)">
-          <div class="nama">Harbie</div>
-          <div class="info">Order: 200</div>
-          <div class="info">Terkirim: 120</div>
-        </div>
-        <div class="kartu" data-nama="Aze" data-order="570" data-terkirim="80" data-status="" onclick="tampilModal(this)">
-          <div class="nama">Aze</div>
-          <div class="info">Order: 570</div>
-          <div class="info">Terkirim: 80</div>
-        </div>
-        <div class="kartu" data-nama="Sena" data-order="570" data-terkirim="80" data-status="" onclick="tampilModal(this)">
-          <div class="nama">Sena</div>
-          <div class="info">Order: 570</div>
-          <div class="info">Terkirim: 80</div>
-        </div>
-        <div class="kartu" data-nama="Raine" data-order="100" data-terkirim="60" data-status="" onclick="tampilModal(this)">
-          <div class="nama">Raine</div>
-          <div class="info">Order: 100</div>
-          <div class="info">Terkirim: 60</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="slot">
-      <div class="judul-slot"><i class="fas fa-clipboard-list"></i> Slot 3</div>
-      <div class="statistik">Total Order: <span id="total-order-slot3">0</span> | Total Terkirim: <span id="total-terkirim-slot3">0</span></div>
-      <div class="kontrol-filter">
-        <button class="tombol-filter" onclick="filterStatus('all', 'slot3')">Semua</button>
-        <button class="tombol-filter" onclick="filterStatus('sukses', 'slot3')">Sukses</button>
-        <button class="tombol-filter" onclick="filterStatus('gagal', 'slot3')">Gagal</button>
-        <button class="tombol-urutkan" onclick="urutkanKartu('asc', 'slot3')">Urutkan (Naik)</button>
-        <button class="tombol-urutkan" onclick="urutkanKartu('desc', 'slot3')">Urutkan (Turun)</button>
-      </div>
-      <div class="kontainer-kartu" id="kontainer-kartu-slot3">
-        <div class="kartu" data-nama="Kiki" data-order="450" data-terkirim="384" data-status="gagal" onclick="tampilModal(this)">
-          <div class="nama">Kiki</div>
-          <div class="info">Order: 450</div>
-          <div class="info">Terkirim: 384</div>
-          <div class="status gagal">Status: ❌</div>
-        </div>
-        <div class="kartu" data-nama="Tobias" data-order="500" data-terkirim="235" data-status="gagal" onclick="tampilModal(this)">
-          <div class="nama">Tobias</div>
-          <div class="info">Order: 500</div>
-          <div class="info">Terkirim: 235</div>
-          <div class="status gagal">Status: ❌</div>
-        </div>
-        <div class="kartu" data-nama="Luna" data-order="800" data-terkirim="615" data-status="gagal" onclick="tampilModal(this)">
-          <div class="nama">Luna</div>
-          <div class="info">Order: 800</div>
-          <div class="info">Terkirim: 615</div>
-          <div class="status gagal">Status: ❌</div>
-        </div>
-        <div class="kartu" data-nama="Ney" data-order="3540" data-terkirim="2805" data-status="gagal" onclick="tampilModal(this)">
-          <div class="nama">Ney</div>
-          <div class="info">Order: 3540</div>
-          <div class="info">Terkirim: 2805</div>
-          <div class="status gagal">Status: ❌</div>
-        </div>
-        <div class="kartu" data-nama="Araba" data-order="150" data-terkirim="75" data-status="gagal" onclick="tampilModal(this)">
-          <div class="nama">Araba</div>
-          <div class="info">Order: 150</div>
-          <div class="info">Terkirim: 75</div>
-          <div class="status gagal">Status: ❌</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="slot">
-      <div class="judul-slot"><i class="fas fa-check-circle"></i> Riwayat Orderan (Selesai ✅)</div>
-      <div class="statistik">Total Order: <span id="total-order-slot4">0</span> | Total Terkirim: <span id="total-terkirim-slot4">0</span></div>
-      <div class="kontrol-filter">
-        <button class="tombol-filter" onclick="filterStatus('all', 'slot4')">Semua</button>
-        <button class="tombol-filter" onclick="filterStatus('sukses', 'slot4')">Sukses</button>
-        <button class="tombol-filter" onclick="filterStatus('gagal', 'slot4')">Gagal</button>
-        <button class="tombol-urutkan" onclick="urutkanKartu('asc', 'slot4')">Urutkan (Naik)</button>
-        <button class="tombol-urutkan" onclick="urutkanKartu('desc', 'slot4')">Urutkan (Turun)</button>
-      </div>
-      <div class="kontainer-kartu" id="kontainer-kartu-slot4">
-        <div class="kartu" data-nama="Lusi" data-order="600" data-terkirim="600" data-status="sukses" onclick="tampilModal(this)">
-          <div class="nama">Lusi</div>
-          <div class="info">Order: 600</div>
-          <div class="info">Terkirim: 600</div>
-          <div class="status sukses">Status: ✅</div>
-        </div>
-        <div class="kartu" data-nama="Sam" data-order="210" data-terkirim="213" data-status="sukses" onclick="tampilModal(this)">
-          <div class="nama">Sam</div>
-          
+          <div class="info">Quests: 150</div>
+          <div class="info">Completed: 111</div>
+          <div class="status gagal">Status: Failed ❌</div>
+          <div class="progress-bar">
+            <div class="progress" style="width: 74.00%"></div>
+      
