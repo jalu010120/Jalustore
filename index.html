@@ -8,16 +8,11 @@
       font-family: 'Segoe UI', Tahoma, sans-serif;
       margin: 0;
       padding: 0;
-      transition: background 0.3s, color 0.3s;
       background: url('https://thatskyshop.com/cdn/shop/files/Page-thatskywallpaper-Portrait-13.jpg?v=1711607986&width=750') no-repeat center center fixed;
       background-size: cover;
       color: #fff;
       backdrop-filter: blur(6px);
-    }
-    body.dark {
-      background: #111;
-      color: #eee;
-      backdrop-filter: none;
+      transition: background 0.3s, color 0.3s;
     }
     .overlay {
       background-color: rgba(0, 0, 0, 0.6);
@@ -68,20 +63,51 @@
       position: fixed;
       top: 20px;
       right: 20px;
+      z-index: 999;
     }
-    .toggle-button {
-      background: #222;
-      color: #fff;
-      border: none;
-      padding: 10px 18px;
-      border-radius: 50px;
-      font-weight: bold;
+    .toggle-container input[type="checkbox"] {
+      height: 0;
+      width: 0;
+      visibility: hidden;
+    }
+    .toggle-container label {
       cursor: pointer;
-      transition: 0.3s;
-      box-shadow: 0 0 10px rgba(255,255,255,0.2);
+      text-indent: -9999px;
+      width: 60px;
+      height: 30px;
+      background: grey;
+      display: block;
+      border-radius: 100px;
+      position: relative;
     }
-    .toggle-button:hover {
+    .toggle-container label:after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 26px;
+      height: 26px;
+      background: #fff;
+      border-radius: 90px;
+      transition: 0.3s;
+    }
+    .toggle-container input:checked + label {
+      background: #4fbe79;
+    }
+    .toggle-container input:checked + label:after {
+      left: calc(100% - 2px);
+      transform: translateX(-100%);
+    }
+    .dark-mode {
+      background: #111 !important;
+      color: #eee !important;
+    }
+    .dark-mode .slot-title {
       background: #444;
+    }
+    .dark-mode .card {
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.1);
     }
   </style>
   <script>
@@ -92,18 +118,19 @@
       });
       document.getElementById('live-time').textContent = '⏰ Live Jam: ' + waktu;
     }
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+    }
     setInterval(updateTime, 1000);
-    window.onload = updateTime;function toggleDarkMode() {
-  document.body.classList.toggle('dark');
-}
-
+    window.onload = updateTime;
   </script>
 </head>
 <body>
+  <div class="toggle-container">
+    <input type="checkbox" id="darkToggle" onclick="toggleDarkMode()">
+    <label for="darkToggle">Toggle</label>
+  </div>
   <div class="overlay">
-    <div class="toggle-container">
-      <button class="toggle-button" onclick="toggleDarkMode()">🌙/☀️</button>
-    </div>
     <div id="live-time"></div>
     <h1>📦 Laporan Pengiriman Heart - <em>JaluStore</em></h1><div class="slot">
   <div class="slot-title">Slot 1</div>
@@ -111,9 +138,11 @@
   <div class="card"><div class="name">Husna</div><div>Order: 450</div><div>Send: 257</div><div class="status fail">Status: ❌</div></div>
   <div class="card"><div class="name">Mursyid</div><div>Order: 320</div><div>Send: 60</div><div class="status fail">Status: ❌</div></div>
   <div class="card"><div class="name">Angel2</div><div>Order: 600</div><div>Send: 240</div><div class="status fail">Status: ❌</div></div>
-  <div class="card"><div class="name">Tsabyy</div><div>Order: 100</div><div>Send: 80</div></div>
+  <div class="card"><div class="name">Aelia</div><div>Order: 420</div><div>Send: 100</div></div>
+  <div class="card"><div class="name">Tsabyy</div><div>Order: 200</div><div>Send: 80</div></div>
   <div class="card"><div class="name">Fida</div><div>Order: 100</div><div>Send: 60</div></div>
   <div class="card"><div class="name">Vyan</div><div>Order: 80</div><div>Send: 40</div></div>
+  <div class="card"><div class="name">Aya</div><div>Order: 320</div><div>Send: 20</div></div>
 </div>
 
 <div class="slot">
@@ -128,7 +157,7 @@
   <div class="card"><div class="name">Harbie</div><div>Order: 200</div><div>Send: 140</div></div>
   <div class="card"><div class="name">Aze</div><div>Order: 570</div><div>Send: 120</div></div>
   <div class="card"><div class="name">Sena</div><div>Order: 570</div><div>Send: 120</div></div>
-  <div class="card"><div class="name">Raine</div><div>Order: 420</div><div>Send: 100</div></div>
+  <div class="card"><div class="name">raine</div><div>Order: 420</div><div>Send: 100</div></div>
   <div class="card"><div class="name">Rani</div><div>Order: 320</div><div>Send: 20</div></div>
 </div>
 
@@ -138,22 +167,20 @@
   <div class="card"><div class="name">Tobias</div><div>Order: 500</div><div>Send: 235</div><div class="status fail">Status: ❌</div></div>
   <div class="card"><div class="name">Luna</div><div>Order: 800</div><div>Send: 645</div></div>
   <div class="card"><div class="name">Ney</div><div>Order: 3540</div><div>Send: 2835</div></div>
-  <div class="card"><div class="name">Idnes</div><div>Order: 320</div><div>Send: 20</div></div>
+  <div class="card"><div class="name">idnes</div><div>Order: 320</div><div>Send: 20</div></div>
   <div class="card"><div class="name">Diyy</div><div>Order: 320</div><div>Send: 20</div></div>
   <div class="card"><div class="name">Araba</div><div>Order: 150</div><div>Send: 90</div><div class="status fail">Status: ❌</div></div>
 </div>
 
 <div class="slot">
   <div class="slot-title">🗂️ Riwayat Orderan (Selesai ✅)</div>
-  <div class="card"><div class="name">Sam</div><div>Order: 210</div><div>Send: 213</div><div class="status done">Status: ✅</div></div>
-  <div class="card"><div class="name">Erwin</div><div>Order: 210</div><div>Send: 213</div><div class="status done">Status: ✅</div></div>
-  <div class="card"><div class="name">Kael</div><div>Order: 120</div><div>Send: 123</div><div class="status done">Status: ✅</div></div>
-  <div class="card"><div class="name">Xen</div><div>Order: 210</div><div>Send: 213</div><div class="status done">Status: ✅</div></div>
-  <div class="card"><div class="name">Lusi</div><div>Order: 600</div><div>Send: 603</div><div class="status done">Status: ✅</div></div>
   <div class="card"><div class="name">Nanda</div><div>Order: 210</div><div>Send: 213</div><div class="status done">Status: ✅</div></div>
   <div class="card"><div class="name">Alvin</div><div>Order: 210</div><div>Send: 213</div><div class="status done">Status: ✅</div></div>
   <div class="card"><div class="name">Ira</div><div>Order: 150</div><div>Send: 153</div><div class="status done">Status: ✅</div></div>
-  <div class="card"><div class="name">Aelia</div><div>Order: 100</div><div>Send: 103</div><div class="status done">Status: ✅</div></div>
+  <div class="card"><div class="name">Kael</div><div>Order: 120</div><div>Send: 123</div><div class="status done">Status: ✅</div></div>
+  <div class="card"><div class="name">Aelia</div><div>Order: 100</div><div>Send: 100</div><div class="status done">Status: ✅</div></div>
+  <div class="card"><div class="name">Xen</div><div>Order: 210</div><div>Send: 213</div><div class="status done">Status: ✅</div></div>
+  <div class="card"><div class="name">Lusi</div><div>Order: 600</div><div>Send: 603</div><div class="status done">Status: ✅</div></div>
 </div>
 
   </div>
