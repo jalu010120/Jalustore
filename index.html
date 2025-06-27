@@ -2,9 +2,9 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <title>JaluStore</title>
+  <title>Dashboard Pengiriman Heart - JaluStore</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     /* Add CSS Variables for Sky Chibi Theme */
     :root {
@@ -77,22 +77,47 @@
     }
 
     h1 {
-        font-family: 'Fredoka', sans-serif; /* Font yang lebih ceria untuk judul (Fredoka) */
+        font-family: 'Fredoka', sans-serif; /* Font utama judul: Fredoka */
         text-align: center;
         color: var(--heading-color);
-        margin-bottom: 2.5rem;
+        margin-bottom: 1.5rem; /* Kurangi margin untuk memberi ruang tombol */
         text-shadow: 2px 2px 7px rgba(0,0,0,0.2);
         font-size: 2.8rem; /* Ukuran font lebih besar */
         letter-spacing: 2px;
         line-height: 1.2;
     }
     h1 em {
+        font-family: 'Pacifico', cursive; /* Font khusus untuk teks di dalam <em> (JaluStore): Pacifico */
         display: block;
         font-size: 0.7em;
         font-style: normal;
         color: var(--text-color);
         opacity: 0.8;
     }
+
+    /* Gaya untuk tombol katalog */
+    .catalog-button {
+        display: inline-block;
+        background: linear-gradient(45deg, #FFD1DC, #FFABAB); /* Pink lembut ke peach */
+        color: #fff;
+        padding: 0.8rem 1.8rem;
+        border-radius: 30px;
+        text-decoration: none;
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-top: 1rem; /* Jarak dari judul */
+        margin-bottom: 2.5rem; /* Jarak ke bagian selanjutnya */
+        box-shadow: 0 5px 15px rgba(255,100,150,0.3); /* Bayangan pink */
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        letter-spacing: 1px;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .catalog-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(255,100,150,0.4);
+    }
+
     section {
         margin-bottom: 3rem; /* Jarak antar bagian lebih besar */
         width: 100%;
@@ -238,6 +263,7 @@
     @media (max-width: 768px) { /* Adjust for tablets */
         .overlay {padding: 1.5rem;}
         h1 { font-size: 2.2rem; }
+        .catalog-button { font-size: 1.1rem; padding: 0.7rem 1.5rem; margin-bottom: 2rem;}
         .slot-title { font-size: 1.3rem; padding: 0.7rem 1.5rem; }
         .cards { gap: 1rem; }
         .card { min-width: 150px; flex: 1 1 200px; padding: 1rem 1.2rem; }
@@ -248,8 +274,9 @@
 
     @media (max-width: 500px) { /* Adjust for mobile phones */
         .overlay {padding: 1rem;}
-        h1 { font-size: 1.8rem; margin-bottom: 2rem;}
+        h1 { font-size: 1.8rem; margin-bottom: 1.5rem;}
         h1 em { font-size: 0.8em; }
+        .catalog-button { font-size: 1rem; padding: 0.6rem 1.2rem; margin-bottom: 1.5rem;}
         .slot-title { font-size: 1.2rem; padding: 0.6rem 1.2rem; border-radius: 25px; }
         .cards { flex-direction: column; gap: 0.8rem; }
         .card { min-width: unset; padding: 0.9rem 1.1rem; border-radius: 15px; }
@@ -266,7 +293,11 @@
 <body>
   <div class="overlay">
     <div id="live-time"></div>
-    <h1>✨ Jejak Cahaya Heart <br><em>Oleh: Rumah Singgah Jalu</em></h1>
+    <h1>📦 Laporan Pengiriman Heart <br><em>JaluStore</em></h1>
+
+    <a href="https://jalustore.github.io/Store/" class="catalog-button" target="_blank">
+      💖 Beli Heart Sekarang!
+    </a>
 
     <section>
       <div class="slot-title">Slot 1</div>
