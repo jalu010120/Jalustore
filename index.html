@@ -4,108 +4,167 @@
   <meta charset="UTF-8" />
   <title>Dashboard Pengiriman Heart - JaluStore</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    /* Add CSS Variables */
+    /* Add CSS Variables for Sky Chibi Theme */
     :root {
-        --bg-color: rgba(0,0,0,0.65);
-        --text-color: #fff;
-        --heading-color: #ffd700;
-        --card-bg: rgba(255,255,255,0.13);
-        --card-border: rgba(255,255,255, 0.19);
-        --slot-gradient: linear-gradient(90deg,#00c6ff80,#007bff88,#61f0b880);
-        --status-done-bg: #2ecc71cc;
-        --status-done-text: #040;
-        --status-fail-bg: #e74c3cbb;
-        --status-fail-text: #fff;
-        --status-pending-bg: #f1c40fbb; /* Yellowish for pending */
-        --status-pending-text: #333;
-        --progress-bar-bg: rgba(255,255,255,0.2);
-        --progress-fill-color: #3498db; /* Blue */
+        --sky-blue-light: #C0E8F9; /* Langit cerah */
+        --sky-blue-medium: #87CEEB; /* Awan biru */
+        --sky-pink-light: #FFDDE1; /* Nuansa awan pink */
+        --sky-yellow-light: #FFF8DC; /* Cahaya lembut */
+        --sky-purple-soft: #E0BBE4; /* Sentuhan magis */
+
+        --bg-color-overlay: rgba(255, 255, 255, 0.7); /* Lebih transparan dan cerah */
+        --text-color: #333; /* Teks lebih gelap agar terbaca di latar cerah */
+        --heading-color: #8A2BE2; /* Warna ungu kebiruan yang manis */
+        --card-bg: rgba(255, 255, 255, 0.9); /* Card lebih solid dan cerah */
+        --card-border: rgba(180, 200, 255, 0.6); /* Border lembut */
+        --slot-gradient: linear-gradient(135deg, var(--sky-blue-light) 0%, var(--sky-pink-light) 100%); /* Gradient pelangi */
+        
+        --status-done-bg: #80CBC4; /* Hijau mint lembut */
+        --status-done-text: #004D40;
+        --status-fail-bg: #FFAB91; /* Oranye peach lembut */
+        --status-fail-text: #D84315;
+        --status-pending-bg: #FFCC80; /* Kuning pastel */
+        --status-pending-text: #E65100;
+
+        --progress-bar-bg: rgba(200, 230, 250, 0.7);
+        --progress-fill-color: #64B5F6; /* Biru langit */
+
+        /* Shadow dan efek lainnya */
+        --soft-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        --inner-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
     }
 
     * { box-sizing: border-box; }
     body {
-        font-family: 'Segoe UI', Tahoma, sans-serif;
+        font-family: 'Poppins', sans-serif; /* Font utama yang lebih lembut */
         margin: 0;
         padding: 0;
+        /* Menggunakan gambar latar Sky yang lebih cerah dan chibi */
         background: url('https://thatskyshop.com/cdn/shop/files/Page-thatskywallpaper-Portrait-13.jpg?v=1711607986&width=750') no-repeat center center fixed;
         background-size: cover;
         color: var(--text-color);
         min-height: 100vh;
+        overflow-x: hidden; /* Mencegah scroll horizontal */
     }
     .overlay {
-        background-color: var(--bg-color);
+        background-color: var(--bg-color-overlay); /* Overlay lebih transparan dan cerah */
         min-height: 100vh;
         padding: 2rem;
-        backdrop-filter: blur(7px);
+        backdrop-filter: blur(5px); /* Blur yang sedikit lebih lembut */
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Pusatkan konten */
     }
     #live-time {
         text-align: center;
-        font-size: 1.2rem;
-        margin-bottom: 1rem;
-        color: #f1f1f1;
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+        color: var(--heading-color); /* Warna yang lebih cerah */
         letter-spacing: 1px;
+        font-weight: 600;
+        background: rgba(255, 255, 255, 0.7);
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+        box-shadow: var(--soft-shadow);
+        animation: pulseTime 1.5s infinite alternate; /* Efek bernafas */
     }
+
+    @keyframes pulseTime {
+        from { transform: scale(1); }
+        to { transform: scale(1.03); }
+    }
+
     h1 {
+        font-family: 'Pacifico', cursive; /* Font yang lebih ceria untuk judul */
         text-align: center;
         color: var(--heading-color);
-        margin-bottom: 2rem;
-        text-shadow: 2px 2px 11px #000;
-        font-size: 2.2rem;
+        margin-bottom: 2.5rem;
+        text-shadow: 2px 2px 7px rgba(0,0,0,0.2);
+        font-size: 2.8rem; /* Ukuran font lebih besar */
+        letter-spacing: 2px;
+        line-height: 1.2;
+    }
+    h1 em {
+        display: block;
+        font-size: 0.7em;
+        font-style: normal;
+        color: var(--text-color);
+        opacity: 0.8;
     }
     section {
-        margin-bottom: 2.5rem;
+        margin-bottom: 3rem; /* Jarak antar bagian lebih besar */
+        width: 100%;
+        max-width: 900px; /* Lebar maksimum untuk konten */
     }
     .slot-title {
-        font-size: 1.3rem;
+        font-size: 1.5rem;
         font-weight: 700;
-        background: var(--slot-gradient);
-        color: var(--text-color);
-        padding: 0.7rem 1.5rem;
-        border-radius: 7px;
-        margin-bottom: 1rem;
+        background: var(--slot-gradient); /* Gradient lebih colorful */
+        color: #fff; /* Teks putih di gradient cerah */
+        padding: 0.8rem 1.8rem;
+        border-radius: 30px; /* Bentuk lebih bulat/pill */
+        margin-bottom: 1.5rem;
         display: inline-block;
-        box-shadow: 0 2px 10px #0004;
+        box-shadow: var(--soft-shadow);
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        transition: transform 0.2s ease-in-out;
+        letter-spacing: 1px;
+    }
+    .slot-title:hover {
+        transform: translateY(-3px); /* Efek melayang */
     }
     .cards {
         display: flex;
         flex-wrap: wrap;
-        gap: 1rem;
+        gap: 1.2rem; /* Jarak antar kartu lebih besar */
+        justify-content: center; /* Pusatkan kartu */
     }
     .card {
         background: var(--card-bg);
-        border: 1px solid var(--card-border);
-        border-radius: 12px;
-        padding: 1rem 1.2rem;
-        min-width: 170px;
-        flex: 1 1 220px;
-        box-shadow: 0 3px 10px #2226;
-        transition: transform 0.1s;
-        display: flex; /* Use flexbox for internal card layout */
-        flex-direction: column; /* Stack name, number, status, progress */
+        border: 2px solid var(--card-border); /* Border lebih jelas */
+        border-radius: 18px; /* Lebih bulat */
+        padding: 1.2rem 1.5rem;
+        min-width: 190px; /* Ukuran minimum lebih besar */
+        flex: 1 1 250px; /* Fleksibilitas ukuran */
+        box-shadow: var(--soft-shadow); /* Bayangan lembut */
+        transition: transform 0.2s ease-out, background 0.2s ease-out;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* Untuk mendorong status ke bawah */
+        position: relative; /* Untuk potensi elemen tambahan */
+        overflow: hidden; /* Mengatasi sudut card */
     }
     .card:hover {
-        transform: scale(1.025);
-        background: rgba(255,255,255,0.17);
+        transform: translateY(-5px) scale(1.02); /* Efek melayang dan sedikit membesar */
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15); /* Bayangan lebih dalam saat hover */
+        background: rgba(255,255,255,0.95);
     }
     .name {
-        font-size: 1.1em;
-        font-weight: bold;
-        margin-bottom: 0.3em;
+        font-size: 1.2em;
+        font-weight: 700; /* Lebih tebal */
+        margin-bottom: 0.5em;
+        color: #555;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.05);
     }
     .number {
-        font-size: 1.08em;
-        margin-bottom: 0.4em; /* Add margin below numbers */
+        font-size: 1.05em;
+        margin-bottom: 0.8em; /* Jarak lebih besar */
+        color: #666;
     }
     .status {
-        margin-top: auto; /* Push status/progress to bottom */
-        font-size: 1em;
-        font-weight: 900;
+        margin-top: auto;
+        font-size: 0.95em;
+        font-weight: 800; /* Sangat tebal */
         display: inline-block;
-        border-radius: 8px;
-        padding: 0 8px;
-        letter-spacing: 1.5px;
-        align-self: flex-start; /* Align status/progress to the left */
+        border-radius: 15px; /* Lebih bulat */
+        padding: 0.3em 0.8em;
+        letter-spacing: 0.8px;
+        align-self: flex-start;
+        box-shadow: var(--inner-shadow);
+        text-transform: uppercase;
+        transition: background 0.3s ease, color 0.3s ease;
     }
     /* Status Colors */
     .status.done { background: var(--status-done-bg); color: var(--status-done-text); }
@@ -114,39 +173,94 @@
 
     /* Progress Bar Styles */
     .progress-bar-container {
-        height: 8px;
+        height: 10px; /* Lebih tebal */
         background-color: var(--progress-bar-bg);
-        border-radius: 4px;
-        margin-top: 0.5em;
-        overflow: hidden; /* Hide overflow of the fill */
-        display: none; /* Initially hidden, shown for pending/fail */
+        border-radius: 5px; /* Lebih bulat */
+        margin-top: 0.8em;
+        overflow: hidden;
+        box-shadow: var(--inner-shadow);
+        display: none;
     }
 
     .card.pending .progress-bar-container,
     .card.fail .progress-bar-container {
-        display: block; /* Show for pending/fail */
+        display: block;
     }
 
     .progress-bar-fill {
         height: 100%;
         background-color: var(--progress-fill-color);
-        border-radius: 4px;
-        transition: width 0.5s ease-in-out; /* Smooth width transitions */
+        border-radius: 5px;
+        transition: width 0.7s ease-in-out; /* Animasi lebih lembut */
+        position: relative;
+    }
+
+    .progress-bar-fill::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.1) 100%);
+        opacity: 0;
+        animation: shimmer 2s infinite linear;
+    }
+
+    @keyframes shimmer {
+        0% { opacity: 0; transform: translateX(-100%); }
+        50% { opacity: 1; transform: translateX(100%); }
+        100% { opacity: 0; transform: translateX(100%); }
     }
 
 
-    @media (max-width: 700px) {
+    /* Chibi elements - these would typically be background images or SVG icons */
+    .card::before {
+        content: '';
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        width: 50px;
+        height: 50px;
+        /* Contoh: Awan atau bintang kecil */
+        /* background: url('path/to/chibi-cloud-icon.png') no-repeat center center / contain; */
+        opacity: 0.1;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    .card.done::before {
+        /* background: url('path/to/chibi-star-icon.png') no-repeat center center / contain; */
+        opacity: 0.2;
+    }
+
+
+    @media (max-width: 768px) { /* Adjust for tablets */
+        .overlay {padding: 1.5rem;}
+        h1 { font-size: 2.2rem; }
+        .slot-title { font-size: 1.3rem; padding: 0.7rem 1.5rem; }
+        .cards { gap: 1rem; }
+        .card { min-width: 150px; flex: 1 1 200px; padding: 1rem 1.2rem; }
+        .name { font-size: 1.1em; }
+        .number { font-size: 1em; }
+        .status { font-size: 0.85em; padding: 0.2em 0.7em; }
+    }
+
+    @media (max-width: 500px) { /* Adjust for mobile phones */
         .overlay {padding: 1rem;}
-        .cards { flex-direction: column; gap: 0.5rem;}
-        .card {min-width: unset; padding: 0.8rem 1rem;}
-        h1 { font-size: 1.4rem;}
-        .slot-title { font-size: 1.1rem; padding: 0.5rem 1rem;}
-        .name { font-size: 1em;}
-        .number { font-size: 0.95em;}
-        .status { font-size: 0.9em;}
+        h1 { font-size: 1.8rem; margin-bottom: 2rem;}
+        h1 em { font-size: 0.8em; }
+        .slot-title { font-size: 1.2rem; padding: 0.6rem 1.2rem; border-radius: 25px; }
+        .cards { flex-direction: column; gap: 0.8rem; }
+        .card { min-width: unset; padding: 0.9rem 1.1rem; border-radius: 15px; }
+        .name { font-size: 1em; }
+        .number { font-size: 0.9em; }
+        .status { font-size: 0.8em; padding: 0.15em 0.6em; border-radius: 12px; }
+        #live-time { font-size: 1rem; padding: 0.4rem 0.8rem; }
     }
-    ::-webkit-scrollbar {width:8px; background:#212;}
-    ::-webkit-scrollbar-thumb {background:#005b8aaa; border-radius:8px;}
+    ::-webkit-scrollbar {width:8px; background:#e0f7fa;} /* Scrollbar lebih terang */
+    ::-webkit-scrollbar-thumb {background:var(--sky-blue-medium); border-radius:8px;}
+    ::-webkit-scrollbar-thumb:hover {background:#67B2D2;}
   </style>
 </head>
 <body>
@@ -154,26 +268,21 @@
     <div id="live-time"></div>
     <h1>📦 Laporan Pengiriman Heart <br><em>JaluStore</em></h1>
 
-    <!-- Placeholders for sections -->
     <section>
       <div class="slot-title">Slot 1</div>
-      <div id="slot1-cards" class="cards"></div> <!-- Cards will be generated here -->
-    </section>
+      <div id="slot1-cards" class="cards"></div> </section>
 
     <section>
       <div class="slot-title">Slot 2</div>
-      <div id="slot2-cards" class="cards"></div> <!-- Cards will be generated here -->
-    </section>
+      <div id="slot2-cards" class="cards"></div> </section>
 
     <section>
       <div class="slot-title">Slot 3</div>
-      <div id="slot3-cards" class="cards"></div> <!-- Cards will be generated here -->
-    </section>
+      <div id="slot3-cards" class="cards"></div> </section>
 
     <section>
       <div class="slot-title">🗂️ Riwayat Orderan Selesai</div>
-      <div id="completed-cards" class="cards"></div> <!-- Cards will be generated here -->
-    </section>
+      <div id="completed-cards" class="cards"></div> </section>
 
   </div>
 
