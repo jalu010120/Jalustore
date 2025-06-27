@@ -2,12 +2,10 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <title>Dashboard Pengiriman Heart - JaluStore (Sky Nuance & Interaktif)</title>
+  <title>Status Pesanan Heart - JaluStore (Buyer View)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Link Google Font for a softer feel -->
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
-  <!-- Link for icons (e.g., trash, edit) - Using Feather Icons via CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
 
   <style>
     /* Sky Nuance CSS Variables */
@@ -17,7 +15,7 @@
         --heading-color: #FFDA66; /* Soft yellow/gold */
         --card-bg: rgba(255, 255, 255, 0.1); /* More transparent white */
         --card-border: rgba(255, 255, 255, 0.12); /* Softer border */
-        --slot-gradient: linear-gradient(90deg, #81D4FA80, #4FC3F788, #64B5F680); /* Lighter blue gradient */
+        /* Removed slot gradient as slots are less prominent for buyer */
         --status-done-bg: #81C784cc; /* Soft green */
         --status-done-text: #1B5E20; /* Dark green */
         --status-fail-bg: #7E57C2bb; /* Muted purple for 'stuck' */
@@ -27,21 +25,13 @@
         --progress-bar-bg: rgba(255, 255, 255, 0.15); /* Lighter progress bar background */
         --progress-fill-color: #4FC3F7; /* Light blue fill */
         --hover-bg: rgba(255, 255, 255, 0.15); /* Slightly more transparent on hover */
-        --button-bg: rgba(255, 255, 255, 0.2);
-        --button-hover-bg: rgba(255, 255, 255, 0.3);
-        --button-delete-bg: rgba(231, 76, 60, 0.7);
-        --button-delete-hover-bg: rgba(231, 76, 60, 0.9);
-        --form-bg: rgba(255, 255, 255, 0.1);
-        --input-bg: rgba(255, 255, 255, 0.08);
-        --input-border: rgba(255, 255, 255, 0.15);
     }
 
     * { box-sizing: border-box; }
     body {
-        font-family: 'Nunito', sans-serif; /* Use Nunito font */
+        font-family: 'Nunito', sans-serif;
         margin: 0;
         padding: 0;
-        /* Keep the existing background image */
         background: url('https://thatskyshop.com/cdn/shop/files/Page-thatskywallpaper-Portrait-13.jpg?v=1711607986&width=750') no-repeat center center fixed;
         background-size: cover;
         color: var(--text-color);
@@ -51,106 +41,98 @@
         background-color: var(--bg-color);
         min-height: 100vh;
         padding: 2rem;
-        backdrop-filter: blur(8px); /* Slightly increased blur for misty feel */
+        backdrop-filter: blur(8px);
     }
     #live-time {
         text-align: center;
         font-size: 1.2rem;
         margin-bottom: 1rem;
-        color: #BDBDBD; /* Slightly darker than text color */
+        color: #BDBDBD;
         letter-spacing: 1px;
     }
     h1 {
         text-align: center;
         color: var(--heading-color);
-        margin-bottom: 1rem; /* Less margin to make space for totals */
-        text-shadow: 0 0 15px rgba(255, 218, 102, 0.5), 0 0 5px rgba(255, 218, 102, 0.7); /* Softer glow effect */
+        margin-bottom: 1rem;
+        text-shadow: 0 0 15px rgba(255, 218, 102, 0.5), 0 0 5px rgba(255, 218, 102, 0.7);
         font-size: 2.2rem;
-        font-weight: 900; /* Nunito Black */
+        font-weight: 900;
     }
 
-    #total-summary {
+    #buyer-greeting {
         text-align: center;
-        font-size: 1.1rem;
+        font-size: 1.3rem;
         margin-bottom: 2rem;
-        color: #B3E5FC;
-    }
-    #total-summary span {
+        color: #B3E5FC; /* Light blue */
         font-weight: bold;
-        color: #FFECB3;
     }
-
+     #buyer-greeting span {
+         color: #FFECB3; /* Light yellow */
+     }
 
     section {
         margin-bottom: 2.5rem;
     }
-    .slot-title {
-        font-size: 1.3rem;
-        font-weight: 700; /* Nunito Bold */
-        background: var(--slot-gradient);
-        color: var(--text-color);
-        padding: 0.7rem 1.5rem;
-        border-radius: 7px;
-        margin-bottom: 1rem;
-        display: inline-block;
-        box-shadow: 0 2px 10px #0004;
-    }
+
+    /* Buyer view doesn't group by slots, so this title is less used */
+     .slot-title {
+         display: none; /* Hide slot titles in buyer view */
+     }
+
     .cards {
         display: flex;
         flex-wrap: wrap;
         gap: 1rem;
+         justify-content: center; /* Center cards if few items */
     }
     .card {
         background: var(--card-bg);
         border: 1px solid var(--card-border);
-        border-radius: 12px; /* Soft rounded corners */
+        border-radius: 12px;
         padding: 1rem 1.2rem;
-        min-width: 170px;
-        flex: 1 1 220px;
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3); /* Softer shadow */
-        transition: transform 0.2s ease-in-out, background 0.2s ease-in-out; /* Add background transition */
+        min-width: 250px; /* Make cards slightly wider for clarity */
+        max-width: 350px; /* Max width for large screens */
+        flex: 1 1 250px; /* Adjust flex basis */
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        transition: transform 0.2s ease-in-out, background 0.2s ease-in-out;
         display: flex;
         flex-direction: column;
-        position: relative; /* Needed for positioning delete button */
+        /* No position: relative needed as delete button is removed */
     }
     .card:hover {
-        transform: translateY(-5px) scale(1.03); /* Lift and slight scale */
-        background: var(--hover-bg); /* Change background on hover */
-        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4); /* More prominent shadow on hover */
+        transform: translateY(-5px) scale(1.03);
+        background: var(--hover-bg);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
     }
     .name {
-        font-size: 1.1em;
-        font-weight: 900; /* Nunito Black */
+        font-size: 1.2em; /* Slightly larger name */
+        font-weight: 900;
         margin-bottom: 0.3em;
-        color: #FFECB3; /* Lighter yellow for names */
+        color: #FFECB3;
+        text-align: center; /* Center the name */
     }
-    .number-info { /* Container for Order, Send, Remaining */
-        font-size: 1.0em; /* Slightly smaller */
+    .number-info {
+        font-size: 1.0em;
         margin-bottom: 0.4em;
-        color: #B3E5FC; /* Light blue for numbers */
+        color: #B3E5FC;
+        text-align: center; /* Center numbers */
     }
     .number-info span {
-        font-weight: bold; /* Make numbers stand out */
+        font-weight: bold;
         color: #E1F5FE;
-    }
-    .number-info .send {
-        cursor: pointer; /* Indicate it's clickable */
-        text-decoration: underline dotted; /* Visual cue for edit */
-    }
-    .number-info .send:hover {
-        color: #FFECB3; /* Change color on hover */
     }
 
     .status {
         margin-top: auto;
-        font-size: 1em;
+        font-size: 1.1em; /* Slightly larger status */
         font-weight: 900;
         display: inline-block;
         border-radius: 8px;
-        padding: 0 8px;
+        padding: 0.3em 0.6em; /* Slightly more padding */
         letter-spacing: 1.5px;
-        align-self: flex-start;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* Subtle shadow on status */
+        align-self: center; /* Center the status */
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        text-align: center;
     }
     /* Status Colors */
     .status.done { background: var(--status-done-bg); color: var(--status-done-text); }
@@ -164,7 +146,8 @@
         border-radius: 4px;
         margin-top: 0.5em;
         overflow: hidden;
-        display: none; /* Initially hidden, shown for pending/fail */
+        /* Show progress for pending/fail, hide for done */
+         display: none; /* Handled by JS based on status */
     }
 
     .card.pending .progress-bar-container,
@@ -179,206 +162,110 @@
         transition: width 0.5s ease-in-out;
     }
 
-    /* Delete Button */
-    .delete-button {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background: var(--button-delete-bg);
-        color: var(--text-color);
-        border: none;
-        border-radius: 50%; /* Make it round */
-        width: 24px;
-        height: 24px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        opacity: 0.7; /* Slightly transparent when not hovered */
-        transition: background 0.2s ease-in-out, opacity 0.2s ease-in-out;
-        padding: 0; /* Remove default padding */
-    }
-    .delete-button:hover {
-        background: var(--button-delete-hover-bg);
-        opacity: 1;
-    }
-    .delete-button svg { /* Style for the Feather icon */
-        width: 14px; /* Adjust icon size */
-        height: 14px;
-        stroke: currentColor; /* Use button color for icon */
-        stroke-width: 2;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-        fill: none;
-        display: block; /* Fix potential alignment issues */
-    }
-
-    /* Add New Order Form */
-    #add-order-form {
-        background: var(--form-bg);
-        border: 1px solid var(--card-border);
-        border-radius: 12px;
-        padding: 1.5rem;
-        margin-bottom: 2.5rem;
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
-    }
-    #add-order-form h3 {
-        margin-top: 0;
-        color: var(--heading-color);
-        font-size: 1.5rem;
-        margin-bottom: 1.5rem;
-    }
-    #add-order-form .form-group {
-        display: flex;
-        flex-wrap: wrap; /* Allow wrapping on smaller screens */
-        gap: 1rem;
-        margin-bottom: 1.5rem;
-        align-items: flex-end; /* Align items at the bottom */
-    }
-     #add-order-form .form-field {
-         flex: 1 1 150px; /* Allow fields to grow but have a minimum width */
-         display: flex;
-         flex-direction: column;
-     }
-    #add-order-form label {
-        display: block;
-        margin-bottom: 0.5rem;
-        color: #B3E5FC; /* Light blue */
-        font-weight: bold;
-        font-size: 0.95em;
-    }
-    #add-order-form input[type="text"],
-    #add-order-form input[type="number"],
-    #add-order-form select {
-        width: 100%; /* Full width within flex item */
-        padding: 0.8rem 1rem;
-        border: 1px solid var(--input-border);
-        border-radius: 8px;
-        background-color: var(--input-bg);
-        color: var(--text-color);
-        font-family: 'Nunito', sans-serif;
-        font-size: 1em;
-        transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
-    }
-    #add-order-form input[type="text"]::placeholder,
-    #add-order-form input[type="number"]::placeholder {
-        color: rgba(255, 255, 255, 0.5);
-    }
-     #add-order-form input[type="text"]:focus,
-     #add-order-form input[type="number"]:focus,
-     #add-order-form select:focus {
-         outline: none;
-         border-color: #4FC3F7; /* Highlight color on focus */
-         background-color: rgba(255, 255, 255, 0.15);
-     }
-
-     #add-order-form button {
-         padding: 0.8rem 2rem;
-         background-color: var(--slot-gradient); /* Use the gradient background */
-         color: #fff;
-         border: none;
-         border-radius: 8px;
-         cursor: pointer;
-         font-size: 1.1em;
-         font-weight: bold;
-         transition: opacity 0.2s ease-in-out;
-         flex-shrink: 0; /* Don't shrink button */
-     }
-    #add-order-form button:hover {
-        opacity: 0.9;
+    /* Message for no orders found */
+    #no-orders-message {
+        text-align: center;
+        font-size: 1.4rem;
+        color: #BDBDBD;
+        margin-top: 3rem;
     }
 
 
     @media (max-width: 700px) {
         .overlay {padding: 1rem;}
-        .cards { flex-direction: column; gap: 0.5rem;}
-        .card {min-width: unset; padding: 0.8rem 1rem;}
-        h1 { font-size: 1.8rem;} /* Slightly smaller on mobile */
-        .slot-title { font-size: 1.1rem; padding: 0.5rem 1rem;}
-        .name { font-size: 1em;}
-        .number-info { font-size: 0.95em;}
-        .status { font-size: 0.9em;}
-        #total-summary { font-size: 1rem;}
-        #add-order-form { padding: 1rem;}
-        #add-order-form h3 { font-size: 1.3rem;}
-         #add-order-form .form-group { flex-direction: column; gap: 0.8rem;}
-        #add-order-form button { width: 100%; }
+        .cards { flex-direction: column; gap: 0.8rem;} /* Slightly larger gap */
+        .card {min-width: unset; padding: 1rem; max-width: unset;} /* Full width on mobile */
+        h1 { font-size: 1.8rem;}
+        #buyer-greeting { font-size: 1.1rem; margin-bottom: 1.5rem;}
+        .name { font-size: 1.1em;}
+        .number-info { font-size: 1em;}
+        .status { font-size: 1em; padding: 0.2em 0.5em;}
+        #no-orders-message { font-size: 1.1rem;}
     }
+
     /* Custom Scrollbar for Sky feel */
-    ::-webkit-scrollbar {width:10px;} /* Wider scrollbar */
-    ::-webkit-scrollbar-track {background: rgba(255,255,255,0.08); border-radius: 5px;} /* Very light, transparent track */
-    ::-webkit-scrollbar-thumb {background: rgba(130, 177, 255, 0.6); border-radius: 5px;} /* Soft blue thumb */
-    ::-webkit-scrollbar-thumb:hover {background: rgba(130, 177, 255, 0.8);} /* More opaque on hover */
+    ::-webkit-scrollbar {width:10px;}
+    ::-webkit-scrollbar-track {background: rgba(255,255,255,0.08); border-radius: 5px;}
+    ::-webkit-scrollbar-thumb {background: rgba(130, 177, 255, 0.6); border-radius: 5px;}
+    ::-webkit-scrollbar-thumb:hover {background: rgba(130, 177, 255, 0.8);}
 
   </style>
 </head>
 <body>
   <div class="overlay">
     <div id="live-time"></div>
-    <h1>📦 Laporan Pengiriman Heart <br><em>JaluStore</em></h1>
+    <h1>📦 Status Pesanan Heart <br><em>JaluStore</em></h1>
 
-    <div id="total-summary"></div>
+    <div id="buyer-greeting"></div> <!-- Greeting for the buyer -->
 
-    <!-- Add New Order Form -->
-    <div id="add-order-form">
-        <h3>Tambah Order Baru</h3>
-        <form id="new-order-details">
-            <div class="form-group">
-                <div class="form-field" style="flex: 2 1 200px;">
-                    <label for="name">Nama:</label>
-                    <input type="text" id="name" required placeholder="Nama Pembeli">
-                </div>
-                 <div class="form-field">
-                    <label for="order">Order (Hearts):</label>
-                    <input type="number" id="order" required min="1" value="100" placeholder="Jumlah Order">
-                </div>
-                 <div class="form-field">
-                    <label for="send">Send (Hearts):</label>
-                    <input type="number" id="send" required min="0" value="0" placeholder="Jumlah Terkirim">
-                </div>
-                 <div class="form-field">
-                     <label for="slot">Slot:</label>
-                     <select id="slot" required>
-                         <option value="1">Slot 1</option>
-                         <option value="2">Slot 2</option>
-                         <option value="3">Slot 3</option>
-                         <option value="completed">Riwayat Selesai</option>
-                     </select>
-                 </div>
-                 <div>
-                     <button type="submit">Tambah Order</button>
-                 </div>
-            </div>
-        </form>
+    <!-- Container for filtered cards -->
+    <div id="buyer-orders-container" class="cards">
+        <!-- Cards for the specific buyer will be generated here -->
     </div>
 
-
-    <!-- Placeholders for sections -->
-    <section>
-      <div class="slot-title">Slot 1</div>
-      <div id="slot1-cards" class="cards"></div> <!-- Cards will be generated here -->
-    </section>
-
-    <section>
-      <div class="slot-title">Slot 2</div>
-      <div id="slot2-cards" class="cards"></div> <!-- Cards will be generated here -->
-    </section>
-
-    <section>
-      <div class="slot-title">Slot 3</div>
-      <div id="slot3-cards" class="cards"></div> <!-- Cards will be generated here -->
-    </section>
-
-    <section>
-      <div class="slot-title">🗂️ Riwayat Orderan Selesai</div>
-      <div id="completed-cards" class="cards"></div> <!-- Cards will be generated here -->
-    </section>
+    <div id="no-orders-message" style="display: none;"></div> <!-- Message when no orders are found -->
 
   </div>
 
   <script>
-    // Data structure (array of objects)
-    let deliveryData = []; // Start with an empty array, will load from Local Storage
+    // --- DATA (This data needs to be updated by the seller) ---
+    // Add a unique ID for better tracking, even if not used for buyer view filtering
+    // Use a field like 'buyerName' or simply the 'name' field consistently
+    const deliveryData = [
+        // Slot 1
+        { id: 1, slot: 1, name: 'Angel', order: 450, send: 260, statusOverride: 'fail' },
+        { id: 2, slot: 1, name: 'Husna', order: 450, send: 257, statusOverride: 'fail' },
+        { id: 3, slot: 1, name: 'Mursyid', order: 320, send: 70 },
+        { id: 4, slot: 1, name: 'Angel2', order: 600, send: 260 }, // Example of multiple orders for one name
+        { id: 5, slot: 1, name: 'Aelia', order: 420, send: 120 },
+        { id: 6, slot: 1, name: 'Tsabyy', order: 200, send: 80 },
+        { id: 7, slot: 1, name: 'Fida', order: 100, send: 80 },
+        { id: 8, slot: 1, name: 'Vyan', order: 80, send: 60 },
+        { id: 9, slot: 1, name: 'Aya', order: 320, send: 40 },
+        { id: 10, slot: 1, name: 'Rain', order: 320, send: 40 },
+
+        // Slot 2
+        { id: 11, slot: 2, name: 'Ayu', order: 1000, send: 1003 },
+        { id: 12, slot: 2, name: 'Anna', order: 600, send: 603 },
+        { id: 13, slot: 2, name: 'Moon', order: 530, send: 253 },
+        { id: 14, slot: 2, name: 'Hira', order: 360, send: 238 },
+        { id: 15, slot: 2, name: 'Sea', order: 150, send: 119, statusOverride: 'fail' },
+        { id: 16, slot: 2, name: 'Zee', order: 150, send: 138 },
+        { id: 17, slot: 2, name: 'Joy', order: 320, send: 260 },
+        { id: 18, slot: 2, name: 'Harbie', order: 200, send: 160 },
+        { id: 19, slot: 2, name: 'Aze', order: 570, send: 140 },
+        { id: 20, slot: 2, name: 'Sena', order: 570, send: 140 },
+        { id: 21, slot: 2, name: 'raine', order: 420, send: 120 },
+        { id: 22, slot: 2, name: 'Rani', order: 320, send: 40 },
+
+        // Slot 3
+        { id: 23, slot: 3, name: 'Kiki', order: 450, send: 414 },
+        { id: 24, slot: 3, name: 'Tobias', order: 500, send: 235, statusOverride: 'fail' },
+        { id: 25, slot: 3, name: 'Luna', order: 800, send: 660 },
+        { id: 26, slot: 3, name: 'Ney', order: 3540, send: 2850 },
+        { id: 27, slot: 3, name: 'Diyy', order: 320, send: 40 },
+        { id: 28, slot: 3, name: 'Al', order: 320, send: 40 },
+        { id: 29, slot: 3, name: 'Purili', order: 320, send: 40 },
+        { id: 30, slot: 3, name: 'Idnes', order: 320, send: 40 },
+        { id: 31, slot: 3, name: 'Anggi', order: 320, send: 40 },
+        { id: 32, slot: 3, name: 'Alip', order: 320, send: 20 },
+
+        // Completed Orders (still included, buyer might want to see these too)
+        { id: 33, slot: 'completed', name: 'Nanda', order: 210, send: 213 },
+        { id: 34, slot: 'completed', name: 'Alvin', order: 210, send: 213 },
+        { id: 35, slot: 'completed', name: 'Ira', order: 150, send: 153 },
+        { id: 36, slot: 'completed', name: 'Kael', order: 120, send: 123 },
+        { id: 37, slot: 'completed', name: 'Xen', order: 210, send: 213 },
+        { id: 38, slot: 'completed', name: 'Lusi', order: 600, send: 603 },
+        { id: 39, slot: 'completed', name: 'Angel', order: 100, send: 100 }, // Another completed order for Angel
+    ];
+    // --- END DATA ---
+
+    // Function to get query parameters from URL
+    function getQueryParameter(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+    }
 
     // Function to update live time
     function updateTime() {
@@ -389,123 +276,101 @@
         document.getElementById('live-time').textContent = '⏰: ' + waktu;
     }
 
-    // Function to save data to Local Storage
-    function saveData() {
-        localStorage.setItem('deliveryData', JSON.stringify(deliveryData));
-    }
+    // Function to render the cards for a specific buyer
+    function renderBuyerDashboard(buyerName) {
+        const container = document.getElementById('buyer-orders-container');
+        const greetingElement = document.getElementById('buyer-greeting');
+        const noOrdersMessageElement = document.getElementById('no-orders-message');
 
-    // Function to load data from Local Storage
-    function loadData() {
-        const storedData = localStorage.getItem('deliveryData');
-        if (storedData) {
-            deliveryData = JSON.parse(storedData);
-            // Ensure all loaded items have a unique ID (for compatibility with older data)
-            deliveryData.forEach(item => {
-                if (!item.id) {
-                    item.id = Date.now() + Math.random(); // Simple unique ID
-                }
-            });
+        container.innerHTML = ''; // Clear existing cards
+        noOrdersMessageElement.style.display = 'none'; // Hide message initially
+
+        // Filter data for the specific buyer name (case-insensitive trim)
+        const filteredData = deliveryData.filter(item =>
+            item.name && item.name.trim().toLowerCase() === buyerName.trim().toLowerCase()
+        );
+
+        if (buyerName) {
+             greetingElement.innerHTML = `Status Pesanan untuk <span>${buyerName}</span>`;
         } else {
-             // Default data if Local Storage is empty (can be removed if you always start fresh)
-            deliveryData = [
-                { id: 1, slot: 1, name: 'Angel', order: 450, send: 260, statusOverride: 'fail' },
-                { id: 2, slot: 1, name: 'Husna', order: 450, send: 257, statusOverride: 'fail' },
-                { id: 3, slot: 1, name: 'Mursyid', order: 320, send: 70 },
-                { id: 4, slot: 1, name: 'Angel2', order: 600, send: 260 },
-                { id: 5, slot: 1, name: 'Aelia', order: 420, send: 120 },
-                { id: 6, slot: 1, name: 'Tsabyy', order: 200, send: 80 },
-                { id: 7, slot: 1, name: 'Fida', order: 100, send: 80 },
-                { id: 8, slot: 1, name: 'Vyan', order: 80, send: 60 },
-                { id: 9, slot: 1, name: 'Aya', order: 320, send: 40 },
-                { id: 10, slot: 1, name: 'Rain', order: 320, send: 40 },
-
-                { id: 11, slot: 2, name: 'Ayu', order: 1000, send: 1003 },
-                { id: 12, slot: 2, name: 'Anna', order: 600, send: 603 },
-                { id: 13, slot: 2, name: 'Moon', order: 530, send: 253 },
-                { id: 14, slot: 2, name: 'Hira', order: 360, send: 238 },
-                { id: 15, slot: 2, name: 'Sea', order: 150, send: 119, statusOverride: 'fail' },
-                { id: 16, slot: 2, name: 'Zee', order: 150, send: 138 },
-                { id: 17, slot: 2, name: 'Joy', order: 320, send: 260 },
-                { id: 18, slot: 2, name: 'Harbie', order: 200, send: 160 },
-                { id: 19, slot: 2, name: 'Aze', order: 570, send: 140 },
-                { id: 20, slot: 2, name: 'Sena', order: 570, send: 140 },
-                { id: 21, slot: 2, name: 'raine', order: 420, send: 120 },
-                { id: 22, slot: 2, name: 'Rani', order: 320, send: 40 },
-
-                { id: 23, slot: 3, name: 'Kiki', order: 450, send: 414 },
-                { id: 24, slot: 3, name: 'Tobias', order: 500, send: 235, statusOverride: 'fail' },
-                { id: 25, slot: 3, name: 'Luna', order: 800, send: 660 },
-                { id: 26, slot: 3, name: 'Ney', order: 3540, send: 2850 },
-                { id: 27, slot: 3, name: 'Diyy', order: 320, send: 40 },
-                { id: 28, slot: 3, name: 'Al', order: 320, send: 40 },
-                { id: 29, slot: 3, name: 'Purili', order: 320, send: 40 },
-                { id: 30, slot: 3, name: 'Idnes', order: 320, send: 40 },
-                { id: 31, slot: 3, name: 'Anggi', order: 320, send: 40 },
-                { id: 32, slot: 3, name: 'Alip', order: 320, send: 20 },
-
-                { id: 33, slot: 'completed', name: 'Nanda', order: 210, send: 213 },
-                { id: 34, slot: 'completed', name: 'Alvin', order: 210, send: 213 },
-                { id: 35, slot: 'completed', name: 'Ira', order: 150, send: 153 },
-                { id: 36, slot: 'completed', name: 'Kael', order: 120, send: 123 },
-                { id: 37, slot: 'completed', name: 'Xen', order: 210, send: 213 },
-                { id: 38, slot: 'completed', name: 'Lusi', order: 600, send: 603 }
-            ];
-             saveData(); // Save default data on first load
+             greetingElement.textContent = 'Silakan masukkan nama Anda di URL.';
+             noOrdersMessageElement.textContent = 'Contoh Link: yourwebsite.com/status.html?name=NamaAnda';
+             noOrdersMessageElement.style.display = 'block';
+             return; // Stop if no name provided
         }
-    }
 
-    // Function to render the cards and totals
-    function renderDashboard() {
-        const slots = {
-            1: document.getElementById('slot1-cards'),
-            2: document.getElementById('slot2-cards'),
-            3: document.getElementById('slot3-cards'),
-            completed: document.getElementById('completed-cards')
-        };
-        const totalSummaryElement = document.getElementById('total-summary');
 
-        // Clear existing cards
-        Object.values(slots).forEach(container => {
-            if (container) container.innerHTML = '';
-        });
+        if (filteredData.length === 0) {
+            greetingElement.innerHTML = `<span>${buyerName}</span>, tidak ada pesanan ditemukan.`;
+            noOrdersMessageElement.textContent = 'Pastikan nama yang dimasukkan di URL sudah benar.';
+            noOrdersMessageElement.style.display = 'block';
+            return; // Stop if no data for this buyer
+        }
 
-        let totalOrder = 0;
-        let totalSend = 0;
-
-        deliveryData.forEach(item => {
-            const container = slots[item.slot];
-            if (!container) return; // Skip if slot container not found
-
+        filteredData.forEach(item => {
             // Determine status
             let statusClass = 'pending';
-            let statusText = '⏳ Progress';
+            let statusText = '⏳ Sedang Diproses';
             let showProgress = true;
 
             if (item.send >= item.order && !item.statusOverride) {
                 statusClass = 'done';
-                statusText = '✅ Done';
+                statusText = '✅ Selesai';
                 showProgress = false; // Hide progress bar for completed
             }
 
             // statusOverride takes precedence
             if (item.statusOverride === 'fail') {
                 statusClass = 'fail';
-                statusText = '❌ Stuck';
+                statusText = '❌ Ada Kendala'; // More buyer-friendly text
                 showProgress = true;
             } else if (item.statusOverride === 'done') {
                  statusClass = 'done';
-                 statusText = '✅ Done';
+                 statusText = '✅ Selesai';
                  showProgress = false;
             }
 
-             // Calculate totals for non-completed slots
-             if (item.slot !== 'completed') {
-                 totalOrder += item.order;
-                 totalSend += item.send;
-             }
+            // Calculate remaining
+            const remaining = item.order - item.send;
+            const remainingText = remaining > 0 ? ` | Sisa: ${remaining}` : (remaining <= 0 ? ' | Sisa: 0' : ''); // Handle negative or zero remaining
+
+            // Add Slot info if desired for buyer
+             const slotInfo = (item.slot !== 'completed' && item.slot) ? ` (Slot ${item.slot})` : (item.slot === 'completed' ? ` (Selesai)` : '');
+
 
             // Calculate progress percentage
             const progressPercent = item.order > 0 ? Math.min((item.send / item.order) * 100, 100) : 0; // Cap at 100% and handle order = 0
 
-            // Calculate remaining
-            const remaining = item.order -
+            const cardHTML = `
+                <div class="card ${statusClass}">
+                    <div class="name">${item.name}${slotInfo}</div> <!-- Display name and slot/completed status -->
+                    <div class="number-info">Order: <span>${item.order}</span> | Terkirim: <span>${item.send}</span>${remainingText}</div>
+                    <span class="status ${statusClass}">${statusText}</span>
+                     ${showProgress ? `
+                     <div class="progress-bar-container">
+                         <div class="progress-bar-fill" style="width: ${progressPercent}%;"></div>
+                     </div>
+                     ` : ''}
+                </div>
+            `;
+
+            container.innerHTML += cardHTML; // Append the card HTML
+        });
+    }
+
+
+    // Initial setup when the page loads
+    document.addEventListener('DOMContentLoaded', () => {
+        updateTime(); // Update time immediately on load
+        setInterval(updateTime, 1000); // Update time every second
+
+        // Get buyer name from URL parameter 'name'
+        const buyerNameFromUrl = getQueryParameter('name');
+
+        // Render dashboard for the specific buyer
+        renderBuyerDashboard(buyerNameFromUrl);
+    });
+
+  </script>
+</body>
+</html>
