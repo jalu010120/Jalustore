@@ -1,172 +1,323 @@
-<!DOCTYPE html><html lang="id">
+<!DOCTYPE html>
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <title>Dashboard Pengiriman Heart - JaluStore</title>
+  <title>Dashboard Pengiriman Heart - JaluStore (Sky Nuance)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Link Google Font for a softer feel -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
+    /* Sky Nuance CSS Variables */
+    :root {
+        --bg-color: rgba(2, 2, 10, 0.7); /* Slightly dark, desaturated blue/purple */
+        --text-color: #E0E0E0; /* Soft white/light gray */
+        --heading-color: #FFDA66; /* Soft yellow/gold */
+        --card-bg: rgba(255, 255, 255, 0.1); /* More transparent white */
+        --card-border: rgba(255, 255, 255, 0.12); /* Softer border */
+        --slot-gradient: linear-gradient(90deg, #81D4FA80, #4FC3F788, #64B5F680); /* Lighter blue gradient */
+        --status-done-bg: #81C784cc; /* Soft green */
+        --status-done-text: #1B5E20; /* Dark green */
+        --status-fail-bg: #7E57C2bb; /* Muted purple for 'stuck' */
+        --status-fail-text: #EEEEEE; /* Light text on dark status */
+        --status-pending-bg: #FFF176bb; /* Soft yellow for pending */
+        --status-pending-text: #333333; /* Dark text on light status */
+        --progress-bar-bg: rgba(255, 255, 255, 0.15); /* Lighter progress bar background */
+        --progress-fill-color: #4FC3F7; /* Light blue fill */
+        --hover-bg: rgba(255, 255, 255, 0.15); /* Slightly more transparent on hover */
+    }
+
     * { box-sizing: border-box; }
     body {
-      font-family: 'Segoe UI', Tahoma, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: url('https://thatskyshop.com/cdn/shop/files/Page-thatskywallpaper-Portrait-13.jpg?v=1711607986&width=750') no-repeat center center fixed;
-      background-size: cover;
-      color: #fff;
-      min-height: 100vh;
+        font-family: 'Nunito', sans-serif; /* Use Nunito font */
+        margin: 0;
+        padding: 0;
+        /* Keep the existing background image */
+        background: url('https://thatskyshop.com/cdn/shop/files/Page-thatskywallpaper-Portrait-13.jpg?v=1711607986&width=750') no-repeat center center fixed;
+        background-size: cover;
+        color: var(--text-color);
+        min-height: 100vh;
     }
     .overlay {
-      background-color: rgba(0,0,0,0.65);
-      min-height: 100vh;
-      padding: 2rem;
-      backdrop-filter: blur(7px);
+        background-color: var(--bg-color);
+        min-height: 100vh;
+        padding: 2rem;
+        backdrop-filter: blur(8px); /* Slightly increased blur for misty feel */
     }
     #live-time {
-      text-align: center;
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-      color: #f1f1f1;
-      letter-spacing: 1px;
+        text-align: center;
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        color: #BDBDBD; /* Slightly darker than text color */
+        letter-spacing: 1px;
     }
     h1 {
-      text-align: center;
-      color: #ffd700;
-      margin-bottom: 2rem;
-      text-shadow: 2px 2px 11px #000;
-      font-size: 2.2rem;
+        text-align: center;
+        color: var(--heading-color);
+        margin-bottom: 2rem;
+        text-shadow: 0 0 15px rgba(255, 218, 102, 0.5), 0 0 5px rgba(255, 218, 102, 0.7); /* Softer glow effect */
+        font-size: 2.2rem;
+        font-weight: 900; /* Nunito Black */
     }
     section {
-      margin-bottom: 2.5rem;
+        margin-bottom: 2.5rem;
     }
     .slot-title {
-      font-size: 1.3rem;
-      font-weight: 700;
-      background: linear-gradient(90deg,#00c6ff80,#007bff88,#61f0b880);
-      color: #fff;
-      padding: 0.7rem 1.5rem;
-      border-radius: 7px;
-      margin-bottom: 1rem;
-      display: inline-block;
-      box-shadow: 0 2px 10px #0004;
+        font-size: 1.3rem;
+        font-weight: 700; /* Nunito Bold */
+        background: var(--slot-gradient);
+        color: var(--text-color);
+        padding: 0.7rem 1.5rem;
+        border-radius: 7px;
+        margin-bottom: 1rem;
+        display: inline-block;
+        box-shadow: 0 2px 10px #0004;
     }
     .cards {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
     }
     .card {
-      background: rgba(255,255,255,0.13);
-      border: 1px solid rgba(255,255,255, 0.19);
-      border-radius: 12px;
-      padding: 1rem 1.2rem;
-      min-width: 170px;
-      flex: 1 1 220px;
-      box-shadow: 0 3px 10px #2226;
-      transition: transform 0.1s;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 12px; /* Soft rounded corners */
+        padding: 1rem 1.2rem;
+        min-width: 170px;
+        flex: 1 1 220px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3); /* Softer shadow */
+        transition: transform 0.2s ease-in-out, background 0.2s ease-in-out; /* Add background transition */
+        display: flex;
+        flex-direction: column;
     }
-    .card:hover { transform: scale(1.025); background: rgba(255,255,255,0.17);}
-    .name { font-size: 1.1em; font-weight: bold; margin-bottom: 0.3em;}
-    .number { font-size: 1.08em; }
+    .card:hover {
+        transform: translateY(-5px) scale(1.03); /* Lift and slight scale */
+        background: var(--hover-bg); /* Change background on hover */
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4); /* More prominent shadow on hover */
+    }
+    .name {
+        font-size: 1.1em;
+        font-weight: 900; /* Nunito Black */
+        margin-bottom: 0.3em;
+        color: #FFECB3; /* Lighter yellow for names */
+    }
+    .number {
+        font-size: 1.08em;
+        margin-bottom: 0.4em;
+        color: #B3E5FC; /* Light blue for numbers */
+    }
     .status {
-      margin-top: 0.4em;
-      font-size: 1em;
-      font-weight: 900;
-      display:inline-block;
-      border-radius: 8px;
-      padding: 0 8px;
-      letter-spacing: 1.5px;
+        margin-top: auto;
+        font-size: 1em;
+        font-weight: 900;
+        display: inline-block;
+        border-radius: 8px;
+        padding: 0 8px;
+        letter-spacing: 1.5px;
+        align-self: flex-start;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* Subtle shadow on status */
     }
-    .done { background: #2ecc71cc; color:#040; }
-    .fail { background: #e74c3cbb; color:#fff; }
+    /* Status Colors */
+    .status.done { background: var(--status-done-bg); color: var(--status-done-text); }
+    .status.fail { background: var(--status-fail-bg); color: var(--status-fail-text); }
+    .status.pending { background: var(--status-pending-bg); color: var(--status-pending-text); }
+
+    /* Progress Bar Styles */
+    .progress-bar-container {
+        height: 8px;
+        background-color: var(--progress-bar-bg);
+        border-radius: 4px;
+        margin-top: 0.5em;
+        overflow: hidden;
+        display: none; /* Initially hidden, shown for pending/fail */
+    }
+
+    .card.pending .progress-bar-container,
+    .card.fail .progress-bar-container {
+        display: block;
+    }
+
+    .progress-bar-fill {
+        height: 100%;
+        background-color: var(--progress-fill-color);
+        border-radius: 4px;
+        transition: width 0.5s ease-in-out;
+    }
+
+
     @media (max-width: 700px) {
-      .overlay {padding: 1rem;}
-      .cards { flex-direction: column; gap: 0.5rem;}
-      .card {min-width: unset; padding: 0.8rem 1rem;}
-      h1 { font-size: 1.4rem;}
+        .overlay {padding: 1rem;}
+        .cards { flex-direction: column; gap: 0.5rem;}
+        .card {min-width: unset; padding: 0.8rem 1rem;}
+        h1 { font-size: 1.8rem;} /* Slightly smaller on mobile */
+        .slot-title { font-size: 1.1rem; padding: 0.5rem 1rem;}
+        .name { font-size: 1em;}
+        .number { font-size: 0.95em;}
+        .status { font-size: 0.9em;}
     }
-    ::-webkit-scrollbar {width:8px; background:#212;}
-    ::-webkit-scrollbar-thumb {background:#005b8aaa; border-radius:8px;}
+    /* Custom Scrollbar for Sky feel */
+    ::-webkit-scrollbar {width:10px;} /* Wider scrollbar */
+    ::-webkit-scrollbar-track {background: rgba(255,255,255,0.08); border-radius: 5px;} /* Very light, transparent track */
+    ::-webkit-scrollbar-thumb {background: rgba(130, 177, 255, 0.6); border-radius: 5px;} /* Soft blue thumb */
+    ::-webkit-scrollbar-thumb:hover {background: rgba(130, 177, 255, 0.8);} /* More opaque on hover */
+
   </style>
-  <script>
-    function updateTime() {
-      const now = new Date();
-      const waktu = now.toLocaleString('id-ID', {
-        hour: '2-digit', minute: '2-digit', second: '2-digit'
-      });
-      document.getElementById('live-time').textContent = '⏰: ' + waktu;
-    }
-    setInterval(updateTime, 1000);
-    window.onload = updateTime;
-  </script>
 </head>
 <body>
   <div class="overlay">
     <div id="live-time"></div>
-    <h1>📦 Laporan Pengiriman Heart <br><em>JaluStore</em></h1><!-- SLOT 1 -->
-<section>
-  <div class="slot-title">Slot 1</div>
-  <div class="cards">
-    <div class="card"><div class="name">Angel</div><div class="number">Order: 450 | Send: 260</div><span class="status fail">❌</span></div>
-    <div class="card"><div class="name">Husna</div><div class="number">Order: 450 | Send: 257</div><span class="status fail">❌</span></div>
-    <div class="card"><div class="name">Mursyid</div><div class="number">Order: 320 | Send: 70</div></div>
-    <div class="card"><div class="name">Angel2</div><div class="number">Order: 600 | Send: 260</div></div>
-    <div class="card"><div class="name">Aelia</div><div class="number">Order: 420 | Send: 120</div></div>
-    <div class="card"><div class="name">Tsabyy</div><div class="number">Order: 200 | Send: 80</div></div>
-    <div class="card"><div class="name">Fida</div><div class="number">Order: 100 | Send: 80</div></div>
-    <div class="card"><div class="name">Vyan</div><div class="number">Order: 80 | Send: 60</div></div>
-    <div class="card"><div class="name">Aya</div><div class="number">Order: 320 | Send: 40</div></div>
-    <div class="card"><div class="name">Rain</div><div class="number">Order: 320 | Send: 40</div></div>
-  </div>
-</section>
+    <h1>📦 Laporan Pengiriman Heart <br><em>JaluStore</em></h1>
 
-<!-- SLOT 2 -->
-<section>
-  <div class="slot-title">Slot 2</div>
-  <div class="cards">
-    <div class="card"><div class="name">Ayu</div><div class="number">Order: 1000 | Send: 1003</div><span class="status done">✅</span></div>
-    <div class="card"><div class="name">Anna</div><div class="number">Order: 600 | Send: 603</div><span class="status done">✅</span></div>
-    <div class="card"><div class="name">Moon</div><div class="number">Order: 530 | Send: 253</div></div>
-    <div class="card"><div class="name">Hira</div><div class="number">Order: 360 | Send: 238</div></div>
-    <div class="card"><div class="name">Sea</div><div class="number">Order: 150 | Send: 119</div><span class="status fail">❌</span></div>
-    <div class="card"><div class="name">Zee</div><div class="number">Order: 150 | Send: 138</div></div>
-    <div class="card"><div class="name">Joy</div><div class="number">Order: 320 | Send: 260</div></div>
-    <div class="card"><div class="name">Harbie</div><div class="number">Order: 200 | Send: 160</div></div>
-    <div class="card"><div class="name">Aze</div><div class="number">Order: 570 | Send: 140</div></div>
-    <div class="card"><div class="name">Sena</div><div class="number">Order: 570 | Send: 140</div></div>
-    <div class="card"><div class="name">raine</div><div class="number">Order: 420 | Send: 120</div></div>
-    <div class="card"><div class="name">Rani</div><div class="number">Order: 320 | Send: 40</div></div>
-  </div>
-</section>
+    <!-- Placeholders for sections -->
+    <section>
+      <div class="slot-title">Slot 1</div>
+      <div id="slot1-cards" class="cards"></div> <!-- Cards will be generated here -->
+    </section>
 
-<!-- SLOT 3 -->
-<section>
-  <div class="slot-title">Slot 3</div>
-  <div class="cards">
-    <div class="card"><div class="name">Kiki</div><div class="number">Order: 450 | Send: 414</div></div>
-    <div class="card"><div class="name">Tobias</div><div class="number">Order: 500 | Send: 235</div><span class="status fail">❌</span></div>
-    <div class="card"><div class="name">Luna</div><div class="number">Order: 800 | Send: 660</div></div>
-    <div class="card"><div class="name">Ney</div><div class="number">Order: 3540 | Send: 2850</div></div>
-    <div class="card"><div class="name">Diyy</div><div class="number">Order: 320 | Send: 40</div></div>
-    <div class="card"><div class="name">Al</div><div class="number">Order: 320 | Send: 40</div></div>
-    <div class="card"><div class="name">Purili</div><div class="number">Order: 320 | Send: 40</div></div>
-    <div class="card"><div class="name">Idnes</div><div class="number">Order: 320 | Send: 40</div></div>
-    <div class="card"><div class="name">Anggi</div><div class="number">Order: 320 | Send: 40</div></div>
-    <div class="card"><div class="name">Alip</div><div class="number">Order: 320 | Send: 20</div></div>
-  </div>
-</section>
+    <section>
+      <div class="slot-title">Slot 2</div>
+      <div id="slot2-cards" class="cards"></div> <!-- Cards will be generated here -->
+    </section>
 
-<!-- Completed Orders -->
-<section>
-  <div class="slot-title">🗂️ Riwayat Orderan Selesai</div>
-  <div class="cards">
-    <div class="card"><div class="name">Nanda</div><div class="number">Order: 210 | Send: 213</div><span class="status done">✅</span></div>
-    <div class="card"><div class="name">Alvin</div><div class="number">Order: 210 | Send: 213</div><span class="status done">✅</span></div>
-    <div class="card"><div class="name">Ira</div><div class="number">Order: 150 | Send: 153</div><span class="status done">✅</span></div>
-    <div class="card"><div class="name">Kael</div><div class="number">Order: 120 | Send: 123</div><span class="status done">✅</span></div>
-    <div class="card"><div class="name">Xen</div><div class="number">Order: 210 | Send: 213</div><span class="status done">✅</span></div>
-    <div class="card"><div class="name">Lusi</div><div class="number">Order: 600 | Send: 603</div><span class="status done">✅</span></div>
-  </div>
-</section>
+    <section>
+      <div class="slot-title">Slot 3</div>
+      <div id="slot3-cards" class="cards"></div> <!-- Cards will be generated here -->
+    </section>
+
+    <section>
+      <div class="slot-title">🗂️ Riwayat Orderan Selesai</div>
+      <div id="completed-cards" class="cards"></div> <!-- Cards will be generated here -->
+    </section>
 
   </div>
+
+  <script>
+    // Data structure (array of objects)
+    const deliveryData = [
+        // Slot 1
+        { slot: 1, name: 'Angel', order: 450, send: 260, statusOverride: 'fail' }, // Manually mark as fail
+        { slot: 1, name: 'Husna', order: 450, send: 257, statusOverride: 'fail' }, // Manually mark as fail
+        { slot: 1, name: 'Mursyid', order: 320, send: 70 },
+        { slot: 1, name: 'Angel2', order: 600, send: 260 },
+        { slot: 1, name: 'Aelia', order: 420, send: 120 },
+        { slot: 1, name: 'Tsabyy', order: 200, send: 80 },
+        { slot: 1, name: 'Fida', order: 100, send: 80 },
+        { slot: 1, name: 'Vyan', order: 80, send: 60 },
+        { slot: 1, name: 'Aya', order: 320, send: 40 },
+        { slot: 1, name: 'Rain', order: 320, send: 40 },
+
+        // Slot 2
+        { slot: 2, name: 'Ayu', order: 1000, send: 1003 }, // Done
+        { slot: 2, name: 'Anna', order: 600, send: 603 }, // Done
+        { slot: 2, name: 'Moon', order: 530, send: 253 },
+        { slot: 2, name: 'Hira', order: 360, send: 238 },
+        { slot: 2, name: 'Sea', order: 150, send: 119, statusOverride: 'fail' }, // Manually mark as fail
+        { slot: 2, name: 'Zee', order: 150, send: 138 },
+        { slot: 2, name: 'Joy', order: 320, send: 260 },
+        { slot: 2, name: 'Harbie', order: 200, send: 160 },
+        { slot: 2, name: 'Aze', order: 570, send: 140 },
+        { slot: 2, name: 'Sena', order: 570, send: 140 },
+        { slot: 2, name: 'raine', order: 420, send: 120 },
+        { slot: 2, name: 'Rani', order: 320, send: 40 },
+
+        // Slot 3
+        { slot: 3, name: 'Kiki', order: 450, send: 414 },
+        { slot: 3, name: 'Tobias', order: 500, send: 235, statusOverride: 'fail' }, // Manually mark as fail
+        { slot: 3, name: 'Luna', order: 800, send: 660 },
+        { slot: 3, name: 'Ney', order: 3540, send: 2850 },
+        { slot: 3, name: 'Diyy', order: 320, send: 40 },
+        { slot: 3, name: 'Al', order: 320, send: 40 },
+        { slot: 3, name: 'Purili', order: 320, send: 40 },
+        { slot: 3, name: 'Idnes', order: 320, send: 40 },
+        { slot: 3, name: 'Anggi', order: 320, send: 40 },
+        { slot: 3, name: 'Alip', order: 320, send: 20 },
+
+        // Completed Orders (using slot: 'completed')
+        { slot: 'completed', name: 'Nanda', order: 210, send: 213 }, // Done
+        { slot: 'completed', name: 'Alvin', order: 210, send: 213 }, // Done
+        { slot: 'completed', name: 'Ira', order: 150, send: 153 }, // Done
+        { slot: 'completed', name: 'Kael', order: 120, send: 123 }, // Done
+        { slot: 'completed', name: 'Xen', order: 210, send: 213 }, // Done
+        { slot: 'completed', name: 'Lusi', order: 600, send: 603 }  // Done
+    ];
+
+    // Function to update live time
+    function updateTime() {
+        const now = new Date();
+        const waktu = now.toLocaleString('id-ID', {
+            hour: '2-digit', minute: '2-digit', second: '2-digit'
+        });
+        document.getElementById('live-time').textContent = '⏰: ' + waktu;
+    }
+
+    // Function to render the cards
+    function renderDashboard(data) {
+        const slots = {
+            1: document.getElementById('slot1-cards'),
+            2: document.getElementById('slot2-cards'),
+            3: document.getElementById('slot3-cards'),
+            completed: document.getElementById('completed-cards')
+        };
+
+        // Clear existing cards
+        Object.values(slots).forEach(container => {
+            if (container) container.innerHTML = '';
+        });
+
+        data.forEach(item => {
+            const container = slots[item.slot];
+            if (!container) return; // Skip if slot container not found
+
+            // Determine status
+            let statusClass = 'pending';
+            let statusText = '⏳ Progress';
+            let showProgress = true;
+
+            if (item.send >= item.order && !item.statusOverride) {
+                statusClass = 'done';
+                statusText = '✅ Done';
+                showProgress = false; // Hide progress bar for completed
+            }
+
+            // statusOverride takes precedence
+            if (item.statusOverride === 'fail') {
+                statusClass = 'fail';
+                statusText = '❌ Stuck';
+                showProgress = true;
+            } else if (item.statusOverride === 'done') {
+                 statusClass = 'done';
+                 statusText = '✅ Done';
+                 showProgress = false;
+            }
+
+
+            // Calculate progress percentage
+            // Ensure order is not 0 to avoid division by zero
+            const progressPercent = item.order > 0 ? Math.min((item.send / item.order) * 100, 100) : 0; // Cap at 100% and handle order = 0
+
+            const cardHTML = `
+                <div class="card ${statusClass}">
+                    <div class="name">${item.name}</div>
+                    <div class="number">Order: ${item.order} | Send: ${item.send}</div>
+                    <span class="status ${statusClass}">${statusText}</span>
+                     ${showProgress ? `
+                     <div class="progress-bar-container">
+                         <div class="progress-bar-fill" style="width: ${progressPercent}%;"></div>
+                     </div>
+                     ` : ''}
+                </div>
+            `;
+
+            container.innerHTML += cardHTML; // Append the card HTML
+        });
+    }
+
+    // Initial setup
+    document.addEventListener('DOMContentLoaded', () => {
+        updateTime(); // Update time immediately on load
+        setInterval(updateTime, 1000); // Update time every second
+        renderDashboard(deliveryData); // Render the dashboard with the data
+    });
+
+  </script>
 </body>
 </html>
