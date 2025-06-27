@@ -2,34 +2,30 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <title>Status Pesanan Heart - JaluStore (Buyer View)</title>
+  <title>Dashboard Pengiriman Heart - JaluStore</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Link Google Font for a softer feel -->
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
-
   <style>
-    /* Sky Nuance CSS Variables */
+    /* Add CSS Variables */
     :root {
-        --bg-color: rgba(2, 2, 10, 0.75); /* Slightly darker overlay */
-        --text-color: #E0E0E0; /* Soft white/light gray */
-        --heading-color: #FFDA66; /* Soft yellow/gold */
-        --card-bg: rgba(255, 255, 255, 0.1); /* More transparent white */
-        --card-border: rgba(255, 255, 255, 0.12); /* Softer border */
-        /* Removed slot gradient as slots are less prominent for buyer */
-        --status-done-bg: #81C784cc; /* Soft green */
-        --status-done-text: #1B5E20; /* Dark green */
-        --status-fail-bg: #7E57C2bb; /* Muted purple for 'stuck' */
-        --status-fail-text: #EEEEEE; /* Light text on dark status */
-        --status-pending-bg: #FFF176bb; /* Soft yellow for pending */
-        --status-pending-text: #333333; /* Dark text on light status */
-        --progress-bar-bg: rgba(255, 255, 255, 0.15); /* Lighter progress bar background */
-        --progress-fill-color: #4FC3F7; /* Light blue fill */
-        --hover-bg: rgba(255, 255, 255, 0.15); /* Slightly more transparent on hover */
+        --bg-color: rgba(0,0,0,0.65);
+        --text-color: #fff;
+        --heading-color: #ffd700;
+        --card-bg: rgba(255,255,255,0.13);
+        --card-border: rgba(255,255,255, 0.19);
+        --slot-gradient: linear-gradient(90deg,#00c6ff80,#007bff88,#61f0b880);
+        --status-done-bg: #2ecc71cc;
+        --status-done-text: #040;
+        --status-fail-bg: #e74c3cbb;
+        --status-fail-text: #fff;
+        --status-pending-bg: #f1c40fbb; /* Yellowish for pending */
+        --status-pending-text: #333;
+        --progress-bar-bg: rgba(255,255,255,0.2);
+        --progress-fill-color: #3498db; /* Blue */
     }
 
     * { box-sizing: border-box; }
     body {
-        font-family: 'Nunito', sans-serif;
+        font-family: 'Segoe UI', Tahoma, sans-serif;
         margin: 0;
         padding: 0;
         background: url('https://thatskyshop.com/cdn/shop/files/Page-thatskywallpaper-Portrait-13.jpg?v=1711607986&width=750') no-repeat center center fixed;
@@ -41,98 +37,75 @@
         background-color: var(--bg-color);
         min-height: 100vh;
         padding: 2rem;
-        backdrop-filter: blur(8px);
+        backdrop-filter: blur(7px);
     }
     #live-time {
         text-align: center;
         font-size: 1.2rem;
         margin-bottom: 1rem;
-        color: #BDBDBD;
+        color: #f1f1f1;
         letter-spacing: 1px;
     }
     h1 {
         text-align: center;
         color: var(--heading-color);
-        margin-bottom: 1rem;
-        text-shadow: 0 0 15px rgba(255, 218, 102, 0.5), 0 0 5px rgba(255, 218, 102, 0.7);
-        font-size: 2.2rem;
-        font-weight: 900;
-    }
-
-    #buyer-greeting {
-        text-align: center;
-        font-size: 1.3rem;
         margin-bottom: 2rem;
-        color: #B3E5FC; /* Light blue */
-        font-weight: bold;
+        text-shadow: 2px 2px 11px #000;
+        font-size: 2.2rem;
     }
-     #buyer-greeting span {
-         color: #FFECB3; /* Light yellow */
-     }
-
     section {
         margin-bottom: 2.5rem;
     }
-
-    /* Buyer view doesn't group by slots, so this title is less used */
-     .slot-title {
-         display: none; /* Hide slot titles in buyer view */
-     }
-
+    .slot-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        background: var(--slot-gradient);
+        color: var(--text-color);
+        padding: 0.7rem 1.5rem;
+        border-radius: 7px;
+        margin-bottom: 1rem;
+        display: inline-block;
+        box-shadow: 0 2px 10px #0004;
+    }
     .cards {
         display: flex;
         flex-wrap: wrap;
         gap: 1rem;
-         justify-content: center; /* Center cards if few items */
     }
     .card {
         background: var(--card-bg);
         border: 1px solid var(--card-border);
         border-radius: 12px;
         padding: 1rem 1.2rem;
-        min-width: 250px; /* Make cards slightly wider for clarity */
-        max-width: 350px; /* Max width for large screens */
-        flex: 1 1 250px; /* Adjust flex basis */
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
-        transition: transform 0.2s ease-in-out, background 0.2s ease-in-out;
-        display: flex;
-        flex-direction: column;
-        /* No position: relative needed as delete button is removed */
+        min-width: 170px;
+        flex: 1 1 220px;
+        box-shadow: 0 3px 10px #2226;
+        transition: transform 0.1s;
+        display: flex; /* Use flexbox for internal card layout */
+        flex-direction: column; /* Stack name, number, status, progress */
     }
     .card:hover {
-        transform: translateY(-5px) scale(1.03);
-        background: var(--hover-bg);
-        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+        transform: scale(1.025);
+        background: rgba(255,255,255,0.17);
     }
     .name {
-        font-size: 1.2em; /* Slightly larger name */
-        font-weight: 900;
-        margin-bottom: 0.3em;
-        color: #FFECB3;
-        text-align: center; /* Center the name */
-    }
-    .number-info {
-        font-size: 1.0em;
-        margin-bottom: 0.4em;
-        color: #B3E5FC;
-        text-align: center; /* Center numbers */
-    }
-    .number-info span {
+        font-size: 1.1em;
         font-weight: bold;
-        color: #E1F5FE;
+        margin-bottom: 0.3em;
     }
-
+    .number {
+        font-size: 1.08em;
+        margin-bottom: 0.4em; /* Add margin below numbers */
+    }
     .status {
-        margin-top: auto;
-        font-size: 1.1em; /* Slightly larger status */
+        margin-top: auto; /* Push status/progress to bottom */
+        font-size: 1em;
         font-weight: 900;
         display: inline-block;
         border-radius: 8px;
-        padding: 0.3em 0.6em; /* Slightly more padding */
+        padding: 0 8px;
         letter-spacing: 1.5px;
-        align-self: center; /* Center the status */
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-        text-align: center;
+        align-self: flex-start; /* Align status/progress to the left */
     }
     /* Status Colors */
     .status.done { background: var(--status-done-bg); color: var(--status-done-text); }
@@ -145,127 +118,114 @@
         background-color: var(--progress-bar-bg);
         border-radius: 4px;
         margin-top: 0.5em;
-        overflow: hidden;
-        /* Show progress for pending/fail, hide for done */
-         display: none; /* Handled by JS based on status */
+        overflow: hidden; /* Hide overflow of the fill */
+        display: none; /* Initially hidden, shown for pending/fail */
     }
 
     .card.pending .progress-bar-container,
     .card.fail .progress-bar-container {
-        display: block;
+        display: block; /* Show for pending/fail */
     }
 
     .progress-bar-fill {
         height: 100%;
         background-color: var(--progress-fill-color);
         border-radius: 4px;
-        transition: width 0.5s ease-in-out;
-    }
-
-    /* Message for no orders found */
-    #no-orders-message {
-        text-align: center;
-        font-size: 1.4rem;
-        color: #BDBDBD;
-        margin-top: 3rem;
+        transition: width 0.5s ease-in-out; /* Smooth width transitions */
     }
 
 
     @media (max-width: 700px) {
         .overlay {padding: 1rem;}
-        .cards { flex-direction: column; gap: 0.8rem;} /* Slightly larger gap */
-        .card {min-width: unset; padding: 1rem; max-width: unset;} /* Full width on mobile */
-        h1 { font-size: 1.8rem;}
-        #buyer-greeting { font-size: 1.1rem; margin-bottom: 1.5rem;}
-        .name { font-size: 1.1em;}
-        .number-info { font-size: 1em;}
-        .status { font-size: 1em; padding: 0.2em 0.5em;}
-        #no-orders-message { font-size: 1.1rem;}
+        .cards { flex-direction: column; gap: 0.5rem;}
+        .card {min-width: unset; padding: 0.8rem 1rem;}
+        h1 { font-size: 1.4rem;}
+        .slot-title { font-size: 1.1rem; padding: 0.5rem 1rem;}
+        .name { font-size: 1em;}
+        .number { font-size: 0.95em;}
+        .status { font-size: 0.9em;}
     }
-
-    /* Custom Scrollbar for Sky feel */
-    ::-webkit-scrollbar {width:10px;}
-    ::-webkit-scrollbar-track {background: rgba(255,255,255,0.08); border-radius: 5px;}
-    ::-webkit-scrollbar-thumb {background: rgba(130, 177, 255, 0.6); border-radius: 5px;}
-    ::-webkit-scrollbar-thumb:hover {background: rgba(130, 177, 255, 0.8);}
-
+    ::-webkit-scrollbar {width:8px; background:#212;}
+    ::-webkit-scrollbar-thumb {background:#005b8aaa; border-radius:8px;}
   </style>
 </head>
 <body>
   <div class="overlay">
     <div id="live-time"></div>
-    <h1>📦 Status Pesanan Heart <br><em>JaluStore</em></h1>
+    <h1>📦 Laporan Pengiriman Heart <br><em>JaluStore</em></h1>
 
-    <div id="buyer-greeting"></div> <!-- Greeting for the buyer -->
+    <!-- Placeholders for sections -->
+    <section>
+      <div class="slot-title">Slot 1</div>
+      <div id="slot1-cards" class="cards"></div> <!-- Cards will be generated here -->
+    </section>
 
-    <!-- Container for filtered cards -->
-    <div id="buyer-orders-container" class="cards">
-        <!-- Cards for the specific buyer will be generated here -->
-    </div>
+    <section>
+      <div class="slot-title">Slot 2</div>
+      <div id="slot2-cards" class="cards"></div> <!-- Cards will be generated here -->
+    </section>
 
-    <div id="no-orders-message" style="display: none;"></div> <!-- Message when no orders are found -->
+    <section>
+      <div class="slot-title">Slot 3</div>
+      <div id="slot3-cards" class="cards"></div> <!-- Cards will be generated here -->
+    </section>
+
+    <section>
+      <div class="slot-title">🗂️ Riwayat Orderan Selesai</div>
+      <div id="completed-cards" class="cards"></div> <!-- Cards will be generated here -->
+    </section>
 
   </div>
 
   <script>
-    // --- DATA (This data needs to be updated by the seller) ---
-    // Add a unique ID for better tracking, even if not used for buyer view filtering
-    // Use a field like 'buyerName' or simply the 'name' field consistently
+    // Data structure (array of objects)
     const deliveryData = [
         // Slot 1
-        { id: 1, slot: 1, name: 'Angel', order: 450, send: 260, statusOverride: 'fail' },
-        { id: 2, slot: 1, name: 'Husna', order: 450, send: 257, statusOverride: 'fail' },
-        { id: 3, slot: 1, name: 'Mursyid', order: 320, send: 70 },
-        { id: 4, slot: 1, name: 'Angel2', order: 600, send: 260 }, // Example of multiple orders for one name
-        { id: 5, slot: 1, name: 'Aelia', order: 420, send: 120 },
-        { id: 6, slot: 1, name: 'Tsabyy', order: 200, send: 80 },
-        { id: 7, slot: 1, name: 'Fida', order: 100, send: 80 },
-        { id: 8, slot: 1, name: 'Vyan', order: 80, send: 60 },
-        { id: 9, slot: 1, name: 'Aya', order: 320, send: 40 },
-        { id: 10, slot: 1, name: 'Rain', order: 320, send: 40 },
+        { slot: 1, name: 'Angel', order: 450, send: 260, statusOverride: 'fail' }, // Manually mark as fail
+        { slot: 1, name: 'Husna', order: 450, send: 257, statusOverride: 'fail' }, // Manually mark as fail
+        { slot: 1, name: 'Mursyid', order: 320, send: 70 },
+        { slot: 1, name: 'Angel2', order: 600, send: 260 },
+        { slot: 1, name: 'Aelia', order: 420, send: 120 },
+        { slot: 1, name: 'Tsabyy', order: 200, send: 80 },
+        { slot: 1, name: 'Fida', order: 100, send: 80 },
+        { slot: 1, name: 'Vyan', order: 80, send: 60 },
+        { slot: 1, name: 'Aya', order: 320, send: 40 },
+        { slot: 1, name: 'Rain', order: 320, send: 40 },
 
         // Slot 2
-        { id: 11, slot: 2, name: 'Ayu', order: 1000, send: 1003 },
-        { id: 12, slot: 2, name: 'Anna', order: 600, send: 603 },
-        { id: 13, slot: 2, name: 'Moon', order: 530, send: 253 },
-        { id: 14, slot: 2, name: 'Hira', order: 360, send: 238 },
-        { id: 15, slot: 2, name: 'Sea', order: 150, send: 119, statusOverride: 'fail' },
-        { id: 16, slot: 2, name: 'Zee', order: 150, send: 138 },
-        { id: 17, slot: 2, name: 'Joy', order: 320, send: 260 },
-        { id: 18, slot: 2, name: 'Harbie', order: 200, send: 160 },
-        { id: 19, slot: 2, name: 'Aze', order: 570, send: 140 },
-        { id: 20, slot: 2, name: 'Sena', order: 570, send: 140 },
-        { id: 21, slot: 2, name: 'raine', order: 420, send: 120 },
-        { id: 22, slot: 2, name: 'Rani', order: 320, send: 40 },
+        { slot: 2, name: 'Ayu', order: 1000, send: 1003 }, // Done
+        { slot: 2, name: 'Anna', order: 600, send: 603 }, // Done
+        { slot: 2, name: 'Moon', order: 530, send: 253 },
+        { slot: 2, name: 'Hira', order: 360, send: 238 },
+        { slot: 2, name: 'Sea', order: 150, send: 119, statusOverride: 'fail' }, // Manually mark as fail
+        { slot: 2, name: 'Zee', order: 150, send: 138 },
+        { slot: 2, name: 'Joy', order: 320, send: 260 },
+        { slot: 2, name: 'Harbie', order: 200, send: 160 },
+        { slot: 2, name: 'Aze', order: 570, send: 140 },
+        { slot: 2, name: 'Sena', order: 570, send: 140 },
+        { slot: 2, name: 'raine', order: 420, send: 120 },
+        { slot: 2, name: 'Rani', order: 320, send: 40 },
 
         // Slot 3
-        { id: 23, slot: 3, name: 'Kiki', order: 450, send: 414 },
-        { id: 24, slot: 3, name: 'Tobias', order: 500, send: 235, statusOverride: 'fail' },
-        { id: 25, slot: 3, name: 'Luna', order: 800, send: 660 },
-        { id: 26, slot: 3, name: 'Ney', order: 3540, send: 2850 },
-        { id: 27, slot: 3, name: 'Diyy', order: 320, send: 40 },
-        { id: 28, slot: 3, name: 'Al', order: 320, send: 40 },
-        { id: 29, slot: 3, name: 'Purili', order: 320, send: 40 },
-        { id: 30, slot: 3, name: 'Idnes', order: 320, send: 40 },
-        { id: 31, slot: 3, name: 'Anggi', order: 320, send: 40 },
-        { id: 32, slot: 3, name: 'Alip', order: 320, send: 20 },
+        { slot: 3, name: 'Kiki', order: 450, send: 414 },
+        { slot: 3, name: 'Tobias', order: 500, send: 235, statusOverride: 'fail' }, // Manually mark as fail
+        { slot: 3, name: 'Luna', order: 800, send: 660 },
+        { slot: 3, name: 'Ney', order: 3540, send: 2850 },
+        { slot: 3, name: 'Diyy', order: 320, send: 40 },
+        { slot: 3, name: 'Al', order: 320, send: 40 },
+        { slot: 3, name: 'Purili', order: 320, send: 40 },
+        { slot: 3, name: 'Idnes', order: 320, send: 40 },
+        { slot: 3, name: 'Anggi', order: 320, send: 40 },
+        { slot: 3, name: 'Alip', order: 320, send: 20 },
 
-        // Completed Orders (still included, buyer might want to see these too)
-        { id: 33, slot: 'completed', name: 'Nanda', order: 210, send: 213 },
-        { id: 34, slot: 'completed', name: 'Alvin', order: 210, send: 213 },
-        { id: 35, slot: 'completed', name: 'Ira', order: 150, send: 153 },
-        { id: 36, slot: 'completed', name: 'Kael', order: 120, send: 123 },
-        { id: 37, slot: 'completed', name: 'Xen', order: 210, send: 213 },
-        { id: 38, slot: 'completed', name: 'Lusi', order: 600, send: 603 },
-        { id: 39, slot: 'completed', name: 'Angel', order: 100, send: 100 }, // Another completed order for Angel
+        // Completed Orders (using slot: 'completed')
+        { slot: 'completed', name: 'Nanda', order: 210, send: 213 }, // Done
+        { slot: 'completed', name: 'Alvin', order: 210, send: 213 }, // Done
+        { slot: 'completed', name: 'Ira', order: 150, send: 153 }, // Done
+        { slot: 'completed', name: 'Kael', order: 120, send: 123 }, // Done
+        { slot: 'completed', name: 'Xen', order: 210, send: 213 }, // Done
+        { slot: 'completed', name: 'Lusi', order: 600, send: 603 }  // Done
     ];
-    // --- END DATA ---
-
-    // Function to get query parameters from URL
-    function getQueryParameter(name) {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get(name);
-    }
 
     // Function to update live time
     function updateTime() {
@@ -276,66 +236,45 @@
         document.getElementById('live-time').textContent = '⏰: ' + waktu;
     }
 
-    // Function to render the cards for a specific buyer
-    function renderBuyerDashboard(buyerName) {
-        const container = document.getElementById('buyer-orders-container');
-        const greetingElement = document.getElementById('buyer-greeting');
-        const noOrdersMessageElement = document.getElementById('no-orders-message');
+    // Function to render the cards
+    function renderDashboard(data) {
+        const slots = {
+            1: document.getElementById('slot1-cards'),
+            2: document.getElementById('slot2-cards'),
+            3: document.getElementById('slot3-cards'),
+            completed: document.getElementById('completed-cards')
+        };
 
-        container.innerHTML = ''; // Clear existing cards
-        noOrdersMessageElement.style.display = 'none'; // Hide message initially
+        // Clear existing cards
+        Object.values(slots).forEach(container => {
+            if (container) container.innerHTML = '';
+        });
 
-        // Filter data for the specific buyer name (case-insensitive trim)
-        const filteredData = deliveryData.filter(item =>
-            item.name && item.name.trim().toLowerCase() === buyerName.trim().toLowerCase()
-        );
+        data.forEach(item => {
+            const container = slots[item.slot];
+            if (!container) return; // Skip if slot container not found
 
-        if (buyerName) {
-             greetingElement.innerHTML = `Status Pesanan untuk <span>${buyerName}</span>`;
-        } else {
-             greetingElement.textContent = 'Silakan masukkan nama Anda di URL.';
-             noOrdersMessageElement.textContent = 'Contoh Link: yourwebsite.com/status.html?name=NamaAnda';
-             noOrdersMessageElement.style.display = 'block';
-             return; // Stop if no name provided
-        }
-
-
-        if (filteredData.length === 0) {
-            greetingElement.innerHTML = `<span>${buyerName}</span>, tidak ada pesanan ditemukan.`;
-            noOrdersMessageElement.textContent = 'Pastikan nama yang dimasukkan di URL sudah benar.';
-            noOrdersMessageElement.style.display = 'block';
-            return; // Stop if no data for this buyer
-        }
-
-        filteredData.forEach(item => {
             // Determine status
             let statusClass = 'pending';
-            let statusText = '⏳ Sedang Diproses';
+            let statusText = '⏳ Progress';
             let showProgress = true;
 
-            if (item.send >= item.order && !item.statusOverride) {
+            if (item.send >= item.order) {
                 statusClass = 'done';
-                statusText = '✅ Selesai';
+                statusText = '✅ Done';
                 showProgress = false; // Hide progress bar for completed
             }
 
             // statusOverride takes precedence
             if (item.statusOverride === 'fail') {
                 statusClass = 'fail';
-                statusText = '❌ Ada Kendala'; // More buyer-friendly text
-                showProgress = true;
+                statusText = '❌ Stuck';
+                showProgress = true; // Show progress bar for stuck even if send >= order (unlikely scenario, but handles the flag)
             } else if (item.statusOverride === 'done') {
                  statusClass = 'done';
-                 statusText = '✅ Selesai';
+                 statusText = '✅ Done';
                  showProgress = false;
             }
-
-            // Calculate remaining
-            const remaining = item.order - item.send;
-            const remainingText = remaining > 0 ? ` | Sisa: ${remaining}` : (remaining <= 0 ? ' | Sisa: 0' : ''); // Handle negative or zero remaining
-
-            // Add Slot info if desired for buyer
-             const slotInfo = (item.slot !== 'completed' && item.slot) ? ` (Slot ${item.slot})` : (item.slot === 'completed' ? ` (Selesai)` : '');
 
 
             // Calculate progress percentage
@@ -343,8 +282,8 @@
 
             const cardHTML = `
                 <div class="card ${statusClass}">
-                    <div class="name">${item.name}${slotInfo}</div> <!-- Display name and slot/completed status -->
-                    <div class="number-info">Order: <span>${item.order}</span> | Terkirim: <span>${item.send}</span>${remainingText}</div>
+                    <div class="name">${item.name}</div>
+                    <div class="number">Order: ${item.order} | Send: ${item.send}</div>
                     <span class="status ${statusClass}">${statusText}</span>
                      ${showProgress ? `
                      <div class="progress-bar-container">
@@ -358,17 +297,11 @@
         });
     }
 
-
-    // Initial setup when the page loads
+    // Initial setup
     document.addEventListener('DOMContentLoaded', () => {
         updateTime(); // Update time immediately on load
         setInterval(updateTime, 1000); // Update time every second
-
-        // Get buyer name from URL parameter 'name'
-        const buyerNameFromUrl = getQueryParameter('name');
-
-        // Render dashboard for the specific buyer
-        renderBuyerDashboard(buyerNameFromUrl);
+        renderDashboard(deliveryData); // Render the dashboard with the data
     });
 
   </script>
