@@ -20,7 +20,7 @@
         --card-bg: rgba(255, 255, 255, 0.9); /* Card lebih solid dan cerah */
         --card-border: rgba(180, 200, 255, 0.6); /* Border lembut */
         --slot-gradient: linear-gradient(135deg, var(--sky-blue-light) 0%, var(--sky-pink-light) 100%); /* Gradient pelangi */
-        
+
         --status-done-bg: #80CBC4; /* Hijau mint lembut */
         --status-done-text: #004D40;
         --status-fail-bg: #FFAB91; /* Oranye peach lembut */
@@ -191,10 +191,10 @@
         text-transform: uppercase;
         transition: background 0.3s ease, color 0.3s ease;
     }
-    /* Status Colors */
-    .status.done { background: var(--status-done-bg); color: var(--status-done-text); }
-    .status.fail { background: var(--status-fail-bg); color: var(--status-fail-text); }
-    .status.pending { background: var(--status-pending-bg); color: var(--status-pending-text); }
+    /* Status Colors - Applied based on parent .card class */
+    .card.done .status { background: var(--status-done-bg); color: var(--status-done-text); }
+    .card.fail .status { background: var(--status-fail-bg); color: var(--status-fail-text); }
+    .card.pending .status { background: var(--status-pending-bg); color: var(--status-pending-text); }
 
     /* Progress Bar Styles */
     .progress-bar-container {
@@ -204,12 +204,7 @@
         margin-top: 0.8em;
         overflow: hidden;
         box-shadow: var(--inner-shadow);
-        display: none;
-    }
-
-    .card.pending .progress-bar-container,
-    .card.fail .progress-bar-container {
-        display: block;
+        /* display handled by JS based on status */
     }
 
     .progress-bar-fill {
@@ -220,6 +215,7 @@
         position: relative;
     }
 
+    /* Shimmer effect on progress bar (optional, can be removed if too distracting) */
     .progress-bar-fill::after {
         content: '';
         position: absolute;
@@ -229,7 +225,7 @@
         left: 0;
         background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.1) 100%);
         opacity: 0;
-        animation: shimmer 2s infinite linear;
+        animation: shimmer 2s infinite linear; /* Adjust duration if needed */
     }
 
     @keyframes shimmer {
@@ -240,24 +236,34 @@
 
 
     /* Chibi elements - these would typically be background images or SVG icons */
+    /* Uncomment and add background images to add chibi flair */
+    /*
     .card::before {
         content: '';
         position: absolute;
-        top: -10px;
-        right: -10px;
-        width: 50px;
-        height: 50px;
-        /* Contoh: Awan atau bintang kecil (Anda bisa ganti path/url ke icon Anda) */
-        /* background: url('path/to/chibi-cloud-icon.png') no-repeat center center / contain; */
-        opacity: 0.1;
+        top: 5px; // Adjust position
+        right: 5px; // Adjust position
+        width: 40px; // Adjust size
+        height: 40px; // Adjust size
+        // Example: Awan kecil di sudut
+        // background: url('path/to/chibi-cloud-icon.png') no-repeat center center / contain;
+        opacity: 0.3; // Make it subtle
         pointer-events: none;
-        z-index: 0;
+        z-index: 1; // Ensure it's above card background but below text
     }
 
     .card.done::before {
-        /* background: url('path/to/chibi-star-icon.png') no-repeat center center / contain; */
-        opacity: 0.2;
+        // Example: Bintang atau hati saat done
+        // background: url('path/to/chibi-star-icon.png') no-repeat center center / contain;
+        opacity: 0.4;
     }
+
+    .card.fail::before {
+        // Example: Awan gelap atau tetesan air mata saat fail
+        // background: url('path/to/chibi-tear-icon.png') no-repeat center center / contain;
+        opacity: 0.4;
+    }
+    */
 
 
     @media (max-width: 768px) { /* Adjust for tablets */
@@ -285,9 +291,12 @@
         .status { font-size: 0.8em; padding: 0.15em 0.6em; border-radius: 12px; }
         #live-time { font-size: 1rem; padding: 0.4rem 0.8rem; }
     }
-    ::-webkit-scrollbar {width:8px; background:#e0f7fa;} /* Scrollbar lebih terang */
-    ::-webkit-scrollbar-thumb {background:var(--sky-blue-medium); border-radius:8px;}
-    ::-webkit-scrollbar-thumb:hover {background:#67B2D2;}
+    /* Scrollbar styling */
+    ::-webkit-scrollbar { width: 8px; background: #e0f7fa; } /* For Webkit browsers */
+    ::-webkit-scrollbar-thumb { background: var(--sky-blue-medium); border-radius: 8px; }
+    ::-webkit-scrollbar-thumb:hover { background: #67B2D2; }
+    /* For Firefox */
+    html { scrollbar-width: thin; scrollbar-color: var(--sky-blue-medium) #e0f7fa; }
   </style>
 </head>
 <body>
@@ -318,7 +327,7 @@
   </div>
 
   <script>
-    // Data structure (array of objects)
+    // Data structure (array of objects) - This data is static and must be updated manually in this file
     const deliveryData = [
         // Slot 1
         { slot: 1, name: 'Angel', order: 450, send: 260, statusOverride: 'fail' }, // Manually mark as fail
@@ -327,8 +336,8 @@
         { slot: 1, name: 'Angel2', order: 600, send: 280 },
         { slot: 1, name: 'Aelia', order: 420, send: 140 },
         { slot: 1, name: 'Tsabyy', order: 200, send: 100 },
-        { slot: 1, name: 'Fida', order: 100, send: 100 }, 
-        { slot: 1, name: 'Vyan', order: 80, send: 80 },   
+        { slot: 1, name: 'Fida', order: 100, send: 100 },
+        { slot: 1, name: 'Vyan', order: 80, send: 80 },
         { slot: 1, name: 'Aya', order: 320, send: 60 },
         { slot: 1, name: 'Rain', order: 320, send: 60 },
 
@@ -377,8 +386,9 @@
         document.getElementById('live-time').textContent = '⏰: ' + waktu;
     }
 
-    // Function to render the cards
+    // Function to render the cards based on the provided data
     function renderDashboard(data) {
+        // Map slot IDs to their respective container elements
         const slots = {
             1: document.getElementById('slot1-cards'),
             2: document.getElementById('slot2-cards'),
@@ -386,63 +396,81 @@
             completed: document.getElementById('completed-cards')
         };
 
-        // Clear existing cards
+        // Clear existing cards from all containers
         Object.values(slots).forEach(container => {
             if (container) container.innerHTML = '';
         });
 
-        data.forEach(item => {
-            const container = slots[item.slot];
-            if (!container) return; // Skip if slot container not found
-
-            // Determine status
-            let statusClass = 'pending';
-            let statusText = '⏳ Progress';
-            let showProgress = true;
-
-            if (item.send >= item.order) {
-                statusClass = 'done';
-                statusText = '✅ Done';
-                showProgress = false; // Hide progress bar for completed
+        // Group data by slot for easier processing
+        const groupedData = data.reduce((acc, item) => {
+            if (!acc[item.slot]) {
+                acc[item.slot] = [];
             }
+            acc[item.slot].push(item);
+            return acc;
+        }, {});
 
-            // statusOverride takes precedence
-            if (item.statusOverride === 'fail') {
-                statusClass = 'fail';
-                statusText = '❌ Stuck';
-                showProgress = true; // Show progress bar for stuck even if send >= order (unlikely scenario, but handles the flag)
-            } else if (item.statusOverride === 'done') {
-                 statusClass = 'done';
-                 statusText = '✅ Done';
-                 showProgress = false;
+        // Loop through each slot container and render its cards
+        Object.keys(slots).forEach(slotKey => {
+            const container = slots[slotKey]; // Get the DOM element for the current slot
+            const items = groupedData[slotKey] || []; // Get data for this slot, default to empty array if none
+            let slotHTML = ''; // String to build HTML for the current slot
+
+            // Loop through items in the current slot and build their HTML
+            items.forEach(item => {
+                // Determine the status based on send vs order and statusOverride
+                let statusClass = 'pending'; // Default status
+                let statusText = '⏳ Progress';
+                let showProgress = true; // Show progress bar by default
+
+                if (item.send >= item.order) {
+                    statusClass = 'done';
+                    statusText = '✅ Done';
+                    showProgress = false; // Hide progress for completed
+                }
+
+                // statusOverride manually overrides calculated status
+                if (item.statusOverride === 'fail') {
+                    statusClass = 'fail';
+                    statusText = '❌ Stuck';
+                    showProgress = true; // Always show progress for stuck
+                } else if (item.statusOverride === 'done') { // Allow manual 'done' override
+                     statusClass = 'done';
+                     statusText = '✅ Done';
+                     showProgress = false;
+                }
+
+
+                // Calculate progress percentage
+                const progressPercent = item.order > 0 ? Math.min((item.send / item.order) * 100, 100) : 0; // Ensure percentage is between 0-100
+
+                // Build the HTML for a single card
+                slotHTML += `
+                    <div class="card ${statusClass}">
+                        <div class="name">${item.name}</div>
+                        <div class="number">Order: ${item.order} | Send: ${item.send}</div>
+                        <span class="status">${statusText}</span> <!-- Status class is now on the card div -->
+                         ${showProgress ? `
+                         <div class="progress-bar-container">
+                             <div class="progress-bar-fill" style="width: ${progressPercent}%;"></div>
+                         </div>
+                         ` : ''}
+                    </div>
+                `;
+            });
+
+            // Insert the accumulated HTML string into the container DOM element ONCE
+            if (container) {
+                container.innerHTML = slotHTML;
             }
-
-
-            // Calculate progress percentage
-            const progressPercent = item.order > 0 ? Math.min((item.send / item.order) * 100, 100) : 0; // Cap at 100% and handle order = 0
-
-            const cardHTML = `
-                <div class="card ${statusClass}">
-                    <div class="name">${item.name}</div>
-                    <div class="number">Order: ${item.order} | Send: ${item.send}</div>
-                    <span class="status ${statusClass}">${statusText}</span>
-                     ${showProgress ? `
-                     <div class="progress-bar-container">
-                         <div class="progress-bar-fill" style="width: ${progressPercent}%;"></div>
-                     </div>
-                     ` : ''}
-                </div>
-            `;
-
-            container.innerHTML += cardHTML; // Append the card HTML
         });
     }
 
-    // Initial setup
+    // Initial setup when the DOM is fully loaded
     document.addEventListener('DOMContentLoaded', () => {
         updateTime(); // Update time immediately on load
         setInterval(updateTime, 1000); // Update time every second
-        renderDashboard(deliveryData); // Render the dashboard with the data
+        renderDashboard(deliveryData); // Render the dashboard with the initial data
     });
 
   </script>
