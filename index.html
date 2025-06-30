@@ -322,45 +322,46 @@
     const deliveryData = [
         // Slot 1
         { slot: 1, name: 'Angel', order: 450, send: 260, statusOverride: 'fail' }, // Manually mark as fail
-        { slot: 1, name: 'Husna', order: 450, send: 257, statusOverride: 'fail' }, // Manually mark as fail
-        { slot: 1, name: 'Mursyid', order: 320, send: 80 },
-        { slot: 1, name: 'Angel2', order: 600, send: 300 },
-        { slot: 1, name: 'Aelia', order: 420, send: 160 },
-        { slot: 1, name: 'Tsabyy', order: 200, send: 120 },
-        { slot: 1, name: 'Fida', order: 100, send: 103 }, 
-        { slot: 1, name: 'Vyan', order: 80, send: 83 },   
-        { slot: 1, name: 'Aya', order: 320, send: 80 },
-        { slot: 1, name: 'Rain', order: 320, send: 80 },
+        { slot: 1, name: 'Husna', order: 450, send: 274 },
+        { slot: 1, name: 'Mursyid', order: 320, send: 80, statusOverride: 'fail' }, // Manually mark as fail
+        { slot: 1, name: 'Angel2', order: 600, send: 320 },
+        { slot: 1, name: 'Aelia', order: 420, send: 180 },
+        { slot: 1, name: 'Tsabyy', order: 200, send: 140 },
+        { slot: 1, name: 'Aya', order: 320, send: 100 },
+        { slot: 1, name: 'Rain', order: 320, send: 100 },
 
         // Slot 2
-        { slot: 2, name: 'Ayu', order: 1000, send: 1003 }, 
-        { slot: 2, name: 'Anna', order: 600, send: 603 }, 
-        { slot: 2, name: 'Moon', order: 530, send: 271 },
-        { slot: 2, name: 'Hira', order: 360, send: 278 },
-        { slot: 2, name: 'Sea', order: 150, send: 128 },
-        { slot: 2, name: 'Zee', order: 150, send: 145 },
+        { slot: 2, name: 'Moon', order: 530, send: 280 },
+        { slot: 2, name: 'Hira', order: 360, send: 287 },
+        { slot: 2, name: 'Sea', order: 150, send: 137 },
+        { slot: 2, name: 'Zee', order: 150, send: 153 }, 
         { slot: 2, name: 'Joy', order: 320, send: 260, statusOverride: 'fail' }, // Manually mark as fail
-        { slot: 2, name: 'Harbie', order: 200, send: 160, statusOverride: 'fail' }, // Manually mark as fail
-        { slot: 2, name: 'Aze', order: 570, send: 180 },
-        { slot: 2, name: 'Sena', order: 570, send: 180 },
-        { slot: 2, name: 'raine', order: 420, send: 160 },
-        { slot: 2, name: 'Rani', order: 320, send: 80 },
+        { slot: 2, name: 'Harbie', order: 200, send: 180 },
+        { slot: 2, name: 'Aze', order: 570, send: 200 },
+        { slot: 2, name: 'Sena', order: 570, send: 200 },
+        { slot: 2, name: 'raine', order: 420, send: 180 },
+        { slot: 2, name: 'Rani', order: 320, send: 100 },
 
         // Slot 3
-        { slot: 3, name: 'Kiki', order: 450, send: 414, statusOverride: 'fail' }, // Manually mark as fail
+        { slot: 3, name: 'Kiki', order: 450, send: 429 },
         { slot: 3, name: 'Tobias', order: 500, send: 235, statusOverride: 'fail' }, // Manually mark as fail
-        { slot: 3, name: 'Luna', order: 800, send: 675, statusOverride: 'fail' }, // Manually mark as fail
-        { slot: 3, name: 'Ney', order: 3540, send: 2865 },
+        { slot: 3, name: 'Luna', order: 800, send: 690 },
+        { slot: 3, name: 'Ney', order: 3540, send: 2880 },
         { slot: 3, name: 'Araba', order: 150, send: 90, statusOverride: 'fail' }, // Manually mark as fail
-        { slot: 3, name: 'Diyy', order: 320, send: 80 },
-        { slot: 3, name: 'Al', order: 320, send: 60 },
-        { slot: 3, name: 'Purili', order: 320, send: 80 },
-        { slot: 3, name: 'Idnes', order: 320, send: 80 },
-        { slot: 3, name: 'Anggi', order: 320, send: 80 },
-        { slot: 3, name: 'Alip', order: 320, send: 60 },
-        { slot: 3, name: 'Autumn', order: 850, send: 40 },
+        { slot: 3, name: 'Diyy', order: 320, send: 100 },
+        { slot: 3, name: 'Al', order: 320, send: 80 },
+        { slot: 3, name: 'Purili', order: 320, send: 100 },
+        { slot: 3, name: 'Idnes', order: 320, send: 100 },
+        { slot: 3, name: 'Anggi', order: 320, send: 100 },
+        { slot: 3, name: 'Alip', order: 320, send: 80 },
+        { slot: 3, name: 'Autumn', order: 850, send: 40, statusOverride: 'fail' }, // Manually mark as fail
 
-        // Previously Completed Orders (Explicitly added to ensure they persist)
+        // ALL Previously Completed Orders (Explicitly added to ensure they persist)
+        // These are orders that were marked as "Done" in previous updates or initially.
+        { slot: 'completed', name: 'Fida', order: 100, send: 103 }, 
+        { slot: 'completed', name: 'Vyan', order: 80, send: 83 }, 
+        { slot: 'completed', name: 'Ayu', order: 1000, send: 1003 }, 
+        { slot: 'completed', name: 'Anna', order: 600, send: 603 }, 
         { slot: 'completed', name: 'Nanda', order: 210, send: 213 }, 
         { slot: 'completed', name: 'Alvin', order: 210, send: 213 }, 
         { slot: 'completed', name: 'Ira', order: 150, send: 153 }, 
@@ -392,64 +393,72 @@
             if (container) container.innerHTML = '';
         });
 
-        // Separate data into current slots and completed for rendering
-        const currentOrders = data.filter(item => (typeof item.send === 'number' && typeof item.order === 'number' && item.send < item.order) || item.statusOverride === 'fail');
-        const completedOrders = data.filter(item => (typeof item.send === 'number' && typeof item.order === 'number' && item.send >= item.order && item.statusOverride !== 'fail') || item.slot === 'completed'); // Include items explicitly marked as 'completed' slot
+        // Use Set to keep track of names already processed for current orders,
+        // so we don't re-add them if they also appear in completed (e.g., initial state)
+        const currentOrderNames = new Set();
+        
+        // Filter and render current orders first
+        data.forEach(item => {
+            // Determine if the item belongs to a current slot and is not yet completed
+            const isCurrentlyActive = (typeof item.send === 'number' && typeof item.order === 'number' && item.send < item.order && item.slot !== 'completed') || 
+                                      (item.statusOverride === 'fail' && item.slot !== 'completed');
+            
+            if (isCurrentlyActive) {
+                const container = slots[item.slot];
+                if (!container) return; // Skip if slot container not found
 
-        currentOrders.forEach(item => {
-            const container = slots[item.slot];
-            if (!container || item.slot === 'completed') return; // Skip if slot container not found or if it's already a 'completed' item
+                currentOrderNames.add(item.name); // Add name to set to prevent re-adding to completed later
 
-            // Determine status
-            let statusClass = 'pending';
-            let statusText = '⏳ Progress';
-            let showProgress = true;
+                let statusClass = 'pending';
+                let statusText = '⏳ Progress';
+                let showProgress = true;
 
-            // statusOverride takes precedence
-            if (item.statusOverride === 'fail') {
-                statusClass = 'fail';
-                statusText = '❌ Stuck';
-                showProgress = true;
-            } else if (item.statusOverride === 'done' || (typeof item.send === 'number' && typeof item.order === 'number' && item.send >= item.order)) { 
-                 statusClass = 'done';
-                 statusText = '✅ Done';
-                 showProgress = false;
+                if (item.statusOverride === 'fail') {
+                    statusClass = 'fail';
+                    statusText = '❌ Stuck';
+                    showProgress = true;
+                }
+
+                let progressPercent = 0;
+                if (typeof item.order === 'number' && typeof item.send === 'number' && item.order > 0) {
+                    progressPercent = Math.min((item.send / item.order) * 100, 100);
+                }
+
+                const cardHTML = `
+                    <div class="card ${statusClass}">
+                        <div class="name">${item.name}</div>
+                        <div class="number">Order: ${item.order} | Send: ${item.send}</div>
+                        <span class="status ${statusClass}">${statusText}</span>
+                        ${showProgress && typeof item.order === 'number' && typeof item.send === 'number' ? `
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill" style="width: ${progressPercent}%;"></div>
+                        </div>
+                        ` : ''}
+                    </div>
+                `;
+                container.innerHTML += cardHTML;
             }
-
-            // Calculate progress percentage only if order and send are numbers
-            let progressPercent = 0;
-            if (typeof item.order === 'number' && typeof item.send === 'number' && item.order > 0) {
-                progressPercent = Math.min((item.send / item.order) * 100, 100); // Cap at 100%
-            }
-
-
-            const cardHTML = `
-                <div class="card ${statusClass}">
-                    <div class="name">${item.name}</div>
-                    <div class="number">Order: ${item.order} | Send: ${item.send}</div>
-                    <span class="status ${statusClass}">${statusText}</span>
-                     ${showProgress && typeof item.order === 'number' && typeof item.send === 'number' ? `
-                     <div class="progress-bar-container">
-                         <div class="progress-bar-fill" style="width: ${progressPercent}%;"></div>
-                     </div>
-                     ` : ''}
-                </div>
-            `;
-
-            container.innerHTML += cardHTML; // Append the card HTML to its respective slot
         });
 
-        // Render completed orders separately
+        // Render completed orders
         const completedContainer = slots['completed'];
-        completedOrders.forEach(item => {
-            const cardHTML = `
-                <div class="card done">
-                    <div class="name">${item.name}</div>
-                    <div class="number">Order: ${item.order} | Send: ${item.send}</div>
-                    <span class="status done">✅ Done</span>
-                </div>
-            `;
-            completedContainer.innerHTML += cardHTML;
+        data.forEach(item => {
+            // An item is completed if:
+            // 1. Its send >= order AND it's not manually stuck (statusOverride: 'fail')
+            // 2. OR its slot is explicitly set to 'completed'
+            // AND it's not already rendered in a current slot (to avoid duplicates if data is structured oddly)
+            const isCompleted = ((typeof item.send === 'number' && typeof item.order === 'number' && item.send >= item.order && item.statusOverride !== 'fail') || item.slot === 'completed');
+
+            if (isCompleted && !currentOrderNames.has(item.name)) {
+                const cardHTML = `
+                    <div class="card done">
+                        <div class="name">${item.name}</div>
+                        <div class="number">Order: ${item.order} | Send: ${item.send}</div>
+                        <span class="status done">✅ Done</span>
+                    </div>
+                `;
+                completedContainer.innerHTML += cardHTML;
+            }
         });
     }
 
