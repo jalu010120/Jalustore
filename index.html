@@ -225,13 +225,18 @@
         margin-top: 0.8em;
         overflow: hidden;
         box-shadow: var(--inner-shadow);
-        display: none;
+        /* display: none; /* Awalnya tersembunyi, akan ditampilkan oleh JS */
     }
 
     .card.pending .progress-bar-container,
     .card.fail .progress-bar-container {
         display: block;
     }
+    
+    .card.done .progress-bar-container {
+        display: none; /* Sembunyikan untuk status done */
+    }
+
 
     .progress-bar-fill {
         height: 100%;
@@ -344,8 +349,6 @@
   </div>
 
   <script>
-    console.log("Script execution started."); // Debug log
-
     // Data structure (array of objects)
     const deliveryData = [
         // Slot 1
@@ -412,8 +415,6 @@
 
     // Function to render the cards
     function renderDashboard(data) {
-        console.log("renderDashboard function started."); // Debug log
-
         const slots = {
             1: document.getElementById('slot1-cards'),
             2: document.getElementById('slot2-cards'),
@@ -426,52 +427,64 @@
             if (container) {
                 container.innerHTML = '';
             } else {
-                // This error will show in console if a slot HTML element is missing
                 console.error("Error: A slot container was not found in the DOM!");
             }
         });
-        console.log("Cleared existing cards from containers."); // Debug log
-
 
         // Loop through each item in the data and render it
-        data.forEach((item, index) => {
-            console.log(`Processing item ${index}: ${item.name}`); // Debug log for each item
-
+        data.forEach(item => {
             let statusClass;
             let statusText;
-            let showProgress = true; // By default, show progress bar
-            let targetContainer = null; // Initialize to null
+            let showProgress = true; 
+            let targetContainer = null; 
 
-            // Determine status based on order data and overrides
-            const isExplicitlyCompleted = item.slot === 'completed'; // Explicitly marked as completed in data
+            const isExplicitlyCompleted = item.slot === 'completed';
             const isCompletedByProgress = (typeof item.send === 'number' && typeof item.order === 'number' && item.send >= item.order);
             const isManuallyFailed = item.statusOverride === 'fail';
 
             if (isExplicitlyCompleted || (isCompletedByProgress && !isManuallyFailed)) {
-                // This order is DONE (either explicitly completed or reached target and not failed)
                 statusClass = 'done';
                 statusText = '✅ Done';
-                showProgress = false; // No progress bar for done orders
-                targetContainer = slots['completed']; // Always put completed in the 'completed' section
+                showProgress = false;
+                targetContainer = slots['completed']; 
             } else if (isManuallyFailed) {
-                // This order is STUCK/FAILED (manually overridden)
                 statusClass = 'fail';
                 statusText = '❌ Stuck';
-                targetContainer = slots[item.slot]; // Still show in its original slot if stuck
+                targetContainer = slots[item.slot]; 
             } else {
-                // This order is IN PROGRESS (neither done nor failed, and not explicitly completed)
                 statusClass = 'pending';
                 statusText = '⏳ Progress';
-                targetContainer = slots[item.slot]; // Show in its assigned slot
+                targetContainer = slots[item.slot];
             }
-            console.log(`Item ${item.name} status: ${statusClass}, target slot: ${item.slot}`); // Debug log for status/target
 
+            // Only proceed if a target container was found
+            if (!targetContainer) {
+                console.warn(`Skipping item: ${item.name}. Target slot '${item.slot}' not found.`);
+                return; // Skip this item if its slot doesn't exist in the DOM
+            }
 
-            // Calculate progress percentage for active orders
             let progressPercent = 0;
             if (showProgress && typeof item.order === 'number' && typeof item.send === 'number' && item.order > 0) {
-                progressPercent = Math.min((item.send / item.order) * 100, 100); // Cap at 100%
+                progressPercent = Math.min((item.send / item.order) * 100, 100);
             }
 
-            // Create the card element using DOM manipulation for better reliability
-            const c
+            // Create the card element
+            const card = document.createElement('div');
+            card.classList.add('card');
+            card.classList.add(statusClass); // Add status class (done, fail, pending)
+
+            card.innerHTML = `
+                <div class="name">${item.name}</div>
+                <div class="number">Order: ${item.order} | Send: ${item.send}</div>
+                <div class="status">${statusText}</div>
+                <div class="progress-bar-container" style="${showProgress ? '' : 'display: none;'}">
+                    <div class="progress-bar-fill" style="width: ${progressPercent}%;"></div>
+                </div>
+            `;
+            
+            // Append the created card to the correct slot container
+            targetContainer.appendChild(card);
+        });
+    }
+
+    // Initi
