@@ -225,7 +225,7 @@
         margin-top: 0.8em;
         overflow: hidden;
         box-shadow: var(--inner-shadow);
-        /* display: none; /* Awalnya tersembunyi, akan ditampilkan oleh JS */
+        /* display: none; /* Awalnya tersembunyi, akan ditampilkan oleh JS jika perlu */
     }
 
     .card.pending .progress-bar-container,
@@ -332,19 +332,23 @@
 
     <section>
       <div class="slot-title">Slot 1</div>
-      <div id="slot1-cards" class="cards"></div> </section>
+      <div id="slot1-cards" class="cards"></div> <!-- Container for Slot 1 cards -->
+    </section>
 
     <section>
       <div class="slot-title">Slot 2</div>
-      <div id="slot2-cards" class="cards"></div> </section>
+      <div id="slot2-cards" class="cards"></div> <!-- Container for Slot 2 cards -->
+    </section>
 
     <section>
       <div class="slot-title">Slot 3</div>
-      <div id="slot3-cards" class="cards"></div> </section>
+      <div id="slot3-cards" class="cards"></div> <!-- Container for Slot 3 cards -->
+    </section>
 
     <section>
       <div class="slot-title">🗂️ Riwayat Orderan Selesai</div>
-      <div id="completed-cards" class="cards"></div> </section>
+      <div id="completed-cards" class="cards"></div> <!-- Container for completed orders -->
+    </section>
 
   </div>
 
@@ -352,21 +356,21 @@
     // Data structure (array of objects)
     const deliveryData = [
         // Slot 1
-        { slot: 1, name: 'Angel', order: 450, send: 260, statusOverride: 'fail' }, // Manually mark as fail
-        { slot: 1, name: 'Husna', order: 450, send: 274, statusOverride: 'fail' }, // Manually mark as fail
-        { slot: 1, name: 'Mursyid', order: 320, send: 80, statusOverride: 'fail' }, // Manually mark as fail
+        { slot: 1, name: 'Angel', order: 450, send: 260, statusOverride: 'fail' }, 
+        { slot: 1, name: 'Husna', order: 450, send: 274, statusOverride: 'fail' }, 
+        { slot: 1, name: 'Mursyid', order: 320, send: 80, statusOverride: 'fail' }, 
         { slot: 1, name: 'Angel2', order: 600, send: 340 },
         { slot: 1, name: 'Aelia', order: 420, send: 200 },
         { slot: 1, name: 'Tsabyy', order: 200, send: 160 },
         { slot: 1, name: 'Aya', order: 320, send: 120 },
-        { slot: 1, name: 'Rain', order: 320, send: 100, statusOverride: 'fail' }, // Manually mark as fail
+        { slot: 1, name: 'Rain', order: 320, send: 100, statusOverride: 'fail' }, 
 
         // Slot 2
         { slot: 2, name: 'Moon', order: 530, send: 289 },
         { slot: 2, name: 'Hira', order: 360, send: 307 },
-        { slot: 2, name: 'Sea', order: 150, send: 137, statusOverride: 'fail' }, // Manually mark as fail
-        { slot: 2, name: 'Joy', order: 320, send: 260, statusOverride: 'fail' }, // Manually mark as fail
-        { slot: 2, name: 'Harbie', order: 200, send: 180, statusOverride: 'fail' }, // Manually mark as fail
+        { slot: 2, name: 'Sea', order: 150, send: 137, statusOverride: 'fail' }, 
+        { slot: 2, name: 'Joy', order: 320, send: 260, statusOverride: 'fail' }, 
+        { slot: 2, name: 'Harbie', order: 200, send: 180, statusOverride: 'fail' }, 
         { slot: 2, name: 'Aze', order: 570, send: 220 },
         { slot: 2, name: 'Sena', order: 570, send: 220 },
         { slot: 2, name: 'raine', order: 420, send: 200 },
@@ -374,20 +378,19 @@
 
         // Slot 3
         { slot: 3, name: 'Kiki', order: 450, send: 444 },
-        { slot: 3, name: 'Tobias', order: 500, send: 235, statusOverride: 'fail' }, // Manually mark as fail
-        { slot: 3, name: 'Luna', order: 800, send: 690, statusOverride: 'fail' }, // Manually mark as fail
+        { slot: 3, name: 'Tobias', order: 500, send: 235, statusOverride: 'fail' }, 
+        { slot: 3, name: 'Luna', order: 800, send: 690, statusOverride: 'fail' }, 
         { slot: 3, name: 'Ney', order: 3540, send: 2895 },
-        { slot: 3, name: 'Araba', order: 150, send: 90, statusOverride: 'fail' }, // Manually mark as fail
+        { slot: 3, name: 'Araba', order: 150, send: 90, statusOverride: 'fail' }, 
         { slot: 3, name: 'Diyy', order: 320, send: 120 },
         { slot: 3, name: 'Al', order: 320, send: 100 },
         { slot: 3, name: 'Purili', order: 320, send: 120 },
         { slot: 3, name: 'Idnes', order: 320, send: 120 },
         { slot: 3, name: 'Anggi', order: 320, send: 120 },
         { slot: 3, name: 'Alip', order: 320, send: 100 },
-        { slot: 3, name: 'Autumn', order: 850, send: 40, statusOverride: 'fail' }, // Manually mark as fail
+        { slot: 3, name: 'Autumn', order: 850, send: 40, statusOverride: 'fail' }, 
 
-        // ALL Previously Completed Orders (Explicitly added to ensure they persist)
-        // These are orders that were marked as "Done" in previous updates or initially.
+        // Previously Completed Orders
         { slot: 'completed', name: 'Fida', order: 100, send: 103 }, 
         { slot: 'completed', name: 'Vyan', order: 80, send: 83 }, 
         { slot: 'completed', name: 'Ayu', order: 1000, send: 1003 }, 
@@ -404,13 +407,17 @@
     // Function to update live time
     function updateTime() {
         const now = new Date();
-        // Set the date to July 1, 2025 for consistent "Pengiriman Hari Ini" message
-        // This ensures the banner always shows "1 Juli 2025" regardless of current actual date.
-        const targetDate = new Date(2025, 6, 1, now.getHours(), now.getMinutes(), now.getSeconds()); // Month is 0-indexed, so 6 is July
+        // Menetapkan tanggal ke 1 Juli 2025 agar pesan "Pengiriman Hari Ini" konsisten
+        const targetDate = new Date(2025, 6, 1, now.getHours(), now.getMinutes(), now.getSeconds()); // Bulan adalah 0-indexed, jadi 6 adalah Juli
         const waktu = targetDate.toLocaleString('id-ID', {
             hour: '2-digit', minute: '2-digit', second: '2-digit'
         });
-        document.getElementById('live-time').textContent = '⏰: ' + waktu;
+        const liveTimeElement = document.getElementById('live-time');
+        if (liveTimeElement) {
+            liveTimeElement.textContent = '⏰: ' + waktu;
+        } else {
+            console.error("Element with ID 'live-time' not found.");
+        }
     }
 
     // Function to render the cards
@@ -423,11 +430,14 @@
         };
 
         // Clear existing cards from all containers
-        Object.values(slots).forEach(container => {
+        // Pastikan kontainer ada sebelum membersihkannya
+        Object.keys(slots).forEach(key => {
+            const container = slots[key];
             if (container) {
                 container.innerHTML = '';
             } else {
-                console.error("Error: A slot container was not found in the DOM!");
+                // Pesan error jika salah satu kontainer tidak ditemukan di DOM.
+                console.error(`Error: Slot container with ID '${key}-cards' was not found in the DOM!`);
             }
         });
 
@@ -435,56 +445,46 @@
         data.forEach(item => {
             let statusClass;
             let statusText;
-            let showProgress = true; 
+            let showProgress = true; // Defaultnya, tampilkan progress bar
             let targetContainer = null; 
 
+            // Pastikan item memiliki properti 'slot' yang valid
+            if (item.slot === undefined || item.slot === null) {
+                console.warn(`Skipping item due to missing 'slot' property:`, item);
+                return; // Lompati item ini jika slot tidak terdefinisi
+            }
+
             const isExplicitlyCompleted = item.slot === 'completed';
-            const isCompletedByProgress = (typeof item.send === 'number' && typeof item.order === 'number' && item.send >= item.order);
+            // Periksa apakah item adalah 'completed' secara eksplisit ATAU jika 'send' sudah mencapai atau melebihi 'order'
+            const isCompletedByProgress = (typeof item.send === 'number' && typeof item.order === 'number' && item.order > 0 && item.send >= item.order);
             const isManuallyFailed = item.statusOverride === 'fail';
 
+            // Tentukan status dan kontainer tujuan
             if (isExplicitlyCompleted || (isCompletedByProgress && !isManuallyFailed)) {
+                // Status "Done"
                 statusClass = 'done';
                 statusText = '✅ Done';
-                showProgress = false;
+                showProgress = false; // Sembunyikan progress bar untuk status Done
                 targetContainer = slots['completed']; 
             } else if (isManuallyFailed) {
+                // Status "Fail"
                 statusClass = 'fail';
                 statusText = '❌ Stuck';
-                targetContainer = slots[item.slot]; 
+                targetContainer = slots[item.slot]; // Tampilkan di slot aslinya jika stuck
             } else {
+                // Status "Pending"
                 statusClass = 'pending';
                 statusText = '⏳ Progress';
-                targetContainer = slots[item.slot];
+                targetContainer = slots[item.slot]; // Tampilkan di slot yang dituju
             }
 
-            // Only proceed if a target container was found
+            // Lanjutkan hanya jika kontainer target ditemukan
             if (!targetContainer) {
-                console.warn(`Skipping item: ${item.name}. Target slot '${item.slot}' not found.`);
-                return; // Skip this item if its slot doesn't exist in the DOM
+                // Jika slot item adalah 'completed' tapi 'completed-cards' tidak ada, atau slot lain tidak ada
+                console.warn(`Skipping item: ${item.name}. Target slot '${item.slot}' (container: ${slots[item.slot] ? 'found' : 'not found'}) is not available or is invalid.`);
+                return; 
             }
 
+            // Hitung persentase progres hanya jika diperlukan dan data valid
             let progressPercent = 0;
-            if (showProgress && typeof item.order === 'number' && typeof item.send === 'number' && item.order > 0) {
-                progressPercent = Math.min((item.send / item.order) * 100, 100);
-            }
-
-            // Create the card element
-            const card = document.createElement('div');
-            card.classList.add('card');
-            card.classList.add(statusClass); // Add status class (done, fail, pending)
-
-            card.innerHTML = `
-                <div class="name">${item.name}</div>
-                <div class="number">Order: ${item.order} | Send: ${item.send}</div>
-                <div class="status">${statusText}</div>
-                <div class="progress-bar-container" style="${showProgress ? '' : 'display: none;'}">
-                    <div class="progress-bar-fill" style="width: ${progressPercent}%;"></div>
-                </div>
-            `;
-            
-            // Append the created card to the correct slot container
-            targetContainer.appendChild(card);
-        });
-    }
-
-    // Initi
+            if (
