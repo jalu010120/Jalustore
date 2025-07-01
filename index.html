@@ -344,6 +344,8 @@
   </div>
 
   <script>
+    console.log("Script execution started."); // Debug log
+
     // Data structure (array of objects)
     const deliveryData = [
         // Slot 1
@@ -410,6 +412,8 @@
 
     // Function to render the cards
     function renderDashboard(data) {
+        console.log("renderDashboard function started."); // Debug log
+
         const slots = {
             1: document.getElementById('slot1-cards'),
             2: document.getElementById('slot2-cards'),
@@ -422,12 +426,17 @@
             if (container) {
                 container.innerHTML = '';
             } else {
-                console.error("Warning: A slot container was not found in the DOM!");
+                // This error will show in console if a slot HTML element is missing
+                console.error("Error: A slot container was not found in the DOM!");
             }
         });
+        console.log("Cleared existing cards from containers."); // Debug log
+
 
         // Loop through each item in the data and render it
-        data.forEach(item => {
+        data.forEach((item, index) => {
+            console.log(`Processing item ${index}: ${item.name}`); // Debug log for each item
+
             let statusClass;
             let statusText;
             let showProgress = true; // By default, show progress bar
@@ -455,6 +464,8 @@
                 statusText = '⏳ Progress';
                 targetContainer = slots[item.slot]; // Show in its assigned slot
             }
+            console.log(`Item ${item.name} status: ${statusClass}, target slot: ${item.slot}`); // Debug log for status/target
+
 
             // Calculate progress percentage for active orders
             let progressPercent = 0;
@@ -463,14 +474,4 @@
             }
 
             // Create the card element using DOM manipulation for better reliability
-            const cardDiv = document.createElement('div');
-            cardDiv.classList.add('card', statusClass);
-
-            cardDiv.innerHTML = `
-                <div class="name">${item.name}</div>
-                <div class="number">Order: ${item.order} | Send: ${item.send}</div>
-                <span class="status ${statusClass}">${statusText}</span>
-                ${showProgress ? `
-                <div class="progress-bar-container">
-                    <div class="progress-bar-fill" style="width: ${progressPercent}%;"></div>
-  
+            const c
