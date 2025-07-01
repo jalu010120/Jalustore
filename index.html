@@ -320,43 +320,42 @@
   <script>
     // Data structure (array of objects)
     const deliveryData = [
-        // Slot 1
-        { slot: 1, name: 'Angel', order: 450, send: 260, statusOverride: 'fail' }, // Manually mark as fail
-        { slot: 1, name: 'Husna', order: 450, send: 274, statusOverride: 'fail' }, // Manually mark as fail
-        { slot: 1, name: 'Mursyid', order: 320, send: 80, statusOverride: 'fail' }, // Manually mark as fail
+        // Slot 1 - Updated from your new list
+        { slot: 1, name: 'Angel', order: 450, send: 260, statusOverride: 'fail' },
+        { slot: 1, name: 'Husna', order: 450, send: 274, statusOverride: 'fail' },
+        { slot: 1, name: 'Mursyid', order: 320, send: 80, statusOverride: 'fail' },
         { slot: 1, name: 'Angel2', order: 600, send: 340 },
         { slot: 1, name: 'Aelia', order: 420, send: 200 },
         { slot: 1, name: 'Tsabyy', order: 200, send: 160 },
         { slot: 1, name: 'Aya', order: 320, send: 120 },
-        { slot: 1, name: 'Rain', order: 320, send: 100, statusOverride: 'fail' }, // Manually mark as fail
+        { slot: 1, name: 'Rain', order: 320, send: 100, statusOverride: 'fail' },
 
-        // Slot 2
+        // Slot 2 - Updated from your new list
         { slot: 2, name: 'Moon', order: 530, send: 289 },
         { slot: 2, name: 'Hira', order: 360, send: 307 },
-        { slot: 2, name: 'Sea', order: 150, send: 137, statusOverride: 'fail' }, // Manually mark as fail
-        { slot: 2, name: 'Joy', order: 320, send: 260, statusOverride: 'fail' }, // Manually mark as fail
-        { slot: 2, name: 'Harbie', order: 200, send: 180, statusOverride: 'fail' }, // Manually mark as fail
+        { slot: 2, name: 'Sea', order: 150, send: 137, statusOverride: 'fail' },
+        { slot: 2, name: 'Joy', order: 320, send: 260, statusOverride: 'fail' },
+        { slot: 2, name: 'Harbie', order: 200, send: 180, statusOverride: 'fail' },
         { slot: 2, name: 'Aze', order: 570, send: 220 },
         { slot: 2, name: 'Sena', order: 570, send: 220 },
         { slot: 2, name: 'raine', order: 420, send: 200 },
         { slot: 2, name: 'Rani', order: 320, send: 120 },
 
-        // Slot 3
+        // Slot 3 - Updated from your new list
         { slot: 3, name: 'Kiki', order: 450, send: 444 },
-        { slot: 3, name: 'Tobias', order: 500, send: 235, statusOverride: 'fail' }, // Manually mark as fail
-        { slot: 3, name: 'Luna', order: 800, send: 690, statusOverride: 'fail' }, // Manually mark as fail
+        { slot: 3, name: 'Tobias', order: 500, send: 235, statusOverride: 'fail' },
+        { slot: 3, name: 'Luna', order: 800, send: 690, statusOverride: 'fail' },
         { slot: 3, name: 'Ney', order: 3540, send: 2895 },
-        { slot: 3, name: 'Araba', order: 150, send: 90, statusOverride: 'fail' }, // Manually mark as fail
+        { slot: 3, name: 'Araba', order: 150, send: 90, statusOverride: 'fail' },
         { slot: 3, name: 'Diyy', order: 320, send: 120 },
         { slot: 3, name: 'Al', order: 320, send: 100 },
         { slot: 3, name: 'Purili', order: 320, send: 120 },
         { slot: 3, name: 'Idnes', order: 320, send: 120 },
         { slot: 3, name: 'Anggi', order: 320, send: 120 },
         { slot: 3, name: 'Alip', order: 320, send: 100 },
-        { slot: 3, name: 'Autumn', order: 850, send: 40, statusOverride: 'fail' }, // Manually mark as fail
+        { slot: 3, name: 'Autumn', order: 850, send: 40, statusOverride: 'fail' },
 
-        // ALL Previously Completed Orders (Explicitly added to ensure they persist)
-        // These are orders that were marked as "Done" in previous updates or initially.
+        // ALL Previously Completed Orders (DO NOT REMOVE)
         { slot: 'completed', name: 'Fida', order: 100, send: 103 }, 
         { slot: 'completed', name: 'Vyan', order: 80, send: 83 }, 
         { slot: 'completed', name: 'Ayu', order: 1000, send: 1003 }, 
@@ -373,8 +372,7 @@
     // Function to update live time
     function updateTime() {
         const now = new Date();
-        // Set the date to July 1, 2025 for consistent "Pengiriman Hari Ini" message
-        // This ensures the banner always shows "1 Juli 2025" regardless of current actual date.
+        // Set the date to July 1, 2025 for consistent time (as per previous request)
         const targetDate = new Date(2025, 6, 1, now.getHours(), now.getMinutes(), now.getSeconds()); // Month is 0-indexed, so 6 is July
         const waktu = targetDate.toLocaleString('id-ID', {
             hour: '2-digit', minute: '2-digit', second: '2-digit'
