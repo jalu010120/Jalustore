@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="monetag" content="7926401baf09072396b117095c7ef4b5">
+  <title>JaluStore</title>
   <meta charset="UTF-8" />
   <title>Dashboard Pengiriman Heart - JaluStore</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -465,16 +470,6 @@
         setInterval(updateTime, 1000); // Update time every second
         renderDashboard(deliveryData); // Render the dashboard with the data
     });
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js')
-      .then(function(reg) {
-        console.log('Service Worker registered 🎉', reg);
-      })
-      .catch(function(err) {
-        console.error('Service Worker registration failed 😢:', err);
-      });
-  }
   </script>
 </body>
 </html>
