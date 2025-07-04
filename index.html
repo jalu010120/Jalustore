@@ -1,14 +1,10 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="monetag" content="7926401baf09072396b117095c7ef4b5">
-  <title>JaluStore</title>
   <meta charset="UTF-8" />
-  <title>Dashboard Pengiriman Heart - JaluStore</title>
+  <title data-lang-key="pageTitle">Dashboard Pengiriman Heart - JaluStore</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     /* Add CSS Variables for Sky Chibi Theme */
@@ -41,58 +37,61 @@
         --inner-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
     }
 
+    body {
+        transition: background-color 0.5s ease, color 0.5s ease;
+    }
+
+    .overlay {
+        transition: background-color 0.5s ease, backdrop-filter 0.5s ease;
+    }
+
+    /* Utility */
     * { box-sizing: border-box; }
     body {
-        font-family: 'Poppins', sans-serif; /* Font utama yang lebih lembut */
+        font-family: 'Poppins', sans-serif;
         margin: 0;
         padding: 0;
-        /* Menggunakan gambar latar Sky yang lebih cerah dan chibi */
         background: url('https://thatskyshop.com/cdn/shop/files/Page-thatskywallpaper-Portrait-13.jpg?v=1711607986&width=750') no-repeat center center fixed;
         background-size: cover;
         color: var(--text-color);
         min-height: 100vh;
-        overflow-x: hidden; /* Mencegah scroll horizontal */
+        overflow-x: hidden;
     }
     .overlay {
-        background-color: var(--bg-color-overlay); /* Overlay lebih transparan dan cerah */
+        background-color: var(--bg-color-overlay);
         min-height: 100vh;
         padding: 2rem;
-        backdrop-filter: blur(5px); /* Blur yang sedikit lebih lembut */
+        backdrop-filter: blur(5px);
         display: flex;
         flex-direction: column;
-        align-items: center; /* Pusatkan konten */
+        align-items: center;
     }
     #live-time {
         text-align: center;
         font-size: 1.1rem;
         margin-bottom: 1.5rem;
-        color: var(--heading-color); /* Warna yang lebih cerah */
+        color: var(--heading-color);
         letter-spacing: 1px;
         font-weight: 600;
         background: rgba(255, 255, 255, 0.7);
         padding: 0.5rem 1rem;
         border-radius: 25px;
         box-shadow: var(--soft-shadow);
-        animation: pulseTime 1.5s infinite alternate; /* Efek bernafas */
-    }
-
-    @keyframes pulseTime {
-        from { transform: scale(1); }
-        to { transform: scale(1.03); }
+        animation: pulseTime 1.5s infinite alternate;
     }
 
     h1 {
-        font-family: 'Fredoka', sans-serif; /* Font utama judul: Fredoka */
+        font-family: 'Fredoka', sans-serif;
         text-align: center;
         color: var(--heading-color);
-        margin-bottom: 1.5rem; /* Kurangi margin untuk memberi ruang tombol */
+        margin-bottom: 1.5rem;
         text-shadow: 2px 2px 7px rgba(0,0,0,0.2);
-        font-size: 2.8rem; /* Ukuran font lebih besar */
+        font-size: 2.8rem;
         letter-spacing: 2px;
         line-height: 1.2;
     }
     h1 em {
-        font-family: 'Pacifico', cursive; /* Font khusus untuk teks di dalam <em> (JaluStore): Pacifico */
+        font-family: 'Pacifico', cursive;
         display: block;
         font-size: 0.7em;
         font-style: normal;
@@ -100,19 +99,18 @@
         opacity: 0.8;
     }
 
-    /* Gaya untuk tombol katalog */
     .catalog-button {
         display: inline-block;
-        background: linear-gradient(45deg, #FFD1DC, #FFABAB); /* Pink lembut ke peach */
+        background: linear-gradient(45deg, #FFD1DC, #FFABAB);
         color: #fff;
         padding: 0.8rem 1.8rem;
         border-radius: 30px;
         text-decoration: none;
         font-size: 1.2rem;
         font-weight: 600;
-        margin-top: 1rem; /* Jarak dari judul */
-        margin-bottom: 2.5rem; /* Jarak ke bagian selanjutnya */
-        box-shadow: 0 5px 15px rgba(255,100,150,0.3); /* Bayangan pink */
+        margin-top: 1rem;
+        margin-bottom: 2.5rem;
+        box-shadow: 0 5px 15px rgba(255,100,150,0.3);
         transition: transform 0.2s ease, box-shadow 0.2s ease;
         letter-spacing: 1px;
         text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
@@ -124,17 +122,17 @@
     }
 
     section {
-        margin-bottom: 3rem; /* Jarak antar bagian lebih besar */
+        margin-bottom: 3rem;
         width: 100%;
-        max-width: 900px; /* Lebar maksimum untuk konten */
+        max-width: 900px;
     }
     .slot-title {
         font-size: 1.5rem;
         font-weight: 700;
-        background: var(--slot-gradient); /* Gradient lebih colorful */
-        color: #fff; /* Teks putih di gradient cerah */
+        background: var(--slot-gradient);
+        color: #fff;
         padding: 0.8rem 1.8rem;
-        border-radius: 30px; /* Bentuk lebih bulat/pill */
+        border-radius: 30px;
         margin-bottom: 1.5rem;
         display: inline-block;
         box-shadow: var(--soft-shadow);
@@ -143,52 +141,69 @@
         letter-spacing: 1px;
     }
     .slot-title:hover {
-        transform: translateY(-3px); /* Efek melayang */
+        transform: translateY(-3px);
     }
     .cards {
         display: flex;
         flex-wrap: wrap;
-        gap: 1.2rem; /* Jarak antar kartu lebih besar */
-        justify-content: center; /* Pusatkan kartu */
+        gap: 1.2rem;
+        justify-content: center;
     }
     .card {
         background: var(--card-bg);
-        border: 2px solid var(--card-border); /* Border lebih jelas */
-        border-radius: 18px; /* Lebih bulat */
+        border: 2px solid var(--card-border);
+        border-radius: 18px;
         padding: 1.2rem 1.5rem;
-        min-width: 190px; /* Ukuran minimum lebih besar */
-        flex: 1 1 250px; /* Fleksibilitas ukuran */
-        box-shadow: var(--soft-shadow); /* Bayangan lembut */
+        min-width: 190px;
+        flex: 1 1 250px;
+        box-shadow: var(--soft-shadow);
         transition: transform 0.2s ease-out, background 0.2s ease-out;
         display: flex;
         flex-direction: column;
-        justify-content: space-between; /* Untuk mendorong status ke bawah */
-        position: relative; /* Untuk potensi elemen tambahan */
-        overflow: hidden; /* Mengatasi sudut card */
+        justify-content: space-between;
+        position: relative;
+        overflow: hidden;
     }
     .card:hover {
-        transform: translateY(-5px) scale(1.02); /* Efek melayang dan sedikit membesar */
-        box-shadow: 0 8px 25px rgba(0,0,0,0.15); /* Bayangan lebih dalam saat hover */
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         background: rgba(255,255,255,0.95);
     }
     .name {
         font-size: 1.2em;
-        font-weight: 700; /* Lebih tebal */
+        font-weight: 700;
         margin-bottom: 0.5em;
         color: #555;
         text-shadow: 0 1px 2px rgba(0,0,0,0.05);
     }
     .number {
         font-size: 1.05em;
-        margin-bottom: 0.8em; /* Jarak lebih besar */
+        margin-bottom: 0.8em;
         color: #666;
+        display: flex;
+        justify-content: space-between; /* To align percentage */
+        align-items: center;
+    }
+    .progress-percentage {
+        font-size: 0.9em;
+        font-weight: 600;
+        color: #4CAF50; /* Green */
+        margin-left: 10px;
+        min-width: 50px; /* Ensure space for percentage */
+        text-align: right;
+    }
+    .card.fail .progress-percentage {
+        color: #D32F2F; /* Red */
+    }
+    .card.pending .progress-percentage {
+        color: #E65100; /* Orange */
     }
     .status {
         margin-top: auto;
         font-size: 0.95em;
-        font-weight: 800; /* Sangat tebal */
+        font-weight: 800;
         display: inline-block;
-        border-radius: 15px; /* Lebih bulat */
+        border-radius: 15px;
         padding: 0.3em 0.8em;
         letter-spacing: 0.8px;
         align-self: flex-start;
@@ -196,16 +211,15 @@
         text-transform: uppercase;
         transition: background 0.3s ease, color 0.3s ease;
     }
-    /* Status Colors */
+
     .status.done { background: var(--status-done-bg); color: var(--status-done-text); }
     .status.fail { background: var(--status-fail-bg); color: var(--status-fail-text); }
     .status.pending { background: var(--status-pending-bg); color: var(--status-pending-text); }
 
-    /* Progress Bar Styles */
     .progress-bar-container {
-        height: 10px; /* Lebih tebal */
+        height: 10px;
         background-color: var(--progress-bar-bg);
-        border-radius: 5px; /* Lebih bulat */
+        border-radius: 5px;
         margin-top: 0.8em;
         overflow: hidden;
         box-shadow: var(--inner-shadow);
@@ -221,7 +235,7 @@
         height: 100%;
         background-color: var(--progress-fill-color);
         border-radius: 5px;
-        transition: width 0.7s ease-in-out; /* Animasi lebih lembut */
+        transition: width 0.7s ease-in-out;
         position: relative;
     }
 
@@ -243,29 +257,36 @@
         100% { opacity: 0; transform: translateX(100%); }
     }
 
-
-    /* Chibi elements - these would typically be background images or SVG icons */
-    .card::before {
-        content: '';
-        position: absolute;
-        top: -10px;
-        right: -10px;
-        width: 50px;
-        height: 50px;
-        /* Contoh: Awan atau bintang kecil (Anda bisa ganti path/url ke icon Anda) */
-        /* background: url('path/to/chibi-cloud-icon.png') no-repeat center center / contain; */
-        opacity: 0.1;
-        pointer-events: none;
-        z-index: 0;
+    .controls {
+        margin-bottom: 2rem;
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        max-width: 900px;
     }
 
-    .card.done::before {
-        /* background: url('path/to/chibi-star-icon.png') no-repeat center center / contain; */
-        opacity: 0.2;
+    .control-button {
+        background-color: #64B5F6; /* Biru langit */
+        color: white;
+        border: none;
+        padding: 0.7rem 1.2rem;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
     }
 
+    .control-button:hover {
+        background-color: #42A5F5;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    }
 
-    @media (max-width: 768px) { /* Adjust for tablets */
+    @media (max-width: 768px) {
         .overlay {padding: 1.5rem;}
         h1 { font-size: 2.2rem; }
         .catalog-button { font-size: 1.1rem; padding: 0.7rem 1.5rem; margin-bottom: 2rem;}
@@ -275,9 +296,11 @@
         .name { font-size: 1.1em; }
         .number { font-size: 1em; }
         .status { font-size: 0.85em; padding: 0.2em 0.7em; }
+        .control-button { padding: 0.6rem 1rem; font-size: 0.9rem;}
+        .controls { gap: 0.8rem; }
     }
 
-    @media (max-width: 500px) { /* Adjust for mobile phones */
+    @media (max-width: 500px) {
         .overlay {padding: 1rem;}
         h1 { font-size: 1.8rem; margin-bottom: 1.5rem;}
         h1 em { font-size: 0.8em; }
@@ -289,6 +312,8 @@
         .number { font-size: 0.9em; }
         .status { font-size: 0.8em; padding: 0.15em 0.6em; border-radius: 12px; }
         #live-time { font-size: 1rem; padding: 0.4rem 0.8rem; }
+        .control-button { padding: 0.5rem 0.8rem; font-size: 0.85rem;}
+        .controls { flex-direction: column; }
     }
     ::-webkit-scrollbar {width:8px; background:#e0f7fa;} /* Scrollbar lebih terang */
     ::-webkit-scrollbar-thumb {background:var(--sky-blue-medium); border-radius:8px;}
@@ -298,69 +323,80 @@
 <body>
   <div class="overlay">
     <div id="live-time"></div>
-    <h1>📦 Laporan Pengiriman Heart <br><em>JaluStore</em></h1>
+    
+    
+<h1><span data-lang-key="mainHeading">📦 Laporan Pengiriman Heart</span> <br><em>JaluStore</em></h1>
 
-    <a href="https://jalustore.github.io/Store/" class="catalog-button" target="_blank">
+    <a href="https://jalustoreid.netlify.app/" class="catalog-button" target="_blank" data-lang-key="buyHeartButton">
       💖 Beli Heart Sekarang!
     </a>
 
-    <section>
-      <div class="slot-title">Slot 1</div>
-      <div id="slot1-cards" class="cards"></div> </section>
+    <div class="controls">
+        <button id="lang-toggle" class="control-button" data-lang-key="toggleLanguage">🇬🇧 English</button>
+    </div>
 
-    <section>
-      <div class="slot-title">Slot 2</div>
-      <div id="slot2-cards" class="cards"></div> </section>
+    
+<section id="slot1-section">
+      <div class="slot-title" data-lang-key="slot1Title">Slot 1</div>
+      <div id="slot1-cards" class="cards"></div>
+    </section>
 
-    <section>
-      <div class="slot-title">Slot 3</div>
-      <div id="slot3-cards" class="cards"></div> </section>
+    <section id="slot2-section">
+      <div class="slot-title" data-lang-key="slot2Title">Slot 2</div>
+      <div id="slot2-cards" class="cards"></div>
+    </section>
 
-    <section>
-      <div class="slot-title">🗂️ Riwayat Orderan Selesai</div>
-      <div id="completed-cards" class="cards"></div> </section>
+    <section id="slot3-section">
+      <div class="slot-title" data-lang-key="slot3Title">Slot 3</div>
+      <div id="slot3-cards" class="cards"></div>
+    </section>
+
+    <section id="completed-section">
+      <div class="slot-title" data-lang-key="completedOrdersTitle">🗂️ Riwayat Orderan Selesai</div>
+      <div id="completed-cards" class="cards"></div>
+    </section>
 
   </div>
 
   <script>
     // Data structure (array of objects)
     const deliveryData = [
-        // Slot 1 - Updated from your new list
+        // Slot 1 - Updated from your new list, all active orders default to 'fail'
         { slot: 1, name: 'Angel', order: 450, send: 260, statusOverride: 'fail' },
         { slot: 1, name: 'Husna', order: 450, send: 274, statusOverride: 'fail' },
         { slot: 1, name: 'Mursyid', order: 320, send: 80, statusOverride: 'fail' },
-        { slot: 1, name: 'Angel2', order: 600, send: 360 },
-        { slot: 1, name: 'Aelia', order: 420, send: 220 },
-        { slot: 1, name: 'Tsabyy', order: 200, send: 180 },
-        { slot: 1, name: 'Aya', order: 320, send: 140 },
-        { slot: 1, name: 'Rain', order: 320, send: 120 },
+        { slot: 1, name: 'Angel2', order: 600, send: 360, statusOverride: 'fail' },
+        { slot: 1, name: 'Aelia', order: 840, send: 220, statusOverride: 'fail' },
+        { slot: 1, name: 'Tsabyy', order: 200, send: 180, statusOverride: 'fail' },
+        { slot: 1, name: 'Aya', order: 320, send: 140, statusOverride: 'fail' },
+        { slot: 1, name: 'Rain', order: 320, send: 120, statusOverride: 'fail' },
 
-        // Slot 2 - Updated from your new list
-        { slot: 2, name: 'Moon', order: 530, send: 298 },
-        { slot: 2, name: 'Hira', order: 360, send: 327 },
+        // Slot 2 - Updated from your new list, all active orders default to 'fail'
+        { slot: 2, name: 'Moon', order: 530, send: 298, statusOverride: 'fail' },
+        { slot: 2, name: 'Hira', order: 360, send: 327, statusOverride: 'fail' },
         { slot: 2, name: 'Sea', order: 150, send: 137, statusOverride: 'fail' },
         { slot: 2, name: 'Joy', order: 320, send: 260, statusOverride: 'fail' },
-        { slot: 2, name: 'Harbie', order: 200, send: 200 }, // Status ✅, will be moved to completed
-        { slot: 2, name: 'Aze', order: 570, send: 240 },
-        { slot: 2, name: 'Sena', order: 570, send: 240 },
-        { slot: 2, name: 'raine', order: 420, send: 220 },
-        { slot: 2, name: 'Rani', order: 320, send: 140 },
+        { slot: 2, name: 'Harbie', order: 200, send: 200 }, // Completed in last update, now here based on logic
+        { slot: 2, name: 'Aze', order: 570, send: 240, statusOverride: 'fail' },
+        { slot: 2, name: 'Sena', order: 570, send: 240, statusOverride: 'fail' },
+        { slot: 2, name: 'raine', order: 420, send: 220, statusOverride: 'fail' },
+        { slot: 2, name: 'Rani', order: 320, send: 140, statusOverride: 'fail' },
 
-        // Slot 3 - Updated from your new list
-        { slot: 3, name: 'Kiki', order: 450, send: 444, statusOverride: 'fail' }, // Status ❌, remain in slot 3
+        // Slot 3 - Updated from your new list, all active orders default to 'fail'
+        { slot: 3, name: 'Kiki', order: 450, send: 444, statusOverride: 'fail' },
         { slot: 3, name: 'Tobias', order: 500, send: 235, statusOverride: 'fail' },
-        { slot: 3, name: 'Luna', order: 800, send: 705 },
-        { slot: 3, name: 'Ney', order: 3540, send: 2910 },
-        { slot: 3, name: 'Araba', order: 150, send: 105 },
-        { slot: 3, name: 'Diyy', order: 320, send: 140 },
-        { slot: 3, name: 'Al', order: 320, send: 120 },
-        { slot: 3, name: 'Purili', order: 320, send: 140 },
-        { slot: 3, name: 'Idnes', order: 320, send: 140 },
-        { slot: 3, name: 'Anggi', order: 320, send: 140 },
-        { slot: 3, name: 'Alip', order: 320, send: 120 },
-        { slot: 3, name: 'Autumn', order: 850, send: 70 },
+        { slot: 3, name: 'Luna', order: 800, send: 705, statusOverride: 'fail' },
+        { slot: 3, name: 'Ney', order: 3540, send: 2910, statusOverride: 'fail' },
+        { slot: 3, name: 'Araba', order: 150, send: 105, statusOverride: 'fail' },
+        { slot: 3, name: 'Diyy', order: 320, send: 140, statusOverride: 'fail' },
+        { slot: 3, name: 'Al', order: 320, send: 120, statusOverride: 'fail' },
+        { slot: 3, name: 'Purili', order: 320, send: 140, statusOverride: 'fail' },
+        { slot: 3, name: 'Idnes', order: 320, send: 140, statusOverride: 'fail' },
+        { slot: 3, name: 'Anggi', order: 320, send: 140, statusOverride: 'fail' },
+        { slot: 3, name: 'Alip', order: 320, send: 100, statusOverride: 'fail' },
+        { slot: 3, name: 'Autumn', order: 850, send: 70, statusOverride: 'fail' },
 
-        // ALL Previously Completed Orders (DO NOT REMOVE)
+        // ALL Previously Completed Orders (DO NOT REMOVE) - These explicitly retain their 'completed' slot
         { slot: 'completed', name: 'Fida', order: 100, send: 103 }, 
         { slot: 'completed', name: 'Vyan', order: 80, send: 83 }, 
         { slot: 'completed', name: 'Ayu', order: 1000, send: 1003 }, 
@@ -374,10 +410,42 @@
         { slot: 'completed', name: 'Lusi', order: 600, send: 603 }  
     ];
 
+    // Language definitions
+    const translations = {
+        'id': {
+            pageTitle: 'Dashboard Pengiriman Heart - JaluStore',
+            mainHeading: '📦 Laporan Pengiriman Heart',
+            buyHeartButton: '💖 Beli Heart Sekarang!',
+            toggleLanguage: '🇬🇧 English',
+            slot1Title: 'Slot 1',
+            slot2Title: 'Slot 2',
+            slot3Title: 'Slot 3',
+            completedOrdersTitle: '🗂️ Riwayat Orderan Selesai',
+            statusDone: '✅ Selesai',
+            statusStuck: '❌ Macet',
+            statusProgress: '⏳ Proses',
+        },
+        'en': {
+            pageTitle: 'Heart Delivery Dashboard - JaluStore',
+            mainHeading: '📦 Heart Delivery Report',
+            buyHeartButton: '💖 Buy Hearts Now!',
+            toggleLanguage: '🇮🇩 Indonesian',
+            slot1Title: 'Slot 1',
+            slot2Title: 'Slot 2',
+            slot3Title: 'Slot 3',
+            completedOrdersTitle: '🗂️ Completed Orders History',
+            statusDone: '✅ Done',
+            statusStuck: '❌ Stuck',
+            statusProgress: '⏳ In Progress',
+        }
+    };
+
+    let currentLang = 'id'; // Default language
+
     // Function to update live time
     function updateTime() {
         const now = new Date();
-        // Set the date to July 1, 2025 for consistent time (as per previous request)
+        // Set the date to July 1, 2025 for consistent time
         const targetDate = new Date(2025, 6, 1, now.getHours(), now.getMinutes(), now.getSeconds()); // Month is 0-indexed, so 6 is July
         const waktu = targetDate.toLocaleString('id-ID', {
             hour: '2-digit', minute: '2-digit', second: '2-digit'
@@ -385,91 +453,149 @@
         document.getElementById('live-time').textContent = '⏰: ' + waktu;
     }
 
-    // Function to render the cards
+    // Function to apply translations
+    function applyTranslations() {
+        document.querySelectorAll('[data-lang-key]').forEach(element => {
+            const key = element.getAttribute('data-lang-key');
+            if (translations[currentLang] && translations[currentLang][key]) {
+                if (key === 'toggleLanguage') {
+                    element.textContent = (currentLang === 'id') ? '🇬🇧 English' : '🇮🇩 Indonesian';
+                } else {
+                    element.textContent = translations[currentLang][key];
+                }
+            }
+        });
+        document.querySelector('title').textContent = translations[currentLang]['pageTitle'];
+        renderDashboard(deliveryData); // Re-render cards to update status text
+    }
+
+    // Function to toggle language
+    function toggleLanguage() {
+        currentLang = currentLang === 'id' ? 'en' : 'id';
+        localStorage.setItem('language', currentLang);
+        applyTranslations();
+    }
+
+    // Function to render the cards based on filters
     function renderDashboard(data) {
+        // No search or status/slot filters, always render all relevant items
         const slots = {
             1: document.getElementById('slot1-cards'),
             2: document.getElementById('slot2-cards'),
             3: document.getElementById('slot3-cards'),
             completed: document.getElementById('completed-cards')
         };
+        const slotSections = {
+            1: document.getElementById('slot1-section'),
+            2: document.getElementById('slot2-section'),
+            3: document.getElementById('slot3-section'),
+            completed: document.getElementById('completed-section')
+        };
 
-        // Clear existing cards from all containers
+        // Clear existing cards and hide all sections initially
         Object.values(slots).forEach(container => {
-            if (container) {
-                container.innerHTML = '';
-            } else {
-                console.error("Warning: A slot container was not found in the DOM!");
-            }
+            if (container) container.innerHTML = '';
+        });
+        Object.values(slotSections).forEach(section => {
+            if (section) section.style.display = 'none';
         });
 
-        // Loop through each item in the data and render it
-        data.forEach(item => {
-            let statusClass;
-            let statusText;
-            let showProgress = true; // By default, show progress bar
-            let targetContainer = null; // Initialize to null
+        const cardsToRender = {
+            1: [],
+            2: [],
+            3: [],
+            completed: []
+        };
 
-            // Determine status based on order data and overrides
-            const isExplicitlyCompleted = item.slot === 'completed'; // Explicitly marked as completed in data
+        data.forEach(item => {
+            let itemStatus;
             const isCompletedByProgress = (typeof item.send === 'number' && typeof item.order === 'number' && item.send >= item.order);
             const isManuallyFailed = item.statusOverride === 'fail';
 
-            if (isExplicitlyCompleted || (isCompletedByProgress && !isManuallyFailed)) {
-                // This order is DONE (either explicitly completed or reached target and not failed)
-                statusClass = 'done';
-                statusText = '✅ Done';
-                showProgress = false; // No progress bar for done orders
-                targetContainer = slots['completed']; // Always put completed in the 'completed' section
+            if (item.slot === 'completed' || (isCompletedByProgress && !isManuallyFailed)) {
+                itemStatus = 'done';
             } else if (isManuallyFailed) {
-                // This order is STUCK/FAILED (manually overridden)
-                statusClass = 'fail';
-                statusText = '❌ Stuck';
-                targetContainer = slots[item.slot]; // Still show in its original slot if stuck
+                itemStatus = 'fail';
             } else {
-                // This order is IN PROGRESS (neither done nor failed, and not explicitly completed)
-                statusClass = 'pending';
-                statusText = '⏳ Progress';
-                targetContainer = slots[item.slot]; // Show in its assigned slot
+                itemStatus = 'pending';
             }
 
-            // Calculate progress percentage for active orders
+            let statusClass;
+            let statusText;
+            let showProgress = true;
+            let targetSlotKey; 
+
+            if (item.slot === 'completed' || (isCompletedByProgress && !isManuallyFailed)) {
+                statusClass = 'done';
+                statusText = translations[currentLang]['statusDone'];
+                showProgress = false;
+                targetSlotKey = 'completed';
+            } else if (isManuallyFailed) {
+                statusClass = 'fail';
+                statusText = translations[currentLang]['statusStuck'];
+                targetSlotKey = item.slot;
+            } else {
+                statusClass = 'pending';
+                statusText = translations[currentLang]['statusProgress'];
+                targetSlotKey = item.slot;
+            }
+
             let progressPercent = 0;
             if (showProgress && typeof item.order === 'number' && typeof item.send === 'number' && item.order > 0) {
-                progressPercent = Math.min((item.send / item.order) * 100, 100); // Cap at 100%
+                progressPercent = Math.min((item.send / item.order) * 100, 100);
             }
 
-            // Create the card element using DOM manipulation for better reliability
-            const cardDiv = document.createElement('div');
-            cardDiv.classList.add('card', statusClass);
-
-            cardDiv.innerHTML = `
-                <div class="name">${item.name}</div>
-                <div class="number">Order: ${item.order} | Send: ${item.send}</div>
-                <span class="status ${statusClass}">${statusText}</span>
-                ${showProgress ? `
-                <div class="progress-bar-container">
-                    <div class="progress-bar-fill" style="width: ${progressPercent}%;"></div>
+            const cardHTML = `
+                <div class="card ${statusClass}">
+                    <div class="name">${item.name}</div>
+                    <div class="number">
+                        Order: ${item.order} | Send: ${item.send}
+                        ${showProgress ? `<span class="progress-percentage">${progressPercent.toFixed(1)}%</span>` : ''}
+                    </div>
+                    <span class="status ${statusClass}">${statusText}</span>
+                    ${showProgress ? `
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" style="width: ${progressPercent}%;"></div>
+                    </div>
+                    ` : ''}
                 </div>
-                ` : ''}
             `;
+            cardsToRender[targetSlotKey].push(cardHTML);
+        });
 
-            // Append the created card to the determined container
-            if (targetContainer) {
-                targetContainer.appendChild(cardDiv);
-            } else {
-                // This console log will help us if an item isn't rendered due to missing slot
-                console.error(`Error: Container for item '${item.name}' (slot: ${item.slot}) not found. This item will not be rendered.`);
+        // Now, append the collected HTML and manage section visibility
+        Object.keys(cardsToRender).forEach(slotKey => {
+            const container = slots[slotKey];
+            const section = slotSections[slotKey];
+            
+            if (container && section) {
+                if (cardsToRender[slotKey].length > 0) {
+                    container.innerHTML = cardsToRender[slotKey].join('');
+                    section.style.display = 'block';
+                } else {
+                    container.innerHTML = '';
+                    section.style.display = 'none';
+                }
             }
         });
     }
 
     // Initial setup
     document.addEventListener('DOMContentLoaded', () => {
+        // Load saved language preference
+        const savedLang = localStorage.getItem('language');
+        if (savedLang) {
+            currentLang = savedLang;
+        }
+
         updateTime(); // Update time immediately on load
         setInterval(updateTime, 1000); // Update time every second
-        renderDashboard(deliveryData); // Render the dashboard with the data
+
+        document.getElementById('lang-toggle').addEventListener('click', toggleLanguage);
+        
+        applyTranslations(); // Apply translations and render dashboard based on loaded language
     });
+
   </script>
 </body>
 </html>
