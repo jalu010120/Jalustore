@@ -324,17 +324,21 @@
   <script>
     // Data structure (array of objects)
     const deliveryData = [
-        // Orderan Berjalan (dari permintaan terakhir Anda)
-        { slot: 1, name: 'bulilisso', order: 80, send: 20 },
-        { slot: 1, name: 'Ney', order: 4340, send: 3010 },
-        { slot: 1, name: 'Purili', order: 320, send: 160 },
-        { slot: 1, name: 'Rain', order: 320, send: 140 },
-        { slot: 1, name: 'Nayla', order: 530, send: 318 },
-        { slot: 1, name: 'Aelia', order: 840, send: 240 },
-        { slot: 1, name: 'Raine', order: 420, send: 240 },
+        // Orderan Berjalan (diperbarui sesuai permintaan Anda)
+        { slot: 1, name: 'bulilisso', order: 80, send: 40 },
+        { slot: 1, name: 'Ney', order: 4340, send: 3030 },
+        { slot: 1, name: 'Purili', order: 320, send: 160, statusOverride: 'fail' }, // Ditambahkan statusOverride
+        { slot: 1, name: 'Rain', order: 320, send: 160 },
+        { slot: 1, name: 'Nayla', order: 530, send: 338 },
+        { slot: 1, name: 'Aelia', order: 840, send: 260 },
+        { slot: 1, name: 'Raine', order: 420, send: 260 },
 
         { slot: 2, name: 'Isa', order: 800, send: 20 },
         { slot: 2, name: 'Angel2', order: 600, send: 380 },
+        { slot: 2, name: 'Alip', order: 320, send: 140 }, // Baru
+        { slot: 2, name: 'Rani', order: 320, send: 160 }, // Baru
+        { slot: 2, name: 'Sea', order: 150, send: 157, statusOverride: 'done' }, // Baru + statusOverride
+        { slot: 2, name: 'Autumn', order: 850, send: 76 }, // Baru
 
         // Riwayat Orderan Selesai (yang Anda minta untuk dipertahankan)
         { slot: 'completed', name: 'Harbie', order: 200, send: 200 },
@@ -408,23 +412,26 @@
             let targetSlotKey = item.slot; // Default target is its assigned slot
 
             const isCompletedByProgress = (typeof item.send === 'number' && typeof item.order === 'number' && item.send >= item.order);
-            const isManuallyFailed = item.statusOverride === 'fail';
-
-            // Determine status and target slot
-            if (item.slot === 'completed' || (isCompletedByProgress && !isManuallyFailed && item.slot !== 'completed')) {
-                // Jika sudah ditandai 'completed' atau selesai berdasarkan progress DAN bukan dari slot aktif
+            
+            // Determine status and target slot based on statusOverride first, then progress
+            if (item.statusOverride === 'done') {
                 statusClass = 'done';
                 statusText = '✅ Done';
                 showProgress = false;
-                targetSlotKey = 'completed'; // Pindahkan ke bagian selesai
-            } else if (isManuallyFailed) {
+                targetSlotKey = 'completed'; // Dipaksa ke completed jika statusOverride 'done'
+            } else if (item.statusOverride === 'fail') {
                 statusClass = 'fail';
                 statusText = '❌ Stuck';
-                targetSlotKey = item.slot; // Tetap di slotnya jika macet
+                // Jika statusOverride 'fail', tetap di slotnya
+            } else if (isCompletedByProgress) {
+                statusClass = 'done';
+                statusText = '✅ Done';
+                showProgress = false;
+                targetSlotKey = 'completed'; // Pindahkan ke bagian selesai jika selesai secara progress
             } else {
                 statusClass = 'pending';
                 statusText = '⏳ Progress';
-                targetSlotKey = item.slot; // Tetap di slotnya jika progres
+                // Tetap di slotnya jika progres
             }
 
             // Calculate progress percentage for active orders
