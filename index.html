@@ -5,202 +5,459 @@
   <title>Dashboard Pengiriman Heart - JaluStore</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* Add CSS Variables for Sky Chibi Theme */
+    /* Sky Chibi Theme - Enhanced */
     :root {
-        --sky-blue-light: #C0E8F9; /* Langit cerah */
-        --sky-blue-medium: #87CEEB; /* Awan biru */
-        --sky-pink-light: #FFDDE1; /* Nuansa awan pink */
-        --sky-yellow-light: #FFF8DC; /* Cahaya lembut */
-        --sky-purple-soft: #E0BBE4; /* Sentuhan magis */
+        --sky-blue-light: #C0E8F9;
+        --sky-blue-medium: #87CEEB;
+        --sky-pink-light: #FFDDE1;
+        --sky-yellow-light: #FFF8DC;
+        --sky-purple-soft: #E0BBE4;
+        --sky-orange-pastel: #FFD3B6;
+        --sky-green-pastel: #DCEDC1;
 
-        --bg-color-overlay: rgba(255, 255, 255, 0.7); /* Lebih transparan dan cerah */
-        --text-color: #333; /* Teks lebih gelap agar terbaca di latar cerah */
-        --heading-color: #8A2BE2; /* Warna ungu kebiruan yang manis */
-        --card-bg: rgba(255, 255, 255, 0.9); /* Card lebih solid dan cerah */
-        --card-border: rgba(180, 200, 255, 0.6); /* Border lembut */
-        --slot-gradient: linear-gradient(135deg, var(--sky-blue-light) 0%, var(--sky-pink-light) 100%); /* Gradient pelangi */
+        --bg-color-overlay: rgba(255, 255, 255, 0.85);
+        --text-color: #5D5D7A;
+        --heading-color: #8A2BE2;
+        --card-bg: rgba(255, 255, 255, 0.95);
+        --card-border: rgba(180, 200, 255, 0.6);
+        --slot-gradient: linear-gradient(135deg, #FF9A9E 0%, #FAD0C4 100%);
         
-        --status-done-bg: #80CBC4; /* Hijau mint lembut */
-        --status-done-text: #004D40;
-        --status-fail-bg: #FFAB91; /* Oranye peach lembut */
-        --status-fail-text: #D84315;
-        --status-pending-bg: #FFCC80; /* Kuning pastel */
-        --status-pending-text: #E65100;
+        --status-done-bg: #A8E6CF;
+        --status-done-text: #1E6F5C;
+        --status-fail-bg: #FFAAA5;
+        --status-fail-text: #B73E3E;
+        --status-pending-bg: #FFD3B6;
+        --status-pending-text: #D46B08;
 
         --progress-bar-bg: rgba(200, 230, 250, 0.7);
-        --progress-fill-color: #64B5F6; /* Biru langit */
+        --progress-fill-color: #64B5F6;
 
-        /* Shadow dan efek lainnya */
-        --soft-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        --soft-shadow: 0 4px 20px rgba(0,0,0,0.08);
         --inner-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
     }
 
     * { box-sizing: border-box; }
     body {
-        font-family: 'Poppins', sans-serif; /* Font utama yang lebih lembut */
+        font-family: 'Poppins', sans-serif;
         margin: 0;
         padding: 0;
-        /* Menggunakan gambar latar Sky yang lebih cerah dan chibi */
         background: url('https://thatskyshop.com/cdn/shop/files/Page-thatskywallpaper-Portrait-13.jpg?v=1711607986&width=750') no-repeat center center fixed;
         background-size: cover;
         color: var(--text-color);
         min-height: 100vh;
-        overflow-x: hidden; /* Mencegah scroll horizontal */
+        overflow-x: hidden;
     }
+    
+    /* Floating Clouds Background */
+    .clouds {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+    }
+    
+    .cloud {
+        position: absolute;
+        background: white;
+        border-radius: 50%;
+        opacity: 0.7;
+        animation: floatCloud linear infinite;
+    }
+    
+    @keyframes floatCloud {
+        0% { transform: translateX(0) translateY(0); }
+        50% { transform: translateX(50px) translateY(20px); }
+        100% { transform: translateX(0) translateY(0); }
+    }
+    
     .overlay {
-        background-color: var(--bg-color-overlay); /* Overlay lebih transparan dan cerah */
+        background-color: var(--bg-color-overlay);
         min-height: 100vh;
         padding: 2rem;
-        backdrop-filter: blur(5px); /* Blur yang sedikit lebih lembut */
         display: flex;
         flex-direction: column;
-        align-items: center; /* Pusatkan konten */
+        align-items: center;
+        position: relative;
+        z-index: 1;
     }
+
     #live-time {
         text-align: center;
         font-size: 1.1rem;
         margin-bottom: 1.5rem;
-        color: var(--heading-color); /* Warna yang lebih cerah */
+        color: var(--heading-color);
         letter-spacing: 1px;
         font-weight: 600;
-        background: rgba(255, 255, 255, 0.7);
-        padding: 0.5rem 1rem;
+        background: rgba(255, 255, 255, 0.8);
+        padding: 0.5rem 1.5rem;
         border-radius: 25px;
         box-shadow: var(--soft-shadow);
-        animation: pulseTime 1.5s infinite alternate; /* Efek bernafas */
+        animation: pulseTime 1.5s infinite alternate;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    #live-time::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+            to bottom right,
+            rgba(255,255,255,0) 45%,
+            rgba(255,255,255,0.8) 50%,
+            rgba(255,255,255,0) 55%
+        );
+        transform: rotate(30deg);
+        animation: shine 3s infinite;
+    }
+    
+    @keyframes shine {
+        0% { transform: translateX(-100%) rotate(30deg); }
+        100% { transform: translateX(100%) rotate(30deg); }
     }
 
     @keyframes pulseTime {
-        from { transform: scale(1); }
-        to { transform: scale(1.03); }
+        from { transform: scale(1); box-shadow: 0 4px 15px rgba(138, 43, 226, 0.2); }
+        to { transform: scale(1.03); box-shadow: 0 6px 20px rgba(138, 43, 226, 0.3); }
     }
 
     h1 {
-        font-family: 'Fredoka', sans-serif; /* Font utama judul: Fredoka */
+        font-family: 'Fredoka', sans-serif;
         text-align: center;
         color: var(--heading-color);
-        margin-bottom: 1.5rem; /* Kurangi margin untuk memberi ruang tombol */
-        text-shadow: 2px 2px 7px rgba(0,0,0,0.2);
-        font-size: 2.8rem; /* Ukuran font lebih besar */
+        margin-bottom: 1.5rem;
+        text-shadow: 2px 2px 7px rgba(0,0,0,0.1);
+        font-size: 2.8rem;
         letter-spacing: 2px;
         line-height: 1.2;
+        position: relative;
+        padding: 0 1rem;
     }
+    
+    h1::before, h1::after {
+        content: '✨';
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.5rem;
+        animation: twinkle 2s infinite alternate;
+    }
+    
+    h1::before { left: -10px; }
+    h1::after { right: -10px; }
+    
+    @keyframes twinkle {
+        0% { opacity: 0.3; transform: translateY(-50%) scale(0.8); }
+        100% { opacity: 1; transform: translateY(-50%) scale(1.1); }
+    }
+
     h1 em {
-        font-family: 'Pacifico', cursive; /* Font khusus untuk teks di dalam <em> (JaluStore): Pacifico */
+        font-family: 'Pacifico', cursive;
         display: block;
         font-size: 0.7em;
         font-style: normal;
         color: var(--text-color);
         opacity: 0.8;
+        margin-top: 0.5rem;
     }
 
-    /* Gaya untuk tombol katalog */
+    /* Catalog Button - Sky Style */
     .catalog-button {
-        display: inline-block;
-        background: linear-gradient(45deg, #FFD1DC, #FFABAB); /* Pink lembut ke peach */
-        color: #fff;
-        padding: 0.8rem 1.8rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(45deg, #FF9A9E, #FAD0C4);
+        color: white;
+        padding: 0.8rem 2rem;
         border-radius: 30px;
         text-decoration: none;
         font-size: 1.2rem;
         font-weight: 600;
-        margin-top: 1rem; /* Jarak dari judul */
-        margin-bottom: 2.5rem; /* Jarak ke bagian selanjutnya */
-        box-shadow: 0 5px 15px rgba(255,100,150,0.3); /* Bayangan pink */
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        margin-top: 1rem;
+        margin-bottom: 2.5rem;
+        box-shadow: 0 5px 15px rgba(255, 154, 158, 0.4);
+        transition: all 0.3s ease;
         letter-spacing: 1px;
         text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        position: relative;
+        overflow: hidden;
+        border: none;
+        cursor: pointer;
     }
-
+    
+    .catalog-button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,0.4),
+            transparent
+        );
+        transition: all 0.5s;
+    }
+    
     .catalog-button:hover {
         transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(255,100,150,0.4);
+        box-shadow: 0 8px 25px rgba(255, 154, 158, 0.6);
+    }
+    
+    .catalog-button:hover::before {
+        left: 100%;
+    }
+    
+    .catalog-button i {
+        margin-right: 0.5rem;
+        font-size: 1.3em;
+        animation: pulseHeart 1.5s infinite;
+    }
+    
+    @keyframes pulseHeart {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
     }
 
     section {
-        margin-bottom: 3rem; /* Jarak antar bagian lebih besar */
+        margin-bottom: 3rem;
         width: 100%;
-        max-width: 900px; /* Lebar maksimum untuk konten */
+        max-width: 900px;
+        position: relative;
     }
+    
+    section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.3), transparent);
+    }
+
     .slot-title {
         font-size: 1.5rem;
         font-weight: 700;
-        background: var(--slot-gradient); /* Gradient lebih colorful */
-        color: #fff; /* Teks putih di gradient cerah */
-        padding: 0.8rem 1.8rem;
-        border-radius: 30px; /* Bentuk lebih bulat/pill */
+        background: var(--slot-gradient);
+        color: white;
+        padding: 0.8rem 2rem;
+        border-radius: 30px;
         margin-bottom: 1.5rem;
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
         box-shadow: var(--soft-shadow);
         text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
-        transition: transform 0.2s ease-in-out;
+        transition: all 0.3s ease;
         letter-spacing: 1px;
+        position: relative;
+        overflow: hidden;
     }
+    
+    .slot-title i {
+        margin-right: 0.5rem;
+        font-size: 1.2em;
+    }
+    
+    .slot-title::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+            to bottom right,
+            rgba(255,255,255,0) 45%,
+            rgba(255,255,255,0.5) 50%,
+            rgba(255,255,255,0) 55%
+        );
+        transform: rotate(30deg);
+        animation: shine 3s infinite;
+        opacity: 0.5;
+    }
+
     .slot-title:hover {
-        transform: translateY(-3px); /* Efek melayang */
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(255, 154, 158, 0.4);
     }
+    
     .cards {
         display: flex;
         flex-wrap: wrap;
-        gap: 1.2rem; /* Jarak antar kartu lebih besar */
-        justify-content: center; /* Pusatkan kartu */
+        gap: 1.2rem;
+        justify-content: center;
     }
+    
     .card {
         background: var(--card-bg);
-        border: 2px solid var(--card-border); /* Border lebih jelas */
-        border-radius: 18px; /* Lebih bulat */
+        border: 2px solid var(--card-border);
+        border-radius: 18px;
         padding: 1.2rem 1.5rem;
-        min-width: 190px; /* Ukuran minimum lebih besar */
-        flex: 1 1 250px; /* Fleksibilitas ukuran */
-        box-shadow: var(--soft-shadow); /* Bayangan lembut */
-        transition: transform 0.2s ease-out, background 0.2s ease-out;
+        min-width: 190px;
+        flex: 1 1 250px;
+        box-shadow: var(--soft-shadow);
+        transition: all 0.3s ease-out;
         display: flex;
         flex-direction: column;
-        justify-content: space-between; /* Untuk mendorong status ke bawah */
-        position: relative; /* Untuk potensi elemen tambahan */
-        overflow: hidden; /* Mengatasi sudut card */
+        justify-content: space-between;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
     }
+    
+    .card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 80% 20%, rgba(255,255,255,0.8) 0%, transparent 30%);
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
     .card:hover {
-        transform: translateY(-5px) scale(1.02); /* Efek melayang dan sedikit membesar */
-        box-shadow: 0 8px 25px rgba(0,0,0,0.15); /* Bayangan lebih dalam saat hover */
-        background: rgba(255,255,255,0.95);
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.15);
     }
+    
+    .card:hover::before {
+        opacity: 1;
+    }
+    
+    /* Chibi Character Placeholders */
+    .card::after {
+        content: '';
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        opacity: 0.1;
+        pointer-events: none;
+        z-index: -1;
+        transition: all 0.3s ease;
+    }
+    
+    .card:nth-child(odd)::after {
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="40" r="30" fill="%238A2BE2"/><circle cx="35" cy="35" r="5" fill="white"/><circle cx="65" cy="35" r="5" fill="white"/><path d="M40 55 Q50 65 60 55" stroke="white" stroke-width="3" fill="none"/></svg>');
+        bottom: -15px;
+        right: -15px;
+    }
+    
+    .card:nth-child(even)::after {
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="40" r="30" fill="%23FF9A9E"/><circle cx="35" cy="35" r="5" fill="white"/><circle cx="65" cy="35" r="5" fill="white"/><path d="M40 55 Q50 65 60 55" stroke="white" stroke-width="3" fill="none"/></svg>');
+        top: -15px;
+        left: -15px;
+    }
+    
+    .card:hover::after {
+        opacity: 0.2;
+        transform: scale(1.1);
+    }
+    
+    .card.done::after {
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20 50 L40 70 L80 30" stroke="%231E6F5C" stroke-width="10" stroke-linecap="round" fill="none"/></svg>');
+        opacity: 0.15;
+    }
+    
+    .card.fail::after {
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M30 30 L70 70 M70 30 L30 70" stroke="%23B73E3E" stroke-width="8" stroke-linecap="round" fill="none"/></svg>');
+        opacity: 0.15;
+    }
+
     .name {
         font-size: 1.2em;
-        font-weight: 700; /* Lebih tebal */
+        font-weight: 700;
         margin-bottom: 0.5em;
-        color: #555;
-        text-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        color: #5D5D7A;
+        position: relative;
+        display: inline-block;
     }
+    
+    .name::after {
+        content: '';
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, var(--sky-blue-light), var(--sky-pink-light));
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s ease;
+    }
+    
+    .card:hover .name::after {
+        transform: scaleX(1);
+    }
+
     .number {
         font-size: 1.05em;
-        margin-bottom: 0.8em; /* Jarak lebih besar */
+        margin-bottom: 0.8em;
         color: #666;
     }
+
     .status {
         margin-top: auto;
         font-size: 0.95em;
-        font-weight: 800; /* Sangat tebal */
-        display: inline-block;
-        border-radius: 15px; /* Lebih bulat */
+        font-weight: 800;
+        display: inline-flex;
+        align-items: center;
+        border-radius: 15px;
         padding: 0.3em 0.8em;
         letter-spacing: 0.8px;
         align-self: flex-start;
         box-shadow: var(--inner-shadow);
         text-transform: uppercase;
-        transition: background 0.3s ease, color 0.3s ease;
+        transition: all 0.3s ease;
     }
+    
+    .status i {
+        margin-right: 0.3em;
+        font-size: 1.1em;
+    }
+
     /* Status Colors */
-    .status.done { background: var(--status-done-bg); color: var(--status-done-text); }
-    .status.fail { background: var(--status-fail-bg); color: var(--status-fail-text); }
-    .status.pending { background: var(--status-pending-bg); color: var(--status-pending-text); }
+    .status.done { 
+        background: var(--status-done-bg); 
+        color: var(--status-done-text);
+    }
+    .status.fail { 
+        background: var(--status-fail-bg); 
+        color: var(--status-fail-text);
+    }
+    .status.pending { 
+        background: var(--status-pending-bg); 
+        color: var(--status-pending-text);
+        animation: pulseStatus 2s infinite;
+    }
+    
+    @keyframes pulseStatus {
+        0% { box-shadow: 0 0 0 0 rgba(255, 211, 182, 0.7); }
+        70% { box-shadow: 0 0 0 10px rgba(255, 211, 182, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(255, 211, 182, 0); }
+    }
 
     /* Progress Bar Styles */
     .progress-bar-container {
-        height: 10px; /* Lebih tebal */
+        height: 10px;
         background-color: var(--progress-bar-bg);
-        border-radius: 5px; /* Lebih bulat */
+        border-radius: 5px;
         margin-top: 0.8em;
         overflow: hidden;
         box-shadow: var(--inner-shadow);
@@ -214,9 +471,9 @@
 
     .progress-bar-fill {
         height: 100%;
-        background-color: var(--progress-fill-color);
+        background: linear-gradient(90deg, var(--progress-fill-color), #A8E6CF);
         border-radius: 5px;
-        transition: width 0.7s ease-in-out; /* Animasi lebih lembut */
+        transition: width 0.7s ease-in-out;
         position: relative;
     }
 
@@ -238,29 +495,33 @@
         100% { opacity: 0; transform: translateX(100%); }
     }
 
-
-    /* Chibi elements - these would typically be background images or SVG icons */
-    .card::before {
-        content: '';
-        position: absolute;
-        top: -10px;
-        right: -10px;
-        width: 50px;
-        height: 50px;
-        /* Contoh: Awan atau bintang kecil (Anda bisa ganti path/url ke icon Anda) */
-        /* background: url('path/to/chibi-cloud-icon.png') no-repeat center center / contain; */
-        opacity: 0.1;
+    /* Floating Hearts Animation */
+    .floating-hearts {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
         pointer-events: none;
-        z-index: 0;
+        z-index: -1;
+    }
+    
+    .heart {
+        position: absolute;
+        opacity: 0;
+        color: #FF9A9E;
+        animation: floatUp 4s linear infinite;
+    }
+    
+    @keyframes floatUp {
+        0% { transform: translateY(100vh) scale(0); opacity: 0; }
+        10% { opacity: 0.7; }
+        90% { opacity: 0.7; }
+        100% { transform: translateY(-100px) scale(1); opacity: 0; }
     }
 
-    .card.done::before {
-        /* background: url('path/to/chibi-star-icon.png') no-repeat center center / contain; */
-        opacity: 0.2;
-    }
-
-
-    @media (max-width: 768px) { /* Adjust for tablets */
+    /* Responsive Design */
+    @media (max-width: 768px) {
         .overlay {padding: 1.5rem;}
         h1 { font-size: 2.2rem; }
         .catalog-button { font-size: 1.1rem; padding: 0.7rem 1.5rem; margin-bottom: 2rem;}
@@ -272,7 +533,7 @@
         .status { font-size: 0.85em; padding: 0.2em 0.7em; }
     }
 
-    @media (max-width: 500px) { /* Adjust for mobile phones */
+    @media (max-width: 500px) {
         .overlay {padding: 1rem;}
         h1 { font-size: 1.8rem; margin-bottom: 1.5rem;}
         h1 em { font-size: 0.8em; }
@@ -285,204 +546,58 @@
         .status { font-size: 0.8em; padding: 0.15em 0.6em; border-radius: 12px; }
         #live-time { font-size: 1rem; padding: 0.4rem 0.8rem; }
     }
-    ::-webkit-scrollbar {width:8px; background:#e0f7fa;} /* Scrollbar lebih terang */
-    ::-webkit-scrollbar-thumb {background:var(--sky-blue-medium); border-radius:8px;}
-    ::-webkit-scrollbar-thumb:hover {background:#67B2D2;}
+    
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+        width: 8px;
+        background: #f0f8ff;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: linear-gradient(#FF9A9E, #FAD0C4);
+        border-radius: 8px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(#FF7B8B, #F8C3B8);
+    }
   </style>
 </head>
 <body>
+  <div class="clouds" id="clouds"></div>
+  
+  <div class="floating-hearts" id="hearts"></div>
+  
   <div class="overlay">
     <div id="live-time"></div>
     <h1>📦 Laporan Pengiriman Heart <br><em>JaluStore</em></h1>
 
     <a href="https://jalustoreid.netlify.app/" class="catalog-button" target="_blank">
-      💖 Beli Heart Sekarang!
+      <i class="fas fa-heart"></i> Beli Heart Sekarang!
     </a>
 
     <section>
-      <div class="slot-title">Slot 1</div>
+      <div class="slot-title"><i class="fas fa-cloud-sun"></i> Slot 1</div>
       <div id="slot1-cards" class="cards"></div>
     </section>
 
     <section>
-      <div class="slot-title">Slot 2</div>
+      <div class="slot-title"><i class="fas fa-cloud-moon"></i> Slot 2</div>
       <div id="slot2-cards" class="cards"></div>
     </section>
 
     <section>
-      <div class="slot-title">Slot 3</div>
+      <div class="slot-title"><i class="fas fa-star"></i> Slot 3</div>
       <div id="slot3-cards" class="cards"></div>
     </section>
 
     <section>
-      <div class="slot-title">🗂️ Riwayat Orderan Selesai</div>
+      <div class="slot-title"><i class="fas fa-check-circle"></i> Riwayat Orderan Selesai</div>
       <div id="completed-cards" class="cards"></div>
     </section>
-
   </div>
 
-  <script>
-    // Data structure (array of objects)
-    const deliveryData = [
-        // Orderan Berjalan (diperbarui sesuai permintaan Anda)
-        { slot: 1, name: 'bulilisso', order: 80, send: 60 },
-        { slot: 1, name: 'Ney', order: 4340, send: 3050 },
-        { slot: 1, name: 'Purili', order: 320, send: 180 }, // statusOverride 'fail' dihapus
-        { slot: 1, name: 'Rain', order: 320, send: 180 },
-        { slot: 1, name: 'Nayla', order: 530, send: 358 },
-        { slot: 1, name: 'Aelia', order: 840, send: 280 },
-        { slot: 1, name: 'Raine', order: 420, send: 280 },
-
-        { slot: 2, name: 'Isa', order: 800, send: 40 },
-        { slot: 2, name: 'Angel2', order: 600, send: 400 },
-        { slot: 2, name: 'Alip', order: 320, send: 160 },
-        { slot: 2, name: 'Rani', order: 320, send: 180 },
-        { slot: 2, name: 'Anggi', order: 320, send: 160 }, 
-        { slot: 2, name: 'Autumn', order: 850, send: 96 }, 
-        { slot: 2, name: 'Amanda', order: 80, send: 40 }, 
-
-        // Riwayat Orderan Selesai (yang Anda minta untuk dipertahankan + 'Sea')
-        { slot: 'completed', name: 'Harbie', order: 200, send: 200 },
-        { slot: 'completed', name: 'Fida', order: 100, send: 103 }, 
-        { slot: 'completed', name: 'Vyan', order: 80, send: 83 }, 
-        { slot: 'completed', name: 'Ayu', order: 1000, send: 1003 }, 
-        { slot: 'completed', name: 'Anna', order: 600, send: 603 }, 
-        { slot: 'completed', name: 'Zee', order: 150, send: 153 }, 
-        { slot: 'completed', name: 'Nanda', order: 210, send: 213 }, 
-        { slot: 'completed', name: 'Alvin', order: 210, send: 213 }, 
-        { slot: 'completed', name: 'Ira', order: 150, send: 153 }, 
-        { slot: 'completed', name: 'Kael', order: 120, send: 123 }, 
-        { slot: 'completed', name: 'Xen', order: 210, send: 213 }, 
-        { slot: 'completed', name: 'Lusi', order: 600, send: 603 },
-        { slot: 'completed', name: 'Sea', order: 150, send: 157 } 
-    ];
-
-    // Function to update live time
-    function updateTime() {
-        const now = new Date();
-        // Set the date to July 1, 2025 for consistent time (as per previous request)
-        const targetDate = new Date(2025, 6, 1, now.getHours(), now.getMinutes(), now.getSeconds()); // Month is 0-indexed, so 6 is July
-        const waktu = targetDate.toLocaleString('id-ID', {
-            hour: '2-digit', minute: '2-digit', second: '2-digit'
-        });
-        document.getElementById('live-time').textContent = '⏰: ' + waktu;
-    }
-
-    // Function to render the cards
-    function renderDashboard(data) {
-        const slots = {
-            1: document.getElementById('slot1-cards'),
-            2: document.getElementById('slot2-cards'),
-            3: document.getElementById('slot3-cards'),
-            completed: document.getElementById('completed-cards')
-        };
-
-        const slotSections = {
-            1: document.querySelector('#slot1-cards').parentElement,
-            2: document.querySelector('#slot2-cards').parentElement,
-            3: document.querySelector('#slot3-cards').parentElement,
-            completed: document.querySelector('#completed-cards').parentElement
-        };
-
-
-        // Clear existing cards from all containers
-        Object.values(slots).forEach(container => {
-            if (container) {
-                container.innerHTML = '';
-            } else {
-                console.error("Warning: A slot container was not found in the DOM!");
-            }
-        });
-
-        // Hide all sections initially, then show only those with content
-        Object.values(slotSections).forEach(section => {
-            if (section) section.style.display = 'none';
-        });
-
-        const cardsToRender = {
-            1: [],
-            2: [],
-            3: [],
-            completed: [] 
-        };
-
-        // Loop through each item in the data and determine its placement
-        data.forEach(item => {
-            let statusClass;
-            let statusText;
-            let showProgress = true;
-            let targetSlotKey = item.slot; // Default target is its assigned slot
-
-            const isCompletedByProgress = (typeof item.send === 'number' && typeof item.order === 'number' && item.send >= item.order);
-            
-            // Determine status and target slot based on statusOverride first, then progress
-            if (item.statusOverride === 'done') {
-                statusClass = 'done';
-                statusText = '✅ Done';
-                showProgress = false;
-                targetSlotKey = 'completed'; // Dipaksa ke completed jika statusOverride 'done'
-            } else if (item.statusOverride === 'fail') {
-                statusClass = 'fail';
-                statusText = '❌ Stuck';
-                // Jika statusOverride 'fail', tetap di slotnya
-            } else if (isCompletedByProgress) {
-                statusClass = 'done';
-                statusText = '✅ Done';
-                showProgress = false;
-                targetSlotKey = 'completed'; // Pindahkan ke bagian selesai jika selesai secara progress
-            } else {
-                statusClass = 'pending';
-                statusText = '⏳ Progress';
-                // Tetap di slotnya jika progres
-            }
-
-            // Calculate progress percentage for active orders
-            let progressPercent = 0;
-            if (showProgress && typeof item.order === 'number' && typeof item.send === 'number' && item.order > 0) {
-                progressPercent = Math.min((item.send / item.order) * 100, 100);
-            }
-
-            const cardHTML = `
-                <div class="card ${statusClass}">
-                    <div class="name">${item.name}</div>
-                    <div class="number">Order: ${item.order} | Send: ${item.send}</div>
-                    <span class="status ${statusClass}">${statusText}</span>
-                    ${showProgress ? `
-                    <div class="progress-bar-container">
-                        <div class="progress-bar-fill" style="width: ${progressPercent}%;"></div>
-                    </div>
-                    ` : ''}
-                </div>
-            `;
-            // Tambahkan HTML kartu ke array yang sesuai
-            if (cardsToRender[targetSlotKey]) {
-                cardsToRender[targetSlotKey].push(cardHTML);
-            }
-        });
-
-        // Render cards into their respective containers and show sections if they have content
-        Object.keys(slots).forEach(slotKey => {
-            const container = slots[slotKey];
-            const section = slotSections[slotKey];
-
-            if (container && section) {
-                if (cardsToRender[slotKey].length > 0) {
-                    container.innerHTML = cardsToRender[slotKey].join('');
-                    section.style.display = 'block'; // Tampilkan bagian jika ada kartu
-                } else {
-                    section.style.display = 'none'; // Sembunyikan bagian jika tidak ada kartu
-                }
-            }
-        });
-    }
-
-    // Initial setup
-    document.addEventListener('DOMContentLoaded', () => {
-        updateTime(); // Update time immediately on load
-        setInterval(updateTime, 1000); // Update time every second
-        renderDashboard(deliveryData); // Render the dashboard with the data
-    });
-
-  </script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
