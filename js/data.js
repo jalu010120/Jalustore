@@ -22,6 +22,7 @@ const deliveryData = [
     { slot: 3, name: 'Diyy', order: 320, send: 180 },
     { slot: 3, name: 'Aze', order: 570, send: 260 },
     { slot: 3, name: 'Al', order: 320, send: 140 },
+    { slot: 3, name: 'Sena', order: 570, send: 260 }, // New buyer added
 
     // Riwayat Orderan Selesai (Dipertahankan dari update sebelumnya)
     { slot: 'completed', name: 'bulilisso', order: 80, send: 80 },
