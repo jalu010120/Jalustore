@@ -2,27 +2,28 @@
 
 const deliveryData = [
     // Orderan Berjalan
-    { slot: 1, name: 'Ney', order: 4340, send: 3130 },
-    { slot: 1, name: 'Purili', order: 320, send: 240 },
-    { slot: 1, name: 'Rain', order: 320, send: 240 },
-    { slot: 1, name: 'Nayla', order: 530, send: 418 },
-    { slot: 1, name: 'Aelia', order: 840, send: 340 },
-    { slot: 1, name: 'Raine', order: 420, send: 340 },
-    { slot: 1, name: 'Aya', order: 320, send: 180 },
+    { slot: 1, name: 'Ney', order: 4340, send: 3170 }, // Updated
+    { slot: 1, name: 'Purili', order: 320, send: 260 }, // Updated
+    { slot: 1, name: 'Rain', order: 320, send: 260 }, // Updated
+    { slot: 1, name: 'Nayla', order: 530, send: 438 }, // Updated
+    { slot: 1, name: 'Aelia', order: 840, send: 360 }, // Updated
+    { slot: 1, name: 'Raine', order: 420, send: 360 }, // Updated
+    { slot: 1, name: 'Aya', order: 320, send: 220 }, // Updated
 
-    { slot: 2, name: 'Isa', order: 800, send: 60, statusOverride: 'fail' },
-    { slot: 2, name: 'Angel2', order: 600, send: 420 },
-    { slot: 2, name: 'Alip', order: 320, send: 220 },
-    { slot: 2, name: 'Rani', order: 320, send: 220, statusOverride: 'fail' },
-    { slot: 2, name: 'Anggi', order: 320, send: 220 },
-    { slot: 2, name: 'Autumn', order: 850, send: 201 },
-    { slot: 2, name: 'Ave', order: 220, send: 20 },
+    { slot: 2, name: 'Isa', order: 800, send: 80 }, // Updated, status ❌ removed
+    { slot: 2, name: 'Angel2', order: 600, send: 440 }, // Updated, status ❌ removed
+    { slot: 2, name: 'Alip', order: 320, send: 240 }, // Updated
+    { slot: 2, name: 'Rani', order: 320, send: 240 }, // Updated, status ❌ removed
+    { slot: 2, name: 'Anggi', order: 320, send: 240 }, // Updated
+    { slot: 2, name: 'Autumn', order: 850, send: 201, statusOverride: 'fail' }, // Status ❌ added
+    { slot: 2, name: 'Ave', order: 220, send: 20, statusOverride: 'fail' }, // Status ❌ added
 
-    { slot: 3, name: 'Zee', order: 220, send: 20 }, // New buyer added (different from completed Zee)
-    { slot: 3, name: 'Diyy', order: 320, send: 200 },
-    { slot: 3, name: 'Aze', order: 570, send: 280 },
-    { slot: 3, name: 'Al', order: 320, send: 160 },
-    { slot: 3, name: 'Sena', order: 570, send: 280 },
+    { slot: 3, name: 'Zee', order: 220, send: 40 }, // Updated
+    { slot: 3, name: 'Diyy', order: 320, send: 220 }, // Updated
+    { slot: 3, name: 'Aze', order: 570, send: 300 }, // Updated
+    { slot: 3, name: 'Al', order: 320, send: 180 }, // Updated
+    { slot: 3, name: 'Sena', order: 570, send: 300 }, // Updated
+    { slot: 3, name: 'Araba', order: 150, send: 113 }, // New buyer added
 
     // Riwayat Orderan Selesai (Dipertahankan dari update sebelumnya)
     { slot: 'completed', name: 'Hira', order: 360, send: 377 },
@@ -34,7 +35,7 @@ const deliveryData = [
     { slot: 'completed', name: 'Vyan', order: 80, send: 83 },
     { slot: 'completed', name: 'Ayu', order: 1000, send: 1003 },
     { slot: 'completed', name: 'Anna', order: 600, send: 603 },
-    { slot: 'completed', name: 'Zee', order: 150, send: 153 }, // This is the old 'Zee' from completed
+    { slot: 'completed', name: 'Zee', order: 150, send: 153 },
     { slot: 'completed', name: 'Nanda', order: 210, send: 213 },
     { slot: 'completed', name: 'Alvin', order: 210, send: 213 },
     { slot: 'completed', name: 'Ira', order: 150, send: 153 },
