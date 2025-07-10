@@ -23,8 +23,11 @@ const deliveryData = [
     { slot: 3, name: 'Aze', order: 570, send: 300 },
     { slot: 3, name: 'Al', order: 320, send: 180 },
     { slot: 3, name: 'Sena', order: 570, send: 300 },
-    { slot: 3, name: 'Araba', order: 150, send: 114 }, // Updated
-    { slot: 3, name: 'Idnes', order: 320, send: 149 }, // New buyer added
+    { slot: 3, name: 'Araba', order: 150, send: 114 },
+    { slot: 3, name: 'Idnes', order: 320, send: 149 },
+    { slot: 3, name: 'Luna', order: 800, send: 713 }, // New buyer added
+    { slot: 3, name: 'Kai', order: 220, send: 20 }, // New buyer added
+    { slot: 3, name: 'Rei', order: 220, send: 20 }, // New buyer added
 
     // Riwayat Orderan Selesai (Dipertahankan dari update sebelumnya)
     { slot: 'completed', name: 'Hira', order: 360, send: 377 },
