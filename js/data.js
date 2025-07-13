@@ -7,9 +7,9 @@ const deliveryData = [
     { slot: 1, name: 'Rain', order: 320, send: 300 },
     { slot: 1, name: 'Nayla', order: 530, send: 478 },
     { slot: 1, name: 'Aelia', order: 840, send: 400 },
-    { slot: 1, name: 'Raine', order: 420, send: 380 },
-    { slot: 1, name: 'Aya', order: 860, send: 260 }, // Updated: Order changed
-    { slot: 1, name: 'Anna', order: 1080, send: 20 }, // New buyer added
+    { slot: 1, name: 'Raine', order: 960, send: 380 }, // Updated: Order changed
+    { slot: 1, name: 'Aya', order: 860, send: 260 },
+    { slot: 1, name: 'Anna', order: 1080, send: 20 },
 
     { slot: 2, name: 'Isa', order: 800, send: 140 },
     { slot: 2, name: 'Angel2', order: 600, send: 460, statusOverride: 'fail' },
@@ -39,8 +39,8 @@ const deliveryData = [
     { slot: 'completed', name: 'Fida', order: 100, send: 103 },
     { slot: 'completed', name: 'Vyan', order: 80, send: 83 },
     { slot: 'completed', name: 'Ayu', order: 1000, send: 1003 },
-    { slot: 'completed', name: 'Anna', order: 600, send: 603 }, // This is the old 'Anna' from completed
-    { slot: 'completed', name: 'Zee', order: 150, send: 153 }, // This is the old 'Zee' from completed
+    { slot: 'completed', name: 'Anna', order: 600, send: 603 },
+    { slot: 'completed', name: 'Zee', order: 150, send: 153 },
     { slot: 'completed', name: 'Nanda', order: 210, send: 213 },
     { slot: 'completed', name: 'Alvin', order: 210, send: 213 },
     { slot: 'completed', name: 'Ira', order: 150, send: 153 },
