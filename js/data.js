@@ -7,7 +7,7 @@ const deliveryData = [
     { slot: 1, name: 'Rain', order: 320, send: 300 },
     { slot: 1, name: 'Nayla', order: 530, send: 478 },
     { slot: 1, name: 'Aelia', order: 840, send: 400 },
-    { slot: 1, name: 'Raine', order: 960, send: 380 },
+    { slot: 1, name: 'Raine', order: 420, send: 380 },
     { slot: 1, name: 'Aya', order: 860, send: 260 },
     { slot: 1, name: 'Anna', order: 1080, send: 40 }, // Updated
 
