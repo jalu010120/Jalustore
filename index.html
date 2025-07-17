@@ -86,6 +86,16 @@
         z-index: 1;
     }
 
+    /* Header Section */
+    .header-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 900px;
+        margin-bottom: 2rem;
+    }
+
     #live-time {
         text-align: center;
         font-size: 1.1rem;
@@ -169,8 +179,17 @@
         margin-top: 0.5rem;
     }
 
+    /* Action Buttons Container */
+    .action-buttons {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
     /* Catalog Button - Sky Style */
-    .catalog-button {
+    .catalog-button, .refresh-button {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -181,8 +200,6 @@
         text-decoration: none;
         font-size: 1.2rem;
         font-weight: 600;
-        margin-top: 1rem;
-        margin-bottom: 2.5rem;
         box-shadow: 0 5px 15px rgba(255, 154, 158, 0.4);
         transition: all 0.3s ease;
         letter-spacing: 1px;
@@ -193,7 +210,12 @@
         cursor: pointer;
     }
     
-    .catalog-button::before {
+    .refresh-button {
+        background: linear-gradient(45deg, #64B5F6, #87CEEB);
+        box-shadow: 0 5px 15px rgba(100, 181, 246, 0.4);
+    }
+    
+    .catalog-button::before, .refresh-button::before {
         content: '';
         position: absolute;
         top: 0;
@@ -209,25 +231,107 @@
         transition: all 0.5s;
     }
     
-    .catalog-button:hover {
+    .catalog-button:hover, .refresh-button:hover {
         transform: translateY(-3px);
         box-shadow: 0 8px 25px rgba(255, 154, 158, 0.6);
     }
     
-    .catalog-button:hover::before {
+    .refresh-button:hover {
+        box-shadow: 0 8px 25px rgba(100, 181, 246, 0.6);
+    }
+    
+    .catalog-button:hover::before, .refresh-button:hover::before {
         left: 100%;
     }
     
-    .catalog-button i {
+    .catalog-button i, .refresh-button i {
         margin-right: 0.5rem;
         font-size: 1.3em;
+    }
+    
+    .catalog-button i {
         animation: pulseHeart 1.5s infinite;
+    }
+    
+    .refresh-button i {
+        transition: transform 0.5s ease;
+    }
+    
+    .refresh-button:hover i {
+        transform: rotate(360deg);
     }
     
     @keyframes pulseHeart {
         0% { transform: scale(1); }
         50% { transform: scale(1.2); }
         100% { transform: scale(1); }
+    }
+
+    /* Search Box */
+    .search-container {
+        width: 100%;
+        max-width: 500px;
+        margin-bottom: 2rem;
+        position: relative;
+    }
+    
+    .search-box {
+        width: 100%;
+        padding: 0.8rem 1.5rem 0.8rem 3rem;
+        border-radius: 30px;
+        border: 2px solid var(--card-border);
+        font-size: 1rem;
+        background: var(--card-bg);
+        box-shadow: var(--soft-shadow);
+        transition: all 0.3s ease;
+    }
+    
+    .search-box:focus {
+        outline: none;
+        border-color: var(--sky-blue-medium);
+        box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.3);
+    }
+    
+    .search-icon {
+        position: absolute;
+        left: 1.2rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-color);
+        opacity: 0.6;
+    }
+
+    /* Stats Cards */
+    .stats-container {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+    }
+    
+    .stat-card {
+        background: var(--card-bg);
+        border-radius: 15px;
+        padding: 1rem 1.5rem;
+        min-width: 150px;
+        text-align: center;
+        box-shadow: var(--soft-shadow);
+        border: 2px solid var(--card-border);
+    }
+    
+    .stat-value {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 0.3rem;
+        color: var(--heading-color);
+    }
+    
+    .stat-label {
+        font-size: 0.9rem;
+        color: var(--text-color);
+        opacity: 0.8;
     }
 
     section {
@@ -495,8 +599,8 @@
         100% { opacity: 0; transform: translateX(100%); }
     }
 
-    /* Floating Hearts Animation */
-    .floating-hearts {
+    /* Floating Elements Animation */
+    .floating-elements {
         position: fixed;
         top: 0;
         left: 0;
@@ -506,45 +610,208 @@
         z-index: -1;
     }
     
-    .heart {
+    .heart, .star {
         position: absolute;
         opacity: 0;
-        color: #FF9A9E;
         animation: floatUp 4s linear infinite;
     }
     
+    .heart {
+        color: #FF9A9E;
+    }
+    
+    .star {
+        color: #FFD700;
+    }
+    
     @keyframes floatUp {
-        0% { transform: translateY(100vh) scale(0); opacity: 0; }
+        0% { transform: translateY(100vh) scale(0) rotate(0deg); opacity: 0; }
         10% { opacity: 0.7; }
         90% { opacity: 0.7; }
-        100% { transform: translateY(-100px) scale(1); opacity: 0; }
+        100% { transform: translateY(-100px) scale(1) rotate(360deg); opacity: 0; }
+    }
+
+    /* Order Details Modal */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .modal-content {
+        background: var(--card-bg);
+        border-radius: 20px;
+        padding: 2rem;
+        max-width: 500px;
+        width: 90%;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        transform: translateY(20px);
+        transition: all 0.3s ease;
+        position: relative;
+    }
+    
+    .modal-overlay.active .modal-content {
+        transform: translateY(0);
+    }
+    
+    .close-modal {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--text-color);
+        opacity: 0.6;
+        transition: opacity 0.2s;
+    }
+    
+    .close-modal:hover {
+        opacity: 1;
+    }
+    
+    .modal-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        color: var(--heading-color);
+        text-align: center;
+    }
+    
+    .modal-details {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .detail-item {
+        margin-bottom: 0.8rem;
+    }
+    
+    .detail-label {
+        font-size: 0.9rem;
+        color: var(--text-color);
+        opacity: 0.7;
+        margin-bottom: 0.2rem;
+    }
+    
+    .detail-value {
+        font-size: 1rem;
+        font-weight: 600;
+    }
+    
+    .modal-actions {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+    
+    .modal-button {
+        padding: 0.6rem 1.2rem;
+        border-radius: 20px;
+        border: none;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    
+    .modal-button.primary {
+        background: linear-gradient(45deg, #FF9A9E, #FAD0C4);
+        color: white;
+    }
+    
+    .modal-button.secondary {
+        background: var(--card-bg);
+        border: 2px solid var(--card-border);
+        color: var(--text-color);
+    }
+    
+    .modal-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
 
     /* Responsive Design */
     @media (max-width: 768px) {
         .overlay {padding: 1.5rem;}
         h1 { font-size: 2.2rem; }
-        .catalog-button { font-size: 1.1rem; padding: 0.7rem 1.5rem; margin-bottom: 2rem;}
+        .action-buttons { margin-bottom: 1.5rem; }
+        .catalog-button, .refresh-button { 
+            font-size: 1.1rem; 
+            padding: 0.7rem 1.5rem;
+        }
         .slot-title { font-size: 1.3rem; padding: 0.7rem 1.5rem; }
         .cards { gap: 1rem; }
         .card { min-width: 150px; flex: 1 1 200px; padding: 1rem 1.2rem; }
         .name { font-size: 1.1em; }
         .number { font-size: 1em; }
         .status { font-size: 0.85em; padding: 0.2em 0.7em; }
+        .stats-container { gap: 0.8rem; }
+        .stat-card { min-width: 120px; padding: 0.8rem 1rem; }
+        .stat-value { font-size: 1.5rem; }
     }
 
     @media (max-width: 500px) {
         .overlay {padding: 1rem;}
         h1 { font-size: 1.8rem; margin-bottom: 1.5rem;}
         h1 em { font-size: 0.8em; }
-        .catalog-button { font-size: 1rem; padding: 0.6rem 1.2rem; margin-bottom: 1.5rem;}
-        .slot-title { font-size: 1.2rem; padding: 0.6rem 1.2rem; border-radius: 25px; }
+        .action-buttons { 
+            flex-direction: column;
+            width: 100%;
+            max-width: 300px;
+        }
+        .catalog-button, .refresh-button { 
+            font-size: 1rem; 
+            padding: 0.6rem 1.2rem;
+            width: 100%;
+        }
+        .slot-title { 
+            font-size: 1.2rem; 
+            padding: 0.6rem 1.2rem; 
+            border-radius: 25px; 
+        }
         .cards { flex-direction: column; gap: 0.8rem; }
-        .card { min-width: unset; padding: 0.9rem 1.1rem; border-radius: 15px; }
+        .card { 
+            min-width: unset; 
+            padding: 0.9rem 1.1rem; 
+            border-radius: 15px; 
+        }
         .name { font-size: 1em; }
         .number { font-size: 0.9em; }
-        .status { font-size: 0.8em; padding: 0.15em 0.6em; border-radius: 12px; }
+        .status { 
+            font-size: 0.8em; 
+            padding: 0.15em 0.6em; 
+            border-radius: 12px; 
+        }
         #live-time { font-size: 1rem; padding: 0.4rem 0.8rem; }
+        .modal-details {
+            grid-template-columns: 1fr;
+        }
+        .stat-card {
+            flex: 1 1 100px;
+            padding: 0.6rem 0.8rem;
+        }
+        .stat-value {
+            font-size: 1.3rem;
+        }
     }
     
     /* Custom Scrollbar */
@@ -566,15 +833,31 @@
 <body>
   <div class="clouds" id="clouds"></div>
   
-  <div class="floating-hearts" id="hearts"></div>
+  <div class="floating-elements" id="floating-elements"></div>
   
   <div class="overlay">
-    <div id="live-time"></div>
-    <h1>📦 Laporan Pengiriman Heart <br><em>JaluStore</em></h1>
-
-    <a href="https://jalustoreid.netlify.app/" class="catalog-button" target="_blank">
-      <i class="fas fa-heart"></i> Beli Heart Sekarang!
-    </a>
+    <div class="header-section">
+      <div id="live-time"></div>
+      <h1>📦 Laporan Pengiriman Heart <br><em>JaluStore</em></h1>
+      
+      <div class="action-buttons">
+        <a href="https://jalustoreid.netlify.app/" class="catalog-button" target="_blank">
+          <i class="fas fa-heart"></i> Beli Heart Sekarang!
+        </a>
+        <button class="refresh-button" id="refresh-button">
+          <i class="fas fa-sync-alt"></i> Refresh Data
+        </button>
+      </div>
+      
+      <div class="search-container">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" class="search-box" id="search-box" placeholder="Cari nama atau nomor order...">
+      </div>
+      
+      <div class="stats-container" id="stats-container">
+        <!-- Stats will be populated by JavaScript -->
+      </div>
+    </div>
 
     <section>
       <div class="slot-title"><i class="fas fa-cloud-sun"></i> Slot 1</div>
@@ -596,8 +879,109 @@
       <div id="completed-cards" class="cards"></div>
     </section>
   </div>
+  
+  <!-- Order Details Modal -->
+  <div class="modal-overlay" id="order-modal">
+    <div class="modal-content">
+      <button class="close-modal" id="close-modal">&times;</button>
+      <h3 class="modal-title">Detail Order</h3>
+      <div class="modal-details" id="modal-details">
+        <!-- Details will be populated by JavaScript -->
+      </div>
+      <div class="modal-actions">
+        <button class="modal-button primary" id="whatsapp-button">
+          <i class="fab fa-whatsapp"></i> Hubungi via WhatsApp
+        </button>
+        <button class="modal-button secondary" id="close-modal-btn">
+          Tutup
+        </button>
+      </div>
+    </div>
+  </div>
 
-  <script src="js/data.js"></script>
-  <script src="js/main.js"></script>
-</body>
-</html>
+  <script>
+    // Sample data - in a real app, this would come from an API
+    const orderData = {
+      stats: {
+        total: 42,
+        pending: 8,
+        completed: 30,
+        failed: 4
+      },
+      orders: [
+        {
+          id: 'ORD-001',
+          name: 'Alicia',
+          number: '0857-1234-5678',
+          slot: 'slot1',
+          status: 'pending',
+          progress: 45,
+          date: '2023-06-15',
+          hearts: 15,
+          price: 'Rp 45.000',
+          notes: 'Kirim setelah jam 5 sore'
+        },
+        {
+          id: 'ORD-002',
+          name: 'Budi',
+          number: '0812-3456-7890',
+          slot: 'slot1',
+          status: 'done',
+          date: '2023-06-14',
+          hearts: 10,
+          price: 'Rp 30.000',
+          notes: 'Sudah dikonfirmasi via WA'
+        },
+        {
+          id: 'ORD-003',
+          name: 'Citra',
+          number: '0821-8765-4321',
+          slot: 'slot2',
+          status: 'pending',
+          progress: 20,
+          date: '2023-06-15',
+          hearts: 5,
+          price: 'Rp 15.000',
+          notes: 'Tunggu konfirmasi'
+        },
+        {
+          id: 'ORD-004',
+          name: 'Doni',
+          number: '0813-4567-8901',
+          slot: 'slot3',
+          status: 'fail',
+          progress: 100,
+          date: '2023-06-13',
+          hearts: 20,
+          price: 'Rp 60.000',
+          notes: 'Nomor tidak aktif'
+        },
+        {
+          id: 'ORD-005',
+          name: 'Eva',
+          number: '0856-7890-1234',
+          slot: 'slot3',
+          status: 'done',
+          date: '2023-06-12',
+          hearts: 8,
+          price: 'Rp 24.000',
+          notes: 'Pembeli puas'
+        },
+        {
+          id: 'ORD-006',
+          name: 'Fajar',
+          number: '0811-2233-4455',
+          slot: 'slot2',
+          status: 'pending',
+          progress: 70,
+          date: '2023-06-15',
+          hearts: 12,
+          price: 'Rp 36.000',
+          notes: 'Sedang diproses'
+        }
+      ]
+    };
+
+    // DOM Elements
+    const liveTimeEl = document.getElementById('live-time');
+    const refreshButton = document.getElementById('refresh
