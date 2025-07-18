@@ -17,19 +17,19 @@ const deliveryData = [
     { slot: 2, name: 'Rachel', order: 400, send: 60 },
     { slot: 2, name: 'Honey bear', order: 1400, send: 60 },
 
-    // Slot 3
+    // Slot 3 (Araba dipindahkan dari sini)
     { slot: 3, name: 'Zee', order: 400, send: 180 },
     { slot: 3, name: 'Diyy', order: 640, send: 360 },
     { slot: 3, name: 'Aze', order: 570, send: 400 },
     { slot: 3, name: 'Al', order: 320, send: 260, statusOverride: 'fail' },
     { slot: 3, name: 'Sena', order: 570, send: 440 },
-    { slot: 3, name: 'Araba', order: 150, send: 150, statusOverride: 'done' }, // ✅
     { slot: 3, name: 'Idnes', order: 320, send: 212 },
     { slot: 3, name: 'Luna', order: 800, send: 731, statusOverride: 'fail' },
     { slot: 3, name: 'Kai', order: 220, send: 160 },
     { slot: 3, name: 'Rei', order: 220, send: 180 },
 
-    // Riwayat Orderan Selesai (Data ini tetap dari update sebelumnya, karena tidak ada perubahan di sini)
+    // Riwayat Orderan Selesai (Araba ditambahkan di sini)
+    { slot: 'completed', name: 'Araba', order: 150, send: 150 }, // ✅ Araba moved here
     { slot: 'completed', name: 'Nayla', order: 530, send: 530 },
     { slot: 'completed', name: 'Rani', order: 320, send: 320 },
     { slot: 'completed', name: 'Purili', order: 320, send: 320 },
