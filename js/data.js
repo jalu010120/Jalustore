@@ -3,7 +3,7 @@
 const deliveryData = [
     // Slot 1
     { slot: 1, name: 'Ney', order: 5000, send: 3390 },
-    { slot: 1, name: 'Rezz', order: 900, send: 560 }, // Ini adalah Rezz yang sebelumnya bernama Aelia (900 order)
+    { slot: 1, name: 'Aelia', order: 900, send: 560 }, // Ini adalah Rezz yang sebelumnya bernama Aelia (900 order)
     { slot: 1, name: 'Rezz', order: 150, send: 60 },  // Ini adalah Rezz baru dengan order 150
     { slot: 1, name: 'Aya', order: 860, send: 500 },
     { slot: 1, name: 'Anna', order: 1080, send: 220 },
