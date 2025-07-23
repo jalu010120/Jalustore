@@ -2,7 +2,7 @@
 
 const deliveryData = [
     // Slot 1
-    { slot: 1, name: 'Ney', order: 5000, send: 3430 },
+    { slot: 1, name: 'Ney', order: 5000, send: 3450 },
     { slot: 1, name: 'Aelia', order: 900, send: 600 },
     { slot: 1, name: 'Rezz', order: 150, send: 100 },
     { slot: 1, name: 'Aya', order: 860, send: 540 },
