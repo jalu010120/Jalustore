@@ -9,8 +9,8 @@ const deliveryData = [
     { slot: 1, name: 'Anna', order: 1080, send: 280 },
     { slot: 1, name: 'futaba', order: 140, send: 80 },
     { slot: 1, name: 'Feng', order: 230, send: 20 },
-    { slot: 1, name: 'Tuna', order: 360, send: 20 }, // Pembeli baru
-    { slot: 1, name: 'Tuna 2', order: 360, send: 20 }, // Pembeli baru
+    { slot: 1, name: 'Tuna', order: 360, send: 20 },
+    { slot: 1, name: 'Tuna 2', order: 360, send: 20 },
 
     // Slot 2
     { slot: 2, name: 'Angel2', order: 600, send: 540, statusOverride: 'fail' },
@@ -20,6 +20,7 @@ const deliveryData = [
     { slot: 2, name: 'Rachel', order: 400, send: 140, isSpecial: true },
     { slot: 2, name: 'Honey bear', order: 1400, send: 180 },
     { slot: 2, name: 'Cem', order: 660, send: 80 },
+    { slot: 2, name: 'Niz', order: 720, send: 20 }, // Pembeli baru
 
     // Slot 3
     { slot: 3, name: 'Zee', order: 400, send: 280 },
