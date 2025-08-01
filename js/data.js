@@ -19,7 +19,7 @@ const deliveryData = [
     { slot: 2, name: 'Honey bear', order: 1400, send: 280 },
     { slot: 2, name: 'Cem', order: 660, send: 200 },
     { slot: 2, name: 'Niz', order: 720, send: 200 },
-    { slot: 2, name: 'yulii', order: 400, send: 20 }, // Pembeli baru
+    { slot: 2, name: 'yulii', order: 400, send: 20 },
 
     // Slot 3
     { slot: 3, name: 'Diyy', order: 640, send: 600 },
@@ -29,6 +29,7 @@ const deliveryData = [
     { slot: 3, name: 'Yaya', order: 200, send: 140 },
     { slot: 3, name: 'Louis', order: 310, send: 140 },
     { slot: 3, name: 'Onde mande', order: 800, send: 60, statusOverride: 'fail' },
+    { slot: 3, name: 'Lia', order: 400, send: 20 }, // Pembeli baru
 
     // Riwayat Orderan Selesai
     { slot: 'completed', name: 'Idnes', order: 320, send: 320 },
