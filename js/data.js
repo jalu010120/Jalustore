@@ -69,4 +69,3 @@ const deliveryData = [
     { slot: 'completed', name: 'Lusi', order: 600, send: 603 },
     { slot: 'completed', name: 'Sea', order: 150, send: 157 }
 ];
-];
