@@ -2,12 +2,12 @@
 
 const deliveryData = [
     // Slot 1
-    { slot: 1, name: 'Ney', order: 5000, send: 3630 }, // Send diperbarui, status ❌ sebelumnya dihapus
-    { slot: 1, name: 'Aelia', order: 1900, send: 840 }, // Order & Send diperbarui, status ❌ sebelumnya dihapus
+    { slot: 1, name: 'Ney', order: 5000, send: 3630 },
+    { slot: 1, name: 'Aelia', order: 1900, send: 840 },
     { slot: 1, name: 'Rezz', order: 350, send: 340 },
     { slot: 1, name: 'Aya', order: 860, send: 820 },
     { slot: 1, name: 'Anna', order: 1080, send: 520 },
-    { slot: 1, name: 'Feng', order: 230, send: 200 }, // Send diperbarui, status ❌ sebelumnya dihapus
+    { slot: 1, name: 'Feng', order: 230, send: 200 },
     { slot: 1, name: 'Tuna', order: 360, send: 260 },
     { slot: 1, name: 'Tuna 2', order: 360, send: 120, statusOverride: 'fail' },
     { slot: 1, name: 'Unii', order: 400, send: 60 },
@@ -16,12 +16,14 @@ const deliveryData = [
     // Slot 2
     { slot: 2, name: 'Angel2', order: 600, send: 540, statusOverride: 'fail' },
     { slot: 2, name: 'Autumn', order: 850, send: 375, statusOverride: 'fail' },
-    { slot: 2, name: 'Rachel', order: 400, send: 280, statusOverride: 'fail', isSpecial: true }, // Status ❌ ditambahkan
-    { slot: 2, name: 'Honey bear', order: 1400, send: 320 }, // Send diperbarui, status ❌ sebelumnya dihapus
+    { slot: 2, name: 'Rachel', order: 400, send: 280, statusOverride: 'fail', isSpecial: true }, // Status ❌ ditambahkan kembali
+    { slot: 2, name: 'Honey bear', order: 1400, send: 320 },
     { slot: 2, name: 'Cem', order: 660, send: 260 },
     { slot: 2, name: 'Niz', order: 720, send: 260 },
     { slot: 2, name: 'yulii', order: 400, send: 80 },
-    { slot: 2, name: 'Ira', order: 500, send: 20 }, // Pembeli baru
+    { slot: 2, name: 'Ira', order: 500, send: 20 },
+    { slot: 2, name: 'Asha', order: 120, send: 20 }, // Pembeli baru
+    { slot: 2, name: 'eliane', order: 120, send: 30 }, // Pembeli baru
 
     // Slot 3
     { slot: 3, name: 'Aze', order: 570, send: 500, statusOverride: 'fail' },
@@ -31,7 +33,7 @@ const deliveryData = [
     { slot: 3, name: 'Lia', order: 400, send: 80 },
 
     // Riwayat Orderan Selesai
-    { slot: 'completed', name: 'Yaya', order: 200, send: 200 }, // Dipindahkan dari Slot 3 (Status ✅)
+    { slot: 'completed', name: 'Yaya', order: 200, send: 200 },
     { slot: 'completed', name: 'Diyy', order: 640, send: 640 },
     { slot: 'completed', name: 'Luna', order: 800, send: 800 },
     { slot: 'completed', name: 'Ryu', order: 320, send: 320 },
