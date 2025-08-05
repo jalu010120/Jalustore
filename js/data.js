@@ -23,7 +23,7 @@ const deliveryData = [
     { slot: 2, name: 'yulii', order: 400, send: 80 },
     { slot: 2, name: 'Ira', order: 500, send: 20 },
     { slot: 2, name: 'Asha', order: 120, send: 20 }, // Pembeli baru
-    { slot: 2, name: 'eliane', order: 120, send: 30 }, // Pembeli baru
+    { slot: 2, name: 'eliane', order: 120, send: 20 }, // Pembeli baru
 
     // Slot 3
     { slot: 3, name: 'Aze', order: 570, send: 500, statusOverride: 'fail' },
