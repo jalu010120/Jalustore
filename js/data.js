@@ -11,6 +11,7 @@ const deliveryData = [
     { slot: 1, name: 'Unii', order: 400, send: 100, statusOverride: 'fail' },
     { slot: 1, name: 'archa', order: 460, send: 120 },
     { slot: 1, name: 'Zel', order: 340, send: 20 },
+    { slot: 1, name: 'Raine', order: 340, send: 20 }, // Pembeli baru
 
     // Slot 2
     { slot: 2, name: 'Angel2', order: 600, send: 540, statusOverride: 'fail' },
@@ -31,7 +32,7 @@ const deliveryData = [
     { slot: 3, name: 'Onde mande', order: 800, send: 140 },
     { slot: 3, name: 'Lia', order: 400, send: 140 },
     { slot: 3, name: 'Cici', order: 100, send: 40 },
-    { slot: 3, name: 'Fia', order: 80, send: 20 }, // Pembeli baru
+    { slot: 3, name: 'Fia', order: 80, send: 20 },
 
     // Riwayat Orderan Selesai
     { slot: 'completed', name: 'Aya', order: 860, send: 860 },
@@ -50,7 +51,6 @@ const deliveryData = [
     { slot: 'completed', name: 'Ave', order: 220, send: 240 },
     { slot: 'completed', name: 'Kai', order: 220, send: 220 },
     { slot: 'completed', name: 'Rei', order: 220, send: 220 },
-    { slot: 'completed', name: 'Raine', order: 420, send: 420 },
     { slot: 'completed', name: 'Araba', order: 150, send: 150 },
     { slot: 'completed', name: 'Nayla', order: 530, send: 530 },
     { slot: 'completed', name: 'Rani', order: 320, send: 320 },
