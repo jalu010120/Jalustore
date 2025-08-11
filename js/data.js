@@ -2,7 +2,7 @@
 
 const deliveryData = [
     // Slot 1
-    { slot: 1, name: 'Ney', order: 5000, send: 3670, statusOverride: 'fail' },
+    { slot: 1, name: 'Ney', order: 5000, send: 3670 },
     { slot: 1, name: 'Aelia', order: 1900, send: 940, statusOverride: 'fail' },
     { slot: 1, name: 'Anna', order: 1080, send: 640 },
     { slot: 1, name: 'Feng', order: 230, send: 220, statusOverride: 'fail' },
