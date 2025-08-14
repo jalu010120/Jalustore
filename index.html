@@ -257,8 +257,13 @@
         transition: transform 0.5s ease;
     }
     
-    .refresh-button:hover i {
-        transform: rotate(360deg);
+    .refresh-button.loading i {
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
     }
     
     @keyframes pulseHeart {
@@ -419,6 +424,7 @@
         position: relative;
         overflow: hidden;
         z-index: 1;
+        cursor: pointer;
     }
     
     .card::before {
@@ -443,47 +449,14 @@
         opacity: 1;
     }
     
-    /* Chibi Character Placeholders */
-    .card::after {
-        content: '';
-        position: absolute;
-        width: 60px;
-        height: 60px;
-        background-size: contain;
-        background-repeat: no-repeat;
-        opacity: 0.1;
-        pointer-events: none;
-        z-index: -1;
-        transition: all 0.3s ease;
+    .card-placeholder {
+        text-align: center;
+        padding: 2rem;
+        width: 100%;
+        color: var(--text-color);
+        opacity: 0.8;
     }
     
-    .card:nth-child(odd)::after {
-        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="40" r="30" fill="%238A2BE2"/><circle cx="35" cy="35" r="5" fill="white"/><circle cx="65" cy="35" r="5" fill="white"/><path d="M40 55 Q50 65 60 55" stroke="white" stroke-width="3" fill="none"/></svg>');
-        bottom: -15px;
-        right: -15px;
-    }
-    
-    .card:nth-child(even)::after {
-        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="40" r="30" fill="%23FF9A9E"/><circle cx="35" cy="35" r="5" fill="white"/><circle cx="65" cy="35" r="5" fill="white"/><path d="M40 55 Q50 65 60 55" stroke="white" stroke-width="3" fill="none"/></svg>');
-        top: -15px;
-        left: -15px;
-    }
-    
-    .card:hover::after {
-        opacity: 0.2;
-        transform: scale(1.1);
-    }
-    
-    .card.done::after {
-        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20 50 L40 70 L80 30" stroke="%231E6F5C" stroke-width="10" stroke-linecap="round" fill="none"/></svg>');
-        opacity: 0.15;
-    }
-    
-    .card.fail::after {
-        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M30 30 L70 70 M70 30 L30 70" stroke="%23B73E3E" stroke-width="8" stroke-linecap="round" fill="none"/></svg>');
-        opacity: 0.15;
-    }
-
     .name {
         font-size: 1.2em;
         font-weight: 700;
@@ -565,12 +538,6 @@
         margin-top: 0.8em;
         overflow: hidden;
         box-shadow: var(--inner-shadow);
-        display: none;
-    }
-
-    .card.pending .progress-bar-container,
-    .card.fail .progress-bar-container {
-        display: block;
     }
 
     .progress-bar-fill {
@@ -580,25 +547,7 @@
         transition: width 0.7s ease-in-out;
         position: relative;
     }
-
-    .progress-bar-fill::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.1) 100%);
-        opacity: 0;
-        animation: shimmer 2s infinite linear;
-    }
-
-    @keyframes shimmer {
-        0% { opacity: 0; transform: translateX(-100%); }
-        50% { opacity: 1; transform: translateX(100%); }
-        100% { opacity: 0; transform: translateX(100%); }
-    }
-
+    
     /* Floating Elements Animation */
     .floating-elements {
         position: fixed;
@@ -616,13 +565,8 @@
         animation: floatUp 4s linear infinite;
     }
     
-    .heart {
-        color: #FF9A9E;
-    }
-    
-    .star {
-        color: #FFD700;
-    }
+    .heart { color: #FF9A9E; }
+    .star { color: #FFD700; }
     
     @keyframes floatUp {
         0% { transform: translateY(100vh) scale(0) rotate(0deg); opacity: 0; }
@@ -832,9 +776,7 @@
 </head>
 <body>
   <div class="clouds" id="clouds"></div>
-  
   <div class="floating-elements" id="floating-elements"></div>
-  
   <div class="overlay">
     <div class="header-section">
       <div id="live-time"></div>
@@ -854,8 +796,7 @@
         <input type="text" class="search-box" id="search-box" placeholder="Cari nama atau nomor order...">
       </div>
       
-      <div class="stats-container" id="stats-container">
-        </div>
+      <div class="stats-container" id="stats-container"></div>
     </div>
 
     <section>
@@ -883,8 +824,7 @@
     <div class="modal-content">
       <button class="close-modal" id="close-modal">&times;</button>
       <h3 class="modal-title">Detail Order</h3>
-      <div class="modal-details" id="modal-details">
-        </div>
+      <div class="modal-details" id="modal-details"></div>
       <div class="modal-actions">
         <button class="modal-button primary" id="whatsapp-button">
           <i class="fab fa-whatsapp"></i> Hubungi via WhatsApp
@@ -897,300 +837,276 @@
   </div>
 
   <script>
-    // Sample data - in a real app, this would come from an API
-    // This part should dynamically load from js/data.js
-    // For now, it's a placeholder. The actual data will come from the external file.
-    let deliveryData = []; 
+    /**
+     * @file Professional Dashboard Script for JaluStore
+     * @author JaluStore & Gemini
+     * @version 2.0.0
+     *
+     * @description
+     * Refactored for maintainability, performance, and modern best practices.
+     * Key improvements:
+     * - Centralized state management (`appState`).
+     * - Asynchronous data loading from a JSON file with error handling.
+     * - Event delegation for card clicks to improve performance.
+     * - Separation of concerns with dedicated functions (e.g., `getStatusInfo`, `createCardElement`).
+     * - Clearer code structure with comments.
+     */
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- 1. Constants & DOM Elements ---
+        const API_URL = 'js/data.json'; // IMPORTANT: Data should now be in `js/data.json`.
+        const DOM = {
+            liveTime: document.getElementById('live-time'),
+            refreshButton: document.getElementById('refresh-button'),
+            searchBox: document.getElementById('search-box'),
+            statsContainer: document.getElementById('stats-container'),
+            cardContainers: {
+                slot1: document.getElementById('slot1-cards'),
+                slot2: document.getElementById('slot2-cards'),
+                slot3: document.getElementById('slot3-cards'),
+                completed: document.getElementById('completed-cards'),
+            },
+            modal: {
+                overlay: document.getElementById('order-modal'),
+                closeButton: document.getElementById('close-modal'),
+                closeBtn: document.getElementById('close-modal-btn'),
+                details: document.getElementById('modal-details'),
+                whatsappButton: document.getElementById('whatsapp-button'),
+            },
+            cloudsContainer: document.getElementById('clouds'),
+            floatingElementsContainer: document.getElementById('floating-elements'),
+        };
 
-    // Function to load data from js/data.js
-    async function loadDeliveryData() {
-        try {
-            const response = await fetch('js/data.js');
-            const scriptText = await response.text();
-            // Create a function to wrap the script text and execute it
-            const dataFunction = new Function(scriptText + '; return deliveryData;');
-            deliveryData = dataFunction();
-            console.log("Data loaded:", deliveryData);
-            renderCards();
-            updateStats();
-        } catch (error) {
-            console.error('Error loading delivery data:', error);
-        }
-    }
+        // --- 2. Application State ---
+        const appState = {
+            deliveryData: [],
+            searchTerm: '',
+        };
 
-    // DOM Elements
-    const liveTimeEl = document.getElementById('live-time');
-    const refreshButton = document.getElementById('refresh-button');
-    const searchBox = document.getElementById('search-box');
-    const statsContainer = document.getElementById('stats-container');
+        // --- 3. Helper & Utility Functions ---
 
-    const slot1Cards = document.getElementById('slot1-cards');
-    const slot2Cards = document.getElementById('slot2-cards');
-    const slot3Cards = document.getElementById('slot3-cards');
-    const completedCards = document.getElementById('completed-cards');
+        /** Updates the live time display. */
+        const updateLiveTime = () => {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'Asia/Jakarta' };
+            DOM.liveTime.textContent = now.toLocaleDateString('id-ID', options);
+        };
 
-    const orderModal = document.getElementById('order-modal');
-    const closeModalButton = document.getElementById('close-modal');
-    const closeModalBtn = document.getElementById('close-modal-btn');
-    const modalDetails = document.getElementById('modal-details');
-    const whatsappButton = document.getElementById('whatsapp-button');
+        /**
+         * Determines the status of an order item.
+         * @param {object} item - The order item object.
+         * @returns {{class: string, text: string, icon: string}} Status object.
+         */
+        const getStatusInfo = (item) => {
+            if (item.statusOverride === 'fail') return { class: 'fail', text: 'Gagal', icon: 'fa-times-circle' };
+            if (item.statusOverride === 'pending') return { class: 'pending', text: 'Proses', icon: 'fa-hourglass-half' };
+            if (item.slot === 'completed' || item.send >= item.order) return { class: 'done', text: 'Selesai', icon: 'fa-check-circle' };
+            return { class: 'pending', text: 'Proses', icon: 'fa-hourglass-half' };
+        };
 
-    // Time update function
-    function updateLiveTime() {
-      const now = new Date();
-      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
-      liveTimeEl.textContent = now.toLocaleDateString('id-ID', options);
-    }
+        /**
+         * Creates an HTML card element for an order item.
+         * @param {object} item - The order item object.
+         * @returns {HTMLElement} The created card element.
+         */
+        const createCardElement = (item) => {
+            const card = document.createElement('div');
+            const status = getStatusInfo(item);
+            const progress = (item.order > 0) ? (item.send / item.order) * 100 : 0;
 
-    // Render cards function
-    function renderCards(searchTerm = '') {
-      slot1Cards.innerHTML = '';
-      slot2Cards.innerHTML = '';
-      slot3Cards.innerHTML = '';
-      completedCards.innerHTML = '';
+            card.className = `card ${status.class}`;
+            card.dataset.id = item.id;
 
-      const filteredData = deliveryData.filter(item => {
-        const nameMatch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
-        const orderMatch = String(item.order).includes(searchTerm);
-        const sendMatch = String(item.send).includes(searchTerm);
-        return nameMatch || orderMatch || sendMatch;
-      });
-
-      filteredData.forEach(item => {
-        const card = document.createElement('div');
-        let statusClass = '';
-        let statusText = '';
-        let statusIcon = '';
-        let progress = 0;
-
-        // Calculate progress only for non-completed items
-        if (item.slot !== 'completed') {
-            progress = (item.send / item.order) * 100;
-            if (progress >= 100) {
-                statusClass = 'done';
-                statusText = 'Selesai';
-                statusIcon = '✅';
-            } else if (item.statusOverride === 'fail') {
-                statusClass = 'fail';
-                statusText = 'Gagal';
-                statusIcon = '❌';
-            } else if (item.statusOverride === 'pending' || progress < 100) { // Explicitly pending or still in progress
-                statusClass = 'pending';
-                statusText = 'Proses';
-                statusIcon = '🔄';
-            }
-        } else { // Already in completed section
-            statusClass = 'done';
-            statusText = 'Selesai';
-            statusIcon = '✅';
-        }
-
-        // Override status if explicitly set in data (e.g., for failed/pending but send=order cases)
-        if (item.statusOverride) {
-            if (item.statusOverride === 'fail') {
-                statusClass = 'fail';
-                statusText = 'Gagal';
-                statusIcon = '❌';
-            } else if (item.statusOverride === 'pending') {
-                statusClass = 'pending';
-                statusText = 'Proses';
-                statusIcon = '🔄';
-            }
-        }
-
-
-        card.classList.add('card', statusClass);
-        card.dataset.id = item.id; // Assuming an ID for modal
-        card.dataset.name = item.name;
-        card.dataset.order = item.order;
-        card.dataset.send = item.send;
-        card.dataset.slot = item.slot;
-        card.dataset.status = statusText; // Use the derived status text
-
-        let progressHtml = '';
-        if (statusClass === 'pending' || statusClass === 'fail') {
-            progressHtml = `
+            const progressHtml = (status.class === 'pending' || status.class === 'fail') ? `
                 <div class="progress-bar-container">
                     <div class="progress-bar-fill" style="width: ${progress.toFixed(0)}%;"></div>
+                </div>` : '';
+
+            card.innerHTML = `
+                <div class="name">${item.name}</div>
+                <div class="number">Order: ${item.order} | Terkirim: ${item.send}</div>
+                ${progressHtml}
+                <div class="status ${status.class}">
+                    <i class="fas ${status.icon}"></i>
+                    ${status.text}
+                </div>`;
+            return card;
+        };
+        
+        // --- 4. Core Logic Functions ---
+
+        /** Renders all cards to their respective slots based on current state. */
+        const renderAllCards = () => {
+            // Clear all containers first
+            Object.values(DOM.cardContainers).forEach(container => container.innerHTML = '');
+
+            const filteredData = appState.deliveryData.filter(item => {
+                const term = appState.searchTerm.toLowerCase().trim();
+                if (!term) return true;
+                return item.name.toLowerCase().includes(term) || 
+                       String(item.order).includes(term) || 
+                       String(item.send).includes(term);
+            });
+            
+            if (filteredData.length === 0 && appState.searchTerm) {
+                 DOM.cardContainers.slot1.innerHTML = `<p class="card-placeholder">Tidak ada hasil untuk "${appState.searchTerm}"</p>`;
+                 return;
+            }
+
+            filteredData.forEach(item => {
+                const cardElement = createCardElement(item);
+                const containerKey = `slot${item.slot}`;
+                if (item.slot === 'completed') {
+                    DOM.cardContainers.completed.appendChild(cardElement);
+                } else if (DOM.cardContainers[containerKey]) {
+                    DOM.cardContainers[containerKey].appendChild(cardElement);
+                }
+            });
+        };
+
+        /** Calculates and updates the statistics display. */
+        const updateStats = () => {
+            const stats = appState.deliveryData.reduce((acc, item) => {
+                const status = getStatusInfo(item);
+                if (status.class === 'done') acc.completed++;
+                else if (status.class === 'fail') acc.failed++;
+                else acc.pending++;
+                return acc;
+            }, { completed: 0, pending: 0, failed: 0 });
+            
+            const totalOrders = appState.deliveryData.length;
+
+            DOM.statsContainer.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-value">${totalOrders}</div><div class="stat-label">Total Order</div>
                 </div>
+                <div class="stat-card">
+                    <div class="stat-value">${stats.completed}</div><div class="stat-label">Selesai</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${stats.pending}</div><div class="stat-label">Proses</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${stats.failed}</div><div class="stat-label">Gagal</div>
+                </div>`;
+        };
+        
+        /** Opens the order details modal. */
+        const openOrderModal = (item) => {
+            const status = getStatusInfo(item);
+            const progress = (item.order > 0) ? (item.send / item.order) * 100 : 0;
+            const remaining = item.order - item.send;
+
+            DOM.modal.details.innerHTML = `
+                <div class="detail-item"><div class="detail-label">Nama</div><div class="detail-value">${item.name}</div></div>
+                <div class="detail-item"><div class="detail-label">Jumlah Order</div><div class="detail-value">${item.order} Heart</div></div>
+                <div class="detail-item"><div class="detail-label">Terkirim</div><div class="detail-value">${item.send} Heart</div></div>
+                <div class="detail-item"><div class="detail-label">Sisa</div><div class="detail-value">${remaining} Heart</div></div>
+                <div class="detail-item"><div class="detail-label">Status</div><div class="detail-value">${status.text}</div></div>
+                <div class="detail-item"><div class="detail-label">Progress</div><div class="detail-value">${progress.toFixed(1)}%</div></div>
+                ${item.number ? `<div class="detail-item" style="grid-column: 1 / -1;"><div class="detail-label">Nomor WA</div><div class="detail-value">${item.number}</div></div>` : ''}
+                ${item.notes ? `<div class="detail-item" style="grid-column: 1 / -1;"><div class="detail-label">Catatan</div><div class="detail-value">${item.notes}</div></div>` : ''}
             `;
-        }
 
-        card.innerHTML = `
-          <div class="name">${item.name}</div>
-          <div class="number">Order: ${item.order} | Terkirim: ${item.send}</div>
-          ${progressHtml}
-          <div class="status ${statusClass}">
-            <i class="fas ${statusIcon === '✅' ? 'fa-check-circle' : statusIcon === '❌' ? 'fa-times-circle' : 'fa-hourglass-half'}"></i>
-            ${statusText}
-          </div>
-        `;
+            if (item.number) {
+                DOM.modal.whatsappButton.style.display = 'inline-block';
+                const whatsappLink = `https://wa.me/${item.number.replace(/\D/g, '')}?text=${encodeURIComponent(`Halo ${item.name}, kami ingin menginformasikan status orderan heart Anda. Dari total ${item.order} heart, telah terkirim ${item.send}. Sisa pengiriman: ${remaining}. Terima kasih!`)}`;
+                DOM.modal.whatsappButton.onclick = () => window.open(whatsappLink, '_blank');
+            } else {
+                DOM.modal.whatsappButton.style.display = 'none';
+            }
+            DOM.modal.overlay.classList.add('active');
+        };
 
-        if (item.slot === 1) {
-          slot1Cards.appendChild(card);
-        } else if (item.slot === 2) {
-          slot2Cards.appendChild(card);
-        } else if (item.slot === 3) {
-          slot3Cards.appendChild(card);
-        } else if (item.slot === 'completed') {
-          completedCards.appendChild(card);
-        }
+        /** Closes the order details modal. */
+        const closeOrderModal = () => DOM.modal.overlay.classList.remove('active');
+        
+        // --- 5. Data Fetching ---
 
-        card.addEventListener('click', () => openOrderModal(item));
-      });
-    }
+        /** Fetches delivery data from the server. */
+        const loadData = async () => {
+            DOM.refreshButton.classList.add('loading');
+            Object.values(DOM.cardContainers).forEach(c => c.innerHTML = `<p class="card-placeholder">Memuat data...</p>`);
+            
+            try {
+                // Cache-busting by adding a timestamp
+                const response = await fetch(`${API_URL}?v=${new Date().getTime()}`);
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                const data = await response.json();
+                appState.deliveryData = data;
+                renderAllCards();
+                updateStats();
+            } catch (error) {
+                console.error('Error loading delivery data:', error);
+                DOM.cardContainers.slot1.innerHTML = `<p class="card-placeholder" style="color:red;">Gagal memuat data. Periksa konsol untuk detail.</p>`;
+            } finally {
+                DOM.refreshButton.classList.remove('loading');
+            }
+        };
+        
+        // --- 6. Event Handlers ---
 
-    // Update stats function
-    function updateStats() {
-      const totalOrders = deliveryData.length;
-      const totalCompleted = deliveryData.filter(item => 
-          (item.slot === 'completed' || (item.send >= item.order && item.statusOverride !== 'fail'))
-      ).length;
-      const totalPending = deliveryData.filter(item => 
-          (item.slot !== 'completed' && item.send < item.order && item.statusOverride !== 'fail')
-      ).length;
-      const totalFailed = deliveryData.filter(item => 
-          (item.slot !== 'completed' && item.statusOverride === 'fail')
-      ).length;
+        const handleSearchInput = (e) => {
+            appState.searchTerm = e.target.value;
+            renderAllCards();
+        };
 
-      statsContainer.innerHTML = `
-        <div class="stat-card">
-          <div class="stat-value">${totalOrders}</div>
-          <div class="stat-label">Total Order</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">${totalCompleted}</div>
-          <div class="stat-label">Selesai</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">${totalPending}</div>
-          <div class="stat-label">Proses</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">${totalFailed}</div>
-          <div class="stat-label">Gagal</div>
-        </div>
-      `;
-    }
+        const handleCardClick = (e) => {
+            const card = e.target.closest('.card');
+            if (!card) return;
+            const itemId = parseInt(card.dataset.id, 10);
+            const item = appState.deliveryData.find(d => d.id === itemId);
+            if (item) openOrderModal(item);
+        };
 
-    // Modal functions
-    function openOrderModal(item) {
-      modalDetails.innerHTML = `
-        <div class="detail-item">
-          <div class="detail-label">Nama</div>
-          <div class="detail-value">${item.name}</div>
-        </div>
-        <div class="detail-item">
-          <div class="detail-label">Jumlah Order</div>
-          <div class="detail-value">${item.order} Heart</div>
-        </div>
-        <div class="detail-item">
-          <div class="detail-label">Terkirim</div>
-          <div class="detail-value">${item.send} Heart</div>
-        </div>
-        <div class="detail-item">
-          <div class="detail-label">Sisa</div>
-          <div class="detail-value">${item.order - item.send} Heart</div>
-        </div>
-        <div class="detail-item">
-          <div class="detail-label">Status</div>
-          <div class="detail-value">${item.statusOverride === 'fail' ? 'Gagal' : (item.send >= item.order ? 'Selesai' : 'Proses')}</div>
-        </div>
-        <div class="detail-item">
-          <div class="detail-label">Progress</div>
-          <div class="detail-value">${((item.send / item.order) * 100).toFixed(2)}%</div>
-        </div>
-        ${item.number ? `
-        <div class="detail-item" style="grid-column: 1 / -1;">
-          <div class="detail-label">Nomor Telepon</div>
-          <div class="detail-value">${item.number}</div>
-        </div>
-        ` : ''}
-        ${item.notes ? `
-        <div class="detail-item" style="grid-column: 1 / -1;">
-          <div class="detail-label">Catatan</div>
-          <div class="detail-value">${item.notes}</div>
-        </div>
-        ` : ''}
-      `;
-      
-      // WhatsApp button logic
-      if (item.number) {
-        whatsappButton.style.display = 'inline-block';
-        const whatsappLink = `https://wa.me/${item.number.replace(/\D/g, '')}?text=Halo%20${encodeURIComponent(item.name)},%20kami%20ingin%20menginformasikan%20status%20orderan%20heart%20Anda%20dengan%20jumlah%20order%20${item.order}%20dan%20telah%20terkirim%20${item.send}.%20Sisa%20pengiriman%20adalah%20${item.order - item.send}.%20Terima%20kasih!`;
-        whatsappButton.onclick = () => window.open(whatsappLink, '_blank');
-      } else {
-        whatsappButton.style.display = 'none';
-      }
+        // --- 7. Decorative Animations ---
 
-      orderModal.classList.add('active');
-    }
+        const createCloud = () => {
+            const cloud = document.createElement('div');
+            cloud.classList.add('cloud');
+            const size = Math.random() * 100 + 50;
+            cloud.style.cssText = `width:${size}px; height:${size*0.7}px; left:${Math.random()*100}%; top:${Math.random()*100}%; animation-duration:${Math.random()*30+20}s; filter:blur(${Math.random()*3}px);`;
+            DOM.cloudsContainer.appendChild(cloud);
+        };
+        
+        const createFloatingElement = () => {
+            const element = document.createElement('i');
+            const type = Math.random() > 0.5 ? 'heart' : 'star';
+            element.className = `fas fa-${type} ${type}`;
+            element.style.cssText = `left:${Math.random()*100}vw; font-size:${Math.random()*1.5+0.8}rem; animation-duration:${Math.random()*5+3}s; animation-delay:${Math.random()*2}s;`;
+            DOM.floatingElementsContainer.appendChild(element);
+            element.addEventListener('animationend', () => element.remove());
+        };
 
-    function closeOrderModal() {
-      orderModal.classList.remove('active');
-    }
+        // --- 8. Initialization ---
 
-    // Event Listeners
-    refreshButton.addEventListener('click', () => {
-        loadDeliveryData(); // Reload data from file
-        // Optionally, add a visual feedback for refresh
-        refreshButton.querySelector('i').classList.add('fa-spin');
-        setTimeout(() => {
-            refreshButton.querySelector('i').classList.remove('fa-spin');
-        }, 1000);
+        const init = () => {
+            // Setup Event Listeners
+            DOM.refreshButton.addEventListener('click', loadData);
+            DOM.searchBox.addEventListener('keyup', handleSearchInput);
+            DOM.modal.closeButton.addEventListener('click', closeOrderModal);
+            DOM.modal.closeBtn.addEventListener('click', closeOrderModal);
+            DOM.modal.overlay.addEventListener('click', (e) => { if (e.target === DOM.modal.overlay) closeOrderModal(); });
+            
+            // Use event delegation for all card containers
+            Object.values(DOM.cardContainers).forEach(container => {
+                container.addEventListener('click', handleCardClick);
+            });
+
+            // Start live clock
+            updateLiveTime();
+            setInterval(updateLiveTime, 1000);
+
+            // Start animations
+            for (let i = 0; i < 10; i++) createCloud();
+            setInterval(createFloatingElement, 500);
+
+            // Initial data load
+            loadData();
+        };
+
+        // Run the application
+        init();
     });
-    searchBox.addEventListener('keyup', (e) => renderCards(e.target.value));
-    closeModalButton.addEventListener('click', closeOrderModal);
-    closeModalBtn.addEventListener('click', closeOrderModal);
-    orderModal.addEventListener('click', (e) => {
-      if (e.target === orderModal) {
-        closeOrderModal();
-      }
-    });
-
-    // Cloud animation setup
-    const cloudsContainer = document.getElementById('clouds');
-    function createCloud() {
-        const cloud = document.createElement('div');
-        cloud.classList.add('cloud');
-        const size = Math.random() * 100 + 50; // 50 to 150px
-        cloud.style.width = `${size}px`;
-        cloud.style.height = `${size * 0.7}px`;
-        cloud.style.left = `${Math.random() * 100}%`;
-        cloud.style.top = `${Math.random() * 100}%`;
-        cloud.style.animationDuration = `${Math.random() * 30 + 20}s`; // 20-50s
-        cloud.style.filter = `blur(${Math.random() * 3}px)`;
-        cloudsContainer.appendChild(cloud);
-    }
-    for (let i = 0; i < 10; i++) { // 10 clouds
-        createCloud();
-    }
-
-    // Floating elements animation setup (hearts/stars)
-    const floatingElementsContainer = document.getElementById('floating-elements');
-    function createFloatingElement() {
-        const element = document.createElement('i');
-        element.classList.add(Math.random() > 0.5 ? 'fas' : 'far'); // solid or regular for hearts
-        element.classList.add(Math.random() > 0.5 ? 'fa-heart' : 'fa-star'); // hearts or stars
-        element.classList.add(Math.random() > 0.5 ? 'heart' : 'star');
-        element.style.left = `${Math.random() * 100}vw`;
-        element.style.fontSize = `${Math.random() * 1.5 + 0.8}rem`; // 0.8rem to 2.3rem
-        element.style.animationDuration = `${Math.random() * 5 + 3}s`; // 3-8s
-        element.style.animationDelay = `${Math.random() * 2}s`; // 0-2s delay
-        floatingElementsContainer.appendChild(element);
-
-        // Remove element after animation
-        element.addEventListener('animationend', () => {
-            element.remove();
-        });
-    }
-    setInterval(createFloatingElement, 500); // Create a new element every 0.5 seconds
-
-
-    // Initial render
-    updateLiveTime();
-    setInterval(updateLiveTime, 1000);
-    loadDeliveryData(); // Load data on initial page load
   </script>
 </body>
 </html>
