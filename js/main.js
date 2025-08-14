@@ -1,14 +1,16 @@
 /**
  * @file main.js
  * @description Script utama untuk mengelola Dashboard Pengiriman JaluStore.
- * @version 2.0
- *
- * Catatan: Script ini mengasumsikan variabel `deliveryData` tersedia secara global
- * dari file `data.js` yang dimuat sebelumnya.
+ * @version 2.1
+ * 
+ * Perubahan utama:
+ * - Penambahan logika status yang lebih robust
+ * - Peningkatan animasi dan efek visual
+ * - Penanganan error yang lebih baik
+ * - Optimasi performa
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-
     /**
      * @namespace DashboardApp
      * @description Objek utama yang mengenkapsulasi semua fungsionalitas dasbor.
@@ -18,12 +20,16 @@ document.addEventListener('DOMContentLoaded', () => {
          * Konfigurasi untuk dasbor.
          */
         config: {
-            cloudCount: 8,
-            heartCount: 15,
-            targetDate: { // Tanggal yang akan ditampilkan di dasbor
+            cloudCount: 10,
+            heartCount: 20,
+            targetDate: {
                 year: 2025,
-                month: 6, // 0-indexed, 6 = Juli
+                month: 6,
                 day: 1
+            },
+            animationIntervals: {
+                clouds: 50,
+                hearts: 500
             }
         },
 
@@ -40,7 +46,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 3: document.getElementById('slot3-cards'),
                 completed: document.getElementById('completed-cards')
             },
-            slotSections: {} // Diisi saat inisialisasi
+            slotSections: {},
+            searchBox: document.getElementById('search-box'),
+            statsContainer: document.getElementById('stats-container'),
+            refreshButton: document.getElementById('refresh-button')
+        },
+
+        /**
+         * State aplikasi
+         */
+        state: {
+            deliveryData: [],
+            filteredData: [],
+            searchTerm: '',
+            stats: {
+                total: 0,
+                completed: 0,
+                pending: 0,
+                failed: 0
+            }
         },
 
         /**
@@ -52,6 +76,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.dom.slotSections[key] = this.dom.slots[key]?.parentElement;
             }
 
+            // Setup event listeners
+            this.setupEventListeners();
+
             // Membuat elemen dekoratif
             this.createDecorativeElements('cloud', this.config.cloudCount, this.helpers.getCloudStyles);
             this.createDecorativeElements('heart', this.config.heartCount, this.helpers.getHeartStyles);
@@ -60,15 +87,8 @@ document.addEventListener('DOMContentLoaded', () => {
             this.updateTime();
             setInterval(() => this.updateTime(), 1000);
 
-            if (typeof deliveryData !== 'undefined') {
-                this.renderDashboard(deliveryData);
-            } else {
-                console.error('Variabel `deliveryData` tidak ditemukan. Pastikan `data.js` dimuat dengan benar.');
-                if (this.dom.slots[1]) {
-                    this.dom.slots[1].innerHTML = '<p class="error-message">Gagal memuat data pembeli.</p>';
-                    this.dom.slotSections[1].style.display = 'block';
-                }
-            }
+            // Load data awal
+            this.loadData();
         },
 
         // ===============================================
@@ -76,8 +96,120 @@ document.addEventListener('DOMContentLoaded', () => {
         // ===============================================
 
         /**
+         * Setup semua event listeners
+         */
+        setupEventListeners() {
+            // Search functionality
+            if (this.dom.searchBox) {
+                this.dom.searchBox.addEventListener('input', (e) => {
+                    this.state.searchTerm = e.target.value.toLowerCase();
+                    this.filterData();
+                    this.renderDashboard(this.state.filteredData);
+                });
+            }
+
+            // Refresh button
+            if (this.dom.refreshButton) {
+                this.dom.refreshButton.addEventListener('click', () => {
+                    this.dom.refreshButton.classList.add('loading');
+                    this.loadData();
+                });
+            }
+        },
+
+        /**
+         * Memfilter data berdasarkan search term
+         */
+        filterData() {
+            if (!this.state.searchTerm) {
+                this.state.filteredData = [...this.state.deliveryData];
+                return;
+            }
+
+            this.state.filteredData = this.state.deliveryData.filter(item => {
+                return (
+                    item.name.toLowerCase().includes(this.state.searchTerm) ||
+                    String(item.order).includes(this.state.searchTerm) ||
+                    String(item.send).includes(this.state.searchTerm)
+                );
+            });
+        },
+
+        /**
+         * Memuat data dari sumber eksternal
+         */
+        loadData() {
+            try {
+                if (typeof deliveryData !== 'undefined') {
+                    this.state.deliveryData = deliveryData;
+                    this.filterData();
+                    this.calculateStats();
+                    this.renderDashboard(this.state.filteredData);
+                } else {
+                    throw new Error('Variabel `deliveryData` tidak ditemukan');
+                }
+            } catch (error) {
+                console.error('Error loading data:', error);
+                if (this.dom.slots[1]) {
+                    this.dom.slots[1].innerHTML = '<p class="error-message">Gagal memuat data pembeli.</p>';
+                    this.dom.slotSections[1].style.display = 'block';
+                }
+            } finally {
+                if (this.dom.refreshButton) {
+                    this.dom.refreshButton.classList.remove('loading');
+                }
+            }
+        },
+
+        /**
+         * Menghitung statistik dashboard
+         */
+        calculateStats() {
+            this.state.stats = {
+                total: this.state.deliveryData.length,
+                completed: 0,
+                pending: 0,
+                failed: 0
+            };
+
+            this.state.deliveryData.forEach(item => {
+                const statusInfo = this.helpers.getStatusInfo(item);
+                if (statusInfo.class === 'done') this.state.stats.completed++;
+                else if (statusInfo.class === 'fail') this.state.stats.failed++;
+                else this.state.stats.pending++;
+            });
+
+            this.renderStats();
+        },
+
+        /**
+         * Merender statistik ke DOM
+         */
+        renderStats() {
+            if (!this.dom.statsContainer) return;
+
+            this.dom.statsContainer.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-value">${this.state.stats.total}</div>
+                    <div class="stat-label">Total Order</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${this.state.stats.completed}</div>
+                    <div class="stat-label">Selesai</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${this.state.stats.pending}</div>
+                    <div class="stat-label">Proses</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${this.state.stats.failed}</div>
+                    <div class="stat-label">Gagal</div>
+                </div>
+            `;
+        },
+
+        /**
          * Memperbarui tampilan jam live di dasbor.
-         * Menggunakan tanggal target dari config dengan waktu saat ini.
          */
         updateTime() {
             const now = new Date();
@@ -98,17 +230,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
         /**
          * Merender semua kartu pesanan ke dalam slot yang sesuai.
-         * @param {Array<Object>} data - Array data pesanan dari `deliveryData`.
          */
         renderDashboard(data) {
+            // Jika tidak ada data yang cocok dengan pencarian
+            if (this.state.searchTerm && (!data || data.length === 0)) {
+                if (this.dom.slots[1]) {
+                    this.dom.slots[1].innerHTML = `<p class="card-placeholder">Tidak ditemukan hasil untuk "${this.state.searchTerm}"</p>`;
+                    this.dom.slotSections[1].style.display = 'block';
+                }
+                return;
+            }
+
             const cardsToRender = { 1: [], 2: [], 3: [], completed: [] };
 
-            data.forEach(item => {
+            (data || this.state.deliveryData).forEach(item => {
                 const statusInfo = this.helpers.getStatusInfo(item);
                 const progressPercent = (item.order > 0) ? Math.min((item.send / item.order) * 100, 100) : 0;
 
                 const cardHTML = `
-                    <div class="card ${statusInfo.class}">
+                    <div class="card ${statusInfo.class}" data-id="${item.name}">
                         <div class="name">${item.name}</div>
                         <div class="number">Order: ${item.order} | Send: ${item.send}</div>
                         <span class="status ${statusInfo.class}">${statusInfo.text}</span>
@@ -141,13 +281,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         /**
          * Membuat elemen dekoratif (awan/hati) secara dinamis.
-         * @param {string} className - Nama class untuk elemen (misal: 'cloud').
-         * @param {number} count - Jumlah elemen yang akan dibuat.
-         * @param {Function} getStylesFn - Fungsi yang mengembalikan properti style untuk setiap elemen.
          */
         createDecorativeElements(className, count, getStylesFn) {
             const container = className === 'cloud' ? this.dom.cloudsContainer : this.dom.heartsContainer;
             if (!container) return;
+
+            // Clear existing elements
+            container.innerHTML = '';
 
             for (let i = 0; i < count; i++) {
                 const element = document.createElement('div');
@@ -172,31 +312,48 @@ document.addEventListener('DOMContentLoaded', () => {
         helpers: {
             /**
              * Menentukan status, teks, dan slot target dari sebuah item pesanan.
-             * @param {Object} item - Item pesanan.
-             * @returns {{class: string, text: string, showProgress: boolean, targetSlot: string}}
              */
             getStatusInfo(item) {
-                const isNumericallyComplete = (typeof item.send === 'number' && typeof item.order === 'number' && item.send >= item.order);
+                const isNumericallyComplete = (typeof item.send === 'number' && 
+                                             typeof item.order === 'number' && 
+                                             item.send >= item.order);
 
-                if (item.statusOverride === 'done' || isNumericallyComplete && item.statusOverride !== 'fail') {
-                    return { class: 'done', text: '<i class="fas fa-check-circle"></i> Selesai', showProgress: false, targetSlot: 'completed' };
+                if (item.statusOverride === 'done' || (isNumericallyComplete && item.statusOverride !== 'fail')) {
+                    return { 
+                        class: 'done', 
+                        text: '<i class="fas fa-check-circle"></i> Selesai', 
+                        showProgress: false, 
+                        targetSlot: 'completed' 
+                    };
                 }
                 if (item.statusOverride === 'fail') {
-                    return { class: 'fail', text: '<i class="fas fa-exclamation-circle"></i> Gagal', showProgress: true, targetSlot: String(item.slot) };
+                    return { 
+                        class: 'fail', 
+                        text: '<i class="fas fa-exclamation-circle"></i> Gagal', 
+                        showProgress: true, 
+                        targetSlot: String(item.slot) 
+                    };
                 }
-                return { class: 'pending', text: '<i class="fas fa-hourglass-half"></i> Proses', showProgress: true, targetSlot: String(item.slot) };
+                return { 
+                    class: 'pending', 
+                    text: '<i class="fas fa-hourglass-half"></i> Proses', 
+                    showProgress: true, 
+                    targetSlot: String(item.slot) 
+                };
             },
 
             /** Mengembalikan style acak untuk elemen awan. */
             getCloudStyles() {
+                const size = Math.random() * 100 + 50;
                 return {
-                    width: `${Math.random() * 100 + 50}px`,
-                    height: `${(Math.random() * 60 + 30)}px`,
+                    width: `${size}px`,
+                    height: `${size * 0.6}px`,
                     opacity: Math.random() * 0.4 + 0.3,
                     left: `${Math.random() * 100}%`,
                     top: `${Math.random() * 100}%`,
                     animationDuration: `${Math.random() * 30 + 30}s`,
-                    animationDelay: `${Math.random() * 10}s`
+                    animationDelay: `${Math.random() * 10}s`,
+                    filter: `blur(${Math.random() * 3}px)`
                 };
             },
 
@@ -205,9 +362,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 return {
                     fontSize: `${Math.random() * 20 + 10}px`,
                     left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`,
                     animationDelay: `${Math.random() * 5}s`,
                     animationDuration: `${Math.random() * 3 + 3}s`,
-                    opacity: Math.random() * 0.5 + 0.3
+                    opacity: Math.random() * 0.5 + 0.3,
+                    color: `hsl(${Math.random() * 60 + 330}, 100%, 70%)` // Warna pink/merah
                 };
             }
         }
