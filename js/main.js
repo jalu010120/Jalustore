@@ -1,183 +1,218 @@
-// js/main.js
+/**
+ * @file main.js
+ * @description Script utama untuk mengelola Dashboard Pengiriman JaluStore.
+ * @version 2.0
+ *
+ * Catatan: Script ini mengasumsikan variabel `deliveryData` tersedia secara global
+ * dari file `data.js` yang dimuat sebelumnya.
+ */
 
-// Pastikan deliveryData tersedia dari data.js
-// Jika Anda menggunakan `const deliveryData = [...]` di data.js tanpa `export`,
-// maka `deliveryData` akan secara otomatis tersedia di sini karena data.js dimuat lebih dulu.
+document.addEventListener('DOMContentLoaded', () => {
 
-// Function to create clouds
-function createClouds() {
-    const cloudsContainer = document.getElementById('clouds');
-    const cloudCount = 8;
-    
-    for (let i = 0; i < cloudCount; i++) {
-        const cloud = document.createElement('div');
-        cloud.className = 'cloud';
-        
-        // Random cloud properties
-        const size = Math.random() * 100 + 50;
-        const opacity = Math.random() * 0.4 + 0.3;
-        const left = Math.random() * 100;
-        const top = Math.random() * 100;
-        const animationDuration = Math.random() * 30 + 30;
-        const delay = Math.random() * 10;
-        
-        cloud.style.width = `${size}px`;
-        cloud.style.height = `${size * 0.6}px`;
-        cloud.style.opacity = opacity;
-        cloud.style.left = `${left}%`;
-        cloud.style.top = `${top}%`;
-        cloud.style.animationDuration = `${animationDuration}s`;
-        cloud.style.animationDelay = `${delay}s`;
-        
-        cloudsContainer.appendChild(cloud);
-    }
-}
+    /**
+     * @namespace DashboardApp
+     * @description Objek utama yang mengenkapsulasi semua fungsionalitas dasbor.
+     */
+    const DashboardApp = {
+        /**
+         * Konfigurasi untuk dasbor.
+         */
+        config: {
+            cloudCount: 8,
+            heartCount: 15,
+            targetDate: { // Tanggal yang akan ditampilkan di dasbor
+                year: 2025,
+                month: 6, // 0-indexed, 6 = Juli
+                day: 1
+            }
+        },
 
-// Function to create floating hearts
-function createHearts() {
-    const heartsContainer = document.getElementById('hearts');
-    const heartCount = 15;
-    
-    for (let i = 0; i < heartCount; i++) {
-        const heart = document.createElement('div');
-        heart.className = 'heart';
-        heart.innerHTML = '<i class="fas fa-heart"></i>';
-        
-        // Random heart properties
-        const size = Math.random() * 20 + 10;
-        const left = Math.random() * 100;
-        const delay = Math.random() * 5;
-        const duration = Math.random() * 3 + 3;
-        const opacity = Math.random() * 0.5 + 0.3;
-        
-        heart.style.fontSize = `${size}px`;
-        heart.style.left = `${left}%`;
-        heart.style.animationDelay = `${delay}s`;
-        heart.style.animationDuration = `${duration}s`;
-        heart.style.opacity = opacity;
-        
-        heartsContainer.appendChild(heart);
-    }
-}
+        /**
+         * Cache untuk elemen DOM yang sering digunakan.
+         */
+        dom: {
+            cloudsContainer: document.getElementById('clouds'),
+            heartsContainer: document.getElementById('hearts'),
+            liveTime: document.getElementById('live-time'),
+            slots: {
+                1: document.getElementById('slot1-cards'),
+                2: document.getElementById('slot2-cards'),
+                3: document.getElementById('slot3-cards'),
+                completed: document.getElementById('completed-cards')
+            },
+            slotSections: {} // Diisi saat inisialisasi
+        },
 
-// Function to update live time
-function updateTime() {
-    const now = new Date();
-    // Gunakan tanggal 1 Juli 2025 dengan waktu saat ini
-    const targetDate = new Date(2025, 6, 1, now.getHours(), now.getMinutes(), now.getSeconds()); 
-    const waktu = targetDate.toLocaleString('id-ID', {
-        hour: '2-digit', minute: '2-digit', second: '2-digit'
-    });
-    document.getElementById('live-time').textContent = '⏰ ' + waktu;
-}
+        /**
+         * Fungsi inisialisasi utama.
+         */
+        init() {
+            // Mengisi cache untuk section-section slot
+            for (const key in this.dom.slots) {
+                this.dom.slotSections[key] = this.dom.slots[key]?.parentElement;
+            }
 
-// Function to render the cards
-function renderDashboard(data) {
-    const slots = {
-        1: document.getElementById('slot1-cards'),
-        2: document.getElementById('slot2-cards'),
-        3: document.getElementById('slot3-cards'),
-        completed: document.getElementById('completed-cards')
-    };
+            // Membuat elemen dekoratif
+            this.createDecorativeElements('cloud', this.config.cloudCount, this.helpers.getCloudStyles);
+            this.createDecorativeElements('heart', this.config.heartCount, this.helpers.getHeartStyles);
 
-    const slotSections = {
-        1: document.querySelector('#slot1-cards').parentElement,
-        2: document.querySelector('#slot2-cards').parentElement,
-        3: document.querySelector('#slot3-cards').parentElement,
-        completed: document.querySelector('#completed-cards').parentElement
-    };
+            // Memulai jam live dan render awal
+            this.updateTime();
+            setInterval(() => this.updateTime(), 1000);
 
-    // Clear existing cards from all containers
-    Object.values(slots).forEach(container => {
-        if (container) container.innerHTML = '';
-    });
-
-    // Hide all sections initially
-    Object.values(slotSections).forEach(section => {
-        if (section) section.style.display = 'none';
-    });
-
-    const cardsToRender = {
-        1: [],
-        2: [],
-        3: [],
-        completed: [] 
-    };
-
-    // Loop through each item in the data
-    data.forEach(item => {
-        let statusClass, statusText, showProgress, targetSlotKey;
-        const isCompleted = (typeof item.send === 'number' && typeof item.order === 'number' && item.send >= item.order);
-        
-        // Determine status
-        if (item.statusOverride === 'done') {
-            statusClass = 'done';
-            statusText = '<i class="fas fa-check-circle"></i> Done';
-            showProgress = false;
-            targetSlotKey = 'completed';
-        } else if (item.statusOverride === 'fail') {
-            statusClass = 'fail';
-            statusText = '<i class="fas fa-exclamation-circle"></i> Stuck';
-            showProgress = true;
-            targetSlotKey = item.slot;
-        } else if (isCompleted) {
-            statusClass = 'done';
-            statusText = '<i class="fas fa-check-circle"></i> Done';
-            showProgress = false;
-            targetSlotKey = 'completed';
-        } else {
-            statusClass = 'pending';
-            statusText = '<i class="fas fa-hourglass-half"></i> Progress';
-            showProgress = true;
-            targetSlotKey = item.slot;
-        }
-
-        // Calculate progress percentage
-        let progressPercent = 0;
-        if (showProgress && typeof item.order === 'number' && typeof item.send === 'number' && item.order > 0) {
-            progressPercent = Math.min((item.send / item.order) * 100, 100);
-        }
-
-        const cardHTML = `
-            <div class="card ${statusClass}">
-                <div class="name">${item.name}</div>
-                <div class="number">Order: ${item.order} | Send: ${item.send}</div>
-                <span class="status ${statusClass}">${statusText}</span>
-                ${showProgress ? `
-                <div class="progress-bar-container">
-                    <div class="progress-bar-fill" style="width: ${progressPercent}%;"></div>
-                </div>
-                ` : ''}
-            </div>
-        `;
-        
-        if (cardsToRender[targetSlotKey]) {
-            cardsToRender[targetSlotKey].push(cardHTML);
-        }
-    });
-
-    // Render cards into their respective containers
-    Object.keys(slots).forEach(slotKey => {
-        const container = slots[slotKey];
-        const section = slotSections[slotKey];
-
-        if (container && section) {
-            if (cardsToRender[slotKey].length > 0) {
-                container.innerHTML = cardsToRender[slotKey].join('');
-                section.style.display = 'block';
+            if (typeof deliveryData !== 'undefined') {
+                this.renderDashboard(deliveryData);
             } else {
-                section.style.display = 'none';
+                console.error('Variabel `deliveryData` tidak ditemukan. Pastikan `data.js` dimuat dengan benar.');
+                if (this.dom.slots[1]) {
+                    this.dom.slots[1].innerHTML = '<p class="error-message">Gagal memuat data pembeli.</p>';
+                    this.dom.slotSections[1].style.display = 'block';
+                }
+            }
+        },
+
+        // ===============================================
+        // Fungsi Inti (Core Functions)
+        // ===============================================
+
+        /**
+         * Memperbarui tampilan jam live di dasbor.
+         * Menggunakan tanggal target dari config dengan waktu saat ini.
+         */
+        updateTime() {
+            const now = new Date();
+            const { year, month, day } = this.config.targetDate;
+            const targetTime = new Date(year, month, day, now.getHours(), now.getMinutes(), now.getSeconds());
+            
+            const timeString = targetTime.toLocaleString('id-ID', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            });
+
+            if (this.dom.liveTime) {
+                this.dom.liveTime.textContent = `⏰ ${timeString}`;
+            }
+        },
+
+        /**
+         * Merender semua kartu pesanan ke dalam slot yang sesuai.
+         * @param {Array<Object>} data - Array data pesanan dari `deliveryData`.
+         */
+        renderDashboard(data) {
+            const cardsToRender = { 1: [], 2: [], 3: [], completed: [] };
+
+            data.forEach(item => {
+                const statusInfo = this.helpers.getStatusInfo(item);
+                const progressPercent = (item.order > 0) ? Math.min((item.send / item.order) * 100, 100) : 0;
+
+                const cardHTML = `
+                    <div class="card ${statusInfo.class}">
+                        <div class="name">${item.name}</div>
+                        <div class="number">Order: ${item.order} | Send: ${item.send}</div>
+                        <span class="status ${statusInfo.class}">${statusInfo.text}</span>
+                        ${statusInfo.showProgress ? `
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill" style="width: ${progressPercent}%;"></div>
+                        </div>` : ''}
+                    </div>
+                `;
+                
+                if (cardsToRender[statusInfo.targetSlot]) {
+                    cardsToRender[statusInfo.targetSlot].push(cardHTML);
+                }
+            });
+
+            // Render ke DOM dan tampilkan/sembunyikan section
+            for (const slotKey in this.dom.slots) {
+                const container = this.dom.slots[slotKey];
+                const section = this.dom.slotSections[slotKey];
+                if (!container || !section) continue;
+
+                if (cardsToRender[slotKey] && cardsToRender[slotKey].length > 0) {
+                    container.innerHTML = cardsToRender[slotKey].join('');
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            }
+        },
+
+        /**
+         * Membuat elemen dekoratif (awan/hati) secara dinamis.
+         * @param {string} className - Nama class untuk elemen (misal: 'cloud').
+         * @param {number} count - Jumlah elemen yang akan dibuat.
+         * @param {Function} getStylesFn - Fungsi yang mengembalikan properti style untuk setiap elemen.
+         */
+        createDecorativeElements(className, count, getStylesFn) {
+            const container = className === 'cloud' ? this.dom.cloudsContainer : this.dom.heartsContainer;
+            if (!container) return;
+
+            for (let i = 0; i < count; i++) {
+                const element = document.createElement('div');
+                element.className = className;
+                if (className === 'heart') {
+                    element.innerHTML = '<i class="fas fa-heart"></i>';
+                }
+                
+                const styles = getStylesFn();
+                for (const prop in styles) {
+                    element.style[prop] = styles[prop];
+                }
+                
+                container.appendChild(element);
+            }
+        },
+
+        // ===============================================
+        // Fungsi Bantuan (Helper Functions)
+        // ===============================================
+        
+        helpers: {
+            /**
+             * Menentukan status, teks, dan slot target dari sebuah item pesanan.
+             * @param {Object} item - Item pesanan.
+             * @returns {{class: string, text: string, showProgress: boolean, targetSlot: string}}
+             */
+            getStatusInfo(item) {
+                const isNumericallyComplete = (typeof item.send === 'number' && typeof item.order === 'number' && item.send >= item.order);
+
+                if (item.statusOverride === 'done' || isNumericallyComplete && item.statusOverride !== 'fail') {
+                    return { class: 'done', text: '<i class="fas fa-check-circle"></i> Selesai', showProgress: false, targetSlot: 'completed' };
+                }
+                if (item.statusOverride === 'fail') {
+                    return { class: 'fail', text: '<i class="fas fa-exclamation-circle"></i> Gagal', showProgress: true, targetSlot: String(item.slot) };
+                }
+                return { class: 'pending', text: '<i class="fas fa-hourglass-half"></i> Proses', showProgress: true, targetSlot: String(item.slot) };
+            },
+
+            /** Mengembalikan style acak untuk elemen awan. */
+            getCloudStyles() {
+                return {
+                    width: `${Math.random() * 100 + 50}px`,
+                    height: `${(Math.random() * 60 + 30)}px`,
+                    opacity: Math.random() * 0.4 + 0.3,
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`,
+                    animationDuration: `${Math.random() * 30 + 30}s`,
+                    animationDelay: `${Math.random() * 10}s`
+                };
+            },
+
+            /** Mengembalikan style acak untuk elemen hati. */
+            getHeartStyles() {
+                return {
+                    fontSize: `${Math.random() * 20 + 10}px`,
+                    left: `${Math.random() * 100}%`,
+                    animationDelay: `${Math.random() * 5}s`,
+                    animationDuration: `${Math.random() * 3 + 3}s`,
+                    opacity: Math.random() * 0.5 + 0.3
+                };
             }
         }
-    });
-}
+    };
 
-// Initial setup
-document.addEventListener('DOMContentLoaded', () => {
-    createClouds();
-    createHearts();
-    updateTime();
-    setInterval(updateTime, 1000);
-    // Panggil renderDashboard dengan deliveryData yang dimuat dari data.js
-    renderDashboard(deliveryData); 
+    // Jalankan aplikasi dasbor.
+    DashboardApp.init();
 });
