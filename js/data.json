@@ -79,5 +79,4 @@
     { slot: 'completed', name: 'Lusi', order: 600, send: 603 },
     { slot: 'completed', name: 'Sea', order: 150, send: 157 },
     { slot: 'completed', name: 'Rani', order: 320, send: 320 },
-    { slot: 'completed', name: 'Raine', order: 420, send: 420 }
-];
+    { slot: 'completed', name: 'Raine', order: 420, send: 420 }, 
