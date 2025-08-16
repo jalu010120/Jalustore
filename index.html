@@ -874,6 +874,11 @@
     </section>
 
     <section>
+      <div class="slot-title"><i class="fas fa-box-open"></i> Slot 4</div>
+      <div id="slot4-cards" class="cards"></div>
+    </section>
+
+    <section>
       <div class="slot-title"><i class="fas fa-check-circle"></i> Riwayat Orderan Selesai</div>
       <div id="completed-cards" class="cards"></div>
     </section>
@@ -927,6 +932,7 @@
     const slot1Cards = document.getElementById('slot1-cards');
     const slot2Cards = document.getElementById('slot2-cards');
     const slot3Cards = document.getElementById('slot3-cards');
+    const slot4Cards = document.getElementById('slot4-cards');
     const completedCards = document.getElementById('completed-cards');
 
     const orderModal = document.getElementById('order-modal');
@@ -947,6 +953,7 @@
       slot1Cards.innerHTML = '';
       slot2Cards.innerHTML = '';
       slot3Cards.innerHTML = '';
+      slot4Cards.innerHTML = '';
       completedCards.innerHTML = '';
 
       const filteredData = deliveryData.filter(item => {
@@ -1032,6 +1039,8 @@
           slot2Cards.appendChild(card);
         } else if (item.slot === 3) {
           slot3Cards.appendChild(card);
+        } else if (item.slot === 4) {
+          slot4Cards.appendChild(card);
         } else if (item.slot === 'completed') {
           completedCards.appendChild(card);
         }
