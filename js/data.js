@@ -32,7 +32,7 @@ const deliveryData = [
     { slot: 3, name: 'Fio', order: 180, send: 160 }, // Send diperbarui
     { slot: 3, name: 'Rezz', order: 180, send: 120 }, // Send diperbarui
     { slot: 3, name: 'Kazuhime', order: 180, send: 140 }, // Send diperbarui
-    { slot: 3, name: 'Rendy', order: 310, send: 140 }, // Send diperbarui
+    { slot: 3, name: 'Rendy', order: 1010, send: 140 }, // Send diperbarui
     { slot: 3, name: 'Saki', order: 120, send: 80, statusOverride: 'fail' }, // Status ❌ ditambahkan
     { slot: 3, name: 'Ian', order: 1100, send: 80 }, // Send diperbarui
     { slot: 3, name: 'Fia', order: 500, send: 360 }, // Send diperbarui
