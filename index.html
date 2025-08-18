@@ -9,7 +9,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
   <style>
-    /* Global Styles */
     :root {
         --primary-color: #8A2BE2;
         --secondary-color: #FF9A9E;
@@ -20,7 +19,6 @@
         --bg-overlay: rgba(255, 255, 255, 0.85);
         --shadow-light: 0 4px 20px rgba(0,0,0,0.08);
         --shadow-dark: 0 12px 30px rgba(0,0,0,0.15);
-
         --status-done-bg: #A8E6CF;
         --status-done-text: #1E6F5C;
         --status-fail-bg: #FFAAA5;
@@ -52,7 +50,7 @@
         z-index: 1;
     }
 
-    /* Header & Title */
+    /* Bagian Header dan Judul */
     .header-section {
         width: 100%;
         max-width: 900px;
@@ -95,7 +93,7 @@
         opacity: 0.8;
     }
 
-    /* Actions & Search */
+    /* Tombol Aksi dan Pencarian */
     .action-buttons {
         display: flex;
         justify-content: center;
@@ -133,6 +131,10 @@
     .btn:hover {
         transform: translateY(-3px);
     }
+    
+    .btn i {
+      margin-right: 0.5em;
+    }
 
     .search-container {
         width: 100%;
@@ -167,7 +169,7 @@
         opacity: 0.6;
     }
 
-    /* Stats Section */
+    /* Statistik */
     .stats-container {
         display: flex;
         gap: 1rem;
@@ -206,7 +208,7 @@
         opacity: 0.8;
     }
 
-    /* Card Sections */
+    /* Bagian Kartu */
     section {
         margin-bottom: 3rem;
         width: 100%;
@@ -231,6 +233,10 @@
     .slot-title i {
         margin-right: 0.5rem;
         font-size: 1.2em;
+    }
+
+    .slot-title:hover {
+      transform: translateY(-3px);
     }
 
     .cards {
@@ -315,7 +321,7 @@
         transition: width 0.7s ease-in-out;
     }
 
-    /* Modal Styles */
+    /* Modal */
     .modal-overlay {
         position: fixed;
         top: 0;
@@ -405,7 +411,7 @@
         margin-top: 2rem;
     }
 
-    /* Responsive Design */
+    /* Desain Responsif */
     @media (max-width: 768px) {
         .overlay { padding: 1.5rem; }
         h1 { font-size: 2rem; }
@@ -427,7 +433,7 @@
         .stat-card { min-width: unset; width: 100%; }
     }
     
-    /* Custom Scrollbar */
+    /* Scrollbar Kustom */
     ::-webkit-scrollbar { width: 8px; background: #f0f8ff; }
     ::-webkit-scrollbar-thumb { background: linear-gradient(var(--secondary-color), #FAD0C4); border-radius: 8px; }
     ::-webkit-scrollbar-thumb:hover { background: linear-gradient(#FF7B8B, #F8C3B8); }
@@ -488,9 +494,9 @@
       <h3 class="modal-title">Detail Order</h3>
       <div class="modal-details" id="modal-details"></div>
       <div class="modal-actions">
-        <button class="btn btn-primary" id="whatsapp-button">
+        <a href="#" class="btn btn-primary" id="whatsapp-button" target="_blank">
           <i class="fab fa-whatsapp"></i> Hubungi via WhatsApp
-        </button>
+        </a>
       </div>
     </div>
   </div>
@@ -653,7 +659,7 @@
       }
     });
 
-    // Initial load
+    // Pemuatan Awal
     updateLiveTime();
     setInterval(updateLiveTime, 1000);
     loadDeliveryData();
