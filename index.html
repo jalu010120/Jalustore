@@ -321,6 +321,24 @@
         transition: width 0.7s ease-in-out;
     }
 
+    .load-more-btn {
+      margin-top: 1.5rem;
+      padding: 0.8rem 2rem;
+      border-radius: 30px;
+      background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
+    }
+
+    .load-more-btn:hover {
+      transform: translateY(-3px);
+    }
+
     /* Modal */
     .modal-overlay {
         position: fixed;
@@ -482,9 +500,10 @@
       <div id="slot4-cards" class="cards"></div>
     </section>
 
-    <section>
+    <section id="completed-section">
       <div class="slot-title"><i class="fas fa-check-circle"></i> Riwayat Orderan Selesai</div>
       <div id="completed-cards" class="cards"></div>
+      <button class="load-more-btn" id="load-more-btn" style="display:none;">Muat Lebih Banyak</button>
     </section>
   </div>
   
@@ -503,6 +522,8 @@
 
   <script>
     let deliveryData = []; 
+    let completedItemsShown = 12; // Jumlah default item yang ditampilkan
+    const itemsPerLoad = 12; // Jumlah item tambahan yang dimuat setiap kali
 
     async function loadDeliveryData() {
         try {
@@ -526,6 +547,7 @@
     const slot3Cards = document.getElementById('slot3-cards');
     const slot4Cards = document.getElementById('slot4-cards');
     const completedCards = document.getElementById('completed-cards');
+    const loadMoreBtn = document.getElementById('load-more-btn');
     const orderModal = document.getElementById('order-modal');
     const closeModalButton = document.getElementById('close-modal');
     const modalDetails = document.getElementById('modal-details');
@@ -540,12 +562,38 @@
     function renderCards(searchTerm = '') {
       [slot1Cards, slot2Cards, slot3Cards, slot4Cards, completedCards].forEach(el => el.innerHTML = '');
 
+      const term = searchTerm.toLowerCase();
       const filteredData = deliveryData.filter(item => {
-        const term = searchTerm.toLowerCase();
         return item.name.toLowerCase().includes(term) || String(item.order).includes(term) || String(item.send).includes(term);
       });
 
-      filteredData.forEach(item => {
+      const pendingData = filteredData.filter(item => item.slot !== 'completed' && item.send < item.order && item.statusOverride !== 'fail');
+      const completedData = filteredData.filter(item => item.slot === 'completed' || item.send >= item.order || item.statusOverride === 'fail');
+
+      // Render pending cards (Slots 1-4)
+      pendingData.forEach(item => {
+        const card = createCardElement(item);
+        if (item.slot === 1) slot1Cards.appendChild(card);
+        else if (item.slot === 2) slot2Cards.appendChild(card);
+        else if (item.slot === 3) slot3Cards.appendChild(card);
+        else if (item.slot === 4) slot4Cards.appendChild(card);
+      });
+
+      // Render completed cards with "load more" logic
+      const completedToShow = completedData.slice(0, completedItemsShown);
+      completedToShow.forEach(item => {
+        completedCards.appendChild(createCardElement(item));
+      });
+
+      // Show/hide "load more" button
+      if (completedData.length > completedItemsShown) {
+        loadMoreBtn.style.display = 'block';
+      } else {
+        loadMoreBtn.style.display = 'none';
+      }
+    }
+
+    function createCardElement(item) {
         const card = document.createElement('div');
         let statusClass = 'pending';
         let statusText = 'Proses';
@@ -575,15 +623,8 @@
             ${statusText}
           </div>
         `;
-
-        if (item.slot === 1) slot1Cards.appendChild(card);
-        else if (item.slot === 2) slot2Cards.appendChild(card);
-        else if (item.slot === 3) slot3Cards.appendChild(card);
-        else if (item.slot === 4) slot4Cards.appendChild(card);
-        else if (item.slot === 'completed') completedCards.appendChild(card);
-
         card.addEventListener('click', () => openOrderModal(item));
-      });
+        return card;
     }
 
     function updateStats() {
@@ -647,16 +688,28 @@
 
     // Event Listeners
     refreshButton.addEventListener('click', () => {
+        completedItemsShown = itemsPerLoad; // Reset jumlah item yang ditampilkan saat refresh
         loadDeliveryData();
         refreshButton.querySelector('i').classList.add('fa-spin');
         setTimeout(() => refreshButton.querySelector('i').classList.remove('fa-spin'), 1000);
     });
-    searchBox.addEventListener('keyup', (e) => renderCards(e.target.value));
+
+    searchBox.addEventListener('keyup', (e) => {
+        completedItemsShown = itemsPerLoad; // Reset jumlah item saat pencarian
+        renderCards(e.target.value);
+    });
+
     closeModalButton.addEventListener('click', closeOrderModal);
+
     orderModal.addEventListener('click', (e) => {
       if (e.target === orderModal) {
         closeOrderModal();
       }
+    });
+
+    loadMoreBtn.addEventListener('click', () => {
+        completedItemsShown += itemsPerLoad;
+        renderCards(searchBox.value);
     });
 
     // Pemuatan Awal
