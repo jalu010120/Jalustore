@@ -2,42 +2,33 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard Pengiriman Heart - JaluStore</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    /* Sky Chibi Theme - Enhanced */
-    :root {
-        --sky-blue-light: #C0E8F9;
-        --sky-blue-medium: #87CEEB;
-        --sky-pink-light: #FFDDE1;
-        --sky-yellow-light: #FFF8DC;
-        --sky-purple-soft: #E0BBE4;
-        --sky-orange-pastel: #FFD3B6;
-        --sky-green-pastel: #DCEDC1;
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-        --bg-color-overlay: rgba(255, 255, 255, 0.85);
+  <style>
+    /* Global Styles */
+    :root {
+        --primary-color: #8A2BE2;
+        --secondary-color: #FF9A9E;
+        --accent-color: #64B5F6;
         --text-color: #5D5D7A;
-        --heading-color: #8A2BE2;
         --card-bg: rgba(255, 255, 255, 0.95);
         --card-border: rgba(180, 200, 255, 0.6);
-        --slot-gradient: linear-gradient(135deg, #FF9A9E 0%, #FAD0C4 100%);
-        
+        --bg-overlay: rgba(255, 255, 255, 0.85);
+        --shadow-light: 0 4px 20px rgba(0,0,0,0.08);
+        --shadow-dark: 0 12px 30px rgba(0,0,0,0.15);
+
         --status-done-bg: #A8E6CF;
         --status-done-text: #1E6F5C;
         --status-fail-bg: #FFAAA5;
         --status-fail-text: #B73E3E;
         --status-pending-bg: #FFD3B6;
         --status-pending-text: #D46B08;
-
-        --progress-bar-bg: rgba(200, 230, 250, 0.7);
-        --progress-fill-color: #64B5F6;
-
-        --soft-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        --inner-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
     }
-
+    
     * { box-sizing: border-box; }
     body {
         font-family: 'Poppins', sans-serif;
@@ -50,33 +41,8 @@
         overflow-x: hidden;
     }
     
-    /* Floating Clouds Background */
-    .clouds {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: -1;
-    }
-    
-    .cloud {
-        position: absolute;
-        background: white;
-        border-radius: 50%;
-        opacity: 0.7;
-        animation: floatCloud linear infinite;
-    }
-    
-    @keyframes floatCloud {
-        0% { transform: translateX(0) translateY(0); }
-        50% { transform: translateX(50px) translateY(20px); }
-        100% { transform: translateX(0) translateY(0); }
-    }
-    
     .overlay {
-        background-color: var(--bg-color-overlay);
+        background-color: var(--bg-overlay);
         min-height: 100vh;
         padding: 2rem;
         display: flex;
@@ -86,192 +52,92 @@
         z-index: 1;
     }
 
-    /* Header Section */
+    /* Header & Title */
     .header-section {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
         width: 100%;
         max-width: 900px;
-        margin-bottom: 2rem;
+        text-align: center;
+        margin-bottom: 2.5rem;
     }
 
     #live-time {
-        text-align: center;
         font-size: 1.1rem;
-        margin-bottom: 1.5rem;
-        color: var(--heading-color);
-        letter-spacing: 1px;
         font-weight: 600;
+        color: var(--primary-color);
         background: rgba(255, 255, 255, 0.8);
         padding: 0.5rem 1.5rem;
         border-radius: 25px;
-        box-shadow: var(--soft-shadow);
-        animation: pulseTime 1.5s infinite alternate;
-        position: relative;
-        overflow: hidden;
+        box-shadow: var(--shadow-light);
+        display: inline-block;
+        margin-bottom: 1.5rem;
+        transition: transform 0.3s ease;
     }
     
-    #live-time::after {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: linear-gradient(
-            to bottom right,
-            rgba(255,255,255,0) 45%,
-            rgba(255,255,255,0.8) 50%,
-            rgba(255,255,255,0) 55%
-        );
-        transform: rotate(30deg);
-        animation: shine 3s infinite;
-    }
-    
-    @keyframes shine {
-        0% { transform: translateX(-100%) rotate(30deg); }
-        100% { transform: translateX(100%) rotate(30deg); }
-    }
-
-    @keyframes pulseTime {
-        from { transform: scale(1); box-shadow: 0 4px 15px rgba(138, 43, 226, 0.2); }
-        to { transform: scale(1.03); box-shadow: 0 6px 20px rgba(138, 43, 226, 0.3); }
+    #live-time:hover {
+      transform: translateY(-2px);
     }
 
     h1 {
         font-family: 'Fredoka', sans-serif;
-        text-align: center;
-        color: var(--heading-color);
-        margin-bottom: 1.5rem;
+        color: var(--primary-color);
+        font-size: clamp(2rem, 5vw, 2.8rem);
+        margin-top: 0;
+        margin-bottom: 0.5rem;
         text-shadow: 2px 2px 7px rgba(0,0,0,0.1);
-        font-size: 2.8rem;
-        letter-spacing: 2px;
-        line-height: 1.2;
-        position: relative;
-        padding: 0 1rem;
     }
     
-    h1::before, h1::after {
-        content: '✨';
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 1.5rem;
-        animation: twinkle 2s infinite alternate;
-    }
-    
-    h1::before { left: -10px; }
-    h1::after { right: -10px; }
-    
-    @keyframes twinkle {
-        0% { opacity: 0.3; transform: translateY(-50%) scale(0.8); }
-        100% { opacity: 1; transform: translateY(-50%) scale(1.1); }
-    }
-
     h1 em {
         font-family: 'Pacifico', cursive;
         display: block;
-        font-size: 0.7em;
+        font-size: 0.6em;
         font-style: normal;
         color: var(--text-color);
         opacity: 0.8;
-        margin-top: 0.5rem;
     }
 
-    /* Action Buttons Container */
+    /* Actions & Search */
     .action-buttons {
         display: flex;
-        gap: 1rem;
+        justify-content: center;
+        gap: 1.5rem;
         margin-bottom: 2rem;
         flex-wrap: wrap;
-        justify-content: center;
     }
-
-    /* Catalog Button - Sky Style */
-    .catalog-button, .refresh-button {
+    
+    .btn {
         display: inline-flex;
         align-items: center;
-        justify-content: center;
-        background: linear-gradient(45deg, #FF9A9E, #FAD0C4);
-        color: white;
         padding: 0.8rem 2rem;
         border-radius: 30px;
         text-decoration: none;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         font-weight: 600;
-        box-shadow: 0 5px 15px rgba(255, 154, 158, 0.4);
-        transition: all 0.3s ease;
-        letter-spacing: 1px;
-        text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-        position: relative;
-        overflow: hidden;
         border: none;
         cursor: pointer;
+        transition: all 0.3s ease;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .btn-primary {
+        background: linear-gradient(45deg, var(--secondary-color), #FAD0C4);
+        color: white;
+        box-shadow: 0 5px 15px rgba(255, 154, 158, 0.4);
     }
     
-    .refresh-button {
-        background: linear-gradient(45deg, #64B5F6, #87CEEB);
+    .btn-secondary {
+        background: linear-gradient(45deg, var(--accent-color), #87CEEB);
+        color: white;
         box-shadow: 0 5px 15px rgba(100, 181, 246, 0.4);
     }
     
-    .catalog-button::before, .refresh-button::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-            90deg,
-            transparent,
-            rgba(255,255,255,0.4),
-            transparent
-        );
-        transition: all 0.5s;
-    }
-    
-    .catalog-button:hover, .refresh-button:hover {
+    .btn:hover {
         transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba(255, 154, 158, 0.6);
-    }
-    
-    .refresh-button:hover {
-        box-shadow: 0 8px 25px rgba(100, 181, 246, 0.6);
-    }
-    
-    .catalog-button:hover::before, .refresh-button:hover::before {
-        left: 100%;
-    }
-    
-    .catalog-button i, .refresh-button i {
-        margin-right: 0.5rem;
-        font-size: 1.3em;
-    }
-    
-    .catalog-button i {
-        animation: pulseHeart 1.5s infinite;
-    }
-    
-    .refresh-button i {
-        transition: transform 0.5s ease;
-    }
-    
-    .refresh-button:hover i {
-        transform: rotate(360deg);
-    }
-    
-    @keyframes pulseHeart {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.2); }
-        100% { transform: scale(1); }
     }
 
-    /* Search Box */
     .search-container {
         width: 100%;
         max-width: 500px;
-        margin-bottom: 2rem;
+        margin-bottom: 2.5rem;
         position: relative;
     }
     
@@ -282,13 +148,13 @@
         border: 2px solid var(--card-border);
         font-size: 1rem;
         background: var(--card-bg);
-        box-shadow: var(--soft-shadow);
+        box-shadow: var(--shadow-light);
         transition: all 0.3s ease;
     }
     
     .search-box:focus {
         outline: none;
-        border-color: var(--sky-blue-medium);
+        border-color: var(--accent-color);
         box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.3);
     }
     
@@ -301,31 +167,37 @@
         opacity: 0.6;
     }
 
-    /* Stats Cards */
+    /* Stats Section */
     .stats-container {
         display: flex;
         gap: 1rem;
-        margin-bottom: 2rem;
         flex-wrap: wrap;
         justify-content: center;
         width: 100%;
+        margin-bottom: 2.5rem;
     }
     
     .stat-card {
         background: var(--card-bg);
         border-radius: 15px;
-        padding: 1rem 1.5rem;
+        padding: 1.2rem 1.5rem;
         min-width: 150px;
         text-align: center;
-        box-shadow: var(--soft-shadow);
+        box-shadow: var(--shadow-light);
         border: 2px solid var(--card-border);
+        flex: 1 1 150px;
+        transition: transform 0.3s ease;
     }
     
+    .stat-card:hover {
+      transform: translateY(-3px);
+    }
+
     .stat-value {
-        font-size: 1.8rem;
+        font-size: 2rem;
         font-weight: 700;
         margin-bottom: 0.3rem;
-        color: var(--heading-color);
+        color: var(--primary-color);
     }
     
     .stat-label {
@@ -334,69 +206,33 @@
         opacity: 0.8;
     }
 
+    /* Card Sections */
     section {
         margin-bottom: 3rem;
         width: 100%;
         max-width: 900px;
-        position: relative;
     }
     
-    section::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 2px;
-        background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.3), transparent);
-    }
-
     .slot-title {
         font-size: 1.5rem;
         font-weight: 700;
-        background: var(--slot-gradient);
+        background: linear-gradient(135deg, var(--secondary-color) 0%, #FAD0C4 100%);
         color: white;
         padding: 0.8rem 2rem;
         border-radius: 30px;
         margin-bottom: 1.5rem;
         display: inline-flex;
         align-items: center;
-        box-shadow: var(--soft-shadow);
+        box-shadow: var(--shadow-light);
         text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
-        transition: all 0.3s ease;
-        letter-spacing: 1px;
-        position: relative;
-        overflow: hidden;
+        transition: transform 0.3s ease;
     }
     
     .slot-title i {
         margin-right: 0.5rem;
         font-size: 1.2em;
     }
-    
-    .slot-title::after {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: linear-gradient(
-            to bottom right,
-            rgba(255,255,255,0) 45%,
-            rgba(255,255,255,0.5) 50%,
-            rgba(255,255,255,0) 55%
-        );
-        transform: rotate(30deg);
-        animation: shine 3s infinite;
-        opacity: 0.5;
-    }
 
-    .slot-title:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba(255, 154, 158, 0.4);
-    }
-    
     .cards {
         display: flex;
         flex-wrap: wrap;
@@ -408,115 +244,35 @@
         background: var(--card-bg);
         border: 2px solid var(--card-border);
         border-radius: 18px;
-        padding: 1.2rem 1.5rem;
-        min-width: 190px;
+        padding: 1.5rem;
         flex: 1 1 250px;
-        box-shadow: var(--soft-shadow);
-        transition: all 0.3s ease-out;
+        box-shadow: var(--shadow-light);
+        transition: all 0.3s ease;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        position: relative;
-        overflow: hidden;
-        z-index: 1;
-    }
-    
-    .card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: radial-gradient(circle at 80% 20%, rgba(255,255,255,0.8) 0%, transparent 30%);
-        z-index: -1;
-        opacity: 0;
-        transition: opacity 0.3s ease;
+        cursor: pointer;
     }
     
     .card:hover {
-        transform: translateY(-5px) scale(1.02);
-        box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-dark);
     }
     
-    .card:hover::before {
-        opacity: 1;
-    }
-    
-    /* Chibi Character Placeholders */
-    .card::after {
-        content: '';
-        position: absolute;
-        width: 60px;
-        height: 60px;
-        background-size: contain;
-        background-repeat: no-repeat;
-        opacity: 0.1;
-        pointer-events: none;
-        z-index: -1;
-        transition: all 0.3s ease;
-    }
-    
-    .card:nth-child(odd)::after {
-        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="40" r="30" fill="%238A2BE2"/><circle cx="35" cy="35" r="5" fill="white"/><circle cx="65" cy="35" r="5" fill="white"/><path d="M40 55 Q50 65 60 55" stroke="white" stroke-width="3" fill="none"/></svg>');
-        bottom: -15px;
-        right: -15px;
-    }
-    
-    .card:nth-child(even)::after {
-        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="40" r="30" fill="%23FF9A9E"/><circle cx="35" cy="35" r="5" fill="white"/><circle cx="65" cy="35" r="5" fill="white"/><path d="M40 55 Q50 65 60 55" stroke="white" stroke-width="3" fill="none"/></svg>');
-        top: -15px;
-        left: -15px;
-    }
-    
-    .card:hover::after {
-        opacity: 0.2;
-        transform: scale(1.1);
-    }
-    
-    .card.done::after {
-        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20 50 L40 70 L80 30" stroke="%231E6F5C" stroke-width="10" stroke-linecap="round" fill="none"/></svg>');
-        opacity: 0.15;
-    }
-    
-    .card.fail::after {
-        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M30 30 L70 70 M70 30 L30 70" stroke="%23B73E3E" stroke-width="8" stroke-linecap="round" fill="none"/></svg>');
-        opacity: 0.15;
-    }
-
-    .name {
+    .card .name {
         font-size: 1.2em;
         font-weight: 700;
         margin-bottom: 0.5em;
-        color: #5D5D7A;
-        position: relative;
-        display: inline-block;
+        color: var(--text-color);
     }
     
-    .name::after {
-        content: '';
-        position: absolute;
-        bottom: -3px;
-        left: 0;
-        width: 100%;
-        height: 2px;
-        background: linear-gradient(90deg, var(--sky-blue-light), var(--sky-pink-light));
-        transform: scaleX(0);
-        transform-origin: left;
-        transition: transform 0.3s ease;
-    }
-    
-    .card:hover .name::after {
-        transform: scaleX(1);
-    }
-
-    .number {
-        font-size: 1.05em;
-        margin-bottom: 0.8em;
+    .card .number {
+        font-size: 1em;
+        margin-bottom: 1em;
         color: #666;
     }
-
-    .status {
+    
+    .card .status {
         margin-top: auto;
         font-size: 0.95em;
         font-weight: 800;
@@ -524,114 +280,42 @@
         align-items: center;
         border-radius: 15px;
         padding: 0.3em 0.8em;
-        letter-spacing: 0.8px;
-        align-self: flex-start;
-        box-shadow: var(--inner-shadow);
         text-transform: uppercase;
-        transition: all 0.3s ease;
+        align-self: flex-start;
     }
     
     .status i {
-        margin-right: 0.3em;
-        font-size: 1.1em;
+        margin-right: 0.5em;
     }
 
-    /* Status Colors */
     .status.done { 
         background: var(--status-done-bg); 
-        color: var(--status-done-text);
+        color: var(--status-done-text); 
     }
     .status.fail { 
         background: var(--status-fail-bg); 
-        color: var(--status-fail-text);
+        color: var(--status-fail-text); 
     }
     .status.pending { 
         background: var(--status-pending-bg); 
-        color: var(--status-pending-text);
-        animation: pulseStatus 2s infinite;
-    }
-    
-    @keyframes pulseStatus {
-        0% { box-shadow: 0 0 0 0 rgba(255, 211, 182, 0.7); }
-        70% { box-shadow: 0 0 0 10px rgba(255, 211, 182, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(255, 211, 182, 0); }
+        color: var(--status-pending-text); 
     }
 
-    /* Progress Bar Styles */
-    .progress-bar-container {
-        height: 10px;
-        background-color: var(--progress-bar-bg);
-        border-radius: 5px;
-        margin-top: 0.8em;
+    .progress-bar {
+        height: 8px;
+        background-color: #e0e0e0;
+        border-radius: 4px;
+        margin-top: 1em;
         overflow: hidden;
-        box-shadow: var(--inner-shadow);
-        display: none;
     }
 
-    .card.pending .progress-bar-container,
-    .card.fail .progress-bar-container {
-        display: block;
-    }
-
-    .progress-bar-fill {
+    .progress-fill {
         height: 100%;
-        background: linear-gradient(90deg, var(--progress-fill-color), #A8E6CF);
-        border-radius: 5px;
+        background: linear-gradient(90deg, var(--accent-color), var(--status-done-bg));
         transition: width 0.7s ease-in-out;
-        position: relative;
     }
 
-    .progress-bar-fill::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.1) 100%);
-        opacity: 0;
-        animation: shimmer 2s infinite linear;
-    }
-
-    @keyframes shimmer {
-        0% { opacity: 0; transform: translateX(-100%); }
-        50% { opacity: 1; transform: translateX(100%); }
-        100% { opacity: 0; transform: translateX(100%); }
-    }
-
-    /* Floating Elements Animation */
-    .floating-elements {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: -1;
-    }
-    
-    .heart, .star {
-        position: absolute;
-        opacity: 0;
-        animation: floatUp 4s linear infinite;
-    }
-    
-    .heart {
-        color: #FF9A9E;
-    }
-    
-    .star {
-        color: #FFD700;
-    }
-    
-    @keyframes floatUp {
-        0% { transform: translateY(100vh) scale(0) rotate(0deg); opacity: 0; }
-        10% { opacity: 0.7; }
-        90% { opacity: 0.7; }
-        100% { transform: translateY(-100px) scale(1) rotate(360deg); opacity: 0; }
-    }
-
-    /* Order Details Modal */
+    /* Modal Styles */
     .modal-overlay {
         position: fixed;
         top: 0;
@@ -656,10 +340,10 @@
     .modal-content {
         background: var(--card-bg);
         border-radius: 20px;
-        padding: 2rem;
+        padding: 2.5rem;
         max-width: 500px;
         width: 90%;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        box-shadow: var(--shadow-dark);
         transform: translateY(20px);
         transition: all 0.3s ease;
         position: relative;
@@ -672,37 +356,34 @@
     .close-modal {
         position: absolute;
         top: 1rem;
-        right: 1rem;
-        background: none;
-        border: none;
-        font-size: 1.5rem;
+        right: 1.5rem;
+        font-size: 2rem;
+        color: #888;
         cursor: pointer;
-        color: var(--text-color);
-        opacity: 0.6;
-        transition: opacity 0.2s;
+        transition: color 0.2s;
     }
     
     .close-modal:hover {
-        opacity: 1;
+        color: #333;
     }
     
     .modal-title {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
         font-weight: 700;
-        margin-bottom: 1.5rem;
-        color: var(--heading-color);
+        color: var(--primary-color);
         text-align: center;
+        margin-bottom: 2rem;
     }
     
     .modal-details {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-        margin-bottom: 1.5rem;
+        gap: 1.5rem;
     }
     
     .detail-item {
-        margin-bottom: 0.8rem;
+        display: flex;
+        flex-direction: column;
     }
     
     .detail-label {
@@ -713,7 +394,7 @@
     }
     
     .detail-value {
-        font-size: 1rem;
+        font-size: 1.1rem;
         font-weight: 600;
     }
     
@@ -721,141 +402,58 @@
         display: flex;
         justify-content: center;
         gap: 1rem;
-        margin-top: 1.5rem;
-    }
-    
-    .modal-button {
-        padding: 0.6rem 1.2rem;
-        border-radius: 20px;
-        border: none;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s ease;
-    }
-    
-    .modal-button.primary {
-        background: linear-gradient(45deg, #FF9A9E, #FAD0C4);
-        color: white;
-    }
-    
-    .modal-button.secondary {
-        background: var(--card-bg);
-        border: 2px solid var(--card-border);
-        color: var(--text-color);
-    }
-    
-    .modal-button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        margin-top: 2rem;
     }
 
     /* Responsive Design */
     @media (max-width: 768px) {
-        .overlay {padding: 1.5rem;}
-        h1 { font-size: 2.2rem; }
-        .action-buttons { margin-bottom: 1.5rem; }
-        .catalog-button, .refresh-button { 
-            font-size: 1.1rem; 
-            padding: 0.7rem 1.5rem;
-        }
+        .overlay { padding: 1.5rem; }
+        h1 { font-size: 2rem; }
+        .btn { padding: 0.7rem 1.5rem; font-size: 1rem; }
         .slot-title { font-size: 1.3rem; padding: 0.7rem 1.5rem; }
         .cards { gap: 1rem; }
-        .card { min-width: 150px; flex: 1 1 200px; padding: 1rem 1.2rem; }
-        .name { font-size: 1.1em; }
-        .number { font-size: 1em; }
-        .status { font-size: 0.85em; padding: 0.2em 0.7em; }
+        .card { padding: 1.2rem; }
         .stats-container { gap: 0.8rem; }
-        .stat-card { min-width: 120px; padding: 0.8rem 1rem; }
-        .stat-value { font-size: 1.5rem; }
+        .stat-card { flex: 1 1 120px; padding: 1rem; }
+        .stat-value { font-size: 1.8rem; }
+        .modal-details { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 500px) {
-        .overlay {padding: 1rem;}
-        h1 { font-size: 1.8rem; margin-bottom: 1.5rem;}
-        h1 em { font-size: 0.8em; }
-        .action-buttons { 
-            flex-direction: column;
-            width: 100%;
-            max-width: 300px;
-        }
-        .catalog-button, .refresh-button { 
-            font-size: 1rem; 
-            padding: 0.6rem 1.2rem;
-            width: 100%;
-        }
-        .slot-title { 
-            font-size: 1.2rem; 
-            padding: 0.6rem 1.2rem; 
-            border-radius: 25px; 
-        }
-        .cards { flex-direction: column; gap: 0.8rem; }
-        .card { 
-            min-width: unset; 
-            padding: 0.9rem 1.1rem; 
-            border-radius: 15px; 
-        }
-        .name { font-size: 1em; }
-        .number { font-size: 0.9em; }
-        .status { 
-            font-size: 0.8em; 
-            padding: 0.15em 0.6em; 
-            border-radius: 12px; 
-        }
-        #live-time { font-size: 1rem; padding: 0.4rem 0.8rem; }
-        .modal-details {
-            grid-template-columns: 1fr;
-        }
-        .stat-card {
-            flex: 1 1 100px;
-            padding: 0.6rem 0.8rem;
-        }
-        .stat-value {
-            font-size: 1.3rem;
-        }
+        h1 { font-size: 1.8rem; }
+        .action-buttons { flex-direction: column; width: 100%; max-width: 300px; }
+        .btn { width: 100%; }
+        .stats-container { flex-direction: column; }
+        .stat-card { min-width: unset; width: 100%; }
     }
     
     /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-        width: 8px;
-        background: #f0f8ff;
-    }
-    
-    ::-webkit-scrollbar-thumb {
-        background: linear-gradient(#FF9A9E, #FAD0C4);
-        border-radius: 8px;
-    }
-    
-    ::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(#FF7B8B, #F8C3B8);
-    }
+    ::-webkit-scrollbar { width: 8px; background: #f0f8ff; }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(var(--secondary-color), #FAD0C4); border-radius: 8px; }
+    ::-webkit-scrollbar-thumb:hover { background: linear-gradient(#FF7B8B, #F8C3B8); }
   </style>
 </head>
 <body>
-  <div class="clouds" id="clouds"></div>
-  
-  <div class="floating-elements" id="floating-elements"></div>
-  
   <div class="overlay">
     <div class="header-section">
       <div id="live-time"></div>
       <h1>📦 Laporan Pengiriman Heart <br><em>JaluStore</em></h1>
       
       <div class="action-buttons">
-        <a href="https://jalustoreid.netlify.app/" class="catalog-button" target="_blank">
+        <a href="https://jalustoreid.netlify.app/" class="btn btn-primary" target="_blank">
           <i class="fas fa-heart"></i> Beli Heart Sekarang!
         </a>
-        <button class="refresh-button" id="refresh-button">
+        <button class="btn btn-secondary" id="refresh-button">
           <i class="fas fa-sync-alt"></i> Refresh Data
         </button>
       </div>
       
       <div class="search-container">
         <i class="fas fa-search search-icon"></i>
-        <input type="text" class="search-box" id="search-box" placeholder="Cari nama atau nomor order...">
+        <input type="text" class="search-box" id="search-box" placeholder="Cari nama atau nomor order..." />
       </div>
       
-      <div class="stats-container" id="stats-container">
-        </div>
+      <div class="stats-container" id="stats-container"></div>
     </div>
 
     <section>
@@ -886,36 +484,26 @@
   
   <div class="modal-overlay" id="order-modal">
     <div class="modal-content">
-      <button class="close-modal" id="close-modal">&times;</button>
+      <span class="close-modal" id="close-modal">&times;</span>
       <h3 class="modal-title">Detail Order</h3>
-      <div class="modal-details" id="modal-details">
-        </div>
+      <div class="modal-details" id="modal-details"></div>
       <div class="modal-actions">
-        <button class="modal-button primary" id="whatsapp-button">
+        <button class="btn btn-primary" id="whatsapp-button">
           <i class="fab fa-whatsapp"></i> Hubungi via WhatsApp
-        </button>
-        <button class="modal-button secondary" id="close-modal-btn">
-          Tutup
         </button>
       </div>
     </div>
   </div>
 
   <script>
-    // Sample data - in a real app, this would come from an API
-    // This part should dynamically load from js/data.js
-    // For now, it's a placeholder. The actual data will come from the external file.
     let deliveryData = []; 
 
-    // Function to load data from js/data.js
     async function loadDeliveryData() {
         try {
             const response = await fetch('js/data.js');
             const scriptText = await response.text();
-            // Create a function to wrap the script text and execute it
             const dataFunction = new Function(scriptText + '; return deliveryData;');
             deliveryData = dataFunction();
-            console.log("Data loaded:", deliveryData);
             renderCards();
             updateStats();
         } catch (error) {
@@ -923,166 +511,89 @@
         }
     }
 
-    // DOM Elements
     const liveTimeEl = document.getElementById('live-time');
     const refreshButton = document.getElementById('refresh-button');
     const searchBox = document.getElementById('search-box');
     const statsContainer = document.getElementById('stats-container');
-
     const slot1Cards = document.getElementById('slot1-cards');
     const slot2Cards = document.getElementById('slot2-cards');
     const slot3Cards = document.getElementById('slot3-cards');
     const slot4Cards = document.getElementById('slot4-cards');
     const completedCards = document.getElementById('completed-cards');
-
     const orderModal = document.getElementById('order-modal');
     const closeModalButton = document.getElementById('close-modal');
-    const closeModalBtn = document.getElementById('close-modal-btn');
     const modalDetails = document.getElementById('modal-details');
     const whatsappButton = document.getElementById('whatsapp-button');
 
-    // Time update function
     function updateLiveTime() {
       const now = new Date();
       const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
       liveTimeEl.textContent = now.toLocaleDateString('id-ID', options);
     }
 
-    // Render cards function
     function renderCards(searchTerm = '') {
-      slot1Cards.innerHTML = '';
-      slot2Cards.innerHTML = '';
-      slot3Cards.innerHTML = '';
-      slot4Cards.innerHTML = '';
-      completedCards.innerHTML = '';
+      [slot1Cards, slot2Cards, slot3Cards, slot4Cards, completedCards].forEach(el => el.innerHTML = '');
 
       const filteredData = deliveryData.filter(item => {
-        const nameMatch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
-        const orderMatch = String(item.order).includes(searchTerm);
-        const sendMatch = String(item.send).includes(searchTerm);
-        return nameMatch || orderMatch || sendMatch;
+        const term = searchTerm.toLowerCase();
+        return item.name.toLowerCase().includes(term) || String(item.order).includes(term) || String(item.send).includes(term);
       });
 
       filteredData.forEach(item => {
         const card = document.createElement('div');
-        let statusClass = '';
-        let statusText = '';
-        let statusIcon = '';
-        let progress = 0;
-
-        // Calculate progress only for non-completed items
-        if (item.slot !== 'completed') {
-            progress = (item.send / item.order) * 100;
-            if (progress >= 100) {
-                statusClass = 'done';
-                statusText = 'Selesai';
-                statusIcon = '✅';
-            } else if (item.statusOverride === 'fail') {
-                statusClass = 'fail';
-                statusText = 'Gagal';
-                statusIcon = '❌';
-            } else if (item.statusOverride === 'pending' || progress < 100) { // Explicitly pending or still in progress
-                statusClass = 'pending';
-                statusText = 'Proses';
-                statusIcon = '🔄';
-            }
-        } else { // Already in completed section
-            statusClass = 'done';
-            statusText = 'Selesai';
-            statusIcon = '✅';
+        let statusClass = 'pending';
+        let statusText = 'Proses';
+        let statusIcon = 'fa-hourglass-half';
+        let progress = (item.send / item.order) * 100;
+        
+        if (item.statusOverride === 'fail') {
+          statusClass = 'fail';
+          statusText = 'Gagal';
+          statusIcon = 'fa-times-circle';
+        } else if (item.slot === 'completed' || item.send >= item.order) {
+          statusClass = 'done';
+          statusText = 'Selesai';
+          statusIcon = 'fa-check-circle';
         }
 
-        // Override status if explicitly set in data (e.g., for failed/pending but send=order cases)
-        if (item.statusOverride) {
-            if (item.statusOverride === 'fail') {
-                statusClass = 'fail';
-                statusText = 'Gagal';
-                statusIcon = '❌';
-            } else if (item.statusOverride === 'pending') {
-                statusClass = 'pending';
-                statusText = 'Proses';
-                statusIcon = '🔄';
-            }
-        }
-
+        const progressHtml = (statusClass === 'pending' || statusClass === 'fail') ? 
+          `<div class="progress-bar"><div class="progress-fill" style="width: ${progress.toFixed(0)}%;"></div></div>` : '';
 
         card.classList.add('card', statusClass);
-        card.dataset.id = item.id; // Assuming an ID for modal
-        card.dataset.name = item.name;
-        card.dataset.order = item.order;
-        card.dataset.send = item.send;
-        card.dataset.slot = item.slot;
-        card.dataset.status = statusText; // Use the derived status text
-
-        let progressHtml = '';
-        if (statusClass === 'pending' || statusClass === 'fail') {
-            progressHtml = `
-                <div class="progress-bar-container">
-                    <div class="progress-bar-fill" style="width: ${progress.toFixed(0)}%;"></div>
-                </div>
-            `;
-        }
-
         card.innerHTML = `
           <div class="name">${item.name}</div>
           <div class="number">Order: ${item.order} | Terkirim: ${item.send}</div>
           ${progressHtml}
           <div class="status ${statusClass}">
-            <i class="fas ${statusIcon === '✅' ? 'fa-check-circle' : statusIcon === '❌' ? 'fa-times-circle' : 'fa-hourglass-half'}"></i>
+            <i class="fas ${statusIcon}"></i>
             ${statusText}
           </div>
         `;
 
-        if (item.slot === 1) {
-          slot1Cards.appendChild(card);
-        } else if (item.slot === 2) {
-          slot2Cards.appendChild(card);
-        } else if (item.slot === 3) {
-          slot3Cards.appendChild(card);
-        } else if (item.slot === 4) {
-          slot4Cards.appendChild(card);
-        } else if (item.slot === 'completed') {
-          completedCards.appendChild(card);
-        }
+        if (item.slot === 1) slot1Cards.appendChild(card);
+        else if (item.slot === 2) slot2Cards.appendChild(card);
+        else if (item.slot === 3) slot3Cards.appendChild(card);
+        else if (item.slot === 4) slot4Cards.appendChild(card);
+        else if (item.slot === 'completed') completedCards.appendChild(card);
 
         card.addEventListener('click', () => openOrderModal(item));
       });
     }
 
-    // Update stats function
     function updateStats() {
       const totalOrders = deliveryData.length;
-      const totalCompleted = deliveryData.filter(item => 
-          (item.slot === 'completed' || (item.send >= item.order && item.statusOverride !== 'fail'))
-      ).length;
-      const totalPending = deliveryData.filter(item => 
-          (item.slot !== 'completed' && item.send < item.order && item.statusOverride !== 'fail')
-      ).length;
-      const totalFailed = deliveryData.filter(item => 
-          (item.slot !== 'completed' && item.statusOverride === 'fail')
-      ).length;
+      const totalCompleted = deliveryData.filter(item => item.slot === 'completed' || (item.send >= item.order && item.statusOverride !== 'fail')).length;
+      const totalPending = deliveryData.filter(item => item.slot !== 'completed' && item.send < item.order && item.statusOverride !== 'fail').length;
+      const totalFailed = deliveryData.filter(item => item.statusOverride === 'fail').length;
 
       statsContainer.innerHTML = `
-        <div class="stat-card">
-          <div class="stat-value">${totalOrders}</div>
-          <div class="stat-label">Total Order</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">${totalCompleted}</div>
-          <div class="stat-label">Selesai</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">${totalPending}</div>
-          <div class="stat-label">Proses</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">${totalFailed}</div>
-          <div class="stat-label">Gagal</div>
-        </div>
+        <div class="stat-card"><div class="stat-value">${totalOrders}</div><div class="stat-label">Total Order</div></div>
+        <div class="stat-card"><div class="stat-value">${totalCompleted}</div><div class="stat-label">Selesai</div></div>
+        <div class="stat-card"><div class="stat-value">${totalPending}</div><div class="stat-label">Proses</div></div>
+        <div class="stat-card"><div class="stat-value">${totalFailed}</div><div class="stat-label">Gagal</div></div>
       `;
     }
 
-    // Modal functions
     function openOrderModal(item) {
       modalDetails.innerHTML = `
         <div class="detail-item">
@@ -1090,7 +601,7 @@
           <div class="detail-value">${item.name}</div>
         </div>
         <div class="detail-item">
-          <div class="detail-label">Jumlah Order</div>
+          <div class="detail-label">Order</div>
           <div class="detail-value">${item.order} Heart</div>
         </div>
         <div class="detail-item">
@@ -1101,33 +612,22 @@
           <div class="detail-label">Sisa</div>
           <div class="detail-value">${item.order - item.send} Heart</div>
         </div>
-        <div class="detail-item">
+        <div class="detail-item" style="grid-column: 1 / -1;">
           <div class="detail-label">Status</div>
           <div class="detail-value">${item.statusOverride === 'fail' ? 'Gagal' : (item.send >= item.order ? 'Selesai' : 'Proses')}</div>
         </div>
-        <div class="detail-item">
+        <div class="detail-item" style="grid-column: 1 / -1;">
           <div class="detail-label">Progress</div>
           <div class="detail-value">${((item.send / item.order) * 100).toFixed(2)}%</div>
         </div>
-        ${item.number ? `
-        <div class="detail-item" style="grid-column: 1 / -1;">
-          <div class="detail-label">Nomor Telepon</div>
-          <div class="detail-value">${item.number}</div>
-        </div>
-        ` : ''}
-        ${item.notes ? `
-        <div class="detail-item" style="grid-column: 1 / -1;">
-          <div class="detail-label">Catatan</div>
-          <div class="detail-value">${item.notes}</div>
-        </div>
-        ` : ''}
+        ${item.number ? `<div class="detail-item" style="grid-column: 1 / -1;"><div class="detail-label">Nomor Telepon</div><div class="detail-value">${item.number}</div></div>` : ''}
+        ${item.notes ? `<div class="detail-item" style="grid-column: 1 / -1;"><div class="detail-label">Catatan</div><div class="detail-value">${item.notes}</div></div>` : ''}
       `;
       
-      // WhatsApp button logic
       if (item.number) {
-        whatsappButton.style.display = 'inline-block';
         const whatsappLink = `https://wa.me/${item.number.replace(/\D/g, '')}?text=Halo%20${encodeURIComponent(item.name)},%20kami%20ingin%20menginformasikan%20status%20orderan%20heart%20Anda%20dengan%20jumlah%20order%20${item.order}%20dan%20telah%20terkirim%20${item.send}.%20Sisa%20pengiriman%20adalah%20${item.order - item.send}.%20Terima%20kasih!`;
-        whatsappButton.onclick = () => window.open(whatsappLink, '_blank');
+        whatsappButton.href = whatsappLink;
+        whatsappButton.style.display = 'inline-flex';
       } else {
         whatsappButton.style.display = 'none';
       }
@@ -1141,65 +641,22 @@
 
     // Event Listeners
     refreshButton.addEventListener('click', () => {
-        loadDeliveryData(); // Reload data from file
-        // Optionally, add a visual feedback for refresh
+        loadDeliveryData();
         refreshButton.querySelector('i').classList.add('fa-spin');
-        setTimeout(() => {
-            refreshButton.querySelector('i').classList.remove('fa-spin');
-        }, 1000);
+        setTimeout(() => refreshButton.querySelector('i').classList.remove('fa-spin'), 1000);
     });
     searchBox.addEventListener('keyup', (e) => renderCards(e.target.value));
     closeModalButton.addEventListener('click', closeOrderModal);
-    closeModalBtn.addEventListener('click', closeOrderModal);
     orderModal.addEventListener('click', (e) => {
       if (e.target === orderModal) {
         closeOrderModal();
       }
     });
 
-    // Cloud animation setup
-    const cloudsContainer = document.getElementById('clouds');
-    function createCloud() {
-        const cloud = document.createElement('div');
-        cloud.classList.add('cloud');
-        const size = Math.random() * 100 + 50; // 50 to 150px
-        cloud.style.width = `${size}px`;
-        cloud.style.height = `${size * 0.7}px`;
-        cloud.style.left = `${Math.random() * 100}%`;
-        cloud.style.top = `${Math.random() * 100}%`;
-        cloud.style.animationDuration = `${Math.random() * 30 + 20}s`; // 20-50s
-        cloud.style.filter = `blur(${Math.random() * 3}px)`;
-        cloudsContainer.appendChild(cloud);
-    }
-    for (let i = 0; i < 10; i++) { // 10 clouds
-        createCloud();
-    }
-
-    // Floating elements animation setup (hearts/stars)
-    const floatingElementsContainer = document.getElementById('floating-elements');
-    function createFloatingElement() {
-        const element = document.createElement('i');
-        element.classList.add(Math.random() > 0.5 ? 'fas' : 'far'); // solid or regular for hearts
-        element.classList.add(Math.random() > 0.5 ? 'fa-heart' : 'fa-star'); // hearts or stars
-        element.classList.add(Math.random() > 0.5 ? 'heart' : 'star');
-        element.style.left = `${Math.random() * 100}vw`;
-        element.style.fontSize = `${Math.random() * 1.5 + 0.8}rem`; // 0.8rem to 2.3rem
-        element.style.animationDuration = `${Math.random() * 5 + 3}s`; // 3-8s
-        element.style.animationDelay = `${Math.random() * 2}s`; // 0-2s delay
-        floatingElementsContainer.appendChild(element);
-
-        // Remove element after animation
-        element.addEventListener('animationend', () => {
-            element.remove();
-        });
-    }
-    setInterval(createFloatingElement, 500); // Create a new element every 0.5 seconds
-
-
-    // Initial render
+    // Initial load
     updateLiveTime();
     setInterval(updateLiveTime, 1000);
-    loadDeliveryData(); // Load data on initial page load
+    loadDeliveryData();
   </script>
 </body>
-  </html>
+</html>
