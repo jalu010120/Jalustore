@@ -34,7 +34,7 @@ const deliveryData = [
     { slot: 3, name: 'Saki', order: 120, send: 80, statusOverride: 'fail' },
     { slot: 3, name: 'Ian', order: 1100, send: 80 },
     { slot: 3, name: 'Lyn', order: 200, send: 20 }, // Pembeli baru
-    { slot: 3, name: 'Fia', order: 500, send: 380 },
+    { slot: 3, name: 'Fia', order: 800, send: 380 },
     
     // Slot 4
     { slot: 4, name: 'Fio2', order: 300, send: 80 },
