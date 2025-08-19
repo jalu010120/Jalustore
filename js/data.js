@@ -3,7 +3,7 @@
 const deliveryData = [
     // Slot 1
     { slot: 1, name: 'Ney', order: 5000, send: 3830 },
-    { slot: 1, name: 'Aelia', order: 1900, send: 1100, statusOverride: 'fail' },
+    { slot: 1, name: 'Aelia', order: 1900, send: 1100 },
     { slot: 1, name: 'Anna', order: 1080, send: 820 },
     { slot: 1, name: 'Tuna 2', order: 360, send: 280, statusOverride: 'fail' },
     { slot: 1, name: 'Unii', order: 400, send: 340 },
@@ -17,10 +17,10 @@ const deliveryData = [
     { slot: 2, name: 'Rachel', order: 400, send: 340, statusOverride: 'fail' },
     { slot: 2, name: 'Honey bear', order: 1400, send: 500 },
     { slot: 2, name: 'Cem', order: 660, send: 500 },
-    { slot: 2, name: 'Niz', order: 720, send: 540, statusOverride: 'fail' },
+    { slot: 2, name: 'Niz', order: 720, send: 540 },
     { slot: 2, name: 'Yulii', order: 400, send: 380 },
-    { slot: 2, name: 'Ira', order: 500, send: 300 },
-    { slot: 2, name: 'Rani', order: 420, send: 140, statusOverride: 'fail' },
+    { slot: 2, name: 'Ira', order: 500, send: 320 },
+    { slot: 2, name: 'Rani', order: 420, send: 140 },
     { slot: 2, name: 'Klara', order: 420, send: 180 },
     { slot: 2, name: 'Asha', order: 400, send: 180 },
     { slot: 2, name: 'Eliane', order: 400, send: 180 },
@@ -29,7 +29,6 @@ const deliveryData = [
     { slot: 3, name: 'Onde mande', order: 800, send: 240, statusOverride: 'fail' },
     { slot: 3, name: 'Lia', order: 400, send: 380 },
     { slot: 3, name: 'Rezz', order: 180, send: 160 },
-    { slot: 3, name: 'Kazuhime', order: 180, send: 180, statusOverride: 'done' },
     { slot: 3, name: 'Rendy', order: 1010, send: 180 },
     { slot: 3, name: 'Saki', order: 120, send: 100, statusOverride: 'fail' },
     { slot: 3, name: 'Ian', order: 1100, send: 120 },
@@ -42,6 +41,7 @@ const deliveryData = [
     // Riwayat Orderan Selesai
     { slot: 'completed', name: 'Lili', order: 360, send: 360 },
     { slot: 'completed', name: 'Fio', order: 180, send: 180 },
+    { slot: 'completed', name: 'Kazuhime', order: 180, send: 180 },
     { slot: 'completed', name: 'Feng', order: 230, send: 230 },
     { slot: 'completed', name: 'Aze', order: 570, send: 570 },
     { slot: 'completed', name: 'Cici', order: 100, send: 100 },
