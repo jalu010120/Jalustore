@@ -2,71 +2,52 @@
 
 const deliveryData = [
     // Slot 1
-    { slot: 1, name: 'Ney', order: 5000, send: 3830 },
-    { slot: 1, name: 'Aelia', order: 1900, send: 1100 },
-    { slot: 1, name: 'Anna', order: 1080, send: 820 },
+    { slot: 1, name: 'Ney', order: 5000, send: 3830, statusOverride: 'fail' },
+    { slot: 1, name: 'Aelia', order: 1900, send: 1100, statusOverride: 'fail' },
+    { slot: 1, name: 'Anna', order: 1080, send: 820, statusOverride: 'fail' }, // Status ❌ ditambahkan
     { slot: 1, name: 'Tuna 2', order: 360, send: 280, statusOverride: 'fail' },
-    { slot: 1, name: 'Unii', order: 400, send: 340 },
-    { slot: 1, name: 'Archa', order: 460, send: 360 },
-    { slot: 1, name: 'Zel', order: 340, send: 240 },
-    { slot: 1, name: 'Raine', order: 340, send: 240 },
+    { slot: 1, name: 'Unii', order: 400, send: 340, statusOverride: 'fail' }, // Status ❌ ditambahkan
+    { slot: 1, name: 'Archa', order: 460, send: 360, statusOverride: 'fail' }, // Status ❌ ditambahkan
+    { slot: 1, name: 'Zel', order: 340, send: 240, statusOverride: 'fail' }, // Status ❌ ditambahkan
+    { slot: 1, name: 'Raine', order: 340, send: 240, statusOverride: 'fail' }, // Status ❌ ditambahkan
 
     // Slot 2
     { slot: 2, name: 'Angel2', order: 600, send: 540, statusOverride: 'fail' },
     { slot: 2, name: 'Autumn', order: 850, send: 375, statusOverride: 'fail' },
-    { slot: 2, name: 'Rachel', order: 400, send: 340, statusOverride: 'fail' },
-    { slot: 2, name: 'Honey bear', order: 1400, send: 500 },
-    { slot: 2, name: 'Cem', order: 660, send: 500 },
-    { slot: 2, name: 'Niz', order: 720, send: 540 },
-    { slot: 2, name: 'Yulii', order: 400, send: 380 },
-    { slot: 2, name: 'Ira', order: 500, send: 320 },
-    { slot: 2, name: 'Rani', order: 420, send: 140 },
-    { slot: 2, name: 'Klara', order: 420, send: 180 },
-    { slot: 2, name: 'Asha', order: 400, send: 180 },
-    { slot: 2, name: 'Eliane', order: 400, send: 180 },
+    { slot: 2, name: 'Rachel', order: 400, send: 340, statusOverride: 'fail', isSpecial: true },
+    { slot: 2, name: 'Honey bear', order: 1400, send: 500, statusOverride: 'fail' }, // Status ❌ ditambahkan
+    { slot: 2, name: 'Cem', order: 660, send: 500, statusOverride: 'fail' }, // Status ❌ ditambahkan
+    { slot: 2, name: 'Niz', order: 720, send: 540, statusOverride: 'fail' },
+    { slot: 2, name: 'Yulii', order: 400, send: 380, statusOverride: 'fail' }, // Status ❌ ditambahkan
+    { slot: 2, name: 'Ira', order: 500, send: 320, statusOverride: 'fail' }, // Status ❌ ditambahkan
+    { slot: 2, name: 'Rani', order: 420, send: 140, statusOverride: 'fail' }, // Status ❌ ditambahkan
+    { slot: 2, name: 'Klara', order: 420, send: 180, statusOverride: 'fail' }, // Status ❌ ditambahkan
+    { slot: 2, name: 'Asha', order: 400, send: 180, statusOverride: 'fail' }, // Status ❌ ditambahkan
+    { slot: 2, name: 'Eliane', order: 400, send: 180, statusOverride: 'fail' }, // Status ❌ ditambahkan
 
     // Slot 3
     { slot: 3, name: 'Onde mande', order: 800, send: 240, statusOverride: 'fail' },
-    { slot: 3, name: 'Lia', order: 400, send: 380 },
-    { slot: 3, name: 'Rezz', order: 180, send: 160 },
-    { slot: 3, name: 'Rendy', order: 1010, send: 180 },
+    { slot: 3, name: 'Lia', order: 400, send: 380, statusOverride: 'fail' }, // Status ❌ ditambahkan
+    { slot: 3, name: 'Rezz', order: 180, send: 160, statusOverride: 'fail' }, // Dipindahkan dari completed, status ❌ ditambahkan
+    { slot: 3, name: 'Rendy', order: 1010, send: 180, statusOverride: 'fail' }, // Status ❌ ditambahkan
     { slot: 3, name: 'Saki', order: 120, send: 100, statusOverride: 'fail' },
-    { slot: 3, name: 'Ian', order: 1100, send: 120 },
-    { slot: 3, name: 'Lyn', order: 200, send: 40 },
-    { slot: 3, name: 'Fia', order: 800, send: 400 },
+    { slot: 3, name: 'Ian', order: 1100, send: 120, statusOverride: 'fail' }, // Status ❌ ditambahkan
+    { slot: 3, name: 'Lyn', order: 200, send: 40, statusOverride: 'fail' }, // Status ❌ ditambahkan
+    { slot: 3, name: 'Fia', order: 800, send: 400, statusOverride: 'fail' }, // Status ❌ ditambahkan
 
     // Slot 4
-    { slot: 4, name: 'Fio2', order: 300, send: 100 },
+    { slot: 4, name: 'Fio2', order: 300, send: 100, statusOverride: 'fail' }, // Status ❌ ditambahkan
 
     // Riwayat Orderan Selesai
+    { slot: 'completed', name: 'Feng', order: 230, send: 230 },
+    { slot: 'completed', name: 'Aze', order: 570, send: 570 },
     { slot: 'completed', name: 'Lili', order: 360, send: 360 },
     { slot: 'completed', name: 'Fio', order: 180, send: 180 },
     { slot: 'completed', name: 'Kazuhime', order: 180, send: 180 },
-    { slot: 'completed', name: 'Feng', order: 230, send: 230 },
-    { slot: 'completed', name: 'Aze', order: 570, send: 570 },
     { slot: 'completed', name: 'Cici', order: 100, send: 100 },
     { slot: 'completed', name: 'Tuna', order: 360, send: 360 },
     { slot: 'completed', name: 'Louis', order: 310, send: 310 },
     { slot: 'completed', name: 'Aya', order: 860, send: 860 },
-    { slot: 'completed', name: 'Rezz', order: 350, send: 350 },
-    { slot: 'completed', name: 'Yaya', order: 200, send: 200 },
-    { slot: 'completed', name: 'Diyy', order: 640, send: 640 },
-    { slot: 'completed', name: 'Luna', order: 800, send: 800 },
-    { slot: 'completed', name: 'Ryu', order: 320, send: 320 },
-    { slot: 'completed', name: 'Idnes', order: 320, send: 320 },
-    { slot: 'completed', name: 'Risma', order: 120, send: 120 },
-    { slot: 'completed', name: 'Alana', order: 320, send: 320 },
-    { slot: 'completed', name: 'Zee', order: 400, send: 400 },
-    { slot: 'completed', name: 'futaba', order: 140, send: 140 },
-    { slot: 'completed', name: 'Sena', order: 570, send: 570 },
-    { slot: 'completed', name: 'Al', order: 320, send: 320 },
-    { slot: 'completed', name: 'Ave', order: 220, send: 240 },
-    { slot: 'completed', name: 'Kai', order: 220, send: 220 },
-    { slot: 'completed', name: 'Rei', order: 220, send: 220 },
-    { slot: 'completed', name: 'Raine', order: 420, send: 420 },
-    { slot: 'completed', name: 'Araba', order: 150, send: 150 },
-    { slot: 'completed', name: 'Nayla', order: 530, send: 530 },
-    { slot: 'completed', name: 'Rani', order: 320, send: 320 },
     { slot: 'completed', name: 'Purili', order: 320, send: 320 },
     { slot: 'completed', name: 'Rain', order: 320, send: 320 },
     { slot: 'completed', name: 'Alip', order: 320, send: 320 },
@@ -87,5 +68,11 @@ const deliveryData = [
     { slot: 'completed', name: 'Kael', order: 120, send: 123 },
     { slot: 'completed', name: 'Xen', order: 210, send: 213 },
     { slot: 'completed', name: 'Lusi', order: 600, send: 603 },
-    { slot: 'completed', name: 'Sea', order: 150, send: 157 }
+    { slot: 'completed', name: 'Sea', order: 150, send: 157 },
+    { slot: 'completed', name: 'Rani', order: 320, send: 320 },
+    { slot: 'completed', name: 'Raine', order: 420, send: 420 },
+    { slot: 'completed', name: 'Ryu', order: 320, send: 320 },
+    { slot: 'completed', name: 'Idnes', order: 320, send: 320 },
+    { slot: 'completed', name: 'Rezz', order: 350, send: 350 }
 ];
+        
