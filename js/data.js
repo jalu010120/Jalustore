@@ -16,13 +16,13 @@ const deliveryData = [
     { slot: 2, name: 'Cem', order: 660, send: 500, statusOverride: 'fail' },
     { slot: 2, name: 'Niz', order: 720, send: 540, statusOverride: 'fail' },
     { slot: 2, name: 'Ira', order: 500, send: 320, statusOverride: 'fail' },
-    { slot: 2, name: 'Rani', order: 420, send: 380, statusOverride: 'fail' },
-    { slot: 2, name: 'Tuhin', order: 600, send: 180, statusOverride: 'fail' },
-    { slot: 2, name: 'Kyy', order: 1000, send: 160, statusOverride: 'fail' },
-    { slot: 2, name: 'Lisa', order: 200, send: 120, statusOverride: 'fail' },
-    { slot: 2, name: 'Lyone', order: 1000, send: 160, statusOverride: 'fail' },
-    { slot: 2, name: 'Louis', order: 310, send: 120, statusOverride: 'fail' },
-    { slot: 2, name: 'Nia', order: 120, send: 100, statusOverride: 'fail' },
+    { slot: 2, name: 'Rani', order: 420, send: 400 },
+    { slot: 2, name: 'Tuhin', order: 600, send: 200 },
+    { slot: 2, name: 'Kyy', order: 1000, send: 180 },
+    { slot: 2, name: 'Lisa', order: 200, send: 140 },
+    { slot: 2, name: 'Lyone', order: 1000, send: 180 },
+    { slot: 2, name: 'Louis', order: 310, send: 140 },
+    { slot: 2, name: 'Nia', order: 120, send: 120 },
 
     // Slot 3
     { slot: 3, name: 'Onde mande', order: 800, send: 240, statusOverride: 'fail' },
@@ -91,5 +91,6 @@ const deliveryData = [
     { slot: 'completed', name: 'Anna', order: 1080, send: 1080 },
     { slot: 'completed', name: 'Klara', order: 420, send: 420 },
     { slot: 'completed', name: 'Asha', order: 400, send: 400 },
-    { slot: 'completed', name: 'Yaya', order: 200, send: 200 }
+    { slot: 'completed', name: 'Yaya', order: 200, send: 200 },
+    { slot: 'completed', name: 'Nia', order: 120, send: 120 }
 ];
