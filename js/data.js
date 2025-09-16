@@ -2,13 +2,12 @@
 
 const deliveryData = [
     // Slot 1
-    { slot: 1, name: 'Ney', order: 5000, send: 4100 },
-    { slot: 1, name: 'Honey bear', order: 1400, send: 690 },
-    { slot: 1, name: 'Aelia', order: 1900, send: 1380 },
+    { slot: 1, name: 'Ney', order: 5000, send: 4100, statusOverride: 'fail' },
+    { slot: 1, name: 'Honey bear', order: 1400, send: 690, statusOverride: 'fail' },
+    { slot: 1, name: 'Aelia', order: 1900, send: 1400, statusOverride: 'fail' },
     { slot: 1, name: 'Tuna 2', order: 360, send: 290, statusOverride: 'fail' },
-    { slot: 1, name: 'Yaya', order: 200, send: 200 },
-    { slot: 1, name: 'Cive', order: 200, send: 60 },
-    { slot: 1, name: 'Van', order: 400, send: 40 },
+    { slot: 1, name: 'Cive', order: 200, send: 80, statusOverride: 'fail' },
+    { slot: 1, name: 'Van', order: 400, send: 60, statusOverride: 'fail' },
 
     // Slot 2
     { slot: 2, name: 'Angel2', order: 600, send: 540, statusOverride: 'fail' },
@@ -17,21 +16,21 @@ const deliveryData = [
     { slot: 2, name: 'Cem', order: 660, send: 500, statusOverride: 'fail' },
     { slot: 2, name: 'Niz', order: 720, send: 540, statusOverride: 'fail' },
     { slot: 2, name: 'Ira', order: 500, send: 320, statusOverride: 'fail' },
-    { slot: 2, name: 'Rani', order: 420, send: 360 },
-    { slot: 2, name: 'Tuhin', order: 600, send: 160 },
-    { slot: 2, name: 'Kyy', order: 1000, send: 140 },
-    { slot: 2, name: 'Lisa', order: 200, send: 100 },
-    { slot: 2, name: 'Lyone', order: 1000, send: 140 },
-    { slot: 2, name: 'Louis', order: 310, send: 100 },
-    { slot: 2, name: 'Nia', order: 120, send: 80 },
+    { slot: 2, name: 'Rani', order: 420, send: 380, statusOverride: 'fail' },
+    { slot: 2, name: 'Tuhin', order: 600, send: 180, statusOverride: 'fail' },
+    { slot: 2, name: 'Kyy', order: 1000, send: 160, statusOverride: 'fail' },
+    { slot: 2, name: 'Lisa', order: 200, send: 120, statusOverride: 'fail' },
+    { slot: 2, name: 'Lyone', order: 1000, send: 160, statusOverride: 'fail' },
+    { slot: 2, name: 'Louis', order: 310, send: 120, statusOverride: 'fail' },
+    { slot: 2, name: 'Nia', order: 120, send: 100, statusOverride: 'fail' },
 
     // Slot 3
     { slot: 3, name: 'Onde mande', order: 800, send: 240, statusOverride: 'fail' },
     { slot: 3, name: 'Rezz', order: 180, send: 160, statusOverride: 'fail' },
-    { slot: 3, name: 'Rendy', order: 1010, send: 510 },
+    { slot: 3, name: 'Rendy', order: 1010, send: 510, statusOverride: 'fail' },
     { slot: 3, name: 'Saki', order: 120, send: 100, statusOverride: 'fail' },
     { slot: 3, name: 'Ian', order: 1100, send: 410, statusOverride: 'fail' },
-    { slot: 3, name: 'Fia', order: 600, send: 350 },
+    { slot: 3, name: 'Fia', order: 600, send: 350, statusOverride: 'fail' },
 
     // Riwayat Orderan Selesai
     { slot: 'completed', name: 'Yulii', order: 400, send: 400 },
