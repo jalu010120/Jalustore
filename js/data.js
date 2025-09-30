@@ -2,11 +2,14 @@
 
 const deliveryData = [
     // Slot 1
-    { slot: 1, name: 'Ney', order: 5000, send: 4100, statusOverride: 'fail' },
+    { slot: 1, name: 'Ney', order: 5000, send: 4120 },
     { slot: 1, name: 'Honey bear', order: 1400, send: 690, statusOverride: 'fail' },
     { slot: 1, name: 'Aelia', order: 1900, send: 1400, statusOverride: 'fail' },
     { slot: 1, name: 'Tuna 2', order: 360, send: 290, statusOverride: 'fail' },
     { slot: 1, name: 'Cive', order: 200, send: 80, statusOverride: 'fail' },
+    { slot: 1, name: 'El', order: 800, send: 110 },
+    { slot: 1, name: 'Asha', order: 800, send: 110 },
+    { slot: 1, name: 'Nicolas', order: 1000, send: 80 },
 
     // Slot 2
     { slot: 2, name: 'Angel2', order: 600, send: 540, statusOverride: 'fail' },
@@ -15,17 +18,13 @@ const deliveryData = [
     { slot: 2, name: 'Cem', order: 660, send: 500, statusOverride: 'fail' },
     { slot: 2, name: 'Niz', order: 720, send: 540, statusOverride: 'fail' },
     { slot: 2, name: 'Ira', order: 500, send: 320, statusOverride: 'fail' },
-    { slot: 2, name: 'Tuhin', order: 600, send: 400 },
-    { slot: 2, name: 'Kyy', order: 1000, send: 400 },
-    { slot: 2, name: 'Lyone', order: 1000, send: 400 },
-    { slot: 2, name: 'Louis', order: 310, send: 310 },
+    { slot: 2, name: 'Tuhin', order: 600, send: 420 },
+    { slot: 2, name: 'Kyy', order: 1000, send: 420 },
+    { slot: 2, name: 'Lyone', order: 1000, send: 420 },
     { slot: 2, name: 'Eca', order: 200, send: 80, statusOverride: 'fail' },
     { slot: 2, name: 'Erin', order: 200, send: 100, statusOverride: 'fail' },
-    { slot: 2, name: 'Ready', order: 1010, send: 710 },
-    { slot: 2, name: 'Van', order: 400, send: 210 },
-    { slot: 2, name: 'El', order: 800, send: 90 },
-    { slot: 2, name: 'Asha', order: 800, send: 90 },
-    { slot: 2, name: 'Nicolas', order: 1000, send: 60 },
+    { slot: 2, name: 'Ready', order: 1010, send: 730 },
+    { slot: 2, name: 'Van', order: 400, send: 230 },
 
     // Slot 3
     { slot: 3, name: 'Onde mande', order: 800, send: 240, statusOverride: 'fail' },
@@ -97,5 +96,6 @@ const deliveryData = [
     { slot: 'completed', name: 'Rendy', order: 1010, send: 510 },
     { slot: 'completed', name: 'Fia', order: 600, send: 350 },
     { slot: 'completed', name: 'Lisa', order: 200, send: 200 },
-    { slot: 'completed', name: 'Rani', order: 420, send: 420 }
+    { slot: 'completed', name: 'Rani', order: 420, send: 420 },
+    { slot: 'completed', name: 'Louis', order: 310, send: 310 }
 ];
