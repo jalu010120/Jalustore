@@ -93,11 +93,11 @@
         opacity: 0.8;
     }
 
-    /* Tombol Aksi dan Pencarian */
+    /* Tombol Aksi, Pencarian, Filter */
     .action-buttons {
         display: flex;
         justify-content: center;
-        gap: 1.5rem;
+        gap: 1rem;
         margin-bottom: 2rem;
         flex-wrap: wrap;
     }
@@ -114,6 +114,7 @@
         cursor: pointer;
         transition: all 0.3s ease;
         text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        position: relative;
     }
 
     .btn-primary {
@@ -167,6 +168,19 @@
         transform: translateY(-50%);
         color: var(--text-color);
         opacity: 0.6;
+    }
+
+    /* Badge untuk notifikasi */
+    .badge {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: var(--status-fail-bg);
+      color: var(--status-fail-text);
+      font-size: 0.75rem;
+      border-radius: 12px;
+      padding: 0 6px;
+      font-weight: 700;
     }
 
     /* Statistik */
@@ -467,9 +481,17 @@
         <a href="https://jalustoreid.netlify.app/" class="btn btn-primary" target="_blank">
           <i class="fas fa-heart"></i> Beli Heart Sekarang!
         </a>
-        <button class="btn btn-secondary" id="refresh-button">
+        <button class="btn btn-secondary" id="refresh-button" style="position:relative;">
           <i class="fas fa-sync-alt"></i> Refresh Data
+          <span id="fail-badge" class="badge" style="display:none;">0</span>
         </button>
+
+        <select id="status-filter" class="btn btn-secondary" style="border-radius:30px;">
+          <option value="all">Semua Status</option>
+          <option value="done">Selesai</option>
+          <option value="pending">Proses</option>
+          <option value="fail">Gagal</option>
+        </select>
       </div>
       
       <div class="search-container">
@@ -522,8 +544,9 @@
 
   <script>
     let deliveryData = []; 
-    let completedItemsShown = 12; // Jumlah default item yang ditampilkan
-    const itemsPerLoad = 12; // Jumlah item tambahan yang dimuat setiap kali
+    let completedItemsShown = 12; 
+    const itemsPerLoad = 12; 
+    let statusFilter = 'all';
 
     async function loadDeliveryData() {
         try {
@@ -552,6 +575,8 @@
     const closeModalButton = document.getElementById('close-modal');
     const modalDetails = document.getElementById('modal-details');
     const whatsappButton = document.getElementById('whatsapp-button');
+    const statusFilterEl = document.getElementById('status-filter');
+    const failBadge = document.getElementById('fail-badge');
 
     function updateLiveTime() {
       const now = new Date();
@@ -563,14 +588,22 @@
       [slot1Cards, slot2Cards, slot3Cards, slot4Cards, completedCards].forEach(el => el.innerHTML = '');
 
       const term = searchTerm.toLowerCase();
-      const filteredData = deliveryData.filter(item => {
+      let filteredData = deliveryData.filter(item => {
         return item.name.toLowerCase().includes(term) || String(item.order).includes(term) || String(item.send).includes(term);
       });
+
+      if (statusFilter !== 'all') {
+        filteredData = filteredData.filter(item => {
+          if (statusFilter === 'done') return item.slot === 'completed' || item.send >= item.order;
+          if (statusFilter === 'fail') return item.statusOverride === 'fail';
+          if (statusFilter === 'pending') return item.slot !== 'completed' && item.send < item.order && item.statusOverride !== 'fail';
+          return true;
+        });
+      }
 
       const pendingData = filteredData.filter(item => item.slot !== 'completed' && item.send < item.order && item.statusOverride !== 'fail');
       const completedData = filteredData.filter(item => item.slot === 'completed' || item.send >= item.order || item.statusOverride === 'fail');
 
-      // Render pending cards (Slots 1-4)
       pendingData.forEach(item => {
         const card = createCardElement(item);
         if (item.slot === 1) slot1Cards.appendChild(card);
@@ -579,13 +612,11 @@
         else if (item.slot === 4) slot4Cards.appendChild(card);
       });
 
-      // Render completed cards with "load more" logic
       const completedToShow = completedData.slice(0, completedItemsShown);
       completedToShow.forEach(item => {
         completedCards.appendChild(createCardElement(item));
       });
 
-      // Show/hide "load more" button
       if (completedData.length > completedItemsShown) {
         loadMoreBtn.style.display = 'block';
       } else {
@@ -639,6 +670,13 @@
         <div class="stat-card"><div class="stat-value">${totalPending}</div><div class="stat-label">Proses</div></div>
         <div class="stat-card"><div class="stat-value">${totalFailed}</div><div class="stat-label">Gagal</div></div>
       `;
+
+      if (totalFailed > 0) {
+        failBadge.textContent = totalFailed;
+        failBadge.style.display = 'inline-block';
+      } else {
+        failBadge.style.display = 'none';
+      }
     }
 
     function openOrderModal(item) {
@@ -672,7 +710,7 @@
       `;
       
       if (item.number) {
-        const whatsappLink = `https://wa.me/${item.number.replace(/\D/g, '')}?text=Halo%20${encodeURIComponent(item.name)},%20kami%20ingin%20menginformasikan%20status%20orderan%20heart%20Anda%20dengan%20jumlah%20order%20${item.order}%20dan%20telah%20terkirim%20${item.send}.%20Sisa%20pengiriman%20adalah%20${item.order - item.send}.%20Terima%20kasih!`;
+        const whatsappLink = `https://wa.me/${item.number.replace(/D/g, '')}?text=Halo%20${encodeURIComponent(item.name)},%20kami%20ingin%20menginformasikan%20status%20orderan%20heart%20Anda%20dengan%20jumlah%20order%20${item.order}%20dan%20telah%20terkirim%20${item.send}.%20Sisa%20pengiriman%20adalah%20${item.order - item.send}.%20Terima%20kasih!`;
         whatsappButton.href = whatsappLink;
         whatsappButton.style.display = 'inline-flex';
       } else {
@@ -688,15 +726,21 @@
 
     // Event Listeners
     refreshButton.addEventListener('click', () => {
-        completedItemsShown = itemsPerLoad; // Reset jumlah item yang ditampilkan saat refresh
+        completedItemsShown = itemsPerLoad; 
         loadDeliveryData();
         refreshButton.querySelector('i').classList.add('fa-spin');
         setTimeout(() => refreshButton.querySelector('i').classList.remove('fa-spin'), 1000);
     });
 
     searchBox.addEventListener('keyup', (e) => {
-        completedItemsShown = itemsPerLoad; // Reset jumlah item saat pencarian
+        completedItemsShown = itemsPerLoad; 
         renderCards(e.target.value);
+    });
+
+    statusFilterEl.addEventListener('change', (e) => {
+      statusFilter = e.target.value;
+      completedItemsShown = itemsPerLoad;
+      renderCards(searchBox.value);
     });
 
     closeModalButton.addEventListener('click', closeOrderModal);
