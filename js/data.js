@@ -24,7 +24,7 @@ const deliveryData = [
     { slot: 2, name: 'Kyy', order: 1000, send: 660 },
     { slot: 2, name: 'Lyone', order: 1000, send: 580 },
     { slot: 2, name: 'Eca', order: 200, send: 140, statusOverride: 'fail' },
-    { slot: 2, name: 'Ready', order: 1010, send: 990 },
+    { slot: 2, name: 'Rendy', order: 1010, send: 990 },
     { slot: 2, name: 'Van', order: 1600, send: 330 },
 
     // Slot 3
@@ -99,5 +99,6 @@ const deliveryData = [
     { slot: 'completed', name: 'Louis', order: 310, send: 310 },
     { slot: 'completed', name: 'Tuhin', order: 600, send: 600 },
     { slot: 'completed', name: 'Erin', order: 200, send: 200 },
-    { slot: 'completed', name: 'CurlyBee', order: 120, send: 120 }
+    { slot: 'completed', name: 'CurlyBee', order: 120, send: 120 },
+    { slot: 'completed', name: 'Ready', order: 1010, send: 990 }
 ];
