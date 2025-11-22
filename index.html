@@ -1,59 +1,98 @@
-let deliveryData = []; 
-let completedItemsShown = 12; 
-const itemsPerLoad = 12; 
-let statusFilter = 'all';
+// Utils - Debounce Function untuk search delay
+const debounce = (fn, delay) => {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(this, args), delay);
+  };
+};
 
-async function loadDeliveryData() {
-    try {
-        const response = await fetch('js/data.js');
-        const scriptText = await response.text();
-        const dataFunction = new Function(scriptText + '; return deliveryData;');
-        deliveryData = dataFunction();
-        renderCards();
-        updateStats();
-    } catch (error) {
-        console.error('Error loading delivery data:', error);
-    }
-}
+// State management sederhana
+const state = {
+  deliveryData: [],
+  completedItemsShown: 12,
+  itemsPerLoad: 12,
+  statusFilter: 'all',
+  searchTerm: ''
+};
 
-const liveTimeEl = document.getElementById('live-time');
-const refreshButton = document.getElementById('refresh-button');
-const searchBox = document.getElementById('search-box');
-const statsContainer = document.getElementById('stats-container');
-const slot1Cards = document.getElementById('slot1-cards');
-const slot2Cards = document.getElementById('slot2-cards');
-const slot3Cards = document.getElementById('slot3-cards');
-const slot4Cards = document.getElementById('slot4-cards');
-const completedCards = document.getElementById('completed-cards');
-const loadMoreBtn = document.getElementById('load-more-btn');
-const orderModal = document.getElementById('order-modal');
-const closeModalButton = document.getElementById('close-modal');
-const modalDetails = document.getElementById('modal-details');
-const whatsappButton = document.getElementById('whatsapp-button');
-const statusFilterEl = document.getElementById('status-filter');
-const failBadge = document.getElementById('fail-badge');
+// DOM Elements Cache
+const elements = {
+  liveTimeEl: document.getElementById('live-time'),
+  refreshButton: document.getElementById('refresh-button'),
+  searchBox: document.getElementById('search-box'),
+  statsContainer: document.getElementById('stats-container'),
+  slotCards: {
+    1: document.getElementById('slot1-cards'),
+    2: document.getElementById('slot2-cards'),
+    3: document.getElementById('slot3-cards'),
+    4: document.getElementById('slot4-cards'),
+  },
+  completedCards: document.getElementById('completed-cards'),
+  loadMoreBtn: document.getElementById('load-more-btn'),
+  orderModal: document.getElementById('order-modal'),
+  closeModalButton: document.getElementById('close-modal'),
+  modalDetails: document.getElementById('modal-details'),
+  whatsappButton: document.getElementById('whatsapp-button'),
+  statusFilterEl: document.getElementById('status-filter'),
+  failBadge: document.getElementById('fail-badge'),
+};
 
-function updateLiveTime() {
+// Show loading/spinner indicator during fetch
+const showLoading = () => {
+  elements.refreshButton.disabled = true;
+  elements.refreshButton.querySelector('i').classList.add('fa-spin');
+};
+
+const hideLoading = () => {
+  elements.refreshButton.disabled = false;
+  elements.refreshButton.querySelector('i').classList.remove('fa-spin');
+};
+
+const fetchDeliveryData = async () => {
+  showLoading();
+  try {
+    const response = await fetch('js/data.js');
+    if (!response.ok) throw new Error('Gagal memuat data pengiriman.');
+    const scriptText = await response.text();
+    const dataFunction = new Function(scriptText + '; return deliveryData;');
+    state.deliveryData = dataFunction();
+    hideLoading();
+    renderUI();
+  } catch (error) {
+    hideLoading();
+    alert(error.message);
+  }
+};
+
+const renderUI = () => {
+  renderCards(state.searchTerm);
+  updateStats();
+};
+
+const updateLiveTime = () => {
   const now = new Date();
-  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
-  liveTimeEl.textContent = now.toLocaleDateString('id-ID', options);
-}
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', 
+                    hour: '2-digit', minute: '2-digit', second: '2-digit' };
+  elements.liveTimeEl.textContent = now.toLocaleDateString('id-ID', options);
+};
 
-function renderCards(searchTerm = '') {
-  [slot1Cards, slot2Cards, slot3Cards, slot4Cards, completedCards].forEach(el => el.innerHTML = '');
+const renderCards = (searchTerm = '') => {
+  Object.values(elements.slotCards).forEach(container => container.innerHTML = '');
+  elements.completedCards.innerHTML = '';
 
   const term = searchTerm.toLowerCase();
-  let filteredData = deliveryData.filter(item => {
-    return item.name && item.name.toLowerCase().includes(term) 
-           || String(item.order).includes(term) 
-           || String(item.send).includes(term);
+  let filteredData = state.deliveryData.filter(item => {
+    return (item.name && item.name.toLowerCase().includes(term)) ||
+           (item.order && String(item.order).includes(term)) ||
+           (item.send && String(item.send).includes(term));
   });
 
-  if (statusFilter !== 'all') {
+  if (state.statusFilter !== 'all') {
     filteredData = filteredData.filter(item => {
-      if (statusFilter === 'done') return item.slot === 'completed' || item.send >= item.order;
-      if (statusFilter === 'fail') return item.statusOverride === 'fail';
-      if (statusFilter === 'pending') return item.slot !== 'completed' && item.send < item.order && item.statusOverride !== 'fail';
+      if (state.statusFilter === 'done') return item.slot === 'completed' || item.send >= item.order;
+      if (state.statusFilter === 'fail') return item.statusOverride === 'fail';
+      if (state.statusFilter === 'pending') return item.slot !== 'completed' && item.send < item.order && item.statusOverride !== 'fail';
       return true;
     });
   }
@@ -63,153 +102,145 @@ function renderCards(searchTerm = '') {
 
   pendingData.forEach(item => {
     const card = createCardElement(item);
-    if (item.slot === 1) slot1Cards.appendChild(card);
-    else if (item.slot === 2) slot2Cards.appendChild(card);
-    else if (item.slot === 3) slot3Cards.appendChild(card);
-    else if (item.slot === 4) slot4Cards.appendChild(card);
+    (elements.slotCards[item.slot] || elements.slotCards[1]).appendChild(card);
   });
 
-  const completedToShow = completedData.slice(0, completedItemsShown);
+  const completedToShow = completedData.slice(0, state.completedItemsShown);
   completedToShow.forEach(item => {
-    completedCards.appendChild(createCardElement(item));
+    elements.completedCards.appendChild(createCardElement(item));
   });
 
-  loadMoreBtn.style.display = (completedData.length > completedItemsShown) ? 'block' : 'none';
-}
+  elements.loadMoreBtn.style.display = (completedData.length > state.completedItemsShown) ? 'block' : 'none';
+};
 
-function createCardElement(item) {
-    const card = document.createElement('div');
-    let statusClass = 'pending';
-    let statusText = 'Proses';
-    let statusIcon = 'fa-hourglass-half';
-    let progress = item.order ? (item.send / item.order) * 100 : 0;
-    
-    if (item.statusOverride === 'fail') {
-      statusClass = 'fail';
-      statusText = 'Gagal';
-      statusIcon = 'fa-times-circle';
-    } else if (item.slot === 'completed' || (item.order && item.send >= item.order)) {
-      statusClass = 'done';
-      statusText = 'Selesai';
-      statusIcon = 'fa-check-circle';
+const createCardElement = (item) => {
+  const card = document.createElement('div');
+
+  let statusClass = 'pending';
+  let statusText = 'Proses';
+  let statusIcon = 'fa-hourglass-half';
+  let progress = item.order ? (item.send / item.order) * 100 : 0;
+
+  if (item.statusOverride === 'fail') {
+    statusClass = 'fail';
+    statusText = 'Gagal';
+    statusIcon = 'fa-times-circle';
+  } else if (item.slot === 'completed' || (item.order && item.send >= item.order)) {
+    statusClass = 'done';
+    statusText = 'Selesai';
+    statusIcon = 'fa-check-circle';
+  }
+
+  const progressHtml = (['pending', 'fail'].includes(statusClass) && item.order) ? 
+    `<div class="progress-bar"><div class="progress-fill" style="width: ${progress.toFixed(0)}%;"></div></div>` : '';
+
+  card.classList.add('card', statusClass);
+  card.setAttribute('tabindex', '0');
+  card.setAttribute('role', 'button');
+  card.setAttribute('aria-pressed', 'false');
+
+  card.innerHTML = `
+    <div class="name">${item.name || '-'}</div>
+    <div class="number">Order: ${item.order || '-'} | Terkirim: ${item.send || '-'}</div>
+    ${progressHtml}
+    <div class="status ${statusClass}">
+      <i class="fas ${statusIcon}" aria-hidden="true"></i>
+      ${statusText}
+    </div>
+  `;
+
+  card.addEventListener('click', () => openOrderModal(item));
+  card.addEventListener('keypress', (evt) => {
+    if (evt.key === 'Enter' || evt.key === ' ') {
+      evt.preventDefault();
+      openOrderModal(item);
     }
+  });
 
-    const progressHtml = (statusClass === 'pending' || statusClass === 'fail') && item.order ? 
-      `<div class="progress-bar"><div class="progress-fill" style="width: ${progress.toFixed(0)}%;"></div></div>` : '';
+  return card;
+};
 
-    card.classList.add('card', statusClass);
-    card.innerHTML = `
-      <div class="name">${item.name || '-'}</div>
-      <div class="number">Order: ${item.order || '-'} | Terkirim: ${item.send || '-'}</div>
-      ${progressHtml}
-      <div class="status ${statusClass}">
-        <i class="fas ${statusIcon}"></i>
-        ${statusText}
-      </div>
-    `;
-    card.addEventListener('click', () => openOrderModal(item));
-    return card;
-}
+const updateStats = () => {
+  const totalOrders = state.deliveryData.length;
+  const totalCompleted = state.deliveryData.filter(item => item.slot === 'completed' || (item.send >= item.order && item.statusOverride !== 'fail')).length;
+  const totalPending = state.deliveryData.filter(item => item.slot !== 'completed' && item.send < item.order && item.statusOverride !== 'fail').length;
+  const totalFailed = state.deliveryData.filter(item => item.statusOverride === 'fail').length;
 
-function updateStats() {
-  const totalOrders = deliveryData.length;
-  const totalCompleted = deliveryData.filter(item => item.slot === 'completed' || (item.send >= item.order && item.statusOverride !== 'fail')).length;
-  const totalPending = deliveryData.filter(item => item.slot !== 'completed' && item.send < item.order && item.statusOverride !== 'fail').length;
-  const totalFailed = deliveryData.filter(item => item.statusOverride === 'fail').length;
-
-  statsContainer.innerHTML = `
-    <div class="stat-card"><div class="stat-value">${totalOrders}</div><div class="stat-label">Total Order</div></div>
-    <div class="stat-card"><div class="stat-value">${totalCompleted}</div><div class="stat-label">Selesai</div></div>
-    <div class="stat-card"><div class="stat-value">${totalPending}</div><div class="stat-label">Proses</div></div>
-    <div class="stat-card"><div class="stat-value">${totalFailed}</div><div class="stat-label">Gagal</div></div>
+  elements.statsContainer.innerHTML = `
+    <div class="stat-card" role="region" aria-label="Total Order"><div class="stat-value">${totalOrders}</div><div class="stat-label">Total Order</div></div>
+    <div class="stat-card" role="region" aria-label="Selesai"><div class="stat-value">${totalCompleted}</div><div class="stat-label">Selesai</div></div>
+    <div class="stat-card" role="region" aria-label="Proses"><div class="stat-value">${totalPending}</div><div class="stat-label">Proses</div></div>
+    <div class="stat-card" role="region" aria-label="Gagal"><div class="stat-value">${totalFailed}</div><div class="stat-label">Gagal</div></div>
   `;
 
   if (totalFailed > 0) {
-    failBadge.textContent = totalFailed;
-    failBadge.style.display = 'inline-block';
+    elements.failBadge.textContent = totalFailed;
+    elements.failBadge.style.display = 'inline-block';
   } else {
-    failBadge.style.display = 'none';
+    elements.failBadge.style.display = 'none';
   }
-}
+};
 
-function openOrderModal(item) {
-  modalDetails.innerHTML = `
-    <div class="detail-item">
-      <div class="detail-label">Nama</div>
-      <div class="detail-value">${item.name || '-'}</div>
-    </div>
-    <div class="detail-item">
-      <div class="detail-label">Order</div>
-      <div class="detail-value">${item.order || '-'} Heart</div>
-    </div>
-    <div class="detail-item">
-      <div class="detail-label">Terkirim</div>
-      <div class="detail-value">${item.send || '-'} Heart</div>
-    </div>
-    <div class="detail-item">
-      <div class="detail-label">Sisa</div>
-      <div class="detail-value">${item.order && item.send ? item.order - item.send : '-'} Heart</div>
-    </div>
-    <div class="detail-item" style="grid-column: 1 / -1;">
-      <div class="detail-label">Status</div>
-      <div class="detail-value">${item.statusOverride === 'fail' ? 'Gagal' : (item.send >= item.order ? 'Selesai' : 'Proses')}</div>
-    </div>
-    <div class="detail-item" style="grid-column: 1 / -1;">
-      <div class="detail-label">Progress</div>
-      <div class="detail-value">${item.order ? ((item.send / item.order) * 100).toFixed(2) : '0'}%</div>
-    </div>
+const openOrderModal = (item) => {
+  elements.modalDetails.innerHTML = `
+    <div class="detail-item"><div class="detail-label">Nama</div><div class="detail-value">${item.name || '-'}</div></div>
+    <div class="detail-item"><div class="detail-label">Order</div><div class="detail-value">${item.order || '-'} Heart</div></div>
+    <div class="detail-item"><div class="detail-label">Terkirim</div><div class="detail-value">${item.send || '-'} Heart</div></div>
+    <div class="detail-item"><div class="detail-label">Sisa</div><div class="detail-value">${item.order && item.send ? item.order - item.send : '-'} Heart</div></div>
+    <div class="detail-item" style="grid-column: 1 / -1;"><div class="detail-label">Status</div><div class="detail-value">${item.statusOverride === 'fail' ? 'Gagal' : (item.send >= item.order ? 'Selesai' : 'Proses')}</div></div>
+    <div class="detail-item" style="grid-column: 1 / -1;"><div class="detail-label">Progress</div><div class="detail-value">${item.order ? ((item.send / item.order) * 100).toFixed(2) : '0'}%</div></div>
     ${item.number ? `<div class="detail-item" style="grid-column: 1 / -1;"><div class="detail-label">Nomor Telepon</div><div class="detail-value">${item.number}</div></div>` : ''}
     ${item.notes ? `<div class="detail-item" style="grid-column: 1 / -1;"><div class="detail-label">Catatan</div><div class="detail-value">${item.notes}</div></div>` : ''}
   `;
-  
+
   if (item.number) {
-    const whatsappLink = `https://wa.me/${item.number.replace(/D/g, '')}?text=Halo%20${encodeURIComponent(item.name)},%20kami%20ingin%20menginformasikan%20status%20orderan%20heart%20Anda%20dengan%20jumlah%20order%20${item.order}%20dan%20telah%20terkirim%20${item.send}.%20Sisa%20pengiriman%20adalah%20${item.order - item.send}.%20Terima%20kasih!`;
-    whatsappButton.href = whatsappLink;
-    whatsappButton.style.display = 'inline-flex';
+    const cleanNumber = item.number.replace(/D/g, '');
+    const whatsappLink = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(`Halo ${item.name}, kami ingin menginformasikan status orderan heart Anda dengan jumlah order ${item.order} dan telah terkirim ${item.send}. Sisa pengiriman adalah ${item.order - item.send}. Terima kasih!`)}`;
+    elements.whatsappButton.href = whatsappLink;
+    elements.whatsappButton.style.display = 'inline-flex';
   } else {
-    whatsappButton.style.display = 'none';
+    elements.whatsappButton.style.display = 'none';
   }
 
-  orderModal.classList.add('active');
-}
+  elements.orderModal.classList.add('active');
+};
 
-function closeOrderModal() {
-  orderModal.classList.remove('active');
-}
+const closeOrderModal = () => {
+  elements.orderModal.classList.remove('active');
+};
 
-// Event Listeners
-refreshButton.addEventListener('click', () => {
-    completedItemsShown = itemsPerLoad; 
-    loadDeliveryData();
-    refreshButton.querySelector('i').classList.add('fa-spin');
-    setTimeout(() => refreshButton.querySelector('i').classList.remove('fa-spin'), 1000);
+// Event Binding with debounce on search input for performance
+elements.refreshButton.addEventListener('click', () => {
+  state.completedItemsShown = state.itemsPerLoad;
+  fetchDeliveryData();
 });
 
-searchBox.addEventListener('keyup', (e) => {
-    completedItemsShown = itemsPerLoad; 
-    renderCards(e.target.value);
+elements.searchBox.addEventListener('input', debounce((e) => {
+  state.searchTerm = e.target.value;
+  state.completedItemsShown = state.itemsPerLoad;
+  renderCards(state.searchTerm);
+}, 300));
+
+elements.statusFilterEl.addEventListener('change', (e) => {
+  state.statusFilter = e.target.value;
+  state.completedItemsShown = state.itemsPerLoad;
+  renderCards(state.searchTerm);
 });
 
-statusFilterEl.addEventListener('change', (e) => {
-  statusFilter = e.target.value;
-  completedItemsShown = itemsPerLoad;
-  renderCards(searchBox.value);
-});
+elements.closeModalButton.addEventListener('click', closeOrderModal);
 
-closeModalButton.addEventListener('click', closeOrderModal);
-
-orderModal.addEventListener('click', (e) => {
-  if (e.target === orderModal) {
+elements.orderModal.addEventListener('click', (e) => {
+  if (e.target === elements.orderModal) {
     closeOrderModal();
   }
 });
 
-loadMoreBtn.addEventListener('click', () => {
-    completedItemsShown += itemsPerLoad;
-    renderCards(searchBox.value);
+elements.loadMoreBtn.addEventListener('click', () => {
+  state.completedItemsShown += state.itemsPerLoad;
+  renderCards(state.searchTerm);
 });
 
-// Load initial data and live clock
+// Initialize app
 updateLiveTime();
 setInterval(updateLiveTime, 1000);
-loadDeliveryData();
+fetchDeliveryData();
