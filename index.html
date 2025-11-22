@@ -1,246 +1,765 @@
-// Utils - Debounce Function untuk search delay
-const debounce = (fn, delay) => {
-  let timer;
-  return (...args) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => fn.apply(this, args), delay);
-  };
-};
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Pengiriman Heart - JaluStore</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-// State management sederhana
-const state = {
-  deliveryData: [],
-  completedItemsShown: 12,
-  itemsPerLoad: 12,
-  statusFilter: 'all',
-  searchTerm: ''
-};
-
-// DOM Elements Cache
-const elements = {
-  liveTimeEl: document.getElementById('live-time'),
-  refreshButton: document.getElementById('refresh-button'),
-  searchBox: document.getElementById('search-box'),
-  statsContainer: document.getElementById('stats-container'),
-  slotCards: {
-    1: document.getElementById('slot1-cards'),
-    2: document.getElementById('slot2-cards'),
-    3: document.getElementById('slot3-cards'),
-    4: document.getElementById('slot4-cards'),
-  },
-  completedCards: document.getElementById('completed-cards'),
-  loadMoreBtn: document.getElementById('load-more-btn'),
-  orderModal: document.getElementById('order-modal'),
-  closeModalButton: document.getElementById('close-modal'),
-  modalDetails: document.getElementById('modal-details'),
-  whatsappButton: document.getElementById('whatsapp-button'),
-  statusFilterEl: document.getElementById('status-filter'),
-  failBadge: document.getElementById('fail-badge'),
-};
-
-// Show loading/spinner indicator during fetch
-const showLoading = () => {
-  elements.refreshButton.disabled = true;
-  elements.refreshButton.querySelector('i').classList.add('fa-spin');
-};
-
-const hideLoading = () => {
-  elements.refreshButton.disabled = false;
-  elements.refreshButton.querySelector('i').classList.remove('fa-spin');
-};
-
-const fetchDeliveryData = async () => {
-  showLoading();
-  try {
-    const response = await fetch('js/data.js');
-    if (!response.ok) throw new Error('Gagal memuat data pengiriman.');
-    const scriptText = await response.text();
-    const dataFunction = new Function(scriptText + '; return deliveryData;');
-    state.deliveryData = dataFunction();
-    hideLoading();
-    renderUI();
-  } catch (error) {
-    hideLoading();
-    alert(error.message);
-  }
-};
-
-const renderUI = () => {
-  renderCards(state.searchTerm);
-  updateStats();
-};
-
-const updateLiveTime = () => {
-  const now = new Date();
-  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', 
-                    hour: '2-digit', minute: '2-digit', second: '2-digit' };
-  elements.liveTimeEl.textContent = now.toLocaleDateString('id-ID', options);
-};
-
-const renderCards = (searchTerm = '') => {
-  Object.values(elements.slotCards).forEach(container => container.innerHTML = '');
-  elements.completedCards.innerHTML = '';
-
-  const term = searchTerm.toLowerCase();
-  let filteredData = state.deliveryData.filter(item => {
-    return (item.name && item.name.toLowerCase().includes(term)) ||
-           (item.order && String(item.order).includes(term)) ||
-           (item.send && String(item.send).includes(term));
-  });
-
-  if (state.statusFilter !== 'all') {
-    filteredData = filteredData.filter(item => {
-      if (state.statusFilter === 'done') return item.slot === 'completed' || item.send >= item.order;
-      if (state.statusFilter === 'fail') return item.statusOverride === 'fail';
-      if (state.statusFilter === 'pending') return item.slot !== 'completed' && item.send < item.order && item.statusOverride !== 'fail';
-      return true;
-    });
-  }
-
-  const pendingData = filteredData.filter(item => item.slot !== 'completed' && item.send < item.order && item.statusOverride !== 'fail');
-  const completedData = filteredData.filter(item => item.slot === 'completed' || item.send >= item.order || item.statusOverride === 'fail');
-
-  pendingData.forEach(item => {
-    const card = createCardElement(item);
-    (elements.slotCards[item.slot] || elements.slotCards[1]).appendChild(card);
-  });
-
-  const completedToShow = completedData.slice(0, state.completedItemsShown);
-  completedToShow.forEach(item => {
-    elements.completedCards.appendChild(createCardElement(item));
-  });
-
-  elements.loadMoreBtn.style.display = (completedData.length > state.completedItemsShown) ? 'block' : 'none';
-};
-
-const createCardElement = (item) => {
-  const card = document.createElement('div');
-
-  let statusClass = 'pending';
-  let statusText = 'Proses';
-  let statusIcon = 'fa-hourglass-half';
-  let progress = item.order ? (item.send / item.order) * 100 : 0;
-
-  if (item.statusOverride === 'fail') {
-    statusClass = 'fail';
-    statusText = 'Gagal';
-    statusIcon = 'fa-times-circle';
-  } else if (item.slot === 'completed' || (item.order && item.send >= item.order)) {
-    statusClass = 'done';
-    statusText = 'Selesai';
-    statusIcon = 'fa-check-circle';
-  }
-
-  const progressHtml = (['pending', 'fail'].includes(statusClass) && item.order) ? 
-    `<div class="progress-bar"><div class="progress-fill" style="width: ${progress.toFixed(0)}%;"></div></div>` : '';
-
-  card.classList.add('card', statusClass);
-  card.setAttribute('tabindex', '0');
-  card.setAttribute('role', 'button');
-  card.setAttribute('aria-pressed', 'false');
-
-  card.innerHTML = `
-    <div class="name">${item.name || '-'}</div>
-    <div class="number">Order: ${item.order || '-'} | Terkirim: ${item.send || '-'}</div>
-    ${progressHtml}
-    <div class="status ${statusClass}">
-      <i class="fas ${statusIcon}" aria-hidden="true"></i>
-      ${statusText}
-    </div>
-  `;
-
-  card.addEventListener('click', () => openOrderModal(item));
-  card.addEventListener('keypress', (evt) => {
-    if (evt.key === 'Enter' || evt.key === ' ') {
-      evt.preventDefault();
-      openOrderModal(item);
+  <style>
+    :root {
+        --primary-color: #8A2BE2;
+        --secondary-color: #FF9A9E;
+        --accent-color: #64B5F6;
+        --text-color: #5D5D7A;
+        --card-bg: rgba(255, 255, 255, 0.95);
+        --card-border: rgba(180, 200, 255, 0.6);
+        --bg-overlay: rgba(255, 255, 255, 0.85);
+        --shadow-light: 0 4px 20px rgba(0,0,0,0.08);
+        --shadow-dark: 0 12px 30px rgba(0,0,0,0.15);
+        --status-done-bg: #A8E6CF;
+        --status-done-text: #1E6F5C;
+        --status-fail-bg: #FFAAA5;
+        --status-fail-text: #B73E3E;
+        --status-pending-bg: #FFD3B6;
+        --status-pending-text: #D46B08;
     }
-  });
+    
+    * { box-sizing: border-box; }
+    body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: url('https://thatskyshop.com/cdn/shop/files/1_7bbdd44b-0aa6-4c76-9e7e-4202391f1c3d.jpg?v=1660796834&width=750') no-repeat center center fixed;
+        background-size: cover;
+        color: var(--text-color);
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+    
+    .overlay {
+        background-color: var(--bg-overlay);
+        min-height: 100vh;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+    }
 
-  return card;
-};
+    /* Bagian Header dan Judul */
+    .header-section {
+        width: 100%;
+        max-width: 900px;
+        text-align: center;
+        margin-bottom: 2.5rem;
+    }
 
-const updateStats = () => {
-  const totalOrders = state.deliveryData.length;
-  const totalCompleted = state.deliveryData.filter(item => item.slot === 'completed' || (item.send >= item.order && item.statusOverride !== 'fail')).length;
-  const totalPending = state.deliveryData.filter(item => item.slot !== 'completed' && item.send < item.order && item.statusOverride !== 'fail').length;
-  const totalFailed = state.deliveryData.filter(item => item.statusOverride === 'fail').length;
+    #live-time {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--primary-color);
+        background: rgba(255, 255, 255, 0.8);
+        padding: 0.5rem 1.5rem;
+        border-radius: 25px;
+        box-shadow: var(--shadow-light);
+        display: inline-block;
+        margin-bottom: 1.5rem;
+        transition: transform 0.3s ease;
+    }
+    
+    #live-time:hover {
+      transform: translateY(-2px);
+    }
 
-  elements.statsContainer.innerHTML = `
-    <div class="stat-card" role="region" aria-label="Total Order"><div class="stat-value">${totalOrders}</div><div class="stat-label">Total Order</div></div>
-    <div class="stat-card" role="region" aria-label="Selesai"><div class="stat-value">${totalCompleted}</div><div class="stat-label">Selesai</div></div>
-    <div class="stat-card" role="region" aria-label="Proses"><div class="stat-value">${totalPending}</div><div class="stat-label">Proses</div></div>
-    <div class="stat-card" role="region" aria-label="Gagal"><div class="stat-value">${totalFailed}</div><div class="stat-label">Gagal</div></div>
-  `;
+    h1 {
+        font-family: 'Fredoka', sans-serif;
+        color: var(--primary-color);
+        font-size: clamp(2rem, 5vw, 2.8rem);
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+        text-shadow: 2px 2px 7px rgba(0,0,0,0.1);
+    }
+    
+    h1 em {
+        font-family: 'Pacifico', cursive;
+        display: block;
+        font-size: 0.6em;
+        font-style: normal;
+        color: var(--text-color);
+        opacity: 0.8;
+    }
 
-  if (totalFailed > 0) {
-    elements.failBadge.textContent = totalFailed;
-    elements.failBadge.style.display = 'inline-block';
-  } else {
-    elements.failBadge.style.display = 'none';
-  }
-};
+    /* Tombol Aksi, Pencarian, Filter */
+    .action-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+    }
+    
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.8rem 2rem;
+        border-radius: 30px;
+        text-decoration: none;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        position: relative;
+    }
 
-const openOrderModal = (item) => {
-  elements.modalDetails.innerHTML = `
-    <div class="detail-item"><div class="detail-label">Nama</div><div class="detail-value">${item.name || '-'}</div></div>
-    <div class="detail-item"><div class="detail-label">Order</div><div class="detail-value">${item.order || '-'} Heart</div></div>
-    <div class="detail-item"><div class="detail-label">Terkirim</div><div class="detail-value">${item.send || '-'} Heart</div></div>
-    <div class="detail-item"><div class="detail-label">Sisa</div><div class="detail-value">${item.order && item.send ? item.order - item.send : '-'} Heart</div></div>
-    <div class="detail-item" style="grid-column: 1 / -1;"><div class="detail-label">Status</div><div class="detail-value">${item.statusOverride === 'fail' ? 'Gagal' : (item.send >= item.order ? 'Selesai' : 'Proses')}</div></div>
-    <div class="detail-item" style="grid-column: 1 / -1;"><div class="detail-label">Progress</div><div class="detail-value">${item.order ? ((item.send / item.order) * 100).toFixed(2) : '0'}%</div></div>
-    ${item.number ? `<div class="detail-item" style="grid-column: 1 / -1;"><div class="detail-label">Nomor Telepon</div><div class="detail-value">${item.number}</div></div>` : ''}
-    ${item.notes ? `<div class="detail-item" style="grid-column: 1 / -1;"><div class="detail-label">Catatan</div><div class="detail-value">${item.notes}</div></div>` : ''}
-  `;
+    .btn-primary {
+        background: linear-gradient(45deg, var(--secondary-color), #FAD0C4);
+        color: white;
+        box-shadow: 0 5px 15px rgba(255, 154, 158, 0.4);
+    }
+    
+    .btn-secondary {
+        background: linear-gradient(45deg, var(--accent-color), #87CEEB);
+        color: white;
+        box-shadow: 0 5px 15px rgba(100, 181, 246, 0.4);
+    }
+    
+    .btn:hover {
+        transform: translateY(-3px);
+    }
+    
+    .btn i {
+      margin-right: 0.5em;
+    }
 
-  if (item.number) {
-    const cleanNumber = item.number.replace(/D/g, '');
-    const whatsappLink = `https://wa.me/${cleanNumber}?text=${encodeURIComponent(`Halo ${item.name}, kami ingin menginformasikan status orderan heart Anda dengan jumlah order ${item.order} dan telah terkirim ${item.send}. Sisa pengiriman adalah ${item.order - item.send}. Terima kasih!`)}`;
-    elements.whatsappButton.href = whatsappLink;
-    elements.whatsappButton.style.display = 'inline-flex';
-  } else {
-    elements.whatsappButton.style.display = 'none';
-  }
+    .search-container {
+        width: 100%;
+        max-width: 500px;
+        margin-bottom: 2.5rem;
+        position: relative;
+    }
+    
+    .search-box {
+        width: 100%;
+        padding: 0.8rem 1.5rem 0.8rem 3rem;
+        border-radius: 30px;
+        border: 2px solid var(--card-border);
+        font-size: 1rem;
+        background: var(--card-bg);
+        box-shadow: var(--shadow-light);
+        transition: all 0.3s ease;
+    }
+    
+    .search-box:focus {
+        outline: none;
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.3);
+    }
+    
+    .search-icon {
+        position: absolute;
+        left: 1.2rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-color);
+        opacity: 0.6;
+    }
 
-  elements.orderModal.classList.add('active');
-};
+    /* Badge untuk notifikasi */
+    .badge {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: var(--status-fail-bg);
+      color: var(--status-fail-text);
+      font-size: 0.75rem;
+      border-radius: 12px;
+      padding: 0 6px;
+      font-weight: 700;
+    }
 
-const closeOrderModal = () => {
-  elements.orderModal.classList.remove('active');
-};
+    /* Statistik */
+    .stats-container {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        margin-bottom: 2.5rem;
+    }
+    
+    .stat-card {
+        background: var(--card-bg);
+        border-radius: 15px;
+        padding: 1.2rem 1.5rem;
+        min-width: 150px;
+        text-align: center;
+        box-shadow: var(--shadow-light);
+        border: 2px solid var(--card-border);
+        flex: 1 1 150px;
+        transition: transform 0.3s ease;
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-3px);
+    }
 
-// Event Binding with debounce on search input for performance
-elements.refreshButton.addEventListener('click', () => {
-  state.completedItemsShown = state.itemsPerLoad;
-  fetchDeliveryData();
-});
+    .stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.3rem;
+        color: var(--primary-color);
+    }
+    
+    .stat-label {
+        font-size: 0.9rem;
+        color: var(--text-color);
+        opacity: 0.8;
+    }
 
-elements.searchBox.addEventListener('input', debounce((e) => {
-  state.searchTerm = e.target.value;
-  state.completedItemsShown = state.itemsPerLoad;
-  renderCards(state.searchTerm);
-}, 300));
+    /* Bagian Kartu */
+    section {
+        margin-bottom: 3rem;
+        width: 100%;
+        max-width: 900px;
+    }
+    
+    .slot-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--secondary-color) 0%, #FAD0C4 100%);
+        color: white;
+        padding: 0.8rem 2rem;
+        border-radius: 30px;
+        margin-bottom: 1.5rem;
+        display: inline-flex;
+        align-items: center;
+        box-shadow: var(--shadow-light);
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        transition: transform 0.3s ease;
+    }
+    
+    .slot-title i {
+        margin-right: 0.5rem;
+        font-size: 1.2em;
+    }
 
-elements.statusFilterEl.addEventListener('change', (e) => {
-  state.statusFilter = e.target.value;
-  state.completedItemsShown = state.itemsPerLoad;
-  renderCards(state.searchTerm);
-});
+    .slot-title:hover {
+      transform: translateY(-3px);
+    }
 
-elements.closeModalButton.addEventListener('click', closeOrderModal);
+    .cards {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.2rem;
+        justify-content: center;
+    }
+    
+    .card {
+        background: var(--card-bg);
+        border: 2px solid var(--card-border);
+        border-radius: 18px;
+        padding: 1.5rem;
+        flex: 1 1 250px;
+        box-shadow: var(--shadow-light);
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        cursor: pointer;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-dark);
+    }
+    
+    .card .name {
+        font-size: 1.2em;
+        font-weight: 700;
+        margin-bottom: 0.5em;
+        color: var(--text-color);
+    }
+    
+    .card .number {
+        font-size: 1em;
+        margin-bottom: 1em;
+        color: #666;
+    }
+    
+    .card .status {
+        margin-top: auto;
+        font-size: 0.95em;
+        font-weight: 800;
+        display: inline-flex;
+        align-items: center;
+        border-radius: 15px;
+        padding: 0.3em 0.8em;
+        text-transform: uppercase;
+        align-self: flex-start;
+    }
+    
+    .status i {
+        margin-right: 0.5em;
+    }
 
-elements.orderModal.addEventListener('click', (e) => {
-  if (e.target === elements.orderModal) {
-    closeOrderModal();
-  }
-});
+    .status.done { 
+        background: var(--status-done-bg); 
+        color: var(--status-done-text); 
+    }
+    .status.fail { 
+        background: var(--status-fail-bg); 
+        color: var(--status-fail-text); 
+    }
+    .status.pending { 
+        background: var(--status-pending-bg); 
+        color: var(--status-pending-text); 
+    }
 
-elements.loadMoreBtn.addEventListener('click', () => {
-  state.completedItemsShown += state.itemsPerLoad;
-  renderCards(state.searchTerm);
-});
+    .progress-bar {
+        height: 8px;
+        background-color: #e0e0e0;
+        border-radius: 4px;
+        margin-top: 1em;
+        overflow: hidden;
+    }
 
-// Initialize app
-updateLiveTime();
-setInterval(updateLiveTime, 1000);
-fetchDeliveryData();
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent-color), var(--status-done-bg));
+        transition: width 0.7s ease-in-out;
+    }
+
+    .load-more-btn {
+      margin-top: 1.5rem;
+      padding: 0.8rem 2rem;
+      border-radius: 30px;
+      background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
+    }
+
+    .load-more-btn:hover {
+      transform: translateY(-3px);
+    }
+
+    /* Modal */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .modal-content {
+        background: var(--card-bg);
+        border-radius: 20px;
+        padding: 2.5rem;
+        max-width: 500px;
+        width: 90%;
+        box-shadow: var(--shadow-dark);
+        transform: translateY(20px);
+        transition: all 0.3s ease;
+        position: relative;
+    }
+    
+    .modal-overlay.active .modal-content {
+        transform: translateY(0);
+    }
+    
+    .close-modal {
+        position: absolute;
+        top: 1rem;
+        right: 1.5rem;
+        font-size: 2rem;
+        color: #888;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+    
+    .close-modal:hover {
+        color: #333;
+    }
+    
+    .modal-title {
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    
+    .modal-details {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+    
+    .detail-item {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .detail-label {
+        font-size: 0.9rem;
+        color: var(--text-color);
+        opacity: 0.7;
+        margin-bottom: 0.2rem;
+    }
+    
+    .detail-value {
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+    
+    .modal-actions {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    /* Desain Responsif */
+    @media (max-width: 768px) {
+        .overlay { padding: 1.5rem; }
+        h1 { font-size: 2rem; }
+        .btn { padding: 0.7rem 1.5rem; font-size: 1rem; }
+        .slot-title { font-size: 1.3rem; padding: 0.7rem 1.5rem; }
+        .cards { gap: 1rem; }
+        .card { padding: 1.2rem; }
+        .stats-container { gap: 0.8rem; }
+        .stat-card { flex: 1 1 120px; padding: 1rem; }
+        .stat-value { font-size: 1.8rem; }
+        .modal-details { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 500px) {
+        h1 { font-size: 1.8rem; }
+        .action-buttons { flex-direction: column; width: 100%; max-width: 300px; }
+        .btn { width: 100%; }
+        .stats-container { flex-direction: column; }
+        .stat-card { min-width: unset; width: 100%; }
+    }
+    
+    /* Scrollbar Kustom */
+    ::-webkit-scrollbar { width: 8px; background: #f0f8ff; }
+    ::-webkit-scrollbar-thumb { background: linear-gradient(var(--secondary-color), #FAD0C4); border-radius: 8px; }
+    ::-webkit-scrollbar-thumb:hover { background: linear-gradient(#FF7B8B, #F8C3B8); }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <div class="header-section">
+      <div id="live-time"></div>
+      <h1>📦 Laporan Pengiriman Heart <br><em>JaluStore</em></h1>
+      
+      <div class="action-buttons">
+        <a href="https://jalustoreid.netlify.app/" class="btn btn-primary" target="_blank">
+          <i class="fas fa-heart"></i> Beli Heart Sekarang!
+        </a>
+        <button class="btn btn-secondary" id="refresh-button" style="position:relative;">
+          <i class="fas fa-sync-alt"></i> Refresh Data
+          <span id="fail-badge" class="badge" style="display:none;">0</span>
+        </button>
+
+        <select id="status-filter" class="btn btn-secondary" style="border-radius:30px;">
+          <option value="all">Semua Status</option>
+          <option value="done">Selesai</option>
+          <option value="pending">Proses</option>
+          <option value="fail">Gagal</option>
+        </select>
+      </div>
+      
+      <div class="search-container">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" class="search-box" id="search-box" placeholder="Cari nama atau nomor order..." />
+      </div>
+      
+      <div class="stats-container" id="stats-container"></div>
+    </div>
+
+    <section>
+      <div class="slot-title"><i class="fas fa-cloud-sun"></i> Slot 1</div>
+      <div id="slot1-cards" class="cards"></div>
+    </section>
+
+    <section>
+      <div class="slot-title"><i class="fas fa-cloud-moon"></i> Slot 2</div>
+      <div id="slot2-cards" class="cards"></div>
+    </section>
+
+    <section>
+      <div class="slot-title"><i class="fas fa-star"></i> Slot 3</div>
+      <div id="slot3-cards" class="cards"></div>
+    </section>
+
+    <section>
+      <div class="slot-title"><i class="fas fa-box-open"></i> Slot 4</div>
+      <div id="slot4-cards" class="cards"></div>
+    </section>
+
+    <section id="completed-section">
+      <div class="slot-title"><i class="fas fa-check-circle"></i> Riwayat Orderan Selesai</div>
+      <div id="completed-cards" class="cards"></div>
+      <button class="load-more-btn" id="load-more-btn" style="display:none;">Muat Lebih Banyak</button>
+    </section>
+  </div>
+  
+  <div class="modal-overlay" id="order-modal">
+    <div class="modal-content">
+      <span class="close-modal" id="close-modal">&times;</span>
+      <h3 class="modal-title">Detail Order</h3>
+      <div class="modal-details" id="modal-details"></div>
+      <div class="modal-actions">
+        <a href="#" class="btn btn-primary" id="whatsapp-button" target="_blank">
+          <i class="fab fa-whatsapp"></i> Hubungi via WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let deliveryData = []; 
+    let completedItemsShown = 12; 
+    const itemsPerLoad = 12; 
+    let statusFilter = 'all';
+
+    async function loadDeliveryData() {
+        try {
+            const response = await fetch('js/data.js');
+            const scriptText = await response.text();
+            const dataFunction = new Function(scriptText + '; return deliveryData;');
+            deliveryData = dataFunction();
+            renderCards();
+            updateStats();
+        } catch (error) {
+            console.error('Error loading delivery data:', error);
+        }
+    }
+
+    const liveTimeEl = document.getElementById('live-time');
+    const refreshButton = document.getElementById('refresh-button');
+    const searchBox = document.getElementById('search-box');
+    const statsContainer = document.getElementById('stats-container');
+    const slot1Cards = document.getElementById('slot1-cards');
+    const slot2Cards = document.getElementById('slot2-cards');
+    const slot3Cards = document.getElementById('slot3-cards');
+    const slot4Cards = document.getElementById('slot4-cards');
+    const completedCards = document.getElementById('completed-cards');
+    const loadMoreBtn = document.getElementById('load-more-btn');
+    const orderModal = document.getElementById('order-modal');
+    const closeModalButton = document.getElementById('close-modal');
+    const modalDetails = document.getElementById('modal-details');
+    const whatsappButton = document.getElementById('whatsapp-button');
+    const statusFilterEl = document.getElementById('status-filter');
+    const failBadge = document.getElementById('fail-badge');
+
+    function updateLiveTime() {
+      const now = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+      liveTimeEl.textContent = now.toLocaleDateString('id-ID', options);
+    }
+
+    function renderCards(searchTerm = '') {
+      [slot1Cards, slot2Cards, slot3Cards, slot4Cards, completedCards].forEach(el => el.innerHTML = '');
+
+      const term = searchTerm.toLowerCase();
+      let filteredData = deliveryData.filter(item => {
+        return item.name.toLowerCase().includes(term) || String(item.order).includes(term) || String(item.send).includes(term);
+      });
+
+      if (statusFilter !== 'all') {
+        filteredData = filteredData.filter(item => {
+          if (statusFilter === 'done') return item.slot === 'completed' || item.send >= item.order;
+          if (statusFilter === 'fail') return item.statusOverride === 'fail';
+          if (statusFilter === 'pending') return item.slot !== 'completed' && item.send < item.order && item.statusOverride !== 'fail';
+          return true;
+        });
+      }
+
+      const pendingData = filteredData.filter(item => item.slot !== 'completed' && item.send < item.order && item.statusOverride !== 'fail');
+      const completedData = filteredData.filter(item => item.slot === 'completed' || item.send >= item.order || item.statusOverride === 'fail');
+
+      pendingData.forEach(item => {
+        const card = createCardElement(item);
+        if (item.slot === 1) slot1Cards.appendChild(card);
+        else if (item.slot === 2) slot2Cards.appendChild(card);
+        else if (item.slot === 3) slot3Cards.appendChild(card);
+        else if (item.slot === 4) slot4Cards.appendChild(card);
+      });
+
+      const completedToShow = completedData.slice(0, completedItemsShown);
+      completedToShow.forEach(item => {
+        completedCards.appendChild(createCardElement(item));
+      });
+
+      if (completedData.length > completedItemsShown) {
+        loadMoreBtn.style.display = 'block';
+      } else {
+        loadMoreBtn.style.display = 'none';
+      }
+    }
+
+    function createCardElement(item) {
+        const card = document.createElement('div');
+        let statusClass = 'pending';
+        let statusText = 'Proses';
+        let statusIcon = 'fa-hourglass-half';
+        let progress = (item.send / item.order) * 100;
+        
+        if (item.statusOverride === 'fail') {
+          statusClass = 'fail';
+          statusText = 'Gagal';
+          statusIcon = 'fa-times-circle';
+        } else if (item.slot === 'completed' || item.send >= item.order) {
+          statusClass = 'done';
+          statusText = 'Selesai';
+          statusIcon = 'fa-check-circle';
+        }
+
+        const progressHtml = (statusClass === 'pending' || statusClass === 'fail') ? 
+          `<div class="progress-bar"><div class="progress-fill" style="width: ${progress.toFixed(0)}%;"></div></div>` : '';
+
+        card.classList.add('card', statusClass);
+        card.innerHTML = `
+          <div class="name">${item.name}</div>
+          <div class="number">Order: ${item.order} | Terkirim: ${item.send}</div>
+          ${progressHtml}
+          <div class="status ${statusClass}">
+            <i class="fas ${statusIcon}"></i>
+            ${statusText}
+          </div>
+        `;
+        card.addEventListener('click', () => openOrderModal(item));
+        return card;
+    }
+
+    function updateStats() {
+      const totalOrders = deliveryData.length;
+      const totalCompleted = deliveryData.filter(item => item.slot === 'completed' || (item.send >= item.order && item.statusOverride !== 'fail')).length;
+      const totalPending = deliveryData.filter(item => item.slot !== 'completed' && item.send < item.order && item.statusOverride !== 'fail').length;
+      const totalFailed = deliveryData.filter(item => item.statusOverride === 'fail').length;
+
+      statsContainer.innerHTML = `
+        <div class="stat-card"><div class="stat-value">${totalOrders}</div><div class="stat-label">Total Order</div></div>
+        <div class="stat-card"><div class="stat-value">${totalCompleted}</div><div class="stat-label">Selesai</div></div>
+        <div class="stat-card"><div class="stat-value">${totalPending}</div><div class="stat-label">Proses</div></div>
+        <div class="stat-card"><div class="stat-value">${totalFailed}</div><div class="stat-label">Gagal</div></div>
+      `;
+
+      if (totalFailed > 0) {
+        failBadge.textContent = totalFailed;
+        failBadge.style.display = 'inline-block';
+      } else {
+        failBadge.style.display = 'none';
+      }
+    }
+
+    function openOrderModal(item) {
+      modalDetails.innerHTML = `
+        <div class="detail-item">
+          <div class="detail-label">Nama</div>
+          <div class="detail-value">${item.name}</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Order</div>
+          <div class="detail-value">${item.order} Heart</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Terkirim</div>
+          <div class="detail-value">${item.send} Heart</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Sisa</div>
+          <div class="detail-value">${item.order - item.send} Heart</div>
+        </div>
+        <div class="detail-item" style="grid-column: 1 / -1;">
+          <div class="detail-label">Status</div>
+          <div class="detail-value">${item.statusOverride === 'fail' ? 'Gagal' : (item.send >= item.order ? 'Selesai' : 'Proses')}</div>
+        </div>
+        <div class="detail-item" style="grid-column: 1 / -1;">
+          <div class="detail-label">Progress</div>
+          <div class="detail-value">${((item.send / item.order) * 100).toFixed(2)}%</div>
+        </div>
+        ${item.number ? `<div class="detail-item" style="grid-column: 1 / -1;"><div class="detail-label">Nomor Telepon</div><div class="detail-value">${item.number}</div></div>` : ''}
+        ${item.notes ? `<div class="detail-item" style="grid-column: 1 / -1;"><div class="detail-label">Catatan</div><div class="detail-value">${item.notes}</div></div>` : ''}
+      `;
+      
+      if (item.number) {
+        const whatsappLink = `https://wa.me/${item.number.replace(/D/g, '')}?text=Halo%20${encodeURIComponent(item.name)},%20kami%20ingin%20menginformasikan%20status%20orderan%20heart%20Anda%20dengan%20jumlah%20order%20${item.order}%20dan%20telah%20terkirim%20${item.send}.%20Sisa%20pengiriman%20adalah%20${item.order - item.send}.%20Terima%20kasih!`;
+        whatsappButton.href = whatsappLink;
+        whatsappButton.style.display = 'inline-flex';
+      } else {
+        whatsappButton.style.display = 'none';
+      }
+
+      orderModal.classList.add('active');
+    }
+
+    function closeOrderModal() {
+      orderModal.classList.remove('active');
+    }
+
+    // Event Listeners
+    refreshButton.addEventListener('click', () => {
+        completedItemsShown = itemsPerLoad; 
+        loadDeliveryData();
+        refreshButton.querySelector('i').classList.add('fa-spin');
+        setTimeout(() => refreshButton.querySelector('i').classList.remove('fa-spin'), 1000);
+    });
+
+    searchBox.addEventListener('keyup', (e) => {
+        completedItemsShown = itemsPerLoad; 
+        renderCards(e.target.value);
+    });
+
+    statusFilterEl.addEventListener('change', (e) => {
+      statusFilter = e.target.value;
+      completedItemsShown = itemsPerLoad;
+      renderCards(searchBox.value);
+    });
+
+    closeModalButton.addEventListener('click', closeOrderModal);
+
+    orderModal.addEventListener('click', (e) => {
+      if (e.target === orderModal) {
+        closeOrderModal();
+      }
+    });
+
+    loadMoreBtn.addEventListener('click', () => {
+        completedItemsShown += itemsPerLoad;
+        renderCards(searchBox.value);
+    });
+
+    // Pemuatan Awal
+    updateLiveTime();
+    setInterval(updateLiveTime, 1000);
+    loadDeliveryData();
+  </script>
+</body>
+</html>
