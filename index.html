@@ -50,7 +50,7 @@
         z-index: 1;
     }
 
-    /* Bagian Header dan Judul */
+    /* Header Section */
     .header-section {
         width: 100%;
         max-width: 900px;
@@ -71,9 +71,7 @@
         transition: transform 0.3s ease;
     }
     
-    #live-time:hover {
-      transform: translateY(-2px);
-    }
+    #live-time:hover { transform: translateY(-2px); }
 
     h1 {
         font-family: 'Fredoka', sans-serif;
@@ -93,7 +91,7 @@
         opacity: 0.8;
     }
 
-    /* Tombol Aksi, Pencarian, Filter */
+    /* Action Buttons */
     .action-buttons {
         display: flex;
         justify-content: center;
@@ -105,10 +103,11 @@
     .btn {
         display: inline-flex;
         align-items: center;
-        padding: 0.8rem 2rem;
+        justify-content: center;
+        padding: 0.8rem 1.5rem;
         border-radius: 30px;
         text-decoration: none;
-        font-size: 1.1rem;
+        font-size: 1rem;
         font-weight: 600;
         border: none;
         cursor: pointer;
@@ -128,20 +127,25 @@
         color: white;
         box-shadow: 0 5px 15px rgba(100, 181, 246, 0.4);
     }
-    
-    .btn:hover {
-        transform: translateY(-3px);
+
+    .btn-outline {
+        background: white;
+        border: 2px solid var(--accent-color);
+        color: var(--accent-color);
+        box-shadow: var(--shadow-light);
+        text-shadow: none;
     }
     
-    .btn i {
-      margin-right: 0.5em;
-    }
+    .btn:hover { transform: translateY(-3px); }
+    .btn i { margin-right: 0.5em; }
 
     .search-container {
         width: 100%;
         max-width: 500px;
         margin-bottom: 2.5rem;
         position: relative;
+        margin-left: auto;
+        margin-right: auto;
     }
     
     .search-box {
@@ -170,20 +174,24 @@
         opacity: 0.6;
     }
 
-    /* Badge untuk notifikasi */
     .badge {
       position: absolute;
-      top: 5px;
-      right: 5px;
+      top: -5px;
+      right: -5px;
       background: var(--status-fail-bg);
       color: var(--status-fail-text);
       font-size: 0.75rem;
-      border-radius: 12px;
-      padding: 0 6px;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-weight: 700;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
 
-    /* Statistik */
+    /* Stats */
     .stats-container {
         display: flex;
         gap: 1rem;
@@ -197,17 +205,15 @@
         background: var(--card-bg);
         border-radius: 15px;
         padding: 1.2rem 1.5rem;
-        min-width: 150px;
+        min-width: 140px;
         text-align: center;
         box-shadow: var(--shadow-light);
         border: 2px solid var(--card-border);
-        flex: 1 1 150px;
+        flex: 1 1 140px;
         transition: transform 0.3s ease;
     }
     
-    .stat-card:hover {
-      transform: translateY(-3px);
-    }
+    .stat-card:hover { transform: translateY(-3px); }
 
     .stat-value {
         font-size: 2rem;
@@ -222,7 +228,7 @@
         opacity: 0.8;
     }
 
-    /* Bagian Kartu */
+    /* Cards */
     section {
         margin-bottom: 3rem;
         width: 100%;
@@ -244,14 +250,8 @@
         transition: transform 0.3s ease;
     }
     
-    .slot-title i {
-        margin-right: 0.5rem;
-        font-size: 1.2em;
-    }
-
-    .slot-title:hover {
-      transform: translateY(-3px);
-    }
+    .slot-title i { margin-right: 0.5rem; font-size: 1.2em; }
+    .slot-title:hover { transform: translateY(-3px); }
 
     .cards {
         display: flex;
@@ -272,11 +272,14 @@
         flex-direction: column;
         justify-content: space-between;
         cursor: pointer;
+        position: relative;
+        overflow: hidden;
     }
     
     .card:hover {
         transform: translateY(-5px);
         box-shadow: var(--shadow-dark);
+        border-color: var(--accent-color);
     }
     
     .card .name {
@@ -287,39 +290,27 @@
     }
     
     .card .number {
-        font-size: 1em;
+        font-size: 0.95em;
         margin-bottom: 1em;
         color: #666;
     }
     
     .card .status {
         margin-top: auto;
-        font-size: 0.95em;
+        font-size: 0.9em;
         font-weight: 800;
         display: inline-flex;
         align-items: center;
         border-radius: 15px;
-        padding: 0.3em 0.8em;
+        padding: 0.4em 0.8em;
         text-transform: uppercase;
         align-self: flex-start;
     }
     
-    .status i {
-        margin-right: 0.5em;
-    }
-
-    .status.done { 
-        background: var(--status-done-bg); 
-        color: var(--status-done-text); 
-    }
-    .status.fail { 
-        background: var(--status-fail-bg); 
-        color: var(--status-fail-text); 
-    }
-    .status.pending { 
-        background: var(--status-pending-bg); 
-        color: var(--status-pending-text); 
-    }
+    .status i { margin-right: 0.5em; }
+    .status.done { background: var(--status-done-bg); color: var(--status-done-text); }
+    .status.fail { background: var(--status-fail-bg); color: var(--status-fail-text); }
+    .status.pending { background: var(--status-pending-bg); color: var(--status-pending-text); }
 
     .progress-bar {
         height: 8px;
@@ -345,21 +336,19 @@
       font-weight: 600;
       border: none;
       cursor: pointer;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
       transition: all 0.3s ease;
       box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
     }
 
-    .load-more-btn:hover {
-      transform: translateY(-3px);
-    }
+    .load-more-btn:hover { transform: translateY(-3px); }
 
     /* Modal */
     .modal-overlay {
         position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        top: 0; left: 0; right: 0; bottom: 0;
         background: rgba(0,0,0,0.7);
         display: flex;
         justify-content: center;
@@ -368,28 +357,26 @@
         opacity: 0;
         visibility: hidden;
         transition: all 0.3s ease;
+        padding: 1rem;
     }
     
-    .modal-overlay.active {
-        opacity: 1;
-        visibility: visible;
-    }
+    .modal-overlay.active { opacity: 1; visibility: visible; }
     
     .modal-content {
         background: var(--card-bg);
         border-radius: 20px;
-        padding: 2.5rem;
+        padding: 2rem;
         max-width: 500px;
-        width: 90%;
+        width: 100%;
         box-shadow: var(--shadow-dark);
         transform: translateY(20px);
         transition: all 0.3s ease;
         position: relative;
+        max-height: 90vh;
+        overflow-y: auto;
     }
     
-    .modal-overlay.active .modal-content {
-        transform: translateY(0);
-    }
+    .modal-overlay.active .modal-content { transform: translateY(0); }
     
     .close-modal {
         position: absolute;
@@ -399,11 +386,10 @@
         color: #888;
         cursor: pointer;
         transition: color 0.2s;
+        z-index: 10;
     }
     
-    .close-modal:hover {
-        color: #333;
-    }
+    .close-modal:hover { color: #333; }
     
     .modal-title {
         font-size: 1.6rem;
@@ -411,82 +397,82 @@
         color: var(--primary-color);
         text-align: center;
         margin-bottom: 2rem;
+        margin-top: 0.5rem;
     }
     
     .modal-details {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 1.5rem;
+        margin-bottom: 2rem;
     }
     
-    .detail-item {
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .detail-label {
-        font-size: 0.9rem;
-        color: var(--text-color);
-        opacity: 0.7;
-        margin-bottom: 0.2rem;
-    }
-    
-    .detail-value {
-        font-size: 1.1rem;
-        font-weight: 600;
-    }
+    .detail-item { display: flex; flex-direction: column; }
+    .detail-label { font-size: 0.9rem; color: var(--text-color); opacity: 0.7; margin-bottom: 0.2rem; }
+    .detail-value { font-size: 1.1rem; font-weight: 600; word-break: break-word; }
     
     .modal-actions {
         display: flex;
-        justify-content: center;
-        gap: 1rem;
-        margin-top: 2rem;
-    }
-
-    /* Desain Responsif */
-    @media (max-width: 768px) {
-        .overlay { padding: 1.5rem; }
-        h1 { font-size: 2rem; }
-        .btn { padding: 0.7rem 1.5rem; font-size: 1rem; }
-        .slot-title { font-size: 1.3rem; padding: 0.7rem 1.5rem; }
-        .cards { gap: 1rem; }
-        .card { padding: 1.2rem; }
-        .stats-container { gap: 0.8rem; }
-        .stat-card { flex: 1 1 120px; padding: 1rem; }
-        .stat-value { font-size: 1.8rem; }
-        .modal-details { grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 500px) {
-        h1 { font-size: 1.8rem; }
-        .action-buttons { flex-direction: column; width: 100%; max-width: 300px; }
-        .btn { width: 100%; }
-        .stats-container { flex-direction: column; }
-        .stat-card { min-width: unset; width: 100%; }
+        flex-direction: column;
+        gap: 0.8rem;
     }
     
-    /* Scrollbar Kustom */
-    ::-webkit-scrollbar { width: 8px; background: #f0f8ff; }
-    ::-webkit-scrollbar-thumb { background: linear-gradient(var(--secondary-color), #FAD0C4); border-radius: 8px; }
-    ::-webkit-scrollbar-thumb:hover { background: linear-gradient(#FF7B8B, #F8C3B8); }
+    @media (min-width: 500px) {
+        .modal-actions {
+            flex-direction: row;
+            justify-content: center;
+        }
+    }
+
+    /* Toast Notification */
+    .toast {
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%) translateY(100px);
+        background: rgba(0,0,0,0.8);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 20px;
+        z-index: 2000;
+        opacity: 0;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+    }
+    
+    .toast.show {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .overlay { padding: 1rem; }
+        h1 { font-size: 1.8rem; }
+        .cards { gap: 1rem; }
+        .modal-details { grid-template-columns: 1fr; gap: 1rem; }
+        .action-buttons { flex-direction: column; align-items: stretch; }
+        .search-container { margin-bottom: 1.5rem; }
+    }
   </style>
 </head>
 <body>
   <div class="overlay">
     <div class="header-section">
-      <div id="live-time"></div>
-      <h1>📦 Laporan Pengiriman Heart <br><em>JaluStore</em></h1>
+      <div id="live-time">Memuat waktu...</div>
+      <h1>📦 Laporan Heart <br><em>JaluStore</em></h1>
       
       <div class="action-buttons">
         <a href="https://jalustoreid.netlify.app/" class="btn btn-primary" target="_blank">
-          <i class="fas fa-heart"></i> Beli Heart Sekarang!
+          <i class="fas fa-heart"></i> Order Baru
         </a>
-        <button class="btn btn-secondary" id="refresh-button" style="position:relative;">
+        
+        <button class="btn btn-secondary" id="refresh-button">
           <i class="fas fa-sync-alt"></i> Refresh Data
           <span id="fail-badge" class="badge" style="display:none;">0</span>
         </button>
 
-        <select id="status-filter" class="btn btn-secondary" style="border-radius:30px;">
+        <select id="status-filter" class="btn btn-outline" style="border-radius:30px; cursor:pointer;">
           <option value="all">Semua Status</option>
           <option value="done">Selesai</option>
           <option value="pending">Proses</option>
@@ -499,31 +485,17 @@
         <input type="text" class="search-box" id="search-box" placeholder="Cari nama atau nomor order..." />
       </div>
       
-      <div class="stats-container" id="stats-container"></div>
+      <div class="stats-container" id="stats-container">
+        </div>
     </div>
 
-    <section>
-      <div class="slot-title"><i class="fas fa-cloud-sun"></i> Slot 1</div>
-      <div id="slot1-cards" class="cards"></div>
-    </section>
-
-    <section>
-      <div class="slot-title"><i class="fas fa-cloud-moon"></i> Slot 2</div>
-      <div id="slot2-cards" class="cards"></div>
-    </section>
-
-    <section>
-      <div class="slot-title"><i class="fas fa-star"></i> Slot 3</div>
-      <div id="slot3-cards" class="cards"></div>
-    </section>
-
-    <section>
-      <div class="slot-title"><i class="fas fa-box-open"></i> Slot 4</div>
-      <div id="slot4-cards" class="cards"></div>
-    </section>
+    <section><div class="slot-title"><i class="fas fa-cloud-sun"></i> Slot 1</div><div id="slot1-cards" class="cards"></div></section>
+    <section><div class="slot-title"><i class="fas fa-cloud-moon"></i> Slot 2</div><div id="slot2-cards" class="cards"></div></section>
+    <section><div class="slot-title"><i class="fas fa-star"></i> Slot 3</div><div id="slot3-cards" class="cards"></div></section>
+    <section><div class="slot-title"><i class="fas fa-box-open"></i> Slot 4</div><div id="slot4-cards" class="cards"></div></section>
 
     <section id="completed-section">
-      <div class="slot-title"><i class="fas fa-check-circle"></i> Riwayat Orderan Selesai</div>
+      <div class="slot-title"><i class="fas fa-check-circle"></i> Riwayat Selesai</div>
       <div id="completed-cards" class="cards"></div>
       <button class="load-more-btn" id="load-more-btn" style="display:none;">Muat Lebih Banyak</button>
     </section>
@@ -534,49 +506,82 @@
       <span class="close-modal" id="close-modal">&times;</span>
       <h3 class="modal-title">Detail Order</h3>
       <div class="modal-details" id="modal-details"></div>
+      
       <div class="modal-actions">
+        <button class="btn btn-secondary" id="copy-info-btn">
+          <i class="fas fa-copy"></i> Salin Info
+        </button>
         <a href="#" class="btn btn-primary" id="whatsapp-button" target="_blank">
-          <i class="fab fa-whatsapp"></i> Hubungi via WhatsApp
+          <i class="fab fa-whatsapp"></i> Chat WhatsApp
         </a>
       </div>
     </div>
   </div>
+
+  <div id="toast" class="toast">Info berhasil disalin!</div>
 
   <script>
     let deliveryData = []; 
     let completedItemsShown = 12; 
     const itemsPerLoad = 12; 
     let statusFilter = 'all';
+    let currentModalItem = null; // Menyimpan item yg sedang dibuka di modal
 
     async function loadDeliveryData() {
+        const refreshBtn = document.getElementById('refresh-button');
+        const originalText = refreshBtn.innerHTML;
+        
+        // Animasi Loading
+        refreshBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memuat...';
+        refreshBtn.disabled = true;
+
         try {
-            const response = await fetch('js/data.js');
+            const response = await fetch('js/data.js?t=' + new Date().getTime()); // Mencegah cache
+            if (!response.ok) throw new Error("Gagal mengambil data");
+            
             const scriptText = await response.text();
+            // Peringatan: new Function memiliki risiko keamanan jika sumber data tidak terpercaya.
+            // Pastikan js/data.js aman.
             const dataFunction = new Function(scriptText + '; return deliveryData;');
             deliveryData = dataFunction();
+            
             renderCards();
             updateStats();
+            showToast("Data berhasil diperbarui");
         } catch (error) {
             console.error('Error loading delivery data:', error);
+            showToast("Gagal memuat data. Periksa koneksi.");
+        } finally {
+            // Kembalikan tombol seperti semula
+            refreshBtn.innerHTML = originalText;
+            refreshBtn.disabled = false;
+            updateStats(); // Update badge lagi
         }
     }
 
+    // Elemen DOM
     const liveTimeEl = document.getElementById('live-time');
     const refreshButton = document.getElementById('refresh-button');
     const searchBox = document.getElementById('search-box');
     const statsContainer = document.getElementById('stats-container');
-    const slot1Cards = document.getElementById('slot1-cards');
-    const slot2Cards = document.getElementById('slot2-cards');
-    const slot3Cards = document.getElementById('slot3-cards');
-    const slot4Cards = document.getElementById('slot4-cards');
-    const completedCards = document.getElementById('completed-cards');
     const loadMoreBtn = document.getElementById('load-more-btn');
     const orderModal = document.getElementById('order-modal');
     const closeModalButton = document.getElementById('close-modal');
     const modalDetails = document.getElementById('modal-details');
     const whatsappButton = document.getElementById('whatsapp-button');
+    const copyInfoBtn = document.getElementById('copy-info-btn');
     const statusFilterEl = document.getElementById('status-filter');
     const failBadge = document.getElementById('fail-badge');
+    const toast = document.getElementById('toast');
+
+    // Slot Containers
+    const slots = {
+        1: document.getElementById('slot1-cards'),
+        2: document.getElementById('slot2-cards'),
+        3: document.getElementById('slot3-cards'),
+        4: document.getElementById('slot4-cards'),
+        'completed': document.getElementById('completed-cards')
+    };
 
     function updateLiveTime() {
       const now = new Date();
@@ -585,13 +590,17 @@
     }
 
     function renderCards(searchTerm = '') {
-      [slot1Cards, slot2Cards, slot3Cards, slot4Cards, completedCards].forEach(el => el.innerHTML = '');
+      // Bersihkan semua slot
+      Object.values(slots).forEach(el => el.innerHTML = '');
 
       const term = searchTerm.toLowerCase();
+      
+      // Filter Global
       let filteredData = deliveryData.filter(item => {
         return item.name.toLowerCase().includes(term) || String(item.order).includes(term) || String(item.send).includes(term);
       });
 
+      // Filter Status
       if (statusFilter !== 'all') {
         filteredData = filteredData.filter(item => {
           if (statusFilter === 'done') return item.slot === 'completed' || item.send >= item.order;
@@ -604,24 +613,19 @@
       const pendingData = filteredData.filter(item => item.slot !== 'completed' && item.send < item.order && item.statusOverride !== 'fail');
       const completedData = filteredData.filter(item => item.slot === 'completed' || item.send >= item.order || item.statusOverride === 'fail');
 
+      // Render Pending ke Slot masing-masing
       pendingData.forEach(item => {
         const card = createCardElement(item);
-        if (item.slot === 1) slot1Cards.appendChild(card);
-        else if (item.slot === 2) slot2Cards.appendChild(card);
-        else if (item.slot === 3) slot3Cards.appendChild(card);
-        else if (item.slot === 4) slot4Cards.appendChild(card);
+        if (slots[item.slot]) slots[item.slot].appendChild(card);
       });
 
+      // Render Completed (dengan limit load more)
       const completedToShow = completedData.slice(0, completedItemsShown);
       completedToShow.forEach(item => {
-        completedCards.appendChild(createCardElement(item));
+        slots['completed'].appendChild(createCardElement(item));
       });
 
-      if (completedData.length > completedItemsShown) {
-        loadMoreBtn.style.display = 'block';
-      } else {
-        loadMoreBtn.style.display = 'none';
-      }
+      loadMoreBtn.style.display = completedData.length > completedItemsShown ? 'block' : 'none';
     }
 
     function createCardElement(item) {
@@ -641,13 +645,13 @@
           statusIcon = 'fa-check-circle';
         }
 
-        const progressHtml = (statusClass === 'pending' || statusClass === 'fail') ? 
+        const progressHtml = (statusClass === 'pending') ? 
           `<div class="progress-bar"><div class="progress-fill" style="width: ${progress.toFixed(0)}%;"></div></div>` : '';
 
         card.classList.add('card', statusClass);
         card.innerHTML = `
           <div class="name">${item.name}</div>
-          <div class="number">Order: ${item.order} | Terkirim: ${item.send}</div>
+          <div class="number"><i class="fas fa-cube"></i> Order: ${item.order} | <i class="fas fa-paper-plane"></i> Kirim: ${item.send}</div>
           ${progressHtml}
           <div class="status ${statusClass}">
             <i class="fas ${statusIcon}"></i>
@@ -659,6 +663,7 @@
     }
 
     function updateStats() {
+      if(!deliveryData) return;
       const totalOrders = deliveryData.length;
       const totalCompleted = deliveryData.filter(item => item.slot === 'completed' || (item.send >= item.order && item.statusOverride !== 'fail')).length;
       const totalPending = deliveryData.filter(item => item.slot !== 'completed' && item.send < item.order && item.statusOverride !== 'fail').length;
@@ -673,45 +678,51 @@
 
       if (totalFailed > 0) {
         failBadge.textContent = totalFailed;
-        failBadge.style.display = 'inline-block';
+        failBadge.style.display = 'flex';
       } else {
         failBadge.style.display = 'none';
       }
     }
 
     function openOrderModal(item) {
+      currentModalItem = item; // Simpan item saat ini
+      const sisa = item.order - item.send;
+      const progress = ((item.send / item.order) * 100).toFixed(1);
+      const status = item.statusOverride === 'fail' ? 'Gagal' : (item.send >= item.order ? 'Selesai' : 'Sedang Proses');
+
       modalDetails.innerHTML = `
         <div class="detail-item">
-          <div class="detail-label">Nama</div>
+          <div class="detail-label">Nama Akun</div>
           <div class="detail-value">${item.name}</div>
         </div>
         <div class="detail-item">
-          <div class="detail-label">Order</div>
+          <div class="detail-label">Status</div>
+          <div class="detail-value">${status}</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">Total Order</div>
           <div class="detail-value">${item.order} Heart</div>
         </div>
         <div class="detail-item">
-          <div class="detail-label">Terkirim</div>
+          <div class="detail-label">Sudah Terkirim</div>
           <div class="detail-value">${item.send} Heart</div>
         </div>
         <div class="detail-item">
           <div class="detail-label">Sisa</div>
-          <div class="detail-value">${item.order - item.send} Heart</div>
+          <div class="detail-value">${sisa > 0 ? sisa : 0} Heart</div>
         </div>
-        <div class="detail-item" style="grid-column: 1 / -1;">
-          <div class="detail-label">Status</div>
-          <div class="detail-value">${item.statusOverride === 'fail' ? 'Gagal' : (item.send >= item.order ? 'Selesai' : 'Proses')}</div>
-        </div>
-        <div class="detail-item" style="grid-column: 1 / -1;">
+        <div class="detail-item">
           <div class="detail-label">Progress</div>
-          <div class="detail-value">${((item.send / item.order) * 100).toFixed(2)}%</div>
+          <div class="detail-value">${progress}%</div>
         </div>
-        ${item.number ? `<div class="detail-item" style="grid-column: 1 / -1;"><div class="detail-label">Nomor Telepon</div><div class="detail-value">${item.number}</div></div>` : ''}
-        ${item.notes ? `<div class="detail-item" style="grid-column: 1 / -1;"><div class="detail-label">Catatan</div><div class="detail-value">${item.notes}</div></div>` : ''}
+        ${item.notes ? `<div class="detail-item" style="grid-column: 1 / -1;"><div class="detail-label">Catatan Admin</div><div class="detail-value">${item.notes}</div></div>` : ''}
       `;
       
+      // Setup tombol WhatsApp
       if (item.number) {
-        const whatsappLink = `https://wa.me/${item.number.replace(/D/g, '')}?text=Halo%20${encodeURIComponent(item.name)},%20kami%20ingin%20menginformasikan%20status%20orderan%20heart%20Anda%20dengan%20jumlah%20order%20${item.order}%20dan%20telah%20terkirim%20${item.send}.%20Sisa%20pengiriman%20adalah%20${item.order - item.send}.%20Terima%20kasih!`;
-        whatsappButton.href = whatsappLink;
+        const cleanNumber = item.number.replace(/\D/g, ''); // Hapus karakter non-digit
+        const waLink = `https://wa.me/${cleanNumber}?text=Halo%20Kak%20${encodeURIComponent(item.name)},%0A%0AUpdate%20status%20order%20Heart%20Sky:%0AOrder:%20${item.order}%0ATerkirim:%20${item.send}%0ASisa:%20${sisa}%0AStatus:%20${status}%0A%0ATerima%20kasih!`;
+        whatsappButton.href = waLink;
         whatsappButton.style.display = 'inline-flex';
       } else {
         whatsappButton.style.display = 'none';
@@ -724,12 +735,33 @@
       orderModal.classList.remove('active');
     }
 
+    function showToast(message) {
+        toast.textContent = message;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // Fitur Salin Teks
+    copyInfoBtn.addEventListener('click', () => {
+        if (!currentModalItem) return;
+        const item = currentModalItem;
+        const sisa = item.order - item.send;
+        const status = item.statusOverride === 'fail' ? 'Gagal' : (item.send >= item.order ? 'Selesai' : 'Proses');
+        
+        const textToCopy = `📦 *Laporan Order JaluStore*\n\n👤 Nama: ${item.name}\n❤️ Order: ${item.order}\n✅ Terkirim: ${item.send}\n⏳ Sisa: ${sisa}\n📊 Status: ${status}\n\nTerima kasih sudah order!`;
+        
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            showToast("Laporan berhasil disalin!");
+        }).catch(err => {
+            console.error('Gagal menyalin: ', err);
+            showToast("Gagal menyalin teks.");
+        });
+    });
+
     // Event Listeners
     refreshButton.addEventListener('click', () => {
         completedItemsShown = itemsPerLoad; 
         loadDeliveryData();
-        refreshButton.querySelector('i').classList.add('fa-spin');
-        setTimeout(() => refreshButton.querySelector('i').classList.remove('fa-spin'), 1000);
     });
 
     searchBox.addEventListener('keyup', (e) => {
@@ -744,11 +776,8 @@
     });
 
     closeModalButton.addEventListener('click', closeOrderModal);
-
     orderModal.addEventListener('click', (e) => {
-      if (e.target === orderModal) {
-        closeOrderModal();
-      }
+      if (e.target === orderModal) closeOrderModal();
     });
 
     loadMoreBtn.addEventListener('click', () => {
@@ -756,7 +785,7 @@
         renderCards(searchBox.value);
     });
 
-    // Pemuatan Awal
+    // Inisialisasi
     updateLiveTime();
     setInterval(updateLiveTime, 1000);
     loadDeliveryData();
