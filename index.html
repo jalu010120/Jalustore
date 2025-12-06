@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
   <style>
+    /* --- CSS SAMA SEPERTI SEBELUMNYA --- */
     :root {
         --primary-color: #8A2BE2;
         --secondary-color: #FF9A9E;
@@ -468,7 +469,7 @@
         </a>
         
         <button class="btn btn-secondary" id="refresh-button">
-          <i class="fas fa-sync-alt"></i> Refresh Data
+          <i class="fas fa-sync-alt"></i> Reload Data
           <span id="fail-badge" class="badge" style="display:none;">0</span>
         </button>
 
@@ -520,44 +521,20 @@
 
   <div id="toast" class="toast">Info berhasil disalin!</div>
 
+  <script src="js/data.js"></script>
+
   <script>
-    let deliveryData = []; 
+    // Konfigurasi & Variabel Global
+    // Pastikan deliveryData sudah dimuat dari js/data.js sebelum script ini jalan
+    if (typeof deliveryData === 'undefined') {
+        console.error("Gagal memuat data. Pastikan file js/data.js ada.");
+        deliveryData = []; // Fallback agar tidak error
+    }
+
     let completedItemsShown = 12; 
     const itemsPerLoad = 12; 
     let statusFilter = 'all';
-    let currentModalItem = null; // Menyimpan item yg sedang dibuka di modal
-
-    async function loadDeliveryData() {
-        const refreshBtn = document.getElementById('refresh-button');
-        const originalText = refreshBtn.innerHTML;
-        
-        // Animasi Loading
-        refreshBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memuat...';
-        refreshBtn.disabled = true;
-
-        try {
-            const response = await fetch('js/data.js?t=' + new Date().getTime()); // Mencegah cache
-            if (!response.ok) throw new Error("Gagal mengambil data");
-            
-            const scriptText = await response.text();
-            // Peringatan: new Function memiliki risiko keamanan jika sumber data tidak terpercaya.
-            // Pastikan js/data.js aman.
-            const dataFunction = new Function(scriptText + '; return deliveryData;');
-            deliveryData = dataFunction();
-            
-            renderCards();
-            updateStats();
-            showToast("Data berhasil diperbarui");
-        } catch (error) {
-            console.error('Error loading delivery data:', error);
-            showToast("Gagal memuat data. Periksa koneksi.");
-        } finally {
-            // Kembalikan tombol seperti semula
-            refreshBtn.innerHTML = originalText;
-            refreshBtn.disabled = false;
-            updateStats(); // Update badge lagi
-        }
-    }
+    let currentModalItem = null;
 
     // Elemen DOM
     const liveTimeEl = document.getElementById('live-time');
@@ -626,6 +603,7 @@
       });
 
       loadMoreBtn.style.display = completedData.length > completedItemsShown ? 'block' : 'none';
+      updateStats(); // Update badge setiap render
     }
 
     function createCardElement(item) {
@@ -685,7 +663,7 @@
     }
 
     function openOrderModal(item) {
-      currentModalItem = item; // Simpan item saat ini
+      currentModalItem = item;
       const sisa = item.order - item.send;
       const progress = ((item.send / item.order) * 100).toFixed(1);
       const status = item.statusOverride === 'fail' ? 'Gagal' : (item.send >= item.order ? 'Selesai' : 'Sedang Proses');
@@ -720,7 +698,7 @@
       
       // Setup tombol WhatsApp
       if (item.number) {
-        const cleanNumber = item.number.replace(/\D/g, ''); // Hapus karakter non-digit
+        const cleanNumber = item.number.replace(/\D/g, ''); 
         const waLink = `https://wa.me/${cleanNumber}?text=Halo%20Kak%20${encodeURIComponent(item.name)},%0A%0AUpdate%20status%20order%20Heart%20Sky:%0AOrder:%20${item.order}%0ATerkirim:%20${item.send}%0ASisa:%20${sisa}%0AStatus:%20${status}%0A%0ATerima%20kasih!`;
         whatsappButton.href = waLink;
         whatsappButton.style.display = 'inline-flex';
@@ -759,9 +737,9 @@
     });
 
     // Event Listeners
+    // Ubah tombol Refresh menjadi Reload Page agar membaca perubahan di data.js
     refreshButton.addEventListener('click', () => {
-        completedItemsShown = itemsPerLoad; 
-        loadDeliveryData();
+        location.reload(); 
     });
 
     searchBox.addEventListener('keyup', (e) => {
@@ -788,7 +766,9 @@
     // Inisialisasi
     updateLiveTime();
     setInterval(updateLiveTime, 1000);
-    loadDeliveryData();
+    
+    // Jalankan render awal
+    renderCards();
   </script>
 </body>
 </html>
