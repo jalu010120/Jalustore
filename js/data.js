@@ -2,26 +2,30 @@
 
 const deliveryData = [
     // --- SLOT 1 (AKTIF) ---
-    { slot: 1, name: 'SHAINA', order: 500, send: 150 },
-    { slot: 1, name: 'ZAH', order: 600, send: 277 },
-    { slot: 1, name: 'JASMINE', order: 500, send: 150 },
-    { slot: 1, name: 'RESTU', order: 500, send: 310 },
-    { slot: 1, name: 'YAYA', order: 500, send: 130 },
-    { slot: 1, name: 'ALIP', order: 600, send: 60 },
-    { slot: 1, name: 'ANGGI', order: 550, send: 100 },
+    { slot: 1, name: 'SHAINA', order: 500, send: 180 },
+    { slot: 1, name: 'ZAH', order: 600, send: 277, statusOverride: 'fail' }, // ❌
+    { slot: 1, name: 'JASMINE', order: 500, send: 180 },
+    { slot: 1, name: 'RESTU', order: 500, send: 340 },
+    { slot: 1, name: 'YAYA', order: 500, send: 160 },
+    { slot: 1, name: 'ALIP', order: 600, send: 90 },
+    { slot: 1, name: 'ANGGI', order: 550, send: 130 },
 
     // --- SLOT 2 (AKTIF) ---
-    { slot: 2, name: 'RAI', order: 100, send: 84 },
-    { slot: 2, name: 'ACELL', order: 100, send: 80 }, // Kembali aktif
-    { slot: 2, name: 'IKA', order: 200, send: 60 },
-    { slot: 2, name: 'KIKI', order: 100, send: 60 },
-    { slot: 2, name: 'GIN', order: 100, send: 80 },
-    { slot: 2, name: 'ICA', order: 800, send: 698 },
+    { slot: 2, name: 'ACELL', order: 100, send: 80, statusOverride: 'fail' }, // ❌
+    { slot: 2, name: 'IKA', order: 200, send: 80 },
+    { slot: 2, name: 'KIKI', order: 100, send: 80 },
+    { slot: 2, name: 'ICA', order: 800, send: 718 },
+    { slot: 2, name: 'ONDE', order: 800, send: 460 },
 
     // --- SLOT 3 (AKTIF) ---
     // Belum ada data
 
     // --- RIWAYAT ORDERAN SELESAI (COMPLETED) ---
+    // Baru selesai (✅ / Target Tercapai):
+    { slot: 'completed', name: 'GIN', order: 100, send: 100 },
+    { slot: 'completed', name: 'RAI', order: 100, send: 102 },
+
+    // Riwayat lama:
     { slot: 'completed', name: 'Yulii', order: 400, send: 400 },
     { slot: 'completed', name: 'Feng', order: 230, send: 230 },
     { slot: 'completed', name: 'Aze', order: 570, send: 570 },
