@@ -2,26 +2,28 @@
 
 const deliveryData = [
     // --- SLOT 1 (AKTIF) ---
-    { slot: 1, name: 'SHAINA', order: 500, send: 180 },
-    { slot: 1, name: 'ZAH', order: 600, send: 277, statusOverride: 'fail' }, // ❌
-    { slot: 1, name: 'JASMINE', order: 500, send: 180 },
-    { slot: 1, name: 'RESTU', order: 500, send: 340 },
-    { slot: 1, name: 'YAYA', order: 500, send: 160 },
-    { slot: 1, name: 'ALIP', order: 600, send: 90 },
-    { slot: 1, name: 'ANGGI', order: 550, send: 130 },
+    { slot: 1, name: 'SHAINA', order: 500, send: 210 },
+    { slot: 1, name: 'ZAH', order: 600, send: 307 }, // Kembali aktif
+    { slot: 1, name: 'JASMINE', order: 500, send: 210 },
+    { slot: 1, name: 'RESTU', order: 500, send: 370 },
+    { slot: 1, name: 'YAYA', order: 500, send: 190 },
+    { slot: 1, name: 'ALIP', order: 600, send: 120 },
+    { slot: 1, name: 'ANGGI', order: 550, send: 160 },
 
     // --- SLOT 2 (AKTIF) ---
-    { slot: 2, name: 'ACELL', order: 100, send: 80, statusOverride: 'fail' }, // ❌
-    { slot: 2, name: 'IKA', order: 200, send: 80 },
-    { slot: 2, name: 'KIKI', order: 100, send: 80 },
-    { slot: 2, name: 'ICA', order: 800, send: 718 },
-    { slot: 2, name: 'ONDE', order: 800, send: 460 },
+    { slot: 2, name: 'IKA', order: 200, send: 80, statusOverride: 'fail' }, // ❌
+    { slot: 2, name: 'RENDY', order: 500, send: 260 },
+    { slot: 2, name: 'ICA', order: 800, send: 738 },
+    { slot: 2, name: 'ONDE', order: 800, send: 460, statusOverride: 'fail' }, // ❌
+    { slot: 2, name: 'ADIT', order: 500, send: 80 },
 
     // --- SLOT 3 (AKTIF) ---
     // Belum ada data
 
     // --- RIWAYAT ORDERAN SELESAI (COMPLETED) ---
-    // Baru selesai (✅ / Target Tercapai):
+    // Baru selesai (✅):
+    { slot: 'completed', name: 'ACELL', order: 100, send: 100 },
+    { slot: 'completed', name: 'KIKI', order: 100, send: 100 },
     { slot: 'completed', name: 'GIN', order: 100, send: 100 },
     { slot: 'completed', name: 'RAI', order: 100, send: 102 },
 
