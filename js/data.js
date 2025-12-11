@@ -2,20 +2,20 @@
 
 const deliveryData = [
     // --- SLOT 1 (AKTIF) ---
-    { slot: 1, name: 'SHAINA', order: 500, send: 210 },
-    { slot: 1, name: 'ZAH', order: 600, send: 307 }, // Kembali aktif
-    { slot: 1, name: 'JASMINE', order: 500, send: 210 },
-    { slot: 1, name: 'RESTU', order: 500, send: 370 },
-    { slot: 1, name: 'YAYA', order: 500, send: 190 },
-    { slot: 1, name: 'ALIP', order: 600, send: 120 },
-    { slot: 1, name: 'ANGGI', order: 550, send: 160 },
+    { slot: 1, name: 'SHAINA', order: 500, send: 240 },
+    { slot: 1, name: 'ZAH', order: 600, send: 337 },
+    { slot: 1, name: 'JASMINE', order: 500, send: 240 },
+    { slot: 1, name: 'RESTU', order: 500, send: 400 },
+    { slot: 1, name: 'YAYA', order: 500, send: 220 },
+    { slot: 1, name: 'ALIP', order: 600, send: 150 },
+    { slot: 1, name: 'ANGGI', order: 550, send: 190 },
 
     // --- SLOT 2 (AKTIF) ---
-    { slot: 2, name: 'IKA', order: 200, send: 80, statusOverride: 'fail' }, // ❌
-    { slot: 2, name: 'RENDY', order: 500, send: 260 },
-    { slot: 2, name: 'ICA', order: 800, send: 738 },
+    { slot: 2, name: 'IKA', order: 200, send: 100 }, // Kembali aktif
+    { slot: 2, name: 'RENDY', order: 500, send: 280 },
+    { slot: 2, name: 'ICA', order: 800, send: 758 },
     { slot: 2, name: 'ONDE', order: 800, send: 460, statusOverride: 'fail' }, // ❌
-    { slot: 2, name: 'ADIT', order: 500, send: 80 },
+    { slot: 2, name: 'ADIT', order: 500, send: 100 },
 
     // --- SLOT 3 (AKTIF) ---
     // Belum ada data
