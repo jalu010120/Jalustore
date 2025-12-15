@@ -2,24 +2,25 @@
 
 const deliveryData = [
     // --- SLOT 1 (AKTIF) ---
-    { slot: 1, name: 'SHAINA', order: 500, send: 270 },
-    { slot: 1, name: 'ZAH', order: 600, send: 367 },
-    { slot: 1, name: 'JASMINE', order: 500, send: 240, statusOverride: 'fail' }, // ❌
-    { slot: 1, name: 'RESTU', order: 500, send: 430 },
-    { slot: 1, name: 'YAYA', order: 500, send: 250 },
-    { slot: 1, name: 'ALIP', order: 600, send: 180 },
-    { slot: 1, name: 'ANGGI', order: 550, send: 220 },
+    { slot: 1, name: 'SHAINA', order: 500, send: 330 },
+    { slot: 1, name: 'ZAH', order: 600, send: 397 },
+    { slot: 1, name: 'JASMINE', order: 500, send: 270 }, // Kembali aktif
+    { slot: 1, name: 'RESTU', order: 500, send: 460 },
+    { slot: 1, name: 'YAYA', order: 500, send: 310 },
+    { slot: 1, name: 'ALIP', order: 600, send: 240 },
+    { slot: 1, name: 'ANGGI', order: 550, send: 280 },
 
-    // --- SLOT 2 (AKTIF) ---
-    { slot: 2, name: 'IKA', order: 200, send: 120 },
-    { slot: 2, name: 'RENDY', order: 500, send: 300 },
-    { slot: 2, name: 'ICA', order: 800, send: 780 },
-    { slot: 2, name: 'ONDE', order: 800, send: 480 }, // Kembali aktif
-    { slot: 2, name: 'ADIT', order: 500, send: 120 },
-    { slot: 2, name: 'AELIA', order: 2300, send: 1870 },
+    // --- SLOT 2 (MASS FREEZE / GAGAL) ---
+    { slot: 2, name: 'IKA', order: 200, send: 120, statusOverride: 'fail' },   // ❌
+    { slot: 2, name: 'ICA', order: 800, send: 780, statusOverride: 'fail' },   // ❌
+    { slot: 2, name: 'ONDE', order: 800, send: 480, statusOverride: 'fail' },  // ❌
+    { slot: 2, name: 'ADIT', order: 500, send: 120, statusOverride: 'fail' },  // ❌
+    { slot: 2, name: 'AELIA', order: 2300, send: 1870, statusOverride: 'fail' }, // ❌
 
     // --- SLOT 3 (AKTIF) ---
-    // Belum ada data
+    { slot: 3, name: 'CICI', order: 200, send: 36 },
+    { slot: 3, name: 'IAN2', order: 500, send: 76 },
+    { slot: 3, name: 'RENDY', order: 500, send: 330 }, // Pindah dari Slot 2
 
     // --- RIWAYAT ORDERAN SELESAI (COMPLETED) ---
     // Baru selesai (✅):
@@ -94,4 +95,4 @@ const deliveryData = [
     { slot: 'completed', name: 'Lisa', order: 200, send: 200 },
     { slot: 'completed', name: 'Rani', order: 420, send: 420 }
 ];
-
+    
