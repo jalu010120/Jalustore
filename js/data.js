@@ -2,35 +2,37 @@
 
 const deliveryData = [
     // --- SLOT 1 (AKTIF) ---
-    { slot: 1, name: 'SHAINA', order: 500, send: 360 },
-    { slot: 1, name: 'ZAH', order: 600, send: 420 },
-    { slot: 1, name: 'JASMINE', order: 500, send: 270, statusOverride: 'fail' }, // ❌
-    { slot: 1, name: 'RESTU', order: 500, send: 460, statusOverride: 'fail' },   // ❌
-    { slot: 1, name: 'YAYA', order: 500, send: 340 },
-    { slot: 1, name: 'ALIP', order: 600, send: 270 },
-    { slot: 1, name: 'ANGGI', order: 550, send: 310 },
+    { slot: 1, name: 'ALIP', order: 600, send: 480 },
+    { slot: 1, name: 'ANGGI', order: 550, send: 520 },
+    { slot: 1, name: 'HACIM', order: 800, send: 30, statusOverride: 'fail' }, // ❌ (Baru)
+    { slot: 1, name: 'REGI', order: 100, send: 60 }, // (Baru)
 
     // --- SLOT 2 (MASS FREEZE / GAGAL) ---
     { slot: 2, name: 'IKA', order: 200, send: 120, statusOverride: 'fail' },   // ❌
     { slot: 2, name: 'ICA', order: 800, send: 780, statusOverride: 'fail' },   // ❌
     { slot: 2, name: 'ONDE', order: 800, send: 480, statusOverride: 'fail' },  // ❌
-    { slot: 2, name: 'ADIT', order: 500, send: 120, statusOverride: 'fail' },  // ❌
-    // AELIA dipindah ke Slot 3
 
     // --- SLOT 3 (AKTIF) ---
-    { slot: 3, name: 'CICI', order: 200, send: 66 },
-    { slot: 3, name: 'IAN2', order: 500, send: 94 },
-    { slot: 3, name: 'RENDY', order: 500, send: 360 },
-    { slot: 3, name: 'AELIA', order: 2300, send: 1900 }, // Pindah dari Slot 2 & Aktif Kembali
+    { slot: 3, name: 'IAN2', order: 500, send: 390 },
+    { slot: 3, name: 'AELIA', order: 2300, send: 2260 },
+    { slot: 3, name: 'VAN', order: 1600, send: 510, statusOverride: 'fail' },  // ❌ (Baru fail)
+    { slot: 3, name: 'ADIT', order: 500, send: 240 },
 
     // --- RIWAYAT ORDERAN SELESAI (COMPLETED) ---
-    // Baru selesai (✅):
+    // Baru selesai (Hilang dari list aktif):
+    { slot: 'completed', name: 'SHAINA', order: 500, send: 480 }, // Diasumsikan done
+    { slot: 'completed', name: 'ZAH', order: 600, send: 510 },    // Diasumsikan done
+    { slot: 'completed', name: 'JASMINE', order: 500, send: 390 },// Diasumsikan done
+    { slot: 'completed', name: 'RESTU', order: 500, send: 460 },  // Diasumsikan done
+    { slot: 'completed', name: 'YAYA', order: 500, send: 490 },   // Diasumsikan done
+    { slot: 'completed', name: 'RENDY', order: 500, send: 480 },  // Diasumsikan done
+
+    // Riwayat lama:
+    { slot: 'completed', name: 'CICI', order: 200, send: 216 },
     { slot: 'completed', name: 'ACELL', order: 100, send: 100 },
     { slot: 'completed', name: 'KIKI', order: 100, send: 100 },
     { slot: 'completed', name: 'GIN', order: 100, send: 100 },
     { slot: 'completed', name: 'RAI', order: 100, send: 102 },
-
-    // Riwayat lama:
     { slot: 'completed', name: 'Yulii', order: 400, send: 400 },
     { slot: 'completed', name: 'Feng', order: 230, send: 230 },
     { slot: 'completed', name: 'Aze', order: 570, send: 570 },
@@ -96,4 +98,4 @@ const deliveryData = [
     { slot: 'completed', name: 'Lisa', order: 200, send: 200 },
     { slot: 'completed', name: 'Rani', order: 420, send: 420 }
 ];
-
+     
