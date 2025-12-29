@@ -20,12 +20,12 @@ const deliveryData = [
 
     // --- RIWAYAT ORDERAN SELESAI (COMPLETED) ---
     // Baru selesai (Hilang dari list aktif):
-    { slot: 'completed', name: 'SHAINA', order: 500, send: 480 }, // Diasumsikan done
-    { slot: 'completed', name: 'ZAH', order: 600, send: 510 },    // Diasumsikan done
-    { slot: 'completed', name: 'JASMINE', order: 500, send: 390 },// Diasumsikan done
-    { slot: 'completed', name: 'RESTU', order: 500, send: 460 },  // Diasumsikan done
-    { slot: 'completed', name: 'YAYA', order: 500, send: 490 },   // Diasumsikan done
-    { slot: 'completed', name: 'RENDY', order: 500, send: 480 },  // Diasumsikan done
+    { slot: 'completed', name: 'SHAINA', order: 500, send: 500 }, // Diasumsikan done
+    { slot: 'completed', name: 'ZAH', order: 600, send: 600 },    // Diasumsikan done
+    { slot: 'completed', name: 'JASMINE', order: 500, send: 500 },// Diasumsikan done
+    { slot: 'completed', name: 'RESTU', order: 500, send: 500 },  // Diasumsikan done
+    { slot: 'completed', name: 'YAYA', order: 500, send: 500 },   // Diasumsikan done
+    { slot: 'completed', name: 'RENDY', order: 500, send: 500 },  // Diasumsikan done
 
     // Riwayat lama:
     { slot: 'completed', name: 'CICI', order: 200, send: 216 },
