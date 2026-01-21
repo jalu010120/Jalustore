@@ -1,774 +1,447 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard Pengiriman Heart - JaluStore</title>
-  
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JaluStore | Top-Up Sky: COTL Premium & Trusted</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <style>
-    /* --- CSS SAMA SEPERTI SEBELUMNYA --- */
-    :root {
-        --primary-color: #8A2BE2;
-        --secondary-color: #FF9A9E;
-        --accent-color: #64B5F6;
-        --text-color: #5D5D7A;
-        --card-bg: rgba(255, 255, 255, 0.95);
-        --card-border: rgba(180, 200, 255, 0.6);
-        --bg-overlay: rgba(255, 255, 255, 0.85);
-        --shadow-light: 0 4px 20px rgba(0,0,0,0.08);
-        --shadow-dark: 0 12px 30px rgba(0,0,0,0.15);
-        --status-done-bg: #A8E6CF;
-        --status-done-text: #1E6F5C;
-        --status-fail-bg: #FFAAA5;
-        --status-fail-text: #B73E3E;
-        --status-pending-bg: #FFD3B6;
-        --status-pending-text: #D46B08;
-    }
-    
-    * { box-sizing: border-box; }
-    body {
-        font-family: 'Poppins', sans-serif;
-        margin: 0;
-        padding: 0;
-        background: url('https://thatskyshop.com/cdn/shop/files/1_7bbdd44b-0aa6-4c76-9e7e-4202391f1c3d.jpg?v=1660796834&width=750') no-repeat center center fixed;
-        background-size: cover;
-        color: var(--text-color);
-        min-height: 100vh;
-        overflow-x: hidden;
-    }
-    
-    .overlay {
-        background-color: var(--bg-overlay);
-        min-height: 100vh;
-        padding: 2rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        position: relative;
-        z-index: 1;
-    }
-
-    /* Header Section */
-    .header-section {
-        width: 100%;
-        max-width: 900px;
-        text-align: center;
-        margin-bottom: 2.5rem;
-    }
-
-    #live-time {
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: var(--primary-color);
-        background: rgba(255, 255, 255, 0.8);
-        padding: 0.5rem 1.5rem;
-        border-radius: 25px;
-        box-shadow: var(--shadow-light);
-        display: inline-block;
-        margin-bottom: 1.5rem;
-        transition: transform 0.3s ease;
-    }
-    
-    #live-time:hover { transform: translateY(-2px); }
-
-    h1 {
-        font-family: 'Fredoka', sans-serif;
-        color: var(--primary-color);
-        font-size: clamp(2rem, 5vw, 2.8rem);
-        margin-top: 0;
-        margin-bottom: 0.5rem;
-        text-shadow: 2px 2px 7px rgba(0,0,0,0.1);
-    }
-    
-    h1 em {
-        font-family: 'Pacifico', cursive;
-        display: block;
-        font-size: 0.6em;
-        font-style: normal;
-        color: var(--text-color);
-        opacity: 0.8;
-    }
-
-    /* Action Buttons */
-    .action-buttons {
-        display: flex;
-        justify-content: center;
-        gap: 1rem;
-        margin-bottom: 2rem;
-        flex-wrap: wrap;
-    }
-    
-    .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0.8rem 1.5rem;
-        border-radius: 30px;
-        text-decoration: none;
-        font-size: 1rem;
-        font-weight: 600;
-        border: none;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-        position: relative;
-    }
-
-    .btn-primary {
-        background: linear-gradient(45deg, var(--secondary-color), #FAD0C4);
-        color: white;
-        box-shadow: 0 5px 15px rgba(255, 154, 158, 0.4);
-    }
-    
-    .btn-secondary {
-        background: linear-gradient(45deg, var(--accent-color), #87CEEB);
-        color: white;
-        box-shadow: 0 5px 15px rgba(100, 181, 246, 0.4);
-    }
-
-    .btn-outline {
-        background: white;
-        border: 2px solid var(--accent-color);
-        color: var(--accent-color);
-        box-shadow: var(--shadow-light);
-        text-shadow: none;
-    }
-    
-    .btn:hover { transform: translateY(-3px); }
-    .btn i { margin-right: 0.5em; }
-
-    .search-container {
-        width: 100%;
-        max-width: 500px;
-        margin-bottom: 2.5rem;
-        position: relative;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    
-    .search-box {
-        width: 100%;
-        padding: 0.8rem 1.5rem 0.8rem 3rem;
-        border-radius: 30px;
-        border: 2px solid var(--card-border);
-        font-size: 1rem;
-        background: var(--card-bg);
-        box-shadow: var(--shadow-light);
-        transition: all 0.3s ease;
-    }
-    
-    .search-box:focus {
-        outline: none;
-        border-color: var(--accent-color);
-        box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.3);
-    }
-    
-    .search-icon {
-        position: absolute;
-        left: 1.2rem;
-        top: 50%;
-        transform: translateY(-50%);
-        color: var(--text-color);
-        opacity: 0.6;
-    }
-
-    .badge {
-      position: absolute;
-      top: -5px;
-      right: -5px;
-      background: var(--status-fail-bg);
-      color: var(--status-fail-text);
-      font-size: 0.75rem;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
-
-    /* Stats */
-    .stats-container {
-        display: flex;
-        gap: 1rem;
-        flex-wrap: wrap;
-        justify-content: center;
-        width: 100%;
-        margin-bottom: 2.5rem;
-    }
-    
-    .stat-card {
-        background: var(--card-bg);
-        border-radius: 15px;
-        padding: 1.2rem 1.5rem;
-        min-width: 140px;
-        text-align: center;
-        box-shadow: var(--shadow-light);
-        border: 2px solid var(--card-border);
-        flex: 1 1 140px;
-        transition: transform 0.3s ease;
-    }
-    
-    .stat-card:hover { transform: translateY(-3px); }
-
-    .stat-value {
-        font-size: 2rem;
-        font-weight: 700;
-        margin-bottom: 0.3rem;
-        color: var(--primary-color);
-    }
-    
-    .stat-label {
-        font-size: 0.9rem;
-        color: var(--text-color);
-        opacity: 0.8;
-    }
-
-    /* Cards */
-    section {
-        margin-bottom: 3rem;
-        width: 100%;
-        max-width: 900px;
-    }
-    
-    .slot-title {
-        font-size: 1.5rem;
-        font-weight: 700;
-        background: linear-gradient(135deg, var(--secondary-color) 0%, #FAD0C4 100%);
-        color: white;
-        padding: 0.8rem 2rem;
-        border-radius: 30px;
-        margin-bottom: 1.5rem;
-        display: inline-flex;
-        align-items: center;
-        box-shadow: var(--shadow-light);
-        text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
-        transition: transform 0.3s ease;
-    }
-    
-    .slot-title i { margin-right: 0.5rem; font-size: 1.2em; }
-    .slot-title:hover { transform: translateY(-3px); }
-
-    .cards {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1.2rem;
-        justify-content: center;
-    }
-    
-    .card {
-        background: var(--card-bg);
-        border: 2px solid var(--card-border);
-        border-radius: 18px;
-        padding: 1.5rem;
-        flex: 1 1 250px;
-        box-shadow: var(--shadow-light);
-        transition: all 0.3s ease;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .card:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--shadow-dark);
-        border-color: var(--accent-color);
-    }
-    
-    .card .name {
-        font-size: 1.2em;
-        font-weight: 700;
-        margin-bottom: 0.5em;
-        color: var(--text-color);
-    }
-    
-    .card .number {
-        font-size: 0.95em;
-        margin-bottom: 1em;
-        color: #666;
-    }
-    
-    .card .status {
-        margin-top: auto;
-        font-size: 0.9em;
-        font-weight: 800;
-        display: inline-flex;
-        align-items: center;
-        border-radius: 15px;
-        padding: 0.4em 0.8em;
-        text-transform: uppercase;
-        align-self: flex-start;
-    }
-    
-    .status i { margin-right: 0.5em; }
-    .status.done { background: var(--status-done-bg); color: var(--status-done-text); }
-    .status.fail { background: var(--status-fail-bg); color: var(--status-fail-text); }
-    .status.pending { background: var(--status-pending-bg); color: var(--status-pending-text); }
-
-    .progress-bar {
-        height: 8px;
-        background-color: #e0e0e0;
-        border-radius: 4px;
-        margin-top: 1em;
-        overflow: hidden;
-    }
-
-    .progress-fill {
-        height: 100%;
-        background: linear-gradient(90deg, var(--accent-color), var(--status-done-bg));
-        transition: width 0.7s ease-in-out;
-    }
-
-    .load-more-btn {
-      margin-top: 1.5rem;
-      padding: 0.8rem 2rem;
-      border-radius: 30px;
-      background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
-      color: white;
-      font-size: 1rem;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      transition: all 0.3s ease;
-      box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
-    }
-
-    .load-more-btn:hover { transform: translateY(-3px); }
-
-    /* Modal */
-    .modal-overlay {
-        position: fixed;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(0,0,0,0.7);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
-        padding: 1rem;
-    }
-    
-    .modal-overlay.active { opacity: 1; visibility: visible; }
-    
-    .modal-content {
-        background: var(--card-bg);
-        border-radius: 20px;
-        padding: 2rem;
-        max-width: 500px;
-        width: 100%;
-        box-shadow: var(--shadow-dark);
-        transform: translateY(20px);
-        transition: all 0.3s ease;
-        position: relative;
-        max-height: 90vh;
-        overflow-y: auto;
-    }
-    
-    .modal-overlay.active .modal-content { transform: translateY(0); }
-    
-    .close-modal {
-        position: absolute;
-        top: 1rem;
-        right: 1.5rem;
-        font-size: 2rem;
-        color: #888;
-        cursor: pointer;
-        transition: color 0.2s;
-        z-index: 10;
-    }
-    
-    .close-modal:hover { color: #333; }
-    
-    .modal-title {
-        font-size: 1.6rem;
-        font-weight: 700;
-        color: var(--primary-color);
-        text-align: center;
-        margin-bottom: 2rem;
-        margin-top: 0.5rem;
-    }
-    
-    .modal-details {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1.5rem;
-        margin-bottom: 2rem;
-    }
-    
-    .detail-item { display: flex; flex-direction: column; }
-    .detail-label { font-size: 0.9rem; color: var(--text-color); opacity: 0.7; margin-bottom: 0.2rem; }
-    .detail-value { font-size: 1.1rem; font-weight: 600; word-break: break-word; }
-    
-    .modal-actions {
-        display: flex;
-        flex-direction: column;
-        gap: 0.8rem;
-    }
-    
-    @media (min-width: 500px) {
-        .modal-actions {
-            flex-direction: row;
-            justify-content: center;
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --bg-card: rgba(30, 41, 59, 0.7);
+            --primary: #0ea5e9; /* Sky Blue */
+            --accent: #f43f5e; /* Rose for hearts */
+            --gold: #fbbf24;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glow: 0 0 20px rgba(14, 165, 233, 0.5);
+            --gradient-btn: linear-gradient(135deg, #0ea5e9, #6366f1);
         }
-    }
 
-    /* Toast Notification */
-    .toast {
-        position: fixed;
-        bottom: 30px;
-        left: 50%;
-        transform: translateX(-50%) translateY(100px);
-        background: rgba(0,0,0,0.8);
-        color: white;
-        padding: 10px 20px;
-        border-radius: 20px;
-        z-index: 2000;
-        opacity: 0;
-        transition: all 0.3s ease;
-        font-size: 0.9rem;
-    }
-    
-    .toast.show {
-        transform: translateX(-50%) translateY(0);
-        opacity: 1;
-    }
+        * { margin:0; padding:0; box-sizing:border-box; scroll-behavior: smooth; }
+        
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: var(--bg-dark); 
+            color: var(--text-main); 
+            overflow-x: hidden;
+        }
 
-    /* Responsive */
-    @media (max-width: 768px) {
-        .overlay { padding: 1rem; }
-        h1 { font-size: 1.8rem; }
-        .cards { gap: 1rem; }
-        .modal-details { grid-template-columns: 1fr; gap: 1rem; }
-        .action-buttons { flex-direction: column; align-items: stretch; }
-        .search-container { margin-bottom: 1.5rem; }
-    }
-  </style>
+        #particles-js { position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; background: linear-gradient(to bottom, #0f172a, #1e1b4b); }
+
+        /* --- Header & Nav --- */
+        header { 
+            position:fixed; top:0; width:100%; padding:1rem 5%; 
+            background: rgba(15, 23, 42, 0.85); backdrop-filter:blur(12px); 
+            z-index:1000; display:flex; justify-content:space-between; align-items:center; 
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .logo { 
+            font-size:1.5rem; font-weight:700; color:var(--text-main); 
+            display:flex; align-items:center; gap:10px; cursor: pointer;
+        }
+        .logo i { color: var(--gold); animation: spin 10s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        nav a { 
+            color:var(--text-muted); text-decoration:none; margin-left:2rem; 
+            font-weight:500; transition:0.3s; position: relative;
+        }
+        nav a:hover, nav a.active { color:var(--primary); }
+        nav a::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0;
+            background: var(--primary); transition: 0.3s;
+        }
+        nav a:hover::after { width: 100%; }
+
+        /* --- Hero Section --- */
+        .hero { 
+            min-height: 80vh; display:flex; flex-direction:column; justify-content:center; align-items:center; 
+            text-align:center; padding: 100px 20px 50px; position: relative; overflow: hidden;
+        }
+        .hero h1 { 
+            font-size: 3.5rem; line-height: 1.2; margin-bottom: 1.5rem; 
+            background: linear-gradient(to right, #fff, #38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero p { font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin-bottom: 2rem; }
+        
+        .cta-btn {
+            background: var(--gradient-btn); color: white; padding: 1rem 2.5rem; 
+            border-radius: 50px; font-weight: 600; text-decoration: none; 
+            box-shadow: 0 10px 25px -5px rgba(14, 165, 233, 0.5); transition: 0.3s; display: inline-flex; align-items: center; gap: 10px;
+        }
+        .cta-btn:hover { transform: translateY(-5px); box-shadow: 0 20px 35px -10px rgba(14, 165, 233, 0.6); }
+
+        /* --- Trust Badges --- */
+        .trust-badges { display: flex; gap: 2rem; margin-top: 3rem; flex-wrap: wrap; justify-content: center; }
+        .badge-item { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.05); padding: 0.8rem 1.5rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); }
+        .badge-item i { color: var(--primary); font-size: 1.2rem; }
+
+        /* --- Packages --- */
+        .section-title { text-align: center; font-size: 2.5rem; margin: 4rem 0 3rem; position: relative; }
+        .section-title span { color: var(--primary); }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:2rem; }
+        
+        .card { 
+            background: var(--bg-card); border-radius:24px; padding:2rem; text-align:center; 
+            border:1px solid rgba(255,255,255,0.05); position: relative; overflow: hidden; transition: 0.4s;
+        }
+        .card:hover { transform:translateY(-10px); border-color: var(--primary); box-shadow: var(--glow); }
+        
+        /* Best Seller Ribbons */
+        .best-seller { border: 1px solid var(--gold); box-shadow: 0 0 15px rgba(251, 191, 36, 0.2); }
+        .ribbon { 
+            position: absolute; top: 15px; right: -30px; background: var(--gold); color: #000; 
+            font-weight: bold; font-size: 0.8rem; padding: 5px 40px; transform: rotate(45deg); 
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        }
+
+        .heart-icon { font-size: 3.5rem; margin-bottom: 0.5rem; color: var(--accent); filter: drop-shadow(0 0 10px rgba(244, 63, 94, 0.5)); }
+        .amount { font-size: 1.8rem; font-weight: 700; color: #fff; margin-bottom: 0.2rem; }
+        .price { font-size: 1.1rem; color: var(--primary); margin-bottom: 1.5rem; font-weight: 500; }
+        
+        .btn-card { 
+            width: 100%; padding: 0.8rem; border-radius: 12px; border: none; 
+            background: rgba(255,255,255,0.1); color: white; font-weight: 600; cursor: pointer; transition: 0.3s;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .btn-card:hover { background: var(--primary); color: #fff; }
+        .best-seller .btn-card { background: var(--gold); color: #000; }
+        .best-seller .btn-card:hover { background: #f59e0b; }
+
+        /* --- Floating Cart --- */
+        .floating-cart {
+            position: fixed; bottom: 30px; right: 30px; background: var(--gradient-btn);
+            width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            color: white; font-size: 1.5rem; cursor: pointer; box-shadow: 0 10px 30px rgba(14, 165, 233, 0.6);
+            z-index: 900; transition: 0.3s;
+        }
+        .floating-cart:hover { transform: scale(1.1); }
+        .cart-badge {
+            position: absolute; top: -5px; right: -5px; background: var(--accent);
+            width: 25px; height: 25px; border-radius: 50%; font-size: 0.8rem;
+            display: flex; justify-content: center; align-items: center; border: 2px solid var(--bg-dark);
+        }
+
+        /* --- Cart Modal (Popup) --- */
+        .modal { display:none; position:fixed; z-index:2000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.85); backdrop-filter: blur(5px); justify-content:center; align-items:center; }
+        .modal-content { 
+            background: #1e293b; padding:2rem; border-radius:24px; width:95%; max-width:500px; 
+            position: relative; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            animation: modalPop 0.3s ease-out;
+        }
+        @keyframes modalPop { from {transform: scale(0.8); opacity: 0;} to {transform: scale(1); opacity: 1;} }
+        
+        .close-modal { position: absolute; top: 20px; right: 20px; font-size: 1.5rem; cursor: pointer; color: var(--text-muted); }
+        .close-modal:hover { color: white; }
+
+        .cart-list { max-height: 200px; overflow-y: auto; margin: 1rem 0; border-top: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .cart-item:last-child { border-bottom: none; }
+        .remove-btn { color: var(--accent); background: none; border: none; cursor: pointer; font-size: 1.2rem; }
+
+        /* Form Styling */
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; color: var(--primary); font-size: 0.9rem; font-weight: 600; }
+        .form-control { 
+            width: 100%; padding: 12px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); 
+            border-radius: 10px; color: white; font-family: 'Poppins'; outline: none; transition: 0.3s;
+        }
+        .form-control:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2); }
+        
+        .btn-checkout { 
+            width: 100%; padding: 1rem; border-radius: 12px; border: none; font-size: 1rem;
+            background: #22c55e; color: white; font-weight: bold; cursor: pointer; margin-top: 1rem;
+            display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s;
+        }
+        .btn-checkout:hover { background: #16a34a; }
+        .btn-checkout:disabled { background: #475569; cursor: not-allowed; }
+
+        /* Footer */
+        footer { text-align:center; padding:3rem 1rem; margin-top:5rem; border-top: 1px solid rgba(255,255,255,0.05); color: var(--text-muted); }
+        .social-links { margin-top: 1rem; }
+        .social-links a { color: var(--text-main); font-size: 1.5rem; margin: 0 10px; transition: 0.3s; }
+        .social-links a:hover { color: var(--primary); }
+
+        /* Mobile Responsive */
+        @media (max-width:768px) { 
+            .hero h1 { font-size: 2.2rem; }
+            header { padding: 1rem; }
+            nav { display: none; } /* Simplified for demo, ideally hamburger menu */
+        }
+    </style>
 </head>
 <body>
-  <div class="overlay">
-    <div class="header-section">
-      <div id="live-time">Memuat waktu...</div>
-      <h1>📦 Laporan Heart <br><em>JaluStore</em></h1>
-      
-      <div class="action-buttons">
-        <a href="https://jalustoreid.netlify.app/" class="btn btn-primary" target="_blank">
-          <i class="fas fa-heart"></i> Order Baru
-        </a>
-        
-        <button class="btn btn-secondary" id="refresh-button">
-          <i class="fas fa-sync-alt"></i> Reload Data
-          <span id="fail-badge" class="badge" style="display:none;">0</span>
-        </button>
 
-        <select id="status-filter" class="btn btn-outline" style="border-radius:30px; cursor:pointer;">
-          <option value="all">Semua Status</option>
-          <option value="done">Selesai</option>
-          <option value="pending">Proses</option>
-          <option value="fail">Gagal</option>
-        </select>
-      </div>
-      
-      <div class="search-container">
-        <i class="fas fa-search search-icon"></i>
-        <input type="text" class="search-box" id="search-box" placeholder="Cari nama atau nomor order..." />
-      </div>
-      
-      <div class="stats-container" id="stats-container">
+    <div id="particles-js"></div>
+
+    <header>
+        <div class="logo" onclick="window.scrollTo(0,0)">
+            <i class="fa-solid fa-star"></i> JaluStore
+        </div>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#packages">Paket</a>
+            <a href="#" onclick="openCart()">Cek Keranjang</a>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <h1>Top-Up Hearts Sky COTL <br>Murah & Kilat ⚡</h1>
+        <p>Solusi top-up anti ribet. Harga pelajar, proses secepat kilat, 100% Legal & Aman. Sudah dipercaya ribuan pemain Sky Indonesia.</p>
+        
+        <a href="#packages" class="cta-btn">
+            Order Sekarang <i class="fa-solid fa-arrow-right"></i>
+        </a>
+
+        <div class="trust-badges">
+            <div class="badge-item"><i class="fa-solid fa-bolt"></i> Proses 5 Menit</div>
+            <div class="badge-item"><i class="fa-solid fa-shield-halved"></i> 100% Aman</div>
+            <div class="badge-item"><i class="fa-solid fa-headset"></i> CS 24/7</div>
+        </div>
+    </section>
+
+    <div class="container" id="packages">
+        <h2 class="section-title">Pilih Paket <span>Sultan</span></h2>
+        
+        <div class="grid">
+            <div class="card">
+                <div class="heart-icon"><i class="fa-solid fa-heart"></i></div>
+                <div class="amount">100 ❤️</div>
+                <div class="price">Rp 10.000</div>
+                <button class="btn-card" onclick="addToCart(100, 10000)">
+                    <i class="fa-solid fa-cart-plus"></i> Tambah
+                </button>
+            </div>
+            
+            <div class="card best-seller">
+                <div class="ribbon">POPULAR</div>
+                <div class="heart-icon"><i class="fa-solid fa-heart"></i></div>
+                <div class="amount">200 ❤️</div>
+                <div class="price">Rp 20.000</div>
+                <button class="btn-card" onclick="addToCart(200, 20000)">
+                    <i class="fa-solid fa-fire"></i> Gas Beli
+                </button>
+            </div>
+
+            <div class="card">
+                <div class="heart-icon"><i class="fa-solid fa-heart"></i></div>
+                <div class="amount">300 ❤️</div>
+                <div class="price">Rp 30.000</div>
+                <button class="btn-card" onclick="addToCart(300, 30000)">
+                    <i class="fa-solid fa-cart-plus"></i> Tambah
+                </button>
+            </div>
+
+            <div class="card best-seller">
+                <div class="ribbon">HEMAT</div>
+                <div class="heart-icon"><i class="fa-solid fa-heart"></i></div>
+                <div class="amount">520 ❤️</div>
+                <div class="price">Rp 50.000</div>
+                <button class="btn-card" onclick="addToCart(520, 50000)">
+                    <i class="fa-solid fa-fire"></i> Gas Beli
+                </button>
+            </div>
+
+            <div class="card">
+                <div class="heart-icon"><i class="fa-solid fa-heart"></i></div>
+                <div class="amount">900 ❤️</div>
+                <div class="price">Rp 80.000</div>
+                <button class="btn-card" onclick="addToCart(900, 80000)">
+                    <i class="fa-solid fa-cart-plus"></i> Tambah
+                </button>
+            </div>
         </div>
     </div>
 
-    <section><div class="slot-title"><i class="fas fa-cloud-sun"></i> Slot 1</div><div id="slot1-cards" class="cards"></div></section>
-    <section><div class="slot-title"><i class="fas fa-cloud-moon"></i> Slot 2</div><div id="slot2-cards" class="cards"></div></section>
-    <section><div class="slot-title"><i class="fas fa-star"></i> Slot 3</div><div id="slot3-cards" class="cards"></div></section>
-    <section><div class="slot-title"><i class="fas fa-box-open"></i> Slot 4</div><div id="slot4-cards" class="cards"></div></section>
-
-    <section id="completed-section">
-      <div class="slot-title"><i class="fas fa-check-circle"></i> Riwayat Selesai</div>
-      <div id="completed-cards" class="cards"></div>
-      <button class="load-more-btn" id="load-more-btn" style="display:none;">Muat Lebih Banyak</button>
-    </section>
-  </div>
-  
-  <div class="modal-overlay" id="order-modal">
-    <div class="modal-content">
-      <span class="close-modal" id="close-modal">&times;</span>
-      <h3 class="modal-title">Detail Order</h3>
-      <div class="modal-details" id="modal-details"></div>
-      
-      <div class="modal-actions">
-        <button class="btn btn-secondary" id="copy-info-btn">
-          <i class="fas fa-copy"></i> Salin Info
-        </button>
-        <a href="#" class="btn btn-primary" id="whatsapp-button" target="_blank">
-          <i class="fab fa-whatsapp"></i> Chat WhatsApp
-        </a>
-      </div>
+    <div class="floating-cart" onclick="openCart()">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <div class="cart-badge" id="cart-count">0</div>
     </div>
-  </div>
 
-  <div id="toast" class="toast">Info berhasil disalin!</div>
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeCart()">&times;</span>
+            <h3 style="margin-bottom:1rem; border-bottom:1px solid #333; padding-bottom:10px;">
+                <i class="fa-brands fa-whatsapp"></i> Checkout Form
+            </h3>
+            
+            <div id="cart-list" class="cart-list">
+                <p style="text-align:center; color:#64748b; padding:20px;">Keranjang kosong.</p>
+            </div>
+            
+            <div style="display:flex; justify-content:space-between; font-weight:bold; margin:1rem 0; font-size:1.2rem;">
+                <span>Total:</span>
+                <span id="cart-total" style="color:var(--gold);">Rp 0</span>
+            </div>
 
-  <script src="js/data.js"></script>
+            <form id="checkout-form">
+                <div class="form-group">
+                    <label>Nickname Sky</label>
+                    <input type="text" id="username" class="form-control" placeholder="Contoh: Admin Jalu" required>
+                </div>
+                <div class="form-group">
+                    <label>Kode Friend / Link Invite</label>
+                    <input type="text" id="friend-code" class="form-control" placeholder="0000-0000-0000" required>
+                </div>
+                <div class="form-group">
+                    <label>Metode Pembayaran</label>
+                    <select id="payment" class="form-control" required>
+                        <option value="">-- Pilih Pembayaran --</option>
+                        <option value="DANA">DANA</option>
+                        <option value="GOPAY">GOPAY</option>
+                        <option value="OVO">OVO</option>
+                        <option value="QRIS">QRIS (All Payment)</option>
+                        <option value="BCA">Transfer BCA</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-checkout" id="btn-wa">
+                    <i class="fa-brands fa-whatsapp"></i> Lanjut ke WhatsApp
+                </button>
+            </form>
+        </div>
+    </div>
 
-  <script>
-    // Konfigurasi & Variabel Global
-    // Pastikan deliveryData sudah dimuat dari js/data.js sebelum script ini jalan
-    if (typeof deliveryData === 'undefined') {
-        console.error("Gagal memuat data. Pastikan file js/data.js ada.");
-        deliveryData = []; // Fallback agar tidak error
-    }
+    <footer>
+        <h3>🌟 JaluStore</h3>
+        <p>Your Best Partner in Sky: Children of the Light</p>
+        <div class="social-links">
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+        </div>
+        <p style="margin-top:2rem; font-size:0.8rem;">&copy; 2024 JaluStore. All Rights Reserved.</p>
+    </footer>
 
-    let completedItemsShown = 12; 
-    const itemsPerLoad = 12; 
-    let statusFilter = 'all';
-    let currentModalItem = null;
-
-    // Elemen DOM
-    const liveTimeEl = document.getElementById('live-time');
-    const refreshButton = document.getElementById('refresh-button');
-    const searchBox = document.getElementById('search-box');
-    const statsContainer = document.getElementById('stats-container');
-    const loadMoreBtn = document.getElementById('load-more-btn');
-    const orderModal = document.getElementById('order-modal');
-    const closeModalButton = document.getElementById('close-modal');
-    const modalDetails = document.getElementById('modal-details');
-    const whatsappButton = document.getElementById('whatsapp-button');
-    const copyInfoBtn = document.getElementById('copy-info-btn');
-    const statusFilterEl = document.getElementById('status-filter');
-    const failBadge = document.getElementById('fail-badge');
-    const toast = document.getElementById('toast');
-
-    // Slot Containers
-    const slots = {
-        1: document.getElementById('slot1-cards'),
-        2: document.getElementById('slot2-cards'),
-        3: document.getElementById('slot3-cards'),
-        4: document.getElementById('slot4-cards'),
-        'completed': document.getElementById('completed-cards')
-    };
-
-    function updateLiveTime() {
-      const now = new Date();
-      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
-      liveTimeEl.textContent = now.toLocaleDateString('id-ID', options);
-    }
-
-    function renderCards(searchTerm = '') {
-      // Bersihkan semua slot
-      Object.values(slots).forEach(el => el.innerHTML = '');
-
-      const term = searchTerm.toLowerCase();
-      
-      // Filter Global
-      let filteredData = deliveryData.filter(item => {
-        return item.name.toLowerCase().includes(term) || String(item.order).includes(term) || String(item.send).includes(term);
-      });
-
-      // Filter Status
-      if (statusFilter !== 'all') {
-        filteredData = filteredData.filter(item => {
-          if (statusFilter === 'done') return item.slot === 'completed' || item.send >= item.order;
-          if (statusFilter === 'fail') return item.statusOverride === 'fail';
-          if (statusFilter === 'pending') return item.slot !== 'completed' && item.send < item.order && item.statusOverride !== 'fail';
-          return true;
+    <script>
+        // Config Particles (Efek Bintang Jatuh)
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 60 },
+                color: { value: '#ffffff' },
+                shape: { type: 'circle' },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                move: { enable: true, speed: 1, direction: 'bottom', random: true, out_mode: 'out' }
+            },
+            interactivity: { events: { onhover: { enable: true, mode: 'bubble' } } }
         });
-      }
 
-      const pendingData = filteredData.filter(item => item.slot !== 'completed' && item.send < item.order && item.statusOverride !== 'fail');
-      const completedData = filteredData.filter(item => item.slot === 'completed' || item.send >= item.order || item.statusOverride === 'fail');
+        // Cart Logic
+        let cart = [];
 
-      // Render Pending ke Slot masing-masing
-      pendingData.forEach(item => {
-        const card = createCardElement(item);
-        if (slots[item.slot]) slots[item.slot].appendChild(card);
-      });
-
-      // Render Completed (dengan limit load more)
-      const completedToShow = completedData.slice(0, completedItemsShown);
-      completedToShow.forEach(item => {
-        slots['completed'].appendChild(createCardElement(item));
-      });
-
-      loadMoreBtn.style.display = completedData.length > completedItemsShown ? 'block' : 'none';
-      updateStats(); // Update badge setiap render
-    }
-
-    function createCardElement(item) {
-        const card = document.createElement('div');
-        let statusClass = 'pending';
-        let statusText = 'Proses';
-        let statusIcon = 'fa-hourglass-half';
-        let progress = (item.send / item.order) * 100;
-        
-        if (item.statusOverride === 'fail') {
-          statusClass = 'fail';
-          statusText = 'Gagal';
-          statusIcon = 'fa-times-circle';
-        } else if (item.slot === 'completed' || item.send >= item.order) {
-          statusClass = 'done';
-          statusText = 'Selesai';
-          statusIcon = 'fa-check-circle';
+        function addToCart(hearts, price) {
+            cart.push({ hearts, price });
+            updateCartUI();
+            
+            // SweetAlert Toast Notification
+            const Toast = Swal.mixin({
+                toast: true, position: 'top-end', showConfirmButton: false, timer: 1500,
+                background: '#1e293b', color: '#fff', iconColor: '#22c55e'
+            });
+            Toast.fire({ icon: 'success', title: `+${hearts} Hearts ditambahkan!` });
         }
 
-        const progressHtml = (statusClass === 'pending') ? 
-          `<div class="progress-bar"><div class="progress-fill" style="width: ${progress.toFixed(0)}%;"></div></div>` : '';
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
 
-        card.classList.add('card', statusClass);
-        card.innerHTML = `
-          <div class="name">${item.name}</div>
-          <div class="number"><i class="fas fa-cube"></i> Order: ${item.order} | <i class="fas fa-paper-plane"></i> Kirim: ${item.send}</div>
-          ${progressHtml}
-          <div class="status ${statusClass}">
-            <i class="fas ${statusIcon}"></i>
-            ${statusText}
-          </div>
-        `;
-        card.addEventListener('click', () => openOrderModal(item));
-        return card;
-    }
+        function updateCartUI() {
+            const listEl = document.getElementById('cart-list');
+            const countEl = document.getElementById('cart-count');
+            const totalEl = document.getElementById('cart-total');
+            const btnWa = document.getElementById('btn-wa');
 
-    function updateStats() {
-      if(!deliveryData) return;
-      const totalOrders = deliveryData.length;
-      const totalCompleted = deliveryData.filter(item => item.slot === 'completed' || (item.send >= item.order && item.statusOverride !== 'fail')).length;
-      const totalPending = deliveryData.filter(item => item.slot !== 'completed' && item.send < item.order && item.statusOverride !== 'fail').length;
-      const totalFailed = deliveryData.filter(item => item.statusOverride === 'fail').length;
+            countEl.innerText = cart.length;
 
-      statsContainer.innerHTML = `
-        <div class="stat-card"><div class="stat-value">${totalOrders}</div><div class="stat-label">Total Order</div></div>
-        <div class="stat-card"><div class="stat-value">${totalCompleted}</div><div class="stat-label">Selesai</div></div>
-        <div class="stat-card"><div class="stat-value">${totalPending}</div><div class="stat-label">Proses</div></div>
-        <div class="stat-card"><div class="stat-value">${totalFailed}</div><div class="stat-label">Gagal</div></div>
-      `;
+            if (cart.length === 0) {
+                listEl.innerHTML = '<p style="text-align:center; color:#64748b; padding:20px;">Keranjang kosong.</p>';
+                totalEl.innerText = 'Rp 0';
+                btnWa.disabled = true;
+                btnWa.style.opacity = '0.5';
+                btnWa.innerHTML = 'Keranjang Kosong';
+                return;
+            }
 
-      if (totalFailed > 0) {
-        failBadge.textContent = totalFailed;
-        failBadge.style.display = 'flex';
-      } else {
-        failBadge.style.display = 'none';
-      }
-    }
+            btnWa.disabled = false;
+            btnWa.style.opacity = '1';
+            btnWa.innerHTML = '<i class="fa-brands fa-whatsapp"></i> Lanjut ke WhatsApp';
 
-    function openOrderModal(item) {
-      currentModalItem = item;
-      const sisa = item.order - item.send;
-      const progress = ((item.send / item.order) * 100).toFixed(1);
-      const status = item.statusOverride === 'fail' ? 'Gagal' : (item.send >= item.order ? 'Selesai' : 'Sedang Proses');
+            let total = 0;
+            listEl.innerHTML = cart.map((item, index) => {
+                total += item.price;
+                return `
+                <div class="cart-item">
+                    <div>
+                        <b style="color:var(--text-main)">${item.hearts} Hearts</b><br>
+                        <small style="color:var(--text-muted)">Rp ${item.price.toLocaleString('id-ID')}</small>
+                    </div>
+                    <button class="remove-btn" onclick="removeFromCart(${index})">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </div>`;
+            }).join('');
 
-      modalDetails.innerHTML = `
-        <div class="detail-item">
-          <div class="detail-label">Nama Akun</div>
-          <div class="detail-value">${item.name}</div>
-        </div>
-        <div class="detail-item">
-          <div class="detail-label">Status</div>
-          <div class="detail-value">${status}</div>
-        </div>
-        <div class="detail-item">
-          <div class="detail-label">Total Order</div>
-          <div class="detail-value">${item.order} Heart</div>
-        </div>
-        <div class="detail-item">
-          <div class="detail-label">Sudah Terkirim</div>
-          <div class="detail-value">${item.send} Heart</div>
-        </div>
-        <div class="detail-item">
-          <div class="detail-label">Sisa</div>
-          <div class="detail-value">${sisa > 0 ? sisa : 0} Heart</div>
-        </div>
-        <div class="detail-item">
-          <div class="detail-label">Progress</div>
-          <div class="detail-value">${progress}%</div>
-        </div>
-        ${item.notes ? `<div class="detail-item" style="grid-column: 1 / -1;"><div class="detail-label">Catatan Admin</div><div class="detail-value">${item.notes}</div></div>` : ''}
-      `;
-      
-      // Setup tombol WhatsApp
-      if (item.number) {
-        const cleanNumber = item.number.replace(/\D/g, ''); 
-        const waLink = `https://wa.me/${cleanNumber}?text=Halo%20Kak%20${encodeURIComponent(item.name)},%0A%0AUpdate%20status%20order%20Heart%20Sky:%0AOrder:%20${item.order}%0ATerkirim:%20${item.send}%0ASisa:%20${sisa}%0AStatus:%20${status}%0A%0ATerima%20kasih!`;
-        whatsappButton.href = waLink;
-        whatsappButton.style.display = 'inline-flex';
-      } else {
-        whatsappButton.style.display = 'none';
-      }
+            totalEl.innerText = `Rp ${total.toLocaleString('id-ID')}`;
+        }
 
-      orderModal.classList.add('active');
-    }
-
-    function closeOrderModal() {
-      orderModal.classList.remove('active');
-    }
-
-    function showToast(message) {
-        toast.textContent = message;
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 3000);
-    }
-
-    // Fitur Salin Teks
-    copyInfoBtn.addEventListener('click', () => {
-        if (!currentModalItem) return;
-        const item = currentModalItem;
-        const sisa = item.order - item.send;
-        const status = item.statusOverride === 'fail' ? 'Gagal' : (item.send >= item.order ? 'Selesai' : 'Proses');
+        // Modal Functions
+        function openCart() {
+            document.getElementById('cartModal').style.display = 'flex';
+        }
+        function closeCart() {
+            document.getElementById('cartModal').style.display = 'none';
+        }
         
-        const textToCopy = `📦 *Laporan Order JaluStore*\n\n👤 Nama: ${item.name}\n❤️ Order: ${item.order}\n✅ Terkirim: ${item.send}\n⏳ Sisa: ${sisa}\n📊 Status: ${status}\n\nTerima kasih sudah order!`;
-        
-        navigator.clipboard.writeText(textToCopy).then(() => {
-            showToast("Laporan berhasil disalin!");
-        }).catch(err => {
-            console.error('Gagal menyalin: ', err);
-            showToast("Gagal menyalin teks.");
+        // Klik luar modal untuk tutup
+        window.onclick = function(e) {
+            if (e.target == document.getElementById('cartModal')) closeCart();
+        }
+
+        // Checkout Logic
+        document.getElementById('checkout-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if(cart.length === 0) return;
+
+            const username = document.getElementById('username').value;
+            const friendCode = document.getElementById('friend-code').value;
+            const payment = document.getElementById('payment').value;
+            
+            let itemsText = cart.map(i => `• ${i.hearts} Hearts (Rp ${i.price.toLocaleString('id-ID')})`).join('%0A');
+            let grandTotal = cart.reduce((a, b) => a + b.price, 0).toLocaleString('id-ID');
+
+            // Format Pesan WA yang Rapi
+            const message = `Halo Admin JaluStore! 👋%0A%0ASaya mau order top-up Sky:%0A%0A📦 *List Pesanan:*%0A${itemsText}%0A%0A💰 *Total: Rp ${grandTotal}*%0A%0A👤 Nickname: ${username}%0A🆔 Kode/Link: ${friendCode}%0A💳 Pembayaran: ${payment}%0A%0AMohon diproses segera ya min! Terima kasih. ✨`;
+
+            const waNumber = '6285363625159'; // Ganti nomormu
+            window.open(`https://wa.me/${waNumber}?text=${message}`, '_blank');
+            
+            // Reset
+            cart = [];
+            updateCartUI();
+            closeCart();
+            document.getElementById('checkout-form').reset();
+            
+            Swal.fire({
+                title: 'Pesanan Terkirim!',
+                text: 'Silakan lanjut chat dengan admin di WhatsApp.',
+                icon: 'success',
+                background: '#1e293b',
+                color: '#fff',
+                confirmButtonColor: '#0ea5e9'
+            });
         });
-    });
-
-    // Event Listeners
-    // Ubah tombol Refresh menjadi Reload Page agar membaca perubahan di data.js
-    refreshButton.addEventListener('click', () => {
-        location.reload(); 
-    });
-
-    searchBox.addEventListener('keyup', (e) => {
-        completedItemsShown = itemsPerLoad; 
-        renderCards(e.target.value);
-    });
-
-    statusFilterEl.addEventListener('change', (e) => {
-      statusFilter = e.target.value;
-      completedItemsShown = itemsPerLoad;
-      renderCards(searchBox.value);
-    });
-
-    closeModalButton.addEventListener('click', closeOrderModal);
-    orderModal.addEventListener('click', (e) => {
-      if (e.target === orderModal) closeOrderModal();
-    });
-
-    loadMoreBtn.addEventListener('click', () => {
-        completedItemsShown += itemsPerLoad;
-        renderCards(searchBox.value);
-    });
-
-    // Inisialisasi
-    updateLiveTime();
-    setInterval(updateLiveTime, 1000);
-    
-    // Jalankan render awal
-    renderCards();
-  </script>
+    </script>
 </body>
 </html>
