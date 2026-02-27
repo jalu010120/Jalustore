@@ -3,524 +3,379 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JaluStore | Top-Up Hearts Sky COTL Premium 2026 ⚡</title>
+    <title>JaluStore V2 | Sky COTL Exclusive Services 2026 ⚡</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
         :root {
-            --bg-dark: #0a0e1a;
-            --bg-gradient: linear-gradient(135deg, #0a0e1a 0%, #1a2332 50%, #0f172a 100%);
-            --bg-card: rgba(30, 41, 59, 0.7);
-            --glass: rgba(255, 255, 255, 0.05);
-            --primary: #3b82f6;
-            --primary-dark: #1d4ed8;
+            --bg-dark: #050810;
+            --bg-gradient: radial-gradient(circle at top right, #1e293b, #050810);
+            --bg-card: rgba(15, 23, 42, 0.8);
+            --primary: #60a5fa;
             --accent: #f43f5e;
-            --accent-dark: #be123c;
-            --gold: #facc15;
-            --gold-dark: #eab308;
+            --gold: #fbbf24;
             --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --text-light: #cbd5e1;
-            --glow-primary: 0 0 20px rgba(59, 130, 246, 0.4);
-            --glow-accent: 0 0 20px rgba(244, 63, 94, 0.4);
-            --gradient-btn: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
-            --gradient-gold: linear-gradient(135deg, #facc15 0%, #fbbf24 50%, #f59e0b 100%);
+            --text-muted: #64748b;
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glow: 0 0 25px rgba(96, 165, 250, 0.3);
+            --heart-glow: 0 0 20px rgba(244, 63, 94, 0.6);
+            --gradient-main: linear-gradient(135deg, #60a5fa 0%, #c084fc 100%);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            overflow-x: hidden;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             background: var(--bg-dark);
-            background-attachment: fixed;
+            background-image: var(--bg-gradient);
             color: var(--text-main);
+            overflow-x: hidden;
             line-height: 1.6;
-            min-height: 100vh;
         }
 
-        #particles-js {
-            position: fixed;
-            inset: 0;
-            z-index: -1;
+        #particles-js { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+
+        /* --- Animations Upgrade --- */
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.15); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.25); }
+            60% { transform: scale(1); }
         }
 
-        /* --- Header --- */
+        .sky-heart {
+            display: inline-block;
+            color: var(--accent);
+            text-shadow: var(--heart-glow);
+            animation: heartbeat 2s infinite ease-in-out;
+            filter: drop-shadow(0 0 10px rgba(244, 63, 94, 0.8));
+        }
+
+        /* --- Custom Scrollbar --- */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+
+        /* --- Header Upgrade --- */
         header {
             position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 1rem 5%;
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(15px);
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1200px;
+            padding: 15px 30px;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .logo {
-            font-size: 1.6rem;
-            font-weight: 700;
-            background: var(--gradient-btn);
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -1px;
+            background: var(--gradient-main);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
-        nav a {
-            color: var(--text-muted);
-            margin-left: 1.5rem;
-            text-decoration: none;
-            font-weight: 500;
-            transition: 0.3s;
-        }
-
-        nav a:hover { color: var(--primary); }
-
-        /* --- Hero --- */
+        /* --- Hero Section --- */
         .hero {
-            height: 90vh;
+            position: relative;
+            z-index: 1;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 0 20px;
         }
 
         .hero h1 {
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            margin-bottom: 1rem;
-            line-height: 1.1;
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 20px;
+            text-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
 
-        .hero p {
-            color: var(--text-light);
-            max-width: 600px;
-            margin-bottom: 2.5rem;
-            font-size: 1.1rem;
-        }
+        .hero span { color: var(--primary); }
 
-        .cta-btn {
-            background: var(--gradient-btn);
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            box-shadow: var(--glow-primary);
-            transition: 0.3s;
-        }
-
-        .cta-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.4);
-        }
-
-        /* --- Grid & Cards --- */
-        .container {
-            max-width: 1200px;
-            margin: auto;
-            padding: 80px 20px;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-            font-size: 2.5rem;
-        }
-
-        .section-title span {
-            background: var(--gradient-btn);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
+        /* --- Card Upgrade --- */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            position: relative;
+            z-index: 1;
         }
 
         .card {
             background: var(--bg-card);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            padding: 2.5rem;
-            text-align: center;
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 40px;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             position: relative;
             overflow: hidden;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            backdrop-filter: blur(10px);
+            text-align: center;
         }
 
         .card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-15px) scale(1.02);
             border-color: var(--primary);
-            box-shadow: var(--glow-primary);
+            box-shadow: var(--glow);
         }
 
-        .ribbon {
-            position: absolute;
-            top: 15px;
-            right: -30px;
-            background: var(--gradient-gold);
-            color: #000;
-            font-size: 0.75rem;
+        .price-tag {
+            font-size: 1.8rem;
             font-weight: 800;
-            padding: 5px 35px;
-            transform: rotate(45deg);
+            margin: 15px 0;
+            color: var(--primary);
         }
 
-        .heart-icon {
-            font-size: 3.5rem;
-            color: var(--accent);
-            margin-bottom: 1rem;
-            filter: drop-shadow(0 0 10px rgba(244, 63, 94, 0.3));
-        }
-
-        .amount { font-size: 2rem; font-weight: 700; }
-        .price { color: var(--primary); font-size: 1.3rem; margin: 1rem 0; font-weight: 600; }
-
-        .btn-card {
-            width: 100%;
-            padding: 12px;
-            border-radius: 12px;
+        .btn-buy {
+            background: var(--text-main);
+            color: var(--bg-dark);
             border: none;
-            background: var(--glass);
-            color: white;
-            font-weight: 600;
+            padding: 15px;
+            width: 100%;
+            border-radius: 15px;
+            font-weight: 700;
             cursor: pointer;
             transition: 0.3s;
         }
 
-        .btn-card:hover { background: var(--primary); }
-
-        .best-seller .btn-card {
-            background: var(--gradient-gold);
-            color: #000;
+        .btn-buy:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
         }
 
-        /* --- Floating Cart --- */
+        /* --- Float Cart Upgrade --- */
         .floating-cart {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 65px;
-            height: 65px;
-            border-radius: 50%;
-            background: var(--gradient-btn);
+            bottom: 40px;
+            right: 40px;
+            background: var(--gradient-main);
+            width: 70px; height: 70px;
+            border-radius: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             cursor: pointer;
-            box-shadow: var(--glow-primary);
             z-index: 999;
+            box-shadow: 0 15px 35px rgba(96, 165, 250, 0.4);
             transition: 0.3s;
         }
 
-        .cart-badge {
-            position: absolute;
-            top: 0;
-            right: 0;
-            background: var(--accent);
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            font-size: 0.8rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-
-        /* --- Modal --- */
         .modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(8px);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            position: fixed; inset: 0; background: rgba(0,0,0,0.9);
+            z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px;
         }
-
-        .modal-content {
-            background: #1e293b;
-            width: 100%;
-            max-width: 500px;
-            border-radius: 24px;
-            padding: 2rem;
+        .modal-content { 
+            background: #0f172a !important;
+            border-radius: 35px !important;
+            border: 1px solid var(--glass-border) !important;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.8) !important;
+            width: 100%; max-width: 500px; padding: 40px; 
             position: relative;
-            border: 1px solid rgba(255,255,255,0.1);
         }
 
-        .form-control {
-            width: 100%;
-            padding: 14px;
-            margin-bottom: 1rem;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.1);
-            background: rgba(0,0,0,0.2);
-            color: white;
-            font-family: inherit;
-        }
-
-        .btn-checkout {
-            width: 100%;
-            padding: 16px;
-            border-radius: 12px;
-            border: none;
-            background: #22c55e;
-            color: white;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            background: rgba(255,255,255,0.03);
-            padding: 10px 15px;
-            border-radius: 10px;
-            margin-bottom: 8px;
-        }
-
-        .remove-btn {
-            background: none;
-            border: none;
-            color: var(--accent);
-            cursor: pointer;
-        }
-
-        footer { text-align: center; padding: 50px; color: var(--text-muted); font-size: 0.9rem; }
-
-        @media (max-width: 600px) {
-            .hero h1 { font-size: 2.5rem; }
-            header { padding: 1rem 5%; }
-            nav { display: none; } /* Sederhanakan mobile */
+        input, select {
+            background: rgba(0,0,0,0.3) !important;
+            border: 1px solid var(--glass-border) !important;
+            color: white !important;
+            border-radius: 15px !important;
+            transition: 0.3s;
+            width: 100%; padding: 15px; margin-bottom: 10px;
         }
     </style>
 </head>
-
 <body>
+
     <div id="particles-js"></div>
 
-    <header>
-        <div class="logo"><i class="fa-solid fa-star"></i> JaluStore</div>
-        <nav>
-            <a href="#packages">Paket</a>
-            <a href="javascript:void(0)" onclick="openCart()">Keranjang</a>
+    <header class="animate__animated animate__fadeInDown">
+        <div class="logo">JALUSTORE</div>
+        <nav style="display: flex; gap: 20px;">
+            <a href="#packages" style="color: white; text-decoration: none; font-weight: 600;">Packages</a>
+            <a href="#" style="color: var(--text-muted); text-decoration: none;">Support</a>
         </nav>
     </header>
 
     <section class="hero">
-        <h1>Beli Hearts Sky<br>Tanpa Ribet!</h1>
-        <p>Proses kilat, aman 100%, dan terpercaya sejak 2024. Pilihan utama Sky Kids Indonesia di tahun 2026.</p>
-        <a href="#packages" class="cta-btn"><i class="fa-solid fa-bolt"></i> Lihat Produk</a>
+        <h1 class="animate__animated animate__zoomIn">Light Up Your <span>Sky</span></h1>
+        <p class="animate__animated animate__fadeInUp" style="color: var(--text-muted); max-width: 500px;">
+            Layanan top-up Hearts Sky: Children of the Light tercepat di galaksi. 100% Legal & Aman.
+        </p>
     </section>
 
-    <div class="container" id="packages">
-        <h2 class="section-title">Paket <span>Paling Dicari</span></h2>
+    <div class="container" id="packages" style="max-width: 1200px; margin: 0 auto 100px; padding: 0 20px;">
+        <h2 style="margin-bottom: 50px; text-align: center; font-size: 2.5rem;">Pilih <span>Energi</span> Lu</h2>
         <div class="grid" id="productGrid"></div>
     </div>
 
-    <div class="floating-cart" onclick="openCart()">
+    <div class="floating-cart animate__animated animate__bounceIn" onclick="openCart()">
         <i class="fa-solid fa-cart-shopping"></i>
-        <div class="cart-badge" id="cart-count">0</div>
+        <div class="badge" id="cart-count" style="position: absolute; top: -5px; right: -5px; background: var(--accent); color: white; width: 28px; height: 28px; border-radius: 50%; font-size: 0.9rem; font-weight: 800; display: flex; align-items: center; justify-content: center; border: 3px solid var(--bg-dark);">0</div>
     </div>
 
     <div class="modal" id="cartModal">
-        <div class="modal-content">
-            <h3 style="margin-bottom: 1.5rem;"><i class="fa-solid fa-cart-flatbed"></i> Keranjang Kamu</h3>
-            <div id="cart-list" style="max-height: 200px; overflow-y: auto; margin-bottom: 1rem;"></div>
-            
-            <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem; font-weight: bold; font-size: 1.2rem;">
-                <span>Total:</span>
-                <span id="cart-total" style="color: var(--primary);">Rp 0</span>
+        <div class="modal-content animate__animated animate__slideInUp">
+            <h2 style="margin-bottom: 20px;"><i class="fa-solid fa-bolt" style="color: var(--gold);"></i> Pesanan Lu</h2>
+            <div id="cart-items" style="margin-bottom: 20px;"></div>
+            <div style="font-size: 1.5rem; font-weight: 800; margin-bottom: 20px; text-align: right;">
+                Total: <span id="cart-total" style="color: var(--primary);">Rp 0</span>
             </div>
-
-            <form id="checkout-form">
-                <input id="username" class="form-control" placeholder="Nickname Sky" required>
-                <input id="friend-code" class="form-control" placeholder="Friend Code / Link" required>
-                <select id="payment" class="form-control" required>
-                    <option value="">-- Pilih Pembayaran --</option>
+            
+            <form id="orderForm">
+                <input type="text" id="skyName" class="form-control" placeholder="Nickname Sky" required>
+                <input type="text" id="skyCode" class="form-control" placeholder="Link QR / Code" required>
+                <select id="payMethod" class="form-control" required>
+                    <option value="">Metode Pembayaran</option>
+                    <option value="QRIS">QRIS (Otomatis)</option>
                     <option value="DANA">DANA</option>
-                    <option value="QRIS">QRIS / Semua Bank</option>
                     <option value="GOPAY">GOPAY</option>
                 </select>
-                <button type="submit" class="btn-checkout">
-                    <i class="fa-brands fa-whatsapp"></i> Checkout WhatsApp
+                <button type="submit" class="btn-buy" style="background: var(--gradient-main); color: white; font-size: 1.1rem;">
+                    Kirim Pesanan ke WhatsApp <i class="fa-brands fa-whatsapp"></i>
                 </button>
             </form>
-            <button onclick="closeCart()" style="position: absolute; top: 15px; right: 15px; background: none; border: none; color: white; cursor: pointer; font-size: 1.2rem;">&times;</button>
+            <button onclick="closeCart()" style="margin-top: 15px; background: none; border: none; color: var(--text-muted); cursor: pointer; width: 100%;">Tutup</button>
         </div>
     </div>
 
-    <footer>
-        <p>© 2026 JaluStore Sky Services. All Rights Reserved.</p>
-    </footer>
-
     <script>
-        /* --- Konfigurasi --- */
-        const ADMIN_WA = "6285363625159";
-        const PRODUCTS = [
-            { hearts: 100, price: 10000, badge: "START" },
-            { hearts: 250, price: 25000, badge: "POPULER", best: true },
-            { hearts: 400, price: 38000, badge: "HEMAT" },
-            { hearts: 650, price: 60000, badge: "SUPER", best: true },
-            { hearts: 1000, price: 90000, badge: "PREMIUM" },
-            { hearts: 2000, price: 175000, badge: "ULTIMATE", best: true }
+        const WA_NUMBER = "6285363625159";
+        const ITEMS = [
+            { id: 1, qty: 100, price: 10000, label: "Starter" },
+            { id: 2, qty: 250, price: 25000, label: "Populer" },
+            { id: 3, qty: 500, price: 45000, label: "Pro" },
+            { id: 4, qty: 1000, price: 85000, label: "Elite" },
+            { id: 5, qty: 2000, price: 160000, label: "Godly" }
         ];
 
         let cart = [];
 
-        /* --- Inisialisasi Produk --- */
-        function renderProducts() {
-            const grid = document.getElementById("productGrid");
-            grid.innerHTML = PRODUCTS.map((p, i) => `
-                <div class="card ${p.best ? 'best-seller' : ''}">
-                    ${p.badge ? `<div class="ribbon">${p.badge}</div>` : ''}
-                    <div class="heart-icon"><i class="fa-solid fa-heart"></i></div>
-                    <div class="amount">${p.hearts.toLocaleString()} ❤️</div>
-                    <div class="price">Rp ${p.price.toLocaleString('id-ID')}</div>
-                    <button class="btn-card" onclick="addToCart(${i})">
-                        ${p.best ? 'Tambah (Rekomendasi)' : 'Tambah ke Keranjang'}
-                    </button>
+        function render() {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = ITEMS.map(item => `
+                <div class="card">
+                    <div style="font-size: 0.8rem; color: var(--primary); font-weight: 800; text-transform: uppercase; margin-bottom: 15px;">${item.label}</div>
+                    <div style="font-size: 3rem; font-weight: 800; margin-bottom: 10px;">
+                        ${item.qty} <i class="fa-solid fa-heart sky-heart"></i>
+                    </div>
+                    <div class="price-tag">Rp ${item.price.toLocaleString('id-ID')}</div>
+                    <button class="btn-buy" onclick="addToCart(${item.id})">Ambil Sekarang</button>
                 </div>
             `).join('');
         }
 
-        /* --- Fungsi Keranjang --- */
-        function addToCart(index) {
-            cart.push(PRODUCTS[index]);
+        function addToCart(id) {
+            const prod = ITEMS.find(i => i.id === id);
+            cart.push(prod);
             updateUI();
             Swal.fire({
-                title: 'Berhasil!',
-                text: 'Paket ditambahkan ke keranjang',
                 icon: 'success',
+                title: 'Mantap cuy!',
+                text: `${prod.qty} Hearts masuk keranjang`,
+                background: '#0f172a',
+                color: '#fff',
                 toast: true,
                 position: 'top-end',
                 showConfirmButton: false,
-                timer: 2000,
-                background: '#1e293b',
-                color: '#fff'
+                timer: 1500
             });
         }
 
-        function removeCart(index) {
-            cart.splice(index, 1);
-            updateUI();
-        }
-
         function updateUI() {
-            const list = document.getElementById("cart-list");
-            const totalEl = document.getElementById("cart-total");
-            const badge = document.getElementById("cart-count");
-
-            badge.textContent = cart.length;
-            badge.style.display = cart.length > 0 ? 'flex' : 'none';
-
-            if(cart.length === 0) {
-                list.innerHTML = '<p style="text-align:center; color: #94a3b8;">Belum ada item.</p>';
-                totalEl.textContent = 'Rp 0';
-                return;
-            }
-
-            const total = cart.reduce((sum, item) => sum + item.price, 0);
-            list.innerHTML = cart.map((item, i) => `
-                <div class="cart-item">
-                    <span>${item.hearts} ❤️</span>
-                    <span>Rp ${item.price.toLocaleString('id-ID')}</span>
-                    <button class="remove-btn" onclick="removeCart(${i})"><i class="fa-solid fa-trash"></i></button>
+            document.getElementById('cart-count').innerText = cart.length;
+            const list = document.getElementById('cart-items');
+            const total = cart.reduce((a, b) => a + b.price, 0);
+            
+            list.innerHTML = cart.map((item, index) => `
+                <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--glass-border);">
+                    <span>${item.qty} <i class="fa-solid fa-heart sky-heart" style="font-size: 0.8rem;"></i></span>
+                    <span style="color: var(--primary);">Rp ${item.price.toLocaleString('id-ID')}</span>
+                    <i class="fa-solid fa-trash" onclick="remove(${index})" style="color: var(--accent); cursor: pointer;"></i>
                 </div>
             `).join('');
-            totalEl.textContent = `Rp ${total.toLocaleString('id-ID')}`;
-        }
-
-        function openCart() {
-            document.getElementById("cartModal").style.display = "flex";
-            document.body.style.overflow = "hidden";
-        }
-
-        function closeCart() {
-            document.getElementById("cartModal").style.display = "none";
-            document.body.style.overflow = "auto";
-        }
-
-        /* --- Form Handling --- */
-        document.getElementById("checkout-form").onsubmit = function(e) {
-            e.preventDefault();
-            if(cart.length === 0) return Swal.fire('Oops!', 'Keranjang masih kosong', 'error');
-
-            const name = document.getElementById("username").value;
-            const code = document.getElementById("friend-code").value;
-            const pay = document.getElementById("payment").value;
-            const total = cart.reduce((sum, item) => sum + item.price, 0);
-
-            // Perbaikan format pesan WhatsApp agar rapi
-            const itemsText = cart.map(item => `- ${item.hearts} Hearts (Rp ${item.price.toLocaleString('id-ID')})`).join('%0A');
             
-            const message = `Halo JaluStore! 🚀%0A%0A` +
-                            `Saya ingin order Top-up Sky:%0A` +
-                            `👤 *Nickname:* ${name}%0A` +
-                            `🔗 *ID/Code:* ${code}%0A` +
-                            `💳 *Metode:* ${pay}%0A%0A` +
-                            `📦 *Rincian Pesanan:*%0A${itemsText}%0A%0A` +
-                            `💰 *Total Bayar: Rp ${total.toLocaleString('id-ID')}*%0A%0A` +
-                            `Mohon segera diproses ya! ✨`;
+            document.getElementById('cart-total').innerText = `Rp ${total.toLocaleString('id-ID')}`;
+        }
 
-            window.open(`https://wa.me/${ADMIN_WA}?text=${message}`, '_blank');
-            
-            // Reset
-            cart = [];
+        function remove(idx) {
+            cart.splice(idx, 1);
             updateUI();
-            closeCart();
-            this.reset();
-            Swal.fire('Terikirim!', 'Silahkan cek WhatsApp kamu', 'success');
+        }
+
+        function openCart() { document.getElementById('cartModal').style.display = 'flex'; }
+        function closeCart() { document.getElementById('cartModal').style.display = 'none'; }
+
+        function generateReceipt(name, total, items, pay) {
+            const date = new Date().toLocaleString('id-ID');
+            return `---------------------------\n🚀 JALUSTORE RECEIPT\n---------------------------\nTanggal: ${date}\nUser: ${name}\nMetode: ${pay}\n---------------------------\nPesanan:\n${items}\n---------------------------\nTOTAL: Rp ${total.toLocaleString('id-ID')}\n---------------------------\nStatus: Menunggu Pembayaran\n---------------------------`;
+        }
+
+        document.getElementById('orderForm').onsubmit = (e) => {
+            e.preventDefault();
+            if(cart.length === 0) return Swal.fire('Error!', 'Keranjang lu masih kosong, anjay!', 'error');
+            
+            const name = document.getElementById('skyName').value;
+            const code = document.getElementById('skyCode').value;
+            const pay = document.getElementById('payMethod').value;
+            const total = cart.reduce((a, b) => a + b.price, 0);
+            const itemsText = cart.map(i => `- ${i.qty} Hearts`).join('\n');
+            
+            const receipt = generateReceipt(name, total, itemsText, pay);
+
+            Swal.fire({
+                title: 'Generating Order...',
+                html: 'Menghubungkan ke server JaluStore...',
+                timer: 1500,
+                timerProgressBar: true,
+                didOpen: () => { Swal.showLoading() }
+            }).then(() => {
+                const msg = encodeURIComponent(`Halo JaluStore! 🚀\n\n${receipt}\n\nLink/ID: ${code}\n\n*Mohon segera diproses ya!*`);
+                window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, '_blank');
+                
+                cart = [];
+                updateUI();
+                closeCart();
+                Swal.fire('Gaspol!', 'Pesanan lu udah dikirim ke WhatsApp Jalu!', 'success');
+            });
         };
 
-        /* --- Particles --- */
         window.onload = () => {
-            renderProducts();
+            render();
             particlesJS("particles-js", {
                 particles: {
-                    number: { value: 60 },
-                    color: { value: "#3b82f6" },
-                    shape: { type: "circle" },
-                    opacity: { value: 0.3 },
-                    size: { value: 3 },
-                    move: { speed: 1.5 }
+                    number: { value: 80 },
+                    color: { value: "#60a5fa" },
+                    opacity: { value: 0.2 },
+                    size: { value: 2 },
+                    line_linked: { enable: true, distance: 150, color: "#60a5fa", opacity: 0.1 },
+                    move: { speed: 1 }
                 }
             });
         };
     </script>
 </body>
 </html>
+
