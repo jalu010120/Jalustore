@@ -57,7 +57,6 @@
             pointer-events: none;
         }
 
-        /* custom scroll */
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -69,7 +68,6 @@
             border-radius: 10px;
         }
 
-        /* animated bg stars effect */
         .stars-bg {
             position: fixed;
             inset: 0;
@@ -82,7 +80,6 @@
             z-index: 0;
         }
 
-        /* glassmorphic header */
         .glass-header {
             position: fixed;
             top: 20px;
@@ -122,12 +119,12 @@
             text-decoration: none;
             font-weight: 600;
             transition: 0.2s;
+            cursor: pointer;
         }
         .nav-links a:hover {
             color: var(--primary-light);
         }
 
-        /* Hero section */
         .hero-section {
             min-height: 100vh;
             display: flex;
@@ -168,7 +165,6 @@
             font-size: 1.1rem;
         }
 
-        /* container */
         .container-custom {
             max-width: 1280px;
             margin: 0 auto 6rem;
@@ -191,7 +187,6 @@
             color: transparent;
         }
 
-        /* premium card grid */
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
@@ -275,7 +270,6 @@
             transform: scale(0.98);
         }
 
-        /* floating cart */
         .floating-cart {
             position: fixed;
             bottom: 32px;
@@ -311,7 +305,6 @@
             border: 2px solid #03050B;
         }
 
-        /* modal modern */
         .modal-modern {
             position: fixed;
             inset: 0;
@@ -459,7 +452,6 @@
 </div>
 
 <script>
-    // Konfigurasi produk
     const PRODUCTS = [
         { id: 1, hearts: 100, price: 10000, tag: "Starter", popular: false },
         { id: 2, hearts: 250, price: 25000, tag: "Populer", popular: true },
@@ -468,9 +460,8 @@
         { id: 5, hearts: 2000, price: 160000, tag: "Legendary", popular: true }
     ];
 
-    let cartItems = []; // menyimpan item { id, hearts, price, tag }
+    let cartItems = [];
 
-    // Render produk ke grid
     function renderProducts() {
         const grid = document.getElementById('productGrid');
         if (!grid) return;
@@ -489,7 +480,6 @@
             </div>
         `).join('');
 
-        // Attach event listeners ke semua tombol
         document.querySelectorAll('.btn-order').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const id = parseInt(btn.getAttribute('data-id'));
@@ -510,7 +500,6 @@
         });
         updateCartUI();
 
-        // SweetAlert mini notifikasi
         Swal.fire({
             icon: 'success',
             title: 'Tersimpan!',
@@ -520,8 +509,7 @@
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 1600,
-            backdrop: false
+            timer: 1600
         });
     }
 
@@ -529,9 +517,9 @@
         const badge = document.getElementById('cartCountBadge');
         if (badge) badge.innerText = cartItems.length;
 
-        // Update tampilan detail di modal jika modal terbuka atau tidak, kita tetap update listnya nanti saat modal di buka.
         const cartListDiv = document.getElementById('cartItemsList');
         const totalSpan = document.getElementById('cartTotalAmount');
+        
         if (cartListDiv) {
             if (cartItems.length === 0) {
                 cartListDiv.innerHTML = `<div style="text-align:center; padding: 2rem; color: #6c7f9e;">Keranjang masih kosong~ <i class="fa-regular fa-heart"></i></div>`;
@@ -545,6 +533,7 @@
                 `).join('');
             }
         }
+        
         if (totalSpan) {
             const total = cartItems.reduce((sum, i) => sum + i.price, 0);
             totalSpan.innerText = `Rp ${total.toLocaleString('id-ID')}`;
@@ -554,15 +543,12 @@
     function removeCartItem(index) {
         cartItems.splice(index, 1);
         updateCartUI();
-        if (cartItems.length === 0 && document.getElementById('cartModal').style.display === 'flex') {
-            // hanya refresh visual
-        }
     }
 
     function openCartModal() {
         const modal = document.getElementById('cartModal');
         if (modal) {
-            updateCartUI();  // refresh sebelum tampil
+            updateCartUI();
             modal.style.display = 'flex';
         }
     }
@@ -572,7 +558,6 @@
         if (modal) modal.style.display = 'none';
     }
 
-    // Generate pesanan ke WhatsApp
     function generateOrderSummary(nickname, identifier, paymentMethod, totalAmount, itemsArray) {
         const dateNow = new Date().toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' });
         let itemsDetail = itemsArray.map(i => `🎁 ${i.hearts} Heart (${i.tag}) - Rp ${i.price.toLocaleString('id-ID')}`).join('\n');
@@ -581,8 +566,10 @@
 
     const WA_NUMBER = "6285363625159";
 
+    // PERBAIKAN UTAMA: Fungsi submit order langsung buka WA tanpa konfirmasi berulang
     function submitOrder(e) {
         e.preventDefault();
+        
         if (cartItems.length === 0) {
             Swal.fire({
                 icon: 'error',
@@ -599,7 +586,13 @@
         const payment = document.getElementById('paymentMethod').value;
 
         if (!nickname || !identifier || !payment) {
-            Swal.fire('Perhatian!', 'Lengkapi semua data (Nama, ID, Metode Bayar) dulu ya.', 'warning');
+            Swal.fire({
+                icon: 'warning',
+                title: 'Data belum lengkap',
+                text: 'Isi semua data (Nama, ID/Code, Metode Bayar) terlebih dahulu.',
+                background: '#0e1628',
+                color: '#fff'
+            });
             return;
         }
 
@@ -608,31 +601,47 @@
         const encodedMsg = encodeURIComponent(message);
         const waLink = `https://wa.me/${WA_NUMBER}?text=${encodedMsg}`;
 
+        // Konfirmasi sederhana sebelum kirim ke WA
         Swal.fire({
-            title: 'Redirect ke WhatsApp',
-            text: 'Kamu akan diarahkan ke chat official JaluStore. Lanjutkan pesanan?',
+            title: 'Kirim Pesanan?',
+            text: `Total pesanan: Rp ${totalPrice.toLocaleString('id-ID')}\nKamu akan diarahkan ke WhatsApp.`,
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#7aa2f7',
             cancelButtonColor: '#f7768e',
-            confirmButtonText: 'Ya, Kirim!',
+            confirmButtonText: 'Ya, Kirim ke WA',
+            cancelButtonText: 'Batal',
             background: '#0e1628',
             color: '#fff'
         }).then((result) => {
             if (result.isConfirmed) {
+                // BUKA WHATSAPP LANGSUNG
                 window.open(waLink, '_blank');
-                // reset cart setelah order
+                
+                // Reset keranjang setelah order
                 cartItems = [];
                 updateCartUI();
                 closeCartModal();
-                // reset form optional
-                document.getElementById('checkoutForm').reset();
-                Swal.fire('Sukses!', 'Pesanan terkirim, admin akan segera merespon!', 'success');
+                
+                // Reset form
+                document.getElementById('skyNickname').value = '';
+                document.getElementById('skyIdentifier').value = '';
+                document.getElementById('paymentMethod').value = '';
+                
+                // Notifikasi sukses
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil!',
+                    text: 'Pesanan terkirim, tunggu konfirmasi dari admin ya.',
+                    background: '#0e1628',
+                    color: '#fff',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
             }
         });
     }
 
-    // fungsi bantuan sweet alert
     function showSupport() {
         Swal.fire({
             title: 'Butuh Bantuan?',
@@ -644,7 +653,6 @@
         });
     }
 
-    // Partikel konfigurasi lebih smooth
     function initParticles() {
         if (typeof particlesJS !== 'undefined') {
             particlesJS('particles-js', {
@@ -666,7 +674,6 @@
         }
     }
 
-    // Event listener setelah load
     window.addEventListener('DOMContentLoaded', () => {
         renderProducts();
         updateCartUI();
@@ -682,7 +689,6 @@
 
         initParticles();
 
-        // klik modal background untuk menutup (opsional)
         const modal = document.getElementById('cartModal');
         modal.addEventListener('click', (e) => {
             if (e.target === modal) closeCartModal();
@@ -691,3 +697,4 @@
 </script>
 </body>
 </html>
+```
