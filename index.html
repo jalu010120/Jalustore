@@ -280,6 +280,16 @@
             font-weight: 800;
             margin: 0.5rem 0;
             color: var(--primary-light);
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .price-usd {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            font-weight: 600;
         }
 
         .btn-order {
@@ -651,15 +661,15 @@
                 width: 96%; 
             }
             .logo {
-                font-size: 1rem; /* Logo sedikit lebih kecil */
+                font-size: 1rem; 
                 white-space: nowrap; 
             }
             .nav-links {
-                gap: 0.5rem; /* Jarak antar menu dirapatkan */
-                white-space: nowrap; /* Mencegah menu turun ke bawah */
+                gap: 0.5rem; 
+                white-space: nowrap; 
             }
             .nav-links a {
-                font-size: 0.75rem; /* Ukuran teks menu disesuaikan */
+                font-size: 0.75rem; 
             }
             .premium-card {
                 padding: 1.8rem 1.2rem;
@@ -672,6 +682,9 @@
             }
             .price-amount {
                 font-size: 1.7rem;
+            }
+            .price-usd {
+                font-size: 0.9rem;
             }
             .floating-cart {
                 bottom: 20px;
@@ -746,7 +759,7 @@
     
     <div class="faq-item">
         <div class="faq-question">Bagaimana sistem pembayarannya? <i class="fa-solid fa-chevron-down"></i></div>
-        <div class="faq-answer">Pembayaran wajib dilunasi di awal sebelum proses pengiriman heart dilakukan. Kami menerima pembayaran via QRIS, DANA, GoPay, dan OVO.</div>
+        <div class="faq-answer">Pembayaran wajib dilunasi di awal sebelum proses pengiriman heart dilakukan. Kami menerima pembayaran via QRIS, DANA, GoPay, OVO, dan PayPal ($ USD).</div>
     </div>
     
     <div class="faq-item">
@@ -776,48 +789,50 @@
 <div class="modal-modern" id="cartModal">
     <div class="modal-card animate__animated animate__slideInUp">
         <div style="display: flex; justify-content: space-between; align-items: center;">
-            <h2 style="font-weight: 700;"><i class="fa-solid fa-cart-shopping" style="color: #e0af68;"></i> Keranjang Kamu</h2>
+            <h2 style="font-weight: 700;"><i class="fa-solid fa-cart-shopping" style="color: #e0af68;"></i> Keranjang / Cart</h2>
             <i class="fa-solid fa-xmark" onclick="closeCartModal()" style="font-size: 1.6rem; cursor: pointer; opacity: 0.7;"></i>
         </div>
         <div id="cartItemsList" style="max-height: 280px; overflow-y: auto; margin: 1rem 0;"></div>
-        <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 1.3rem; margin-bottom: 1rem;">
+        <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 1.2rem; margin-bottom: 1rem; align-items: flex-end;">
             <span>Total</span>
-            <span id="cartTotalAmount" style="color: #7aa2f7;">Rp 0</span>
+            <span id="cartTotalAmount" style="color: #7aa2f7; text-align: right;">Rp 0 <br><span style="font-size:0.9rem; color:#8a9bb5;">$0.00</span></span>
         </div>
         <hr>
         <form id="checkoutForm">
             <div class="form-group">
-                <input type="text" id="skyNickname" class="form-control-custom" placeholder="Nama karakter / Nickname" required>
+                <input type="text" id="skyNickname" class="form-control-custom" placeholder="Nama karakter / In-game Nickname" required>
             </div>
             <div class="form-group">
                 <input type="text" id="skyIdentifier" class="form-control-custom" placeholder="ID / Link QR Code / Sky Code" required>
             </div>
             <div class="form-group">
                 <select id="paymentMethod" class="form-control-custom" required>
-                    <option value="" disabled selected>Pilih metode bayar</option>
-                    <option value="QRIS (Scan Cepat)">QRIS (Scan Cepat)</option>
-                    <option value="DANA">DANA</option>
-                    <option value="GOPAY">GoPay</option>
-                    <option value="OVO">OVO</option>
+                    <option value="" disabled selected>Pilih metode bayar / Payment method</option>
+                    <option value="QRIS (Scan Cepat)">QRIS (Scan Cepat - IDR)</option>
+                    <option value="DANA">DANA (IDR)</option>
+                    <option value="GOPAY">GoPay (IDR)</option>
+                    <option value="OVO">OVO (IDR)</option>
+                    <option value="PAYPAL">PayPal ($ USD)</option>
                 </select>
             </div>
-            <button type="submit" class="btn-submit"><i class="fa-brands fa-whatsapp"></i> Konfirmasi & Kirim ke WA</button>
+            <button type="submit" class="btn-submit"><i class="fa-brands fa-whatsapp"></i> Checkout via WhatsApp</button>
         </form>
-        <p style="font-size: 0.7rem; text-align: center; margin-top: 1rem; color: #5b6e8c;">Pesanan akan diproses setelah pembayaran dikonfirmasi</p>
+        <p style="font-size: 0.7rem; text-align: center; margin-top: 1rem; color: #5b6e8c;">Pesanan diproses setelah pembayaran dikonfirmasi<br>Orders are processed after payment is confirmed.</p>
     </div>
 </div>
 
 <script src="data.js"></script>
 
 <script>
+    // DATA PRODUK DENGAN TAMBAHAN HARGA USD
     const PRODUCTS = [
-        { id: 1, hearts: 100, price: 10000, tag: "Starter", popular: false },
-        { id: 2, hearts: 200, price: 20000, tag: "Basic", popular: false },
-        { id: 3, hearts: 360, price: 35000, tag: "Populer", popular: true },
-        { id: 4, hearts: 480, price: 45000, tag: "Pro Gamer", popular: false },
-        { id: 5, hearts: 600, price: 55000, tag: "Elite Light", popular: false },
-        { id: 6, hearts: 700, price: 60000, tag: "Legendary", popular: true },
-        { id: 7, hearts: 1000, price: 85000, tag: "Sultan", popular: false }
+        { id: 1, hearts: 100, price: 10000, priceUSD: 0.99, tag: "Starter", popular: false },
+        { id: 2, hearts: 200, price: 20000, priceUSD: 1.99, tag: "Basic", popular: false },
+        { id: 3, hearts: 360, price: 35000, priceUSD: 2.99, tag: "Populer", popular: true },
+        { id: 4, hearts: 480, price: 45000, priceUSD: 3.99, tag: "Pro Gamer", popular: false },
+        { id: 5, hearts: 600, price: 55000, priceUSD: 4.99, tag: "Elite Light", popular: false },
+        { id: 6, hearts: 700, price: 60000, priceUSD: 5.49, tag: "Legendary", popular: true },
+        { id: 7, hearts: 1000, price: 85000, priceUSD: 6.99, tag: "Sultan", popular: false }
     ];
 
     let cartItems = [];
@@ -837,7 +852,10 @@
                 
                 <div class="product-tag">${prod.tag}</div>
                 
-                <div class="price-amount">Rp ${prod.price.toLocaleString('id-ID')}</div>
+                <div class="price-amount">
+                    Rp ${prod.price.toLocaleString('id-ID')} 
+                    <span class="price-usd">/ $${prod.priceUSD}</span>
+                </div>
                 
                 <button class="btn-order" data-id="${prod.id}">
                     <i class="fa-solid fa-cart-plus"></i> Ambil Sekarang
@@ -902,8 +920,6 @@
 
         searchInput.addEventListener('input', (e) => {
             const keyword = e.target.value.toLowerCase();
-            
-            // TRACKING_DATA sekarang dipanggil langsung dari file data.js
             if(typeof TRACKING_DATA !== 'undefined') {
                 const filteredData = TRACKING_DATA.filter(item => 
                     item.name.toLowerCase().includes(keyword)
@@ -921,6 +937,7 @@
             id: product.id,
             hearts: product.hearts,
             price: product.price,
+            priceUSD: product.priceUSD,
             tag: product.tag
         });
         updateCartUI();
@@ -952,8 +969,8 @@
                 cartListDiv.innerHTML = cartItems.map((item, idx) => `
                     <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #1e2a3a;">
                         <div><i class="fa-solid fa-heart" style="color: #f7768e;"></i> ${item.hearts} Hearts <span style="font-size:0.8rem;">(${item.tag})</span></div>
-                        <div>Rp ${item.price.toLocaleString('id-ID')}</div>
-                        <i class="fa-regular fa-trash-can" onclick="removeCartItem(${idx})" style="cursor: pointer; color: #f7768e;"></i>
+                        <div style="text-align: right;">Rp ${item.price.toLocaleString('id-ID')} <br><span style="font-size:0.8rem; color:#8a9bb5;">$${item.priceUSD}</span></div>
+                        <i class="fa-regular fa-trash-can" onclick="removeCartItem(${idx})" style="cursor: pointer; color: #f7768e; margin-left: 10px;"></i>
                     </div>
                 `).join('');
             }
@@ -961,7 +978,8 @@
         
         if (totalSpan) {
             const total = cartItems.reduce((sum, i) => sum + i.price, 0);
-            totalSpan.innerText = `Rp ${total.toLocaleString('id-ID')}`;
+            const totalUSD = cartItems.reduce((sum, i) => sum + i.priceUSD, 0);
+            totalSpan.innerHTML = `Rp ${total.toLocaleString('id-ID')} <br><span style="font-size:0.9rem; color:#8a9bb5;">$${totalUSD.toFixed(2)}</span>`;
         }
     }
 
@@ -983,10 +1001,10 @@
         if (modal) modal.style.display = 'none';
     }
 
-    function generateOrderSummary(nickname, identifier, paymentMethod, totalAmount, itemsArray) {
+    function generateOrderSummary(nickname, identifier, paymentMethod, totalAmount, totalUSDAmount, itemsArray) {
         const dateNow = new Date().toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' });
-        let itemsDetail = itemsArray.map(i => `🎁 ${i.hearts} Heart (${i.tag}) - Rp ${i.price.toLocaleString('id-ID')}`).join('\n');
-        return `✨ *ORDER JALUSTORE* ✨\n────────────────\n🕒 Tanggal: ${dateNow}\n👤 Nickname: ${nickname}\n🆔 ID/Code: ${identifier}\n💳 Metode: ${paymentMethod}\n────────────────\n📦 *Pesanan:*\n${itemsDetail}\n────────────────\n💰 *Total:* Rp ${totalAmount.toLocaleString('id-ID')}\n────────────────\n📌 Status: Menunggu Pembayaran\n⚡ Segera kirim bukti ya! Terima kasih.`;
+        let itemsDetail = itemsArray.map(i => `🎁 ${i.hearts} Heart (${i.tag}) - Rp ${i.price.toLocaleString('id-ID')} / $${i.priceUSD}`).join('\n');
+        return `✨ *ORDER JALUSTORE* ✨\n────────────────\n🕒 Date: ${dateNow}\n👤 Nickname: ${nickname}\n🆔 ID/Code: ${identifier}\n💳 Payment: ${paymentMethod}\n────────────────\n📦 *Order Details:*\n${itemsDetail}\n────────────────\n💰 *Total:* Rp ${totalAmount.toLocaleString('id-ID')} / $${totalUSDAmount.toFixed(2)}\n────────────────\n📌 Status: Waiting for Payment\n⚡ Please send the payment proof! Thank you.`;
     }
 
     const WA_NUMBER = "6285363625159";
@@ -1021,18 +1039,19 @@
         }
 
         const totalPrice = cartItems.reduce((sum, i) => sum + i.price, 0);
-        const message = generateOrderSummary(nickname, identifier, payment, totalPrice, cartItems);
+        const totalUSD = cartItems.reduce((sum, i) => sum + i.priceUSD, 0);
+        const message = generateOrderSummary(nickname, identifier, payment, totalPrice, totalUSD, cartItems);
         const encodedMsg = encodeURIComponent(message);
         const waLink = `https://wa.me/${WA_NUMBER}?text=${encodedMsg}`;
 
         Swal.fire({
             title: 'Kirim Pesanan?',
-            html: `Total pesanan: <strong style="color:#7aa2f7;">Rp ${totalPrice.toLocaleString('id-ID')}</strong><br>Kamu akan diarahkan ke WhatsApp.`,
+            html: `Total: <strong style="color:#7aa2f7;">Rp ${totalPrice.toLocaleString('id-ID')} / $${totalUSD.toFixed(2)}</strong><br>Lanjut ke WhatsApp?`,
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#7aa2f7',
             cancelButtonColor: '#f7768e',
-            confirmButtonText: 'Ya, Kirim ke WA',
+            confirmButtonText: 'Ya, Kirim',
             cancelButtonText: 'Batal',
             background: '#0e1628',
             color: '#fff'
@@ -1051,7 +1070,7 @@
                 Swal.fire({
                     icon: 'success',
                     title: 'Berhasil!',
-                    text: 'Pesanan terkirim, tunggu konfirmasi dari admin ya.',
+                    text: 'Pesanan terkirim, tunggu konfirmasi ya.',
                     background: '#0e1628',
                     color: '#fff',
                     timer: 2200,
@@ -1102,7 +1121,6 @@
     window.addEventListener('DOMContentLoaded', () => {
         renderProducts();
         
-        // Ambil data dari data.js
         if (typeof TRACKING_DATA !== 'undefined') {
             renderTracking(TRACKING_DATA);
         } else {
