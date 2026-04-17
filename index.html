@@ -5,14 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>JaluStore V3 | Sky COTL - Experience The Light ✨</title>
 
-    <!-- Preconnect & Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     
-    <!-- Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -31,6 +29,8 @@
             --primary-glow: #3b82f6;
             --accent-coral: #f7768e;
             --gold-soft: #e0af68;
+            --success-green: #9ece6a;
+            --warning-orange: #ff9e64;
             --text-white: #f0f3f8;
             --text-dim: #8a9bb5;
             --grad-1: linear-gradient(125deg, #1e2a4a 0%, #0a0f1f 100%);
@@ -87,7 +87,7 @@
             transform: translateX(-50%);
             width: 90%;
             max-width: 1280px;
-            background: rgba(8, 14, 26, 0.65);
+            background: rgba(8, 14, 26, 0.75);
             backdrop-filter: blur(16px);
             border-radius: 2rem;
             border: 1px solid rgba(122, 162, 247, 0.2);
@@ -171,6 +171,7 @@
             padding: 0 1.5rem;
             position: relative;
             z-index: 2;
+            scroll-margin-top: 100px; 
         }
 
         .section-title {
@@ -198,11 +199,14 @@
             backdrop-filter: blur(12px);
             border: 1px solid var(--glass-edge);
             border-radius: 32px;
-            padding: 2rem 1.5rem;
+            padding: 2.5rem 1.5rem;
             transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             text-align: center;
             position: relative;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .premium-card::before {
@@ -225,23 +229,56 @@
             box-shadow: var(--shadow-glow);
         }
 
-        .heart-icon-big {
-            font-size: 3rem;
-            display: inline-block;
-            filter: drop-shadow(0 0 12px #f7768e);
-            animation: floatHeart 2s infinite ease;
+        .heart-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 0.8rem;
+        }
+
+        .heart-number {
+            font-size: 3.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .heart-icon {
+            font-size: 2.4rem;
+            color: #f7768e;
+            filter: drop-shadow(0 0 15px rgba(247, 118, 142, 0.5));
+            animation: floatHeart 2.5s infinite ease-in-out;
         }
 
         @keyframes floatHeart {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-6px); }
-            100% { transform: translateY(0px); }
+            0% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-5px) scale(1.05); }
+            100% { transform: translateY(0px) scale(1); }
+        }
+
+        .product-tag {
+            display: inline-block;
+            padding: 5px 16px;
+            background: rgba(187, 154, 247, 0.12);
+            color: #bb9af7;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            border: 1px solid rgba(187, 154, 247, 0.25);
         }
 
         .price-amount {
             font-size: 2rem;
             font-weight: 800;
-            margin: 1rem 0 0.5rem;
+            margin: 0.5rem 0;
             color: var(--primary-light);
         }
 
@@ -256,7 +293,7 @@
             color: white;
             cursor: pointer;
             transition: 0.25s;
-            margin-top: 1.5rem;
+            margin-top: auto; 
             display: flex;
             align-items: center;
             justify-content: center;
@@ -270,6 +307,248 @@
             transform: scale(0.98);
         }
 
+        /* --- TRACKING DASHBOARD --- */
+        .search-box-container {
+            max-width: 500px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            background: rgba(18, 25, 45, 0.8);
+            border: 1px solid rgba(122, 162, 247, 0.4);
+            padding: 1rem 1.5rem 1rem 3rem;
+            border-radius: 30px;
+            color: white;
+            font-size: 1rem;
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-light);
+            box-shadow: 0 0 15px rgba(122, 162, 247, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-dim);
+        }
+
+        .tracking-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .track-card {
+            background: rgba(18, 25, 45, 0.6);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 1.5rem;
+            backdrop-filter: blur(8px);
+            transition: 0.3s;
+        }
+
+        .track-card:hover {
+            border-color: rgba(122, 162, 247, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .track-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .track-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .slot-badge {
+            background: #2a3650;
+            font-size: 0.7rem;
+            padding: 3px 8px;
+            border-radius: 10px;
+            color: #8a9bb5;
+        }
+
+        .status-badge {
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+
+        .status-done {
+            background: rgba(158, 206, 106, 0.15);
+            color: var(--success-green);
+            border: 1px solid rgba(158, 206, 106, 0.3);
+        }
+
+        .status-process {
+            background: rgba(255, 158, 100, 0.15);
+            color: var(--warning-orange);
+            border: 1px solid rgba(255, 158, 100, 0.3);
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            margin-bottom: 8px;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 10px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #1e2a3a;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--grad-2);
+            border-radius: 10px;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        /* --- FAQ --- */
+        .faq-section {
+            max-width: 800px;
+            margin: 0 auto 6rem;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 2;
+            scroll-margin-top: 100px;
+        }
+
+        .faq-item {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-edge);
+            border-radius: 20px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: rgba(122, 162, 247, 0.3);
+        }
+
+        .faq-question {
+            padding: 1.2rem 1.5rem;
+            cursor: pointer;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-white);
+            transition: 0.3s;
+        }
+
+        .faq-question:hover {
+            color: var(--primary-light);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease;
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 1.5rem 1.2rem;
+            max-height: 300px; 
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+            color: var(--primary-light);
+        }
+
+        .faq-question i {
+            transition: 0.4s ease;
+            color: var(--text-dim);
+        }
+
+        /* --- FOOTER --- */
+        .site-footer {
+            text-align: center;
+            padding: 3rem 1.5rem;
+            border-top: 1px solid rgba(122, 162, 247, 0.1);
+            position: relative;
+            z-index: 2;
+            background: rgba(3, 5, 11, 0.8);
+            margin-top: 2rem;
+        }
+
+        .site-footer .footer-logo {
+            font-weight: 800;
+            font-size: 1.4rem;
+            background: var(--grad-2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .site-footer p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            color: var(--text-white);
+            background: rgba(255, 255, 255, 0.05);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
+            font-size: 1.2rem;
+        }
+
+        .social-links a:hover {
+            background: var(--grad-2);
+            color: #03050B;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(122, 162, 247, 0.3);
+        }
+
+        /* --- MODAL & MISC --- */
         .floating-cart {
             position: fixed;
             bottom: 32px;
@@ -365,12 +644,34 @@
             margin: 1rem 0;
         }
 
+        /* PERBAIKAN RESPONSIVE AGAR MENU TIDAK OVERFLOW */
         @media (max-width: 680px) {
             .glass-header {
-                padding: 0.7rem 1.5rem;
+                padding: 0.7rem 0.8rem; 
+                width: 96%; 
+            }
+            .logo {
+                font-size: 1rem; /* Logo sedikit lebih kecil */
+                white-space: nowrap; 
+            }
+            .nav-links {
+                gap: 0.5rem; /* Jarak antar menu dirapatkan */
+                white-space: nowrap; /* Mencegah menu turun ke bawah */
+            }
+            .nav-links a {
+                font-size: 0.75rem; /* Ukuran teks menu disesuaikan */
             }
             .premium-card {
-                padding: 1.5rem;
+                padding: 1.8rem 1.2rem;
+            }
+            .heart-number {
+                font-size: 2.8rem; 
+            }
+            .heart-icon {
+                font-size: 2rem; 
+            }
+            .price-amount {
+                font-size: 1.7rem;
             }
             .floating-cart {
                 bottom: 20px;
@@ -391,7 +692,8 @@
     <div class="logo">JALUSTORE ✦</div>
     <div class="nav-links">
         <a href="#packages">Hearts</a>
-        <a href="#" id="supportBtn">Bantuan</a>
+        <a href="#tracking">Tracking</a>
+        <a href="#faq">FAQ</a>
     </div>
 </header>
 
@@ -411,12 +713,66 @@
     <div class="cards-grid" id="productGrid"></div>
 </div>
 
+<div class="container-custom" id="tracking">
+    <div class="section-title">
+        <h2><i class="fa-solid fa-truck-fast" style="color: #bb9af7;"></i> Cek Pengiriman</h2>
+        <p style="color: #8a9bb5;">Pantau progress pengiriman heart kamu hari ini</p>
+    </div>
+    
+    <div class="search-box-container">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input type="text" id="searchInput" class="search-input" placeholder="Ketik Nickname kamu di sini...">
+    </div>
+
+    <div class="tracking-grid" id="trackingGrid">
+        </div>
+</div>
+
+<div class="faq-section" id="faq">
+    <div class="section-title">
+        <h2><i class="fa-solid fa-circle-question" style="color: #bb9af7;"></i> FAQ</h2>
+        <p style="color: #8a9bb5;">Pertanyaan yang sering diajukan</p>
+    </div>
+    
+    <div class="faq-item">
+        <div class="faq-question">Berapa lama proses pengiriman Heart? <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="faq-answer">Karena aturan game Sky maksimal mengirim jumlah tertentu per hari, proses pengiriman bertahap (cicil). Kamu bisa cek progressnya di menu Tracking.</div>
+    </div>
+    
+    <div class="faq-item">
+        <div class="faq-question">Apakah akun Sky saya aman? <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="faq-answer">100% Aman! JaluStore tidak pernah meminta email atau password akun kamu. Pengiriman heart murni menggunakan fitur in-game via Friend Link / QR Code.</div>
+    </div>
+    
+    <div class="faq-item">
+        <div class="faq-question">Bagaimana sistem pembayarannya? <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="faq-answer">Pembayaran wajib dilunasi di awal sebelum proses pengiriman heart dilakukan. Kami menerima pembayaran via QRIS, DANA, GoPay, dan OVO.</div>
+    </div>
+    
+    <div class="faq-item">
+        <div class="faq-question">Apakah butuh login akun? <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="faq-answer">Sama sekali tidak. Cukup masukkan Nickname dan Link QR/Sky Code kamu di form keranjang, lalu admin kami akan add friend kamu di dalam game.</div>
+    </div>
+</div>
+
+<footer class="site-footer">
+    <div class="footer-logo">JALUSTORE ✦</div>
+    <p>© 2026 JaluStore. All Rights Reserved.</p>
+    <div class="social-links">
+        <a href="https://instagram.com/jalustoreid" target="_blank" title="Instagram JaluStore">
+            <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="https://wa.me/6285363625159" target="_blank" title="WhatsApp JaluStore">
+            <i class="fa-brands fa-whatsapp"></i>
+        </a>
+    </div>
+</footer>
+
 <div class="floating-cart animate__animated animate__bounceIn" onclick="openCartModal()">
     <i class="fa-solid fa-bag-shopping"></i>
     <div class="cart-badge" id="cartCountBadge">0</div>
 </div>
 
-<!-- Modal Cart & Checkout -->
 <div class="modal-modern" id="cartModal">
     <div class="modal-card animate__animated animate__slideInUp">
         <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -451,13 +807,17 @@
     </div>
 </div>
 
+<script src="data.js"></script>
+
 <script>
     const PRODUCTS = [
         { id: 1, hearts: 100, price: 10000, tag: "Starter", popular: false },
-        { id: 2, hearts: 250, price: 25000, tag: "Populer", popular: true },
-        { id: 3, hearts: 500, price: 45000, tag: "Pro Gamer", popular: false },
-        { id: 4, hearts: 1000, price: 85000, tag: "Elite Light", popular: false },
-        { id: 5, hearts: 2000, price: 160000, tag: "Legendary", popular: true }
+        { id: 2, hearts: 200, price: 20000, tag: "Basic", popular: false },
+        { id: 3, hearts: 360, price: 35000, tag: "Populer", popular: true },
+        { id: 4, hearts: 480, price: 45000, tag: "Pro Gamer", popular: false },
+        { id: 5, hearts: 600, price: 55000, tag: "Elite Light", popular: false },
+        { id: 6, hearts: 700, price: 60000, tag: "Legendary", popular: true },
+        { id: 7, hearts: 1000, price: 85000, tag: "Sultan", popular: false }
     ];
 
     let cartItems = [];
@@ -468,12 +828,17 @@
 
         grid.innerHTML = PRODUCTS.map(prod => `
             <div class="premium-card">
-                ${prod.popular ? '<div style="position: absolute; top: 16px; right: 20px; background: #f7768e; padding: 4px 10px; border-radius: 50px; font-size: 0.7rem; font-weight: bold;">🔥 Best</div>' : ''}
-                <div class="heart-icon-big">
-                    ${prod.hearts} <i class="fa-solid fa-heart" style="color: #f7768e; text-shadow: 0 0 6px #f7768e;"></i>
+                ${prod.popular ? '<div style="position: absolute; top: 16px; right: 20px; background: #f7768e; padding: 5px 12px; border-radius: 50px; font-size: 0.7rem; font-weight: bold; color: #fff; box-shadow: 0 4px 10px rgba(247, 118, 142, 0.3);">🔥 Best</div>' : ''}
+                
+                <div class="heart-container">
+                    <span class="heart-number">${prod.hearts}</span>
+                    <i class="fa-solid fa-heart heart-icon"></i>
                 </div>
-                <div style="font-weight: 600; letter-spacing: 1px; color: #bb9af7;">${prod.tag}</div>
+                
+                <div class="product-tag">${prod.tag}</div>
+                
                 <div class="price-amount">Rp ${prod.price.toLocaleString('id-ID')}</div>
+                
                 <button class="btn-order" data-id="${prod.id}">
                     <i class="fa-solid fa-cart-plus"></i> Ambil Sekarang
                 </button>
@@ -485,6 +850,66 @@
                 const id = parseInt(btn.getAttribute('data-id'));
                 addToCartById(id);
             });
+        });
+    }
+
+    function renderTracking(dataToRender) {
+        const grid = document.getElementById('trackingGrid');
+        if (!grid) return;
+
+        if (typeof TRACKING_DATA === 'undefined') {
+            grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #f7768e; padding: 2rem;">Error: File data.js tidak terbaca! Pastikan filenya sudah di-upload ke GitHub.</div>`;
+            return;
+        }
+
+        if (dataToRender.length === 0) {
+            grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #8a9bb5; padding: 2rem;">Mencari Nickname... Kosong! Pastikan ejaannya benar ya.</div>`;
+            return;
+        }
+
+        grid.innerHTML = dataToRender.map(data => {
+            const isDone = data.kirim >= data.order;
+            const statusText = isDone ? "Selesai ✅" : "Proses ⏳";
+            const statusClass = isDone ? "status-done" : "status-process";
+            
+            let percentage = (data.kirim / data.order) * 100;
+            if (percentage > 100) percentage = 100;
+
+            return `
+                <div class="track-card animate__animated animate__fadeIn">
+                    <div class="track-header">
+                        <div class="track-name">
+                            ${data.name} 
+                            <span class="slot-badge">${data.slot}</span>
+                        </div>
+                        <div class="status-badge ${statusClass}">${statusText}</div>
+                    </div>
+                    <div class="progress-info">
+                        <span>Dikirim: ${data.kirim}</span>
+                        <span>Total: ${data.order} <i class="fa-solid fa-heart" style="color:#f7768e; font-size:0.8rem;"></i></span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" style="width: ${percentage}%;"></div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function initLiveSearch() {
+        const searchInput = document.getElementById('searchInput');
+        if (!searchInput) return;
+
+        searchInput.addEventListener('input', (e) => {
+            const keyword = e.target.value.toLowerCase();
+            
+            // TRACKING_DATA sekarang dipanggil langsung dari file data.js
+            if(typeof TRACKING_DATA !== 'undefined') {
+                const filteredData = TRACKING_DATA.filter(item => 
+                    item.name.toLowerCase().includes(keyword)
+                );
+                renderTracking(filteredData);
+            }
         });
     }
 
@@ -566,7 +991,6 @@
 
     const WA_NUMBER = "6285363625159";
 
-    // PERBAIKAN UTAMA: Fungsi submit order langsung buka WA tanpa konfirmasi berulang
     function submitOrder(e) {
         e.preventDefault();
         
@@ -601,10 +1025,9 @@
         const encodedMsg = encodeURIComponent(message);
         const waLink = `https://wa.me/${WA_NUMBER}?text=${encodedMsg}`;
 
-        // Konfirmasi sederhana sebelum kirim ke WA
         Swal.fire({
             title: 'Kirim Pesanan?',
-            text: `Total pesanan: Rp ${totalPrice.toLocaleString('id-ID')}\nKamu akan diarahkan ke WhatsApp.`,
+            html: `Total pesanan: <strong style="color:#7aa2f7;">Rp ${totalPrice.toLocaleString('id-ID')}</strong><br>Kamu akan diarahkan ke WhatsApp.`,
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#7aa2f7',
@@ -615,41 +1038,26 @@
             color: '#fff'
         }).then((result) => {
             if (result.isConfirmed) {
-                // BUKA WHATSAPP LANGSUNG
                 window.open(waLink, '_blank');
                 
-                // Reset keranjang setelah order
                 cartItems = [];
                 updateCartUI();
                 closeCartModal();
                 
-                // Reset form
                 document.getElementById('skyNickname').value = '';
                 document.getElementById('skyIdentifier').value = '';
                 document.getElementById('paymentMethod').value = '';
                 
-                // Notifikasi sukses
                 Swal.fire({
                     icon: 'success',
                     title: 'Berhasil!',
                     text: 'Pesanan terkirim, tunggu konfirmasi dari admin ya.',
                     background: '#0e1628',
                     color: '#fff',
-                    timer: 2000,
+                    timer: 2200,
                     showConfirmButton: false
                 });
             }
-        });
-    }
-
-    function showSupport() {
-        Swal.fire({
-            title: 'Butuh Bantuan?',
-            html: `Hubungi langsung via WhatsApp:<br><strong style="color:#7aa2f7;">+62 853-6362-5159</strong><br>atau chat di menu dukungan.`,
-            icon: 'info',
-            background: '#0e1628',
-            color: '#f0f3f8',
-            confirmButtonText: 'OK'
         });
     }
 
@@ -674,18 +1082,39 @@
         }
     }
 
+    function initFAQ() {
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        faqQuestions.forEach(q => {
+            q.addEventListener('click', () => {
+                const currentItem = q.parentElement;
+                
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    if (item !== currentItem) {
+                        item.classList.remove('active');
+                    }
+                });
+                
+                currentItem.classList.toggle('active');
+            });
+        });
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
         renderProducts();
+        
+        // Ambil data dari data.js
+        if (typeof TRACKING_DATA !== 'undefined') {
+            renderTracking(TRACKING_DATA);
+        } else {
+            console.error("File data.js belum terhubung!");
+        }
+        
+        initLiveSearch();
         updateCartUI();
+        initFAQ();
 
         const form = document.getElementById('checkoutForm');
         if (form) form.addEventListener('submit', submitOrder);
-
-        const supportBtn = document.getElementById('supportBtn');
-        if (supportBtn) supportBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            showSupport();
-        });
 
         initParticles();
 
@@ -697,4 +1126,3 @@
 </script>
 </body>
 </html>
-```
