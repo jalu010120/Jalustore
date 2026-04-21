@@ -28,5 +28,5 @@ const TRACKING_DATA = [
     { slot: "S40B", name: "NAI", order: 500, kirim: 40 },
     { slot: "S40B", name: "WINDI", order: 500, kirim: 40 },
     { slot: "S40B", name: "ASHA", order: 500, kirim: 40 },
-    { slot: "S40B", name: "mocchaa", order: 500, kirim: 40 }
+    { slot: "S40B", name: "MOCCHAA", order: 500, kirim: 40 }
 ];
