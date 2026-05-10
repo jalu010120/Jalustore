@@ -1,5 +1,5 @@
 // File: data.js
-// Update Terakhir: 7 Mei 2026
+// Update Terakhir: 10 Mei 2026
 
 const TRACKING_DATA = [
     // S1
@@ -26,21 +26,22 @@ const TRACKING_DATA = [
     { slot: "S2", name: "zahra", order: 100, kirim: 100 },
 
     // S40B
-    { slot: "S40B", name: "NAI", order: 500, kirim: 400 },     // Progres (+80)
-    { slot: "S40B", name: "WINDI", order: 900, kirim: 80 },    // REPEAT ORDER (Order naik 500 -> 900)
-    { slot: "S40B", name: "ASHA", order: 500, kirim: 500 },    // SELESAI (✅)
-    { slot: "S40B", name: "MOCCHAA", order: 500, kirim: 500 }, // SELESAI (✅)
+    { slot: "S40B", name: "NAI", order: 500, kirim: 500 },     // SELESAI (✅)
+    { slot: "S40B", name: "WINDI", order: 900, kirim: 200 },   // Progres (+120)
+    { slot: "S40B", name: "ASHA", order: 500, kirim: 500 },
+    { slot: "S40B", name: "MOCCHAA", order: 500, kirim: 500 }, 
     { slot: "S40B", name: "DAVULA", order: 200, kirim: 200 },  
-    { slot: "S40B", name: "ALIP", order: 800, kirim: 280 },    // Progres (+40)
-    { slot: "S40B", name: "CACA", order: 800, kirim: 360 },    // Progres (+80)
-    { slot: "S40B", name: "ian", order: 300, kirim: 80 },      // REPEAT ORDER (Order naik 200 -> 300)
-    { slot: "S40B", name: "Eliane", order: 600, kirim: 160 },  // Progres (+80)
-    { slot: "S40B", name: "nepi", order: 200, kirim: 200 },    // SELESAI (✅)
-    { slot: "S40B", name: "rendy", order: 500, kirim: 200 },   // Progres (+120)
+    { slot: "S40B", name: "ALIP", order: 800, kirim: 380 },    // Progres (+100)
+    { slot: "S40B", name: "CACA", order: 800, kirim: 480 },    // Progres (+120)
+    { slot: "S40B", name: "ian", order: 300, kirim: 120 },     // Progres (+40)
+    { slot: "S40B", name: "Eliane", order: 600, kirim: 240 },  // Progres (+80)
+    { slot: "S40B", name: "nepi", order: 200, kirim: 200 },    
+    { slot: "S40B", name: "rendy", order: 500, kirim: 240 },   // Progres (+40)
+    { slot: "S40B", name: "AMANDA", order: 500, kirim: 80 },   // NEW MEMBER
 
-    // S20B (Slot Baru)
-    { slot: "S20B", name: "ZEYA", order: 600, kirim: 40 },
-    { slot: "S20B", name: "LUNA", order: 300, kirim: 40 },
-    { slot: "S20B", name: "ECA", order: 300, kirim: 20 },
-    { slot: "S20B", name: "SHA", order: 300, kirim: 20 }
+    // S20B
+    { slot: "S20B", name: "ZEYA", order: 600, kirim: 100 },    // Progres (+60)
+    { slot: "S20B", name: "LUNA", order: 300, kirim: 100 },    // Progres (+60)
+    { slot: "S20B", name: "ECA", order: 300, kirim: 80 },      // Progres (+60)
+    { slot: "S20B", name: "SHA", order: 300, kirim: 80 }       // Progres (+60)
 ];
