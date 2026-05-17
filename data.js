@@ -103,12 +103,12 @@ const TRACKING_DATA = [
     { slot: "COMPLETED", name: "Lia", order: 400, kirim: 400 },
     { slot: "COMPLETED", name: "Unii", order: 400, kirim: 400 },
     { slot: "COMPLETED", name: "Fio", order: 300, kirim: 300 },
-    { slot: "COMPLETED", name: "Archa", order: 460, kirim: 440 },
-    { slot: "COMPLETED", name: "Zel", order: 340, kirim: 320 },
+    { slot: "COMPLETED", name: "Archa", order: 460, kirim: 460 },
+    { slot: "COMPLETED", name: "Zel", order: 340, kirim: 340 },
     { slot: "COMPLETED", name: "Lyn", order: 200, kirim: 200 },
     { slot: "COMPLETED", name: "Klara", order: 420, kirim: 420 },
     { slot: "COMPLETED", name: "Nia", order: 120, kirim: 120 },
-    { slot: "COMPLETED", name: "Fia", order: 600, kirim: 350 },
+    { slot: "COMPLETED", name: "Fia", order: 600, kirim: 600 },
     { slot: "COMPLETED", name: "Lisa", order: 200, kirim: 200 },
     { slot: "COMPLETED", name: "Rani", order: 420, kirim: 420 }
 ];
