@@ -7,15 +7,14 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     
+    <link rel="stylesheet" href="style.css">
+
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
-    <!-- CSS External -->
-    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
@@ -41,6 +40,7 @@
     <div class="hero-badge animate__animated animate__fadeInUp" style="margin-top:1rem; background: rgba(247,118,142,0.15); border: 1px solid rgba(247,118,142,0.35); color:#f7768e;">
         🔥 PROMO TERBATAS — 700 Hearts cuma Rp55.000!
     </div>
+
 </section>
 
 <div class="container-custom" id="packages">
@@ -62,7 +62,8 @@
         <input type="text" id="searchInput" class="search-input" placeholder="Ketik Nickname kamu di sini...">
     </div>
 
-    <div class="tracking-grid" id="trackingGrid"></div>
+    <div class="tracking-grid" id="trackingGrid">
+        </div>
 </div>
 
 <div class="faq-section" id="faq">
@@ -96,8 +97,12 @@
     <div class="footer-logo">JALUSTORE ✦</div>
     <p>© 2026 JaluStore. All Rights Reserved.</p>
     <div class="social-links">
-        <a href="https://instagram.com/jalustoreid" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-        <a href="https://wa.me/6285363625159" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="https://instagram.com/jalustoreid" target="_blank" title="Instagram JaluStore">
+            <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="https://wa.me/6285363625159" target="_blank" title="WhatsApp JaluStore">
+            <i class="fa-brands fa-whatsapp"></i>
+        </a>
     </div>
 </footer>
 
@@ -141,11 +146,7 @@
     </div>
 </div>
 
-<!-- JS External -->
-<script src="js/products.js"></script>
-<script src="js/cart.js"></script>
-<script src="js/particles-config.js"></script>
-<script src="js/main.js"></script>
-
+<script src="data.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
