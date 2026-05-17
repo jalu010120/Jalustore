@@ -1,53 +1,57 @@
 // File: data.js
-// Update Terakhir: 16 Mei 2026 (Sesi 2) - FIXED VERSION
+// Update Terakhir: 18 Mei 2026
 
 const TRACKING_DATA = [
-    // ========== SLOT S1 ==========
-    { slot: "S1", name: "GANZAI", order: 400, kirim: 419 },
+    // ========== SLOT S1 (Sedang Berjalan) ==========
     { slot: "S1", name: "CUPIS", order: 250, kirim: 210 },
-    { slot: "S1", name: "SHUNA", order: 550, kirim: 550 },
-    { slot: "S1", name: "FEBY", order: 500, kirim: 500 },
-    { slot: "S1", name: "NAI", order: 250, kirim: 260 },   
-    { slot: "S1", name: "LIN", order: 250, kirim: 250 },
     
-    // ========== SLOT S2 ==========
+    // ========== SLOT S2 (Sedang Berjalan) ==========
     { slot: "S2", name: "CACA", order: 250, kirim: 160 },
-    { slot: "S2", name: "BRIYAN", order: 100, kirim: 100 },
-    { slot: "S2", name: "IKA", order: 200, kirim: 206 },
-    { slot: "S2", name: "DIAN", order: 500, kirim: 200 },
-    { slot: "S2", name: "SHIN", order: 250, kirim: 120 },
-    { slot: "S2", name: "Isma", order: 250, kirim: 250 },  
-    { slot: "S2", name: "Sqa", order: 100, kirim: 100 },
-    { slot: "S2", name: "Leya", order: 100, kirim: 100 },
-    { slot: "S2", name: "Mai", order: 250, kirim: 253 },
-    { slot: "S2", name: "Al", order: 250, kirim: 260 },
-    { slot: "S2", name: "Nura", order: 100, kirim: 100 }, 
-    { slot: "S2", name: "ellie", order: 100, kirim: 100 }, 
-    { slot: "S2", name: "zahra", order: 100, kirim: 100 },
 
-    // ========== SLOT S40B ==========
-    { slot: "S40B", name: "NAI", order: 500, kirim: 500 },     
-    { slot: "S40B", name: "WINDI", order: 900, kirim: 360 },   
-    { slot: "S40B", name: "ASHA", order: 500, kirim: 500 },
-    { slot: "S40B", name: "MOCCHAA", order: 500, kirim: 500 }, 
-    { slot: "S40B", name: "DAVULA", order: 200, kirim: 200 },  
-    { slot: "S40B", name: "ALIP", order: 800, kirim: 580 },    
-    { slot: "S40B", name: "CACA", order: 800, kirim: 680 },    
+    // ========== SLOT S40B (Sedang Berjalan) ==========
+    { slot: "S40B", name: "WINDI", order: 900, kirim: 435 },   // Progres (+75)
+    { slot: "S40B", name: "ALIP", order: 800, kirim: 655 },    // Progres (+75)
+    { slot: "S40B", name: "CACA", order: 800, kirim: 755 },    // Progres (+75)
     { slot: "S40B", name: "ian", order: 300, kirim: 240 },     
-    { slot: "S40B", name: "Eliane", order: 600, kirim: 360 },  
-    { slot: "S40B", name: "nepi", order: 200, kirim: 200 },    
+    { slot: "S40B", name: "Eliane", order: 600, kirim: 435 },  // Progres (+75)
     { slot: "S40B", name: "rendy", order: 500, kirim: 280 },   
     { slot: "S40B", name: "AMANDA", order: 500, kirim: 200 },  
-    { slot: "S40B", name: "JOY", order: 1000, kirim: 39 },     
+    { slot: "S40B", name: "JOY", order: 1000, kirim: 117 },    // Progres (+78)
 
-    // ========== SLOT S20B ==========
-    { slot: "S20B", name: "ZEYA", order: 600, kirim: 160 },    
+    // ========== SLOT S20B (Sedang Berjalan) ==========
+    { slot: "S20B", name: "ZEYA", order: 600, kirim: 190 },    // Progres (+30)
     { slot: "S20B", name: "LUNA", order: 300, kirim: 120 },    
-    { slot: "S20B", name: "ECA", order: 300, kirim: 140 },     
+    { slot: "S20B", name: "ECA", order: 300, kirim: 160 },     // Progres (+20)
     { slot: "S20B", name: "SHA", order: 300, kirim: 100 },     
-    { slot: "S20B", name: "GANZAI", order: 200, kirim: 60 },
+    { slot: "S20B", name: "GANZAI", order: 200, kirim: 100 },  // Progres (+40)
 
-    // ========== COMPLETED ORDERS (Riwayat Lama) ==========
+    // ========== COMPLETED ORDERS (Baru Selesai & Riwayat Lama) ==========
+    
+    // --- Baru Selesai (Dipindah dari Slot Aktif) ---
+    { slot: "COMPLETED", name: "DIAN", order: 500, kirim: 500 },   // LUNAS MANUAL (dari S2)
+    { slot: "COMPLETED", name: "SHIN", order: 250, kirim: 250 },   // LUNAS MANUAL (dari S2)
+    { slot: "COMPLETED", name: "GANZAI", order: 400, kirim: 419 }, // dari S1
+    { slot: "COMPLETED", name: "SHUNA", order: 550, kirim: 550 },  // dari S1
+    { slot: "COMPLETED", name: "FEBY", order: 500, kirim: 500 },   // dari S1
+    { slot: "COMPLETED", name: "NAI", order: 250, kirim: 260 },    // dari S1
+    { slot: "COMPLETED", name: "LIN", order: 250, kirim: 250 },    // dari S1
+    { slot: "COMPLETED", name: "BRIYAN", order: 100, kirim: 100 }, // dari S2
+    { slot: "COMPLETED", name: "IKA", order: 200, kirim: 206 },    // dari S2
+    { slot: "COMPLETED", name: "Isma", order: 250, kirim: 250 },   // dari S2
+    { slot: "COMPLETED", name: "Sqa", order: 100, kirim: 100 },    // dari S2
+    { slot: "COMPLETED", name: "Leya", order: 100, kirim: 100 },   // dari S2
+    { slot: "COMPLETED", name: "Mai", order: 250, kirim: 253 },    // dari S2
+    { slot: "COMPLETED", name: "Al", order: 250, kirim: 260 },     // dari S2
+    { slot: "COMPLETED", name: "Nura", order: 100, kirim: 100 },   // dari S2
+    { slot: "COMPLETED", name: "ellie", order: 100, kirim: 100 },  // dari S2
+    { slot: "COMPLETED", name: "zahra", order: 100, kirim: 100 },  // dari S2
+    { slot: "COMPLETED", name: "NAI", order: 500, kirim: 500 },    // dari S40B
+    { slot: "COMPLETED", name: "ASHA", order: 500, kirim: 500 },   // dari S40B
+    { slot: "COMPLETED", name: "MOCCHAA", order: 500, kirim: 500 },// dari S40B
+    { slot: "COMPLETED", name: "DAVULA", order: 200, kirim: 200 }, // dari S40B
+    { slot: "COMPLETED", name: "nepi", order: 200, kirim: 200 },   // dari S40B
+
+    // --- Riwayat Lama ---
     { slot: "COMPLETED", name: "CICI", order: 200, kirim: 216 },
     { slot: "COMPLETED", name: "ACELL", order: 100, kirim: 100 },
     { slot: "COMPLETED", name: "KIKI", order: 100, kirim: 100 },
@@ -103,12 +107,12 @@ const TRACKING_DATA = [
     { slot: "COMPLETED", name: "Lia", order: 400, kirim: 400 },
     { slot: "COMPLETED", name: "Unii", order: 400, kirim: 400 },
     { slot: "COMPLETED", name: "Fio", order: 300, kirim: 300 },
-    { slot: "COMPLETED", name: "Archa", order: 460, kirim: 460 },
-    { slot: "COMPLETED", name: "Zel", order: 340, kirim: 340 },
+    { slot: "COMPLETED", name: "Archa", order: 460, kirim: 440 },
+    { slot: "COMPLETED", name: "Zel", order: 340, kirim: 320 },
     { slot: "COMPLETED", name: "Lyn", order: 200, kirim: 200 },
     { slot: "COMPLETED", name: "Klara", order: 420, kirim: 420 },
     { slot: "COMPLETED", name: "Nia", order: 120, kirim: 120 },
-    { slot: "COMPLETED", name: "Fia", order: 600, kirim: 600 },
+    { slot: "COMPLETED", name: "Fia", order: 600, kirim: 350 },
     { slot: "COMPLETED", name: "Lisa", order: 200, kirim: 200 },
     { slot: "COMPLETED", name: "Rani", order: 420, kirim: 420 }
 ];
