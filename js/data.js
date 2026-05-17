@@ -1,32 +1,52 @@
-// js/data.js
+// File: data.js
+// Update Terakhir: 16 Mei 2026 (Sesi 2)
 
-const deliveryData = [
-    // --- SLOT 1 (AKTIF) ---
-    { slot: 1, name: 'ALIP', order: 600, send: 480 },
-    { slot: 1, name: 'ANGGI', order: 550, send: 520 },
-    { slot: 1, name: 'HACIM', order: 800, send: 30, statusOverride: 'fail' }, // ❌ (Baru)
-    { slot: 1, name: 'REGI', order: 100, send: 60 }, // (Baru)
+const TRACKING_DATA = [
+    // S1
+    { slot: "S1", name: "GANZAI", order: 400, kirim: 419 },
+    { slot: "S1", name: "CUPIS", order: 250, kirim: 210 },
+    { slot: "S1", name: "SHUNA", order: 550, kirim: 550 },
+    { slot: "S1", name: "FEBY", order: 500, kirim: 500 },
+    { slot: "S1", name: "NAI", order: 250, kirim: 260 },   
+    { slot: "S1", name: "LIN", order: 250, kirim: 250 },
+    
+    // S2
+    { slot: "S2", name: "CACA", order: 250, kirim: 160 },
+    { slot: "S2", name: "BRIYAN", order: 100, kirim: 100 },
+    { slot: "S2", name: "IKA", order: 200, kirim: 206 },
+    { slot: "S2", name: "DIAN", order: 500, kirim: 200 },
+    { slot: "S2", name: "SHIN", order: 250, kirim: 120 },
+    { slot: "S2", name: "Isma", order: 250, kirim: 250 },  
+    { slot: "S2", name: "Sqa", order: 100, kirim: 100 },
+    { slot: "S2", name: "Leya", order: 100, kirim: 100 },
+    { slot: "S2", name: "Mai", order: 250, kirim: 253 },
+    { slot: "S2", name: "Al", order: 250, kirim: 260 },
+    { slot: "S2", name: "Nura", order: 100, kirim: 100 }, 
+    { slot: "S2", name: "ellie", order: 100, kirim: 100 }, 
+    { slot: "S2", name: "zahra", order: 100, kirim: 100 },
 
-    // --- SLOT 2 (MASS FREEZE / GAGAL) ---
-    { slot: 2, name: 'IKA', order: 200, send: 120, statusOverride: 'fail' },   // ❌
-    { slot: 2, name: 'ICA', order: 800, send: 780, statusOverride: 'fail' },   // ❌
-    { slot: 2, name: 'ONDE', order: 800, send: 480, statusOverride: 'fail' },  // ❌
+    // S40B
+    { slot: "S40B", name: "NAI", order: 500, kirim: 500 },     
+    { slot: "S40B", name: "WINDI", order: 900, kirim: 360 },   
+    { slot: "S40B", name: "ASHA", order: 500, kirim: 500 },
+    { slot: "S40B", name: "MOCCHAA", order: 500, kirim: 500 }, 
+    { slot: "S40B", name: "DAVULA", order: 200, kirim: 200 },  
+    { slot: "S40B", name: "ALIP", order: 800, kirim: 580 },    
+    { slot: "S40B", name: "CACA", order: 800, kirim: 680 },    
+    { slot: "S40B", name: "ian", order: 300, kirim: 240 },     
+    { slot: "S40B", name: "Eliane", order: 600, kirim: 360 },  
+    { slot: "S40B", name: "nepi", order: 200, kirim: 200 },    
+    { slot: "S40B", name: "rendy", order: 500, kirim: 280 },   
+    { slot: "S40B", name: "AMANDA", order: 500, kirim: 200 },  
+    { slot: "S40B", name: "JOY", order: 1000, kirim: 39 },     
 
-    // --- SLOT 3 (AKTIF) ---
-    { slot: 3, name: 'IAN2', order: 500, send: 390 },
-    { slot: 3, name: 'AELIA', order: 2300, send: 2260 },
-    { slot: 3, name: 'VAN', order: 1600, send: 510, statusOverride: 'fail' },  // ❌ (Baru fail)
-    { slot: 3, name: 'ADIT', order: 500, send: 240 },
-
-    // --- RIWAYAT ORDERAN SELESAI (COMPLETED) ---
-    // Baru selesai (Hilang dari list aktif):
-    { slot: 'completed', name: 'SHAINA', order: 500, send: 500 }, // Diasumsikan done
-    { slot: 'completed', name: 'ZAH', order: 600, send: 600 },    // Diasumsikan done
-    { slot: 'completed', name: 'JASMINE', order: 500, send: 500 },// Diasumsikan done
-    { slot: 'completed', name: 'RESTU', order: 500, send: 500 },  // Diasumsikan done
-    { slot: 'completed', name: 'YAYA', order: 500, send: 500 },   // Diasumsikan done
-    { slot: 'completed', name: 'RENDY', order: 500, send: 500 },  // Diasumsikan done
-
+    // S20B
+    { slot: "S20B", name: "ZEYA", order: 600, kirim: 160 },    // Progres (+20)
+    { slot: "S20B", name: "LUNA", order: 300, kirim: 120 },    
+    { slot: "S20B", name: "ECA", order: 300, kirim: 140 },     // Progres (+20)
+    { slot: "S20B", name: "SHA", order: 300, kirim: 100 },     
+    { slot: "S20B", name: "GANZAI", order: 200, kirim: 60 }    // Progres (+20)
+];
     // Riwayat lama:
     { slot: 'completed', name: 'CICI', order: 200, send: 216 },
     { slot: 'completed', name: 'ACELL', order: 100, send: 100 },
