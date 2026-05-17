@@ -1,3 +1,9 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 :root {
     --bg-deep: #03050B;
     --bg-card: rgba(18, 25, 45, 0.75);
@@ -13,12 +19,6 @@
     --grad-1: linear-gradient(125deg, #1e2a4a 0%, #0a0f1f 100%);
     --grad-2: linear-gradient(135deg, #7aa2f7 0%, #bb9af7 100%);
     --shadow-glow: 0 10px 30px -8px rgba(59, 130, 246, 0.3);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
 }
 
 body {
