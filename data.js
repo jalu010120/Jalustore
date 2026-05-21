@@ -1,5 +1,5 @@
 // File: data.js
-// Update Terakhir: 22 Mei 2026
+// Update Terakhir: 22 Mei 2026 (Koreksi GANZAI S20B)
 
 const TRACKING_DATA = [
     // ========== SLOT S1 (Sedang Berjalan) ==========
@@ -24,14 +24,16 @@ const TRACKING_DATA = [
     { slot: "S20B", name: "LUNA", order: 300, kirim: 120 },    
     { slot: "S20B", name: "ECA", order: 300, kirim: 180 },     
     { slot: "S20B", name: "SHA", order: 300, kirim: 100 },     
-    { slot: "S20B", name: "GANZAI", order: 200, kirim: 180 },  // Kembali ke aktif
+    { slot: "S20B", name: "GANZAI", order: 200, kirim: 180 },  // Koreksi: Kembali ke Aktif (Sisa 20 lagi)
 
-    // ========== COMPLETED ORDERS ==========
+    // ========== COMPLETED ORDERS (Baru Selesai & Riwayat Lama) ==========
+    
+    // --- Baru Selesai ---
     { slot: "COMPLETED", name: "ian", order: 300, kirim: 318 },    
     { slot: "COMPLETED", name: "CACA", order: 800, kirim: 805 },   
     { slot: "COMPLETED", name: "DIAN", order: 500, kirim: 500 },   
     { slot: "COMPLETED", name: "SHIN", order: 250, kirim: 250 },   
-    { slot: "COMPLETED", name: "GANZAI", order: 400, kirim: 419 }, 
+    { slot: "COMPLETED", name: "GANZAI", order: 400, kirim: 419 }, // Riwayat S1 Lama
     { slot: "COMPLETED", name: "SHUNA", order: 550, kirim: 550 },  
     { slot: "COMPLETED", name: "FEBY", order: 500, kirim: 500 },   
     { slot: "COMPLETED", name: "NAI", order: 250, kirim: 260 },    
@@ -51,8 +53,71 @@ const TRACKING_DATA = [
     { slot: "COMPLETED", name: "MOCCHAA", order: 500, kirim: 500 },
     { slot: "COMPLETED", name: "DAVULA", order: 200, kirim: 200 }, 
     { slot: "COMPLETED", name: "nepi", order: 200, kirim: 200 },   
-    
-    // ... (Riwayat lainnya tetap sama)
+
+    // --- Riwayat Lama ---
+    { slot: "COMPLETED", name: "CICI", order: 200, kirim: 216 },
+    { slot: "COMPLETED", name: "ACELL", order: 100, kirim: 100 },
+    { slot: "COMPLETED", name: "KIKI", order: 100, kirim: 100 },
+    { slot: "COMPLETED", name: "GIN", order: 100, kirim: 100 },
+    { slot: "COMPLETED", name: "RAI", order: 100, kirim: 102 },
+    { slot: "COMPLETED", name: "Yulii", order: 400, kirim: 400 },
+    { slot: "COMPLETED", name: "Feng", order: 230, kirim: 230 },
+    { slot: "COMPLETED", name: "Aze", order: 570, kirim: 570 },
+    { slot: "COMPLETED", name: "Lili", order: 360, kirim: 360 },
+    { slot: "COMPLETED", name: "Cici", order: 100, kirim: 100 },
+    { slot: "COMPLETED", name: "Tuna", order: 360, kirim: 360 },
+    { slot: "COMPLETED", name: "Louis", order: 310, kirim: 310 },
+    { slot: "COMPLETED", name: "Aya", order: 860, kirim: 860 },
+    { slot: "COMPLETED", name: "Rezz", order: 350, kirim: 350 },
+    { slot: "COMPLETED", name: "Yaya", order: 200, kirim: 200 },
+    { slot: "COMPLETED", name: "Diyy", order: 640, kirim: 640 },
+    { slot: "COMPLETED", name: "Luna", order: 800, kirim: 800 },
+    { slot: "COMPLETED", name: "Ryu", order: 320, kirim: 320 },
+    { slot: "COMPLETED", name: "Idnes", order: 320, kirim: 320 },
+    { slot: "COMPLETED", name: "Risma", order: 120, kirim: 120 },
+    { slot: "COMPLETED", name: "Alana", order: 320, kirim: 320 },
+    { slot: "COMPLETED", name: "Zee", order: 400, kirim: 400 },
+    { slot: "COMPLETED", name: "futaba", order: 140, kirim: 140 },
+    { slot: "COMPLETED", name: "Sena", order: 570, kirim: 570 },
+    { slot: "COMPLETED", name: "Al", order: 320, kirim: 320 },
+    { slot: "COMPLETED", name: "Ave", order: 220, kirim: 240 },
+    { slot: "COMPLETED", name: "Kai", order: 220, kirim: 220 },
+    { slot: "COMPLETED", name: "Rei", order: 220, kirim: 220 },
+    { slot: "COMPLETED", name: "Raine", order: 420, kirim: 420 },
+    { slot: "COMPLETED", name: "Araba", order: 150, kirim: 150 },
+    { slot: "COMPLETED", name: "Nayla", order: 530, kirim: 530 },
+    { slot: "COMPLETED", name: "Purili", order: 320, kirim: 320 },
+    { slot: "COMPLETED", name: "Rain", order: 320, kirim: 320 },
+    { slot: "COMPLETED", name: "Alip", order: 320, kirim: 320 },
+    { slot: "COMPLETED", name: "Anggi", order: 320, kirim: 320 },
+    { slot: "COMPLETED", name: "Hira", order: 360, kirim: 377 },
+    { slot: "COMPLETED", name: "Amanda", order: 80, kirim: 80 },
+    { slot: "COMPLETED", name: "bulilisso", order: 80, kirim: 80 },
+    { slot: "COMPLETED", name: "Tsabyy", order: 200, kirim: 200 },
+    { slot: "COMPLETED", name: "Harbie", order: 200, kirim: 200 },
+    { slot: "COMPLETED", name: "Fida", order: 100, kirim: 103 },
+    { slot: "COMPLETED", name: "Vyan", order: 80, kirim: 83 },
+    { slot: "COMPLETED", name: "Ayu", order: 1000, kirim: 1003 },
+    { slot: "COMPLETED", name: "Anna", order: 600, kirim: 603 },
+    { slot: "COMPLETED", name: "Zee", order: 150, kirim: 153 },
+    { slot: "COMPLETED", name: "Nanda", order: 210, kirim: 213 },
+    { slot: "COMPLETED", name: "Alvin", order: 210, kirim: 213 },
+    { slot: "COMPLETED", name: "Ira", order: 150, kirim: 153 },
+    { slot: "COMPLETED", name: "Kael", order: 120, kirim: 123 },
+    { slot: "COMPLETED", name: "Xen", order: 210, kirim: 213 },
+    { slot: "COMPLETED", name: "Lusi", order: 600, kirim: 603 },
+    { slot: "COMPLETED", name: "Sea", order: 150, kirim: 157 },
+    { slot: "COMPLETED", name: "Lia", order: 400, kirim: 400 },
+    { slot: "COMPLETED", name: "Unii", order: 400, kirim: 400 },
+    { slot: "COMPLETED", name: "Fio", order: 300, kirim: 300 },
+    { slot: "COMPLETED", name: "Archa", order: 460, kirim: 440 },
+    { slot: "COMPLETED", name: "Zel", order: 340, kirim: 320 },
+    { slot: "COMPLETED", name: "Lyn", order: 200, kirim: 200 },
+    { slot: "COMPLETED", name: "Klara", order: 420, kirim: 420 },
+    { slot: "COMPLETED", name: "Nia", order: 120, kirim: 120 },
+    { slot: "COMPLETED", name: "Fia", order: 600, kirim: 350 },
+    { slot: "COMPLETED", name: "Lisa", order: 200, kirim: 200 },
+    { slot: "COMPLETED", name: "Rani", order: 420, kirim: 420 }
 ];
 
-console.log("✅ data.js berhasil diperbarui!");
+console.log("✅ data.js loaded! Total tracking data:", TRACKING_DATA.length);
