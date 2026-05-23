@@ -1,5 +1,5 @@
 // File: data.js
-// Update Terakhir: 22 Mei 2026 (Koreksi GANZAI S20B)
+// Update Terakhir: 23 Mei 2026
 
 const TRACKING_DATA = [
     // ========== SLOT S1 (Sedang Berjalan) ==========
@@ -9,26 +9,28 @@ const TRACKING_DATA = [
     { slot: "S2", name: "CACA", order: 250, kirim: 160 },
 
     // ========== SLOT S40B (Sedang Berjalan) ==========
-    { slot: "S40B", name: "WINDI", order: 900, kirim: 589 },   
-    { slot: "S40B", name: "ALIP", order: 800, kirim: 733 },    
-    { slot: "S40B", name: "Eliane", order: 600, kirim: 552 },  
+    { slot: "S40B", name: "WINDI", order: 900, kirim: 628 },   // Progres (+39)
+    { slot: "S40B", name: "ALIP", order: 800, kirim: 772 },    // Progres (+39) - Dikit lagi lunas!
+    { slot: "S40B", name: "Eliane", order: 600, kirim: 591 },  // Progres (+39) - Dikit lagi lunas!
     { slot: "S40B", name: "rendy", order: 500, kirim: 280 },   
-    { slot: "S40B", name: "AMANDA", order: 500, kirim: 239 },  
-    { slot: "S40B", name: "JOY", order: 1000, kirim: 333 },    
-    { slot: "S40B", name: "SIENNA", order: 1600, kirim: 156 }, 
-    { slot: "S40B", name: "ARZ", order: 500, kirim: 117 },     
-    { slot: "S40B", name: "SUNDAY", order: 500, kirim: 156 },  
+    { slot: "S40B", name: "AMANDA", order: 500, kirim: 287 },  // Progres (+48)
+    { slot: "S40B", name: "JOY", order: 1000, kirim: 372 },    // Progres (+39)
+    { slot: "S40B", name: "SIENNA", order: 1600, kirim: 195 }, // Progres (+39)
+    { slot: "S40B", name: "ARZ", order: 500, kirim: 156 },     // Progres (+39)
+    { slot: "S40B", name: "SUNDAY", order: 500, kirim: 195 },  // Progres (+39)
 
     // ========== SLOT S20B (Sedang Berjalan) ==========
-    { slot: "S20B", name: "ZEYA", order: 600, kirim: 270 },    
+    { slot: "S20B", name: "ZEYA", order: 600, kirim: 290 },    // Progres (+20)
     { slot: "S20B", name: "LUNA", order: 300, kirim: 120 },    
-    { slot: "S20B", name: "ECA", order: 300, kirim: 180 },     
+    { slot: "S20B", name: "ECA", order: 300, kirim: 200 },     // Progres (+20)
     { slot: "S20B", name: "SHA", order: 300, kirim: 100 },     
-    { slot: "S20B", name: "GANZAI", order: 200, kirim: 180 },  // Koreksi: Kembali ke Aktif (Sisa 20 lagi)
+    { slot: "S20B", name: "RYU", order: 400, kirim: 20 },      // NEW MEMBER
+    { slot: "S20B", name: "Azzura", order: 200, kirim: 19 },   // NEW MEMBER
 
     // ========== COMPLETED ORDERS (Baru Selesai & Riwayat Lama) ==========
     
     // --- Baru Selesai ---
+    { slot: "COMPLETED", name: "GANZAI", order: 200, kirim: 200 }, // SELESAI HARI INI (S20B)
     { slot: "COMPLETED", name: "ian", order: 300, kirim: 318 },    
     { slot: "COMPLETED", name: "CACA", order: 800, kirim: 805 },   
     { slot: "COMPLETED", name: "DIAN", order: 500, kirim: 500 },   
