@@ -4,230 +4,210 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Ketentuan Layanan dan Kebijakan Refund BALILSTORE — Top-Up Heart Sky: Children of the Light." />
-  <title>Ketentuan Layanan & Refund — BALILSTORE</title>
+  <meta name="theme-color" content="#08111a" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♥</text></svg>" />
   <link rel="stylesheet" href="css/style.css" />
+  <title>Ketentuan Layanan & Refund — BALILSTORE</title>
+  <style>
+    .terms-page { padding-top: calc(var(--nav-h) + 56px); padding-bottom: 80px; }
+    .terms-hero { text-align: center; padding: 40px 0 52px; }
+    .terms-hero .sec-title { margin: 10px 0 10px; }
+    .terms-date { font-size: 0.72rem; color: var(--c-dim); margin-top: 6px; }
+    .terms-body { max-width: 760px; margin-inline: auto; display: flex; flex-direction: column; gap: 14px; }
+    .tc-card {
+      background: var(--c-surface-1); border: 1px solid var(--c-border); border-radius: var(--r-lg); padding: 28px 28px 22px;
+    }
+    .tc-card:hover { border-color: var(--c-border-gold); }
+    .tc-title {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-display); font-size: 0.98rem; font-weight: 600;
+      color: var(--c-gold); margin-bottom: 14px;
+    }
+    .tc-num {
+      background: var(--c-gold); color: #1a0e00; width: 22px; height: 22px; border-radius: 50%;
+      font-family: var(--font-ui); font-size: 0.68rem; font-weight: 800;
+      display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .tc-card p, .tc-card li { font-size: 0.83rem; color: var(--c-dim); line-height: 1.78; margin-bottom: 6px; }
+    .tc-card ul { padding-left: 18px; margin-bottom: 0; }
+    .tc-card ul li::marker { color: var(--c-gold); }
+    .tc-card strong { color: var(--c-white); }
+    .tc-hl {
+      background: rgba(222,176,104,0.08); border-left: 3px solid var(--c-gold);
+      border-radius: 0 var(--r-sm) var(--r-sm) 0; padding: 11px 14px;
+      font-size: 0.8rem; color: var(--c-sky); margin-top: 12px; line-height: 1.65;
+    }
+    .tc-hl strong { color: var(--c-gold); }
+    .terms-back { text-align: center; margin-top: 36px; }
+  </style>
 </head>
 <body>
-  <div class="bg-scene"></div>
-  <div id="stars-bg"></div>
 
-  <div id="page-wrapper">
-
-    <!-- NAVIGATION -->
-    <nav id="main-nav" role="navigation" aria-label="Navigasi utama">
-      <div class="container">
-        <div class="nav-inner">
-          <a href="index.html" class="nav-logo" aria-label="BALILSTORE beranda">
-            <span class="nav-logo-name">BALILSTORE</span>
-            <span class="nav-logo-sub">Sky: CoTL Top-Up</span>
-          </a>
-          <ul id="nav-links">
-            <li><a href="index.html#packages">Paket</a></li>
-            <li><a href="index.html#tracking">Cek Pesanan</a></li>
-            <li><a href="index.html#why-us">Keunggulan</a></li>
-            <li><a href="index.html#faq">FAQ</a></li>
-            <li><a href="terms.html" aria-current="page">Ketentuan</a></li>
-          </ul>
-          <div class="nav-actions">
-            <div id="currency-switcher" role="group" aria-label="Pilih mata uang">
-              <button class="btn-currency active" id="btn-idr">IDR</button>
-              <button class="btn-currency" id="btn-usd">USD</button>
-            </div>
-            <button id="mobile-menu-toggle" aria-label="Buka menu" aria-expanded="false">☰</button>
-          </div>
-        </div>
-      </div>
-    </nav>
-
-    <!-- TERMS HERO -->
-    <div class="terms-hero">
-      <div class="container">
-        <span class="section-eyebrow">📄 Dokumen Resmi</span>
-        <h1 class="section-title" style="margin-top:12px">Ketentuan Layanan &amp; <span>Kebijakan Refund</span></h1>
-        <p class="section-lead">Harap baca dokumen ini dengan seksama sebelum melakukan pemesanan di BALILSTORE.</p>
-        <p style="font-size:0.75rem;color:var(--text-dim);margin-top:12px">Terakhir diperbarui: Juni 2025</p>
-      </div>
-    </div>
-
-    <!-- TERMS CONTENT -->
+  <nav id="nav" role="navigation" aria-label="Navigasi">
     <div class="container">
-      <div class="terms-content">
-
-        <div class="terms-card animate-on-scroll">
-          <div class="terms-section-title">
-            <span class="terms-num">1</span>
-            Definisi dan Pihak yang Terlibat
+      <div class="nav-wrap">
+        <a href="index.html" class="nav-brand">
+          <span class="nav-brand-icon">♥</span>
+          <span class="nav-brand-text">
+            <span class="nav-brand-name">BALILSTORE</span>
+            <span class="nav-brand-sub">Sky: CoTL · Top-Up Resmi</span>
+          </span>
+        </a>
+        <ul id="nav-links" class="nav-links">
+          <li><a href="index.html#packages">Paket</a></li>
+          <li><a href="index.html#tracking">Cek Pesanan</a></li>
+          <li><a href="index.html#reviews">Ulasan</a></li>
+          <li><a href="index.html#faq">FAQ</a></li>
+          <li><a href="terms.html" aria-current="page">Ketentuan</a></li>
+        </ul>
+        <div class="nav-right">
+          <div class="currency-toggle">
+            <button class="btn-cur on" id="btn-idr">IDR</button>
+            <button class="btn-cur"    id="btn-usd">USD</button>
           </div>
-          <p><strong>BALILSTORE</strong> adalah toko virtual independen yang menyediakan layanan pengisian ulang (top-up) Heart untuk game <strong>Sky: Children of the Light</strong> ("Game"). BALILSTORE tidak berafiliasi dengan, disponsori oleh, atau merupakan bagian dari <strong>thatgamecompany</strong>, pengembang resmi Game.</p>
-          <p><strong>Pelanggan</strong> adalah setiap individu yang menggunakan layanan BALILSTORE dengan menyetujui ketentuan ini.</p>
-          <p><strong>Heart</strong> adalah mata uang dalam game Sky: Children of the Light yang diperoleh melalui mekanisme resmi dalam game dan ditransfer oleh akun BALILSTORE kepada akun Pelanggan.</p>
-          <div class="terms-highlight">
-            ⚠ Dengan melakukan pemesanan, Pelanggan dianggap telah membaca, memahami, dan menyetujui seluruh ketentuan yang berlaku dalam dokumen ini.
-          </div>
+          <button class="btn-menu" id="btn-menu" aria-label="Menu" aria-expanded="false">☰</button>
         </div>
-
-        <div class="terms-card animate-on-scroll">
-          <div class="terms-section-title">
-            <span class="terms-num">2</span>
-            Mekanisme Layanan
-          </div>
-          <ul>
-            <li>BALILSTORE mengirimkan Heart melalui mekanisme pemberian hadiah (gifting) antar sesama pemain yang tersedia di dalam game secara resmi.</li>
-            <li>Pengiriman Heart dilakukan secara bertahap, maksimal <strong>30 Heart per hari</strong> sesuai batas kapasitas pengiriman harian yang ditetapkan oleh sistem game.</li>
-            <li>Proses pengiriman aktif setiap hari mulai pukul <strong>08.00 hingga 22.00 WIB</strong>, termasuk hari Sabtu, Minggu, dan hari libur nasional.</li>
-            <li>Pelanggan harus memastikan akun Sky mereka <strong>tidak dikunci, tidak dibanned</strong>, dan masih aktif selama proses pengiriman berlangsung.</li>
-            <li>Pelanggan tidak perlu memberikan password, data login, atau informasi akun pribadi apapun kepada BALILSTORE.</li>
-          </ul>
-        </div>
-
-        <div class="terms-card animate-on-scroll">
-          <div class="terms-section-title">
-            <span class="terms-num">3</span>
-            Syarat dan Ketentuan Pemesanan
-          </div>
-          <ul>
-            <li>Pemesanan dilakukan melalui WhatsApp Admin dengan menyertakan: <strong>nama paket yang dipilih, Nickname atau Friend Code Sky, dan bukti pembayaran</strong>.</li>
-            <li>Pesanan dianggap sah setelah Admin mengkonfirmasi penerimaan pembayaran.</li>
-            <li>Pelanggan wajib memberikan data Nickname atau Friend Code yang benar dan valid. Kerugian akibat data yang salah menjadi tanggung jawab Pelanggan.</li>
-            <li>BALILSTORE berhak menolak atau membatalkan pesanan yang dicurigai memiliki indikasi penipuan, data palsu, atau pelanggaran ketentuan.</li>
-            <li>Satu pesanan berlaku untuk satu akun Sky. Tidak dapat digabungkan ke beberapa akun berbeda.</li>
-          </ul>
-        </div>
-
-        <div class="terms-card animate-on-scroll">
-          <div class="terms-section-title">
-            <span class="terms-num">4</span>
-            Kebijakan Pembayaran
-          </div>
-          <p>BALILSTORE menerima pembayaran melalui dua metode:</p>
-          <ul>
-            <li><strong>QRIS (IDR):</strong> Pembayaran dapat dilakukan dari seluruh aplikasi dompet digital (GoPay, OVO, DANA, ShopeePay, dll.) dan mobile banking yang mendukung QRIS.</li>
-            <li><strong>PayPal (USD):</strong> Pembayaran internasional melalui akun PayPal. Nominal menggunakan kurs USD sesuai yang tercantum pada paket.</li>
-          </ul>
-          <p>Seluruh pembayaran bersifat <strong>non-refundable kecuali dalam kondisi yang diatur pada Pasal 5</strong>. Pastikan nominal pembayaran sesuai dengan paket yang dipilih.</p>
-        </div>
-
-        <div class="terms-card animate-on-scroll">
-          <div class="terms-section-title">
-            <span class="terms-num">5</span>
-            Kebijakan Refund (Pengembalian Dana)
-          </div>
-          <p><strong>Refund AKAN diberikan apabila:</strong></p>
-          <ul>
-            <li>Pengiriman Heart sama sekali tidak dilakukan dalam waktu 7 hari kalender setelah konfirmasi pesanan dan bukan karena kesalahan data Pelanggan.</li>
-            <li>Terjadi kelebihan pengiriman di luar jumlah paket yang dipesan (sisa nominal yang belum terkirim akan dikembalikan).</li>
-            <li>BALILSTORE tidak dapat menyelesaikan pesanan karena alasan teknis yang berada di luar kendali Pelanggan.</li>
-          </ul>
-          <p style="margin-top:12px"><strong>Refund TIDAK diberikan apabila:</strong></p>
-          <ul>
-            <li>Pelanggan memberikan data Nickname atau Friend Code yang salah, tidak lengkap, atau sudah tidak valid.</li>
-            <li>Akun Sky Pelanggan dikunci, dibanned, atau dihapus oleh pihak thatgamecompany setelah pesanan dikonfirmasi.</li>
-            <li>Pelanggan mengubah Nickname atau Friend Code selama proses pengiriman berlangsung tanpa pemberitahuan terlebih dahulu.</li>
-            <li>Pesanan telah selesai terkirim sebagian atau seluruhnya sesuai yang disepakati.</li>
-            <li>Pelanggan berubah pikiran setelah pembayaran selesai dan pengiriman telah dimulai.</li>
-          </ul>
-          <div class="terms-highlight">
-            💡 Klaim refund harus diajukan kepada Admin WhatsApp disertai Order ID, bukti pembayaran, dan penjelasan singkat. Klaim akan diproses dalam 1–3 hari kerja.
-          </div>
-        </div>
-
-        <div class="terms-card animate-on-scroll">
-          <div class="terms-section-title">
-            <span class="terms-num">6</span>
-            Estimasi Waktu Pengiriman
-          </div>
-          <p>Estimasi waktu yang tertera pada setiap paket adalah perkiraan berdasarkan kapasitas harian maksimal 30 Heart/hari. Waktu aktual dapat bervariasi tergantung pada:</p>
-          <ul>
-            <li>Antrean pesanan yang sedang aktif pada saat pemesanan dilakukan.</li>
-            <li>Gangguan teknis pada server game Sky yang berada di luar kendali BALILSTORE.</li>
-            <li>Kebijakan internal game yang dapat berubah sewaktu-waktu oleh thatgamecompany.</li>
-          </ul>
-          <p>BALILSTORE berkomitmen untuk memberikan estimasi waktu yang akurat dan akan menginformasikan kepada Pelanggan jika ada keterlambatan yang signifikan.</p>
-        </div>
-
-        <div class="terms-card animate-on-scroll">
-          <div class="terms-section-title">
-            <span class="terms-num">7</span>
-            Batasan Tanggung Jawab
-          </div>
-          <ul>
-            <li>BALILSTORE tidak bertanggung jawab atas segala bentuk kerugian tidak langsung, kerugian data, atau kehilangan keuntungan yang mungkin timbul dari penggunaan layanan ini.</li>
-            <li>BALILSTORE tidak dapat menjamin ketersediaan layanan secara terus-menerus apabila terjadi gangguan pada platform game Sky yang bersumber dari thatgamecompany.</li>
-            <li>Perubahan mekanisme game oleh thatgamecompany yang berdampak pada layanan BALILSTORE bukan merupakan tanggung jawab BALILSTORE.</li>
-          </ul>
-        </div>
-
-        <div class="terms-card animate-on-scroll">
-          <div class="terms-section-title">
-            <span class="terms-num">8</span>
-            Privasi Data Pelanggan
-          </div>
-          <p>BALILSTORE menghormati privasi Pelanggan. Data yang kami kumpulkan meliputi:</p>
-          <ul>
-            <li><strong>Nickname / Friend Code Sky</strong>: Digunakan semata-mata untuk keperluan pengiriman Heart.</li>
-            <li><strong>Nomor WhatsApp</strong>: Digunakan untuk komunikasi terkait pesanan.</li>
-          </ul>
-          <p>BALILSTORE tidak menjual, menyewakan, atau membagikan data Pelanggan kepada pihak ketiga manapun. Data disimpan hanya selama diperlukan untuk keperluan layanan dan arsip pesanan.</p>
-        </div>
-
-        <div class="terms-card animate-on-scroll">
-          <div class="terms-section-title">
-            <span class="terms-num">9</span>
-            Perubahan Ketentuan
-          </div>
-          <p>BALILSTORE berhak mengubah ketentuan layanan ini sewaktu-waktu tanpa pemberitahuan terlebih dahulu. Perubahan akan berlaku efektif segera setelah dipublikasikan di halaman ini. Tanggal pembaruan akan selalu dicantumkan di bagian atas dokumen ini.</p>
-          <p>Penggunaan layanan BALILSTORE setelah terjadinya perubahan dianggap sebagai persetujuan Pelanggan terhadap ketentuan yang telah diperbarui.</p>
-        </div>
-
-        <div class="terms-card animate-on-scroll">
-          <div class="terms-section-title">
-            <span class="terms-num">10</span>
-            Kontak &amp; Penyelesaian Sengketa
-          </div>
-          <p>Jika terdapat pertanyaan, keluhan, atau klaim terkait layanan BALILSTORE, Pelanggan dapat menghubungi kami melalui:</p>
-          <ul>
-            <li>📱 <strong>WhatsApp Admin:</strong> <a href="https://wa.me/6285363625159" target="_blank" rel="noopener">+62 853-6362-5159</a></li>
-            <li>👥 <strong>Grup WhatsApp:</strong> <a href="https://chat.whatsapp.com/JelUbSutCNVAIOtcGoy6Uy?s=cl&p=a&mlu=4" target="_blank" rel="noopener">Gabung Grup BALILSTORE</a></li>
-          </ul>
-          <p style="margin-top:12px">Setiap sengketa yang timbul akan diselesaikan secara musyawarah antara Pelanggan dan BALILSTORE. Apabila tidak tercapai kesepakatan, penyelesaian mengacu pada hukum yang berlaku di Republik Indonesia.</p>
-          <div class="terms-highlight">
-            BALILSTORE bukan merupakan entitas perusahaan terdaftar dan beroperasi sebagai penjual perorangan. Oleh karena itu, mekanisme penyelesaian sengketa bersifat informal dan mengutamakan itikad baik kedua belah pihak.
-          </div>
-        </div>
-
-        <div style="text-align:center;padding:30px 0">
-          <a href="index.html" class="btn-primary">← Kembali ke Beranda</a>
-        </div>
-
       </div>
     </div>
+  </nav>
 
-    <!-- FOOTER -->
-    <footer role="contentinfo">
-      <div class="container">
-        <div class="footer-inner">
-          <div>
-            <div class="footer-logo-name">BALILSTORE</div>
-            <div class="footer-logo-sub">Top-Up Heart Sky: Children of the Light</div>
-          </div>
-          <nav class="footer-links" aria-label="Link footer">
-            <a href="index.html#packages">Paket</a>
-            <a href="index.html#tracking">Cek Pesanan</a>
-            <a href="terms.html" aria-current="page">Ketentuan</a>
-            <a href="https://wa.me/6285363625159" target="_blank" rel="noopener">WhatsApp</a>
-          </nav>
-        </div>
-        <div class="footer-copy">
-          &copy; <span id="footer-year"></span> <span>BALILSTORE</span>. Bukan afiliasi resmi thatgamecompany. Sky: CoTL adalah merek dagang thatgamecompany.
+  <div class="container terms-page">
+    <div class="terms-hero reveal">
+      <span class="sec-eye">📄 Dokumen Resmi</span>
+      <h1 class="sec-title">Ketentuan Layanan &amp; <em>Kebijakan Refund</em></h1>
+      <p class="sec-lead">Harap baca dengan seksama sebelum melakukan pemesanan di BALILSTORE.</p>
+      <p class="terms-date">Terakhir diperbarui: Juni 2025</p>
+    </div>
+
+    <div class="terms-body">
+
+      <div class="tc-card reveal">
+        <div class="tc-title"><span class="tc-num">1</span> Definisi &amp; Pihak yang Terlibat</div>
+        <p><strong>BALILSTORE</strong> adalah toko virtual independen yang menyediakan layanan top-up Heart untuk game <strong>Sky: Children of the Light</strong>. BALILSTORE tidak berafiliasi dengan, disponsori oleh, atau merupakan bagian dari <strong>thatgamecompany</strong>.</p>
+        <p><strong>Pelanggan</strong> adalah setiap individu yang menggunakan layanan BALILSTORE.</p>
+        <p><strong>Heart</strong> adalah mata uang dalam game yang ditransfer melalui mekanisme gifting resmi antar pemain.</p>
+        <div class="tc-hl">⚠ Dengan melakukan pemesanan, Pelanggan dianggap telah membaca, memahami, dan menyetujui seluruh ketentuan dalam dokumen ini.</div>
+      </div>
+
+      <div class="tc-card reveal">
+        <div class="tc-title"><span class="tc-num">2</span> Mekanisme Layanan</div>
+        <ul>
+          <li>Heart dikirim melalui mekanisme pemberian hadiah (gifting) antar sesama pemain secara resmi di dalam game.</li>
+          <li>Pengiriman maksimal <strong>30 Heart per hari</strong> sesuai batas kapasitas sistem game.</li>
+          <li>Proses aktif setiap hari <strong>pukul 08.00–22.00 WIB</strong>, termasuk hari libur.</li>
+          <li>Akun Sky Pelanggan harus tidak dikunci, tidak dibanned, dan masih aktif selama proses berlangsung.</li>
+          <li>Pelanggan tidak perlu memberikan password atau data login apapun.</li>
+        </ul>
+      </div>
+
+      <div class="tc-card reveal">
+        <div class="tc-title"><span class="tc-num">3</span> Syarat Pemesanan</div>
+        <ul>
+          <li>Pesanan dilakukan via WhatsApp Admin dengan menyertakan nama paket, Nickname/Friend Code Sky, dan bukti pembayaran.</li>
+          <li>Pesanan sah setelah Admin mengkonfirmasi penerimaan pembayaran.</li>
+          <li>Pelanggan wajib memberikan data yang benar dan valid. Kerugian akibat data salah menjadi tanggung jawab Pelanggan.</li>
+          <li>BALILSTORE berhak menolak pesanan dengan indikasi penipuan, data palsu, atau pelanggaran ketentuan.</li>
+          <li>Satu pesanan berlaku untuk satu akun Sky. Tidak dapat dibagi ke beberapa akun.</li>
+        </ul>
+      </div>
+
+      <div class="tc-card reveal">
+        <div class="tc-title"><span class="tc-num">4</span> Kebijakan Pembayaran</div>
+        <p>BALILSTORE menerima dua metode pembayaran:</p>
+        <ul>
+          <li><strong>QRIS (IDR):</strong> GoPay, OVO, DANA, ShopeePay, dan semua mobile banking yang mendukung QRIS.</li>
+          <li><strong>PayPal (USD):</strong> Pembayaran internasional via akun PayPal.</li>
+        </ul>
+        <p>Seluruh pembayaran <strong>non-refundable kecuali kondisi yang diatur Pasal 5</strong>. Pastikan nominal sesuai paket.</p>
+      </div>
+
+      <div id="refund" class="tc-card reveal">
+        <div class="tc-title"><span class="tc-num">5</span> Kebijakan Refund (Pengembalian Dana)</div>
+        <p><strong>Refund AKAN diberikan apabila:</strong></p>
+        <ul>
+          <li>Pengiriman tidak dilakukan dalam 7 hari kalender setelah konfirmasi, bukan karena kesalahan data Pelanggan.</li>
+          <li>Terjadi kelebihan pengiriman — sisa nominal dikembalikan.</li>
+          <li>BALILSTORE tidak dapat menyelesaikan pesanan karena alasan teknis di luar kendali Pelanggan.</li>
+        </ul>
+        <p style="margin-top:10px"><strong>Refund TIDAK diberikan apabila:</strong></p>
+        <ul>
+          <li>Data Nickname atau Friend Code yang diberikan salah, tidak lengkap, atau tidak valid.</li>
+          <li>Akun Sky Pelanggan dikunci atau dibanned oleh thatgamecompany setelah pesanan dikonfirmasi.</li>
+          <li>Pelanggan mengubah Nickname selama proses berlangsung tanpa pemberitahuan.</li>
+          <li>Pesanan telah selesai terkirim sebagian atau seluruhnya.</li>
+          <li>Pelanggan berubah pikiran setelah pengiriman dimulai.</li>
+        </ul>
+        <div class="tc-hl">💡 Klaim refund diajukan ke Admin WhatsApp dengan menyertakan Order ID, bukti pembayaran, dan penjelasan singkat. Diproses dalam <strong>1–3 hari kerja</strong>.</div>
+      </div>
+
+      <div class="tc-card reveal">
+        <div class="tc-title"><span class="tc-num">6</span> Estimasi Waktu Pengiriman</div>
+        <p>Estimasi yang tertera pada paket adalah perkiraan berdasarkan kapasitas 30 Heart/hari. Waktu aktual dapat bervariasi karena:</p>
+        <ul>
+          <li>Antrean pesanan aktif saat pemesanan dilakukan.</li>
+          <li>Gangguan teknis server game Sky yang berada di luar kendali BALILSTORE.</li>
+          <li>Perubahan kebijakan internal game oleh thatgamecompany.</li>
+        </ul>
+        <p>BALILSTORE berkomitmen menginformasikan Pelanggan jika ada keterlambatan signifikan.</p>
+      </div>
+
+      <div class="tc-card reveal">
+        <div class="tc-title"><span class="tc-num">7</span> Batasan Tanggung Jawab</div>
+        <ul>
+          <li>BALILSTORE tidak bertanggung jawab atas kerugian tidak langsung atau kehilangan data akibat penggunaan layanan ini.</li>
+          <li>BALILSTORE tidak menjamin ketersediaan layanan saat terjadi gangguan pada platform Sky dari thatgamecompany.</li>
+          <li>Perubahan mekanisme game oleh thatgamecompany yang berdampak pada layanan bukan tanggung jawab BALILSTORE.</li>
+        </ul>
+      </div>
+
+      <div id="privacy" class="tc-card reveal">
+        <div class="tc-title"><span class="tc-num">8</span> Privasi Data Pelanggan</div>
+        <p>Data yang kami kumpulkan:</p>
+        <ul>
+          <li><strong>Nickname / Friend Code Sky:</strong> Hanya untuk keperluan pengiriman Heart.</li>
+          <li><strong>Nomor WhatsApp:</strong> Hanya untuk komunikasi pesanan.</li>
+        </ul>
+        <p>BALILSTORE tidak menjual, menyewakan, atau membagikan data Pelanggan kepada pihak ketiga. Data disimpan hanya selama diperlukan.</p>
+      </div>
+
+      <div class="tc-card reveal">
+        <div class="tc-title"><span class="tc-num">9</span> Perubahan Ketentuan</div>
+        <p>BALILSTORE berhak mengubah ketentuan ini sewaktu-waktu. Perubahan berlaku efektif segera setelah dipublikasikan. Penggunaan layanan setelah perubahan dianggap sebagai persetujuan atas ketentuan yang diperbarui.</p>
+      </div>
+
+      <div class="tc-card reveal">
+        <div class="tc-title"><span class="tc-num">10</span> Kontak &amp; Penyelesaian Sengketa</div>
+        <p>Hubungi kami melalui:</p>
+        <ul>
+          <li>📱 <strong>WhatsApp Admin:</strong> <a href="https://wa.me/6285363625159" target="_blank" rel="noopener">+62 853-6362-5159</a></li>
+          <li>👥 <strong>Grup WhatsApp:</strong> <a href="https://chat.whatsapp.com/JelUbSutCNVAIOtcGoy6Uy" target="_blank" rel="noopener">Gabung Komunitas BALILSTORE</a></li>
+        </ul>
+        <p style="margin-top:10px">Sengketa diselesaikan secara musyawarah. Jika tidak tercapai kesepakatan, mengacu pada hukum Republik Indonesia.</p>
+        <div class="tc-hl">BALILSTORE beroperasi sebagai penjual perorangan. Penyelesaian sengketa bersifat informal dan mengutamakan itikad baik kedua pihak.</div>
+      </div>
+
+      <div class="terms-back">
+        <a href="index.html" class="btn btn-gold">← Kembali ke Beranda</a>
+      </div>
+
+    </div>
+  </div>
+
+  <footer role="contentinfo">
+    <div class="container">
+      <div class="foot-bottom" style="padding-top:0;border-top:none">
+        <p class="foot-copy">&copy; <span id="footer-year"></span> <em>BALILSTORE</em>. Bukan afiliasi resmi thatgamecompany. Sky: CoTL adalah merek dagang thatgamecompany, Inc.</p>
+        <div class="foot-legal">
+          <a href="index.html">Beranda</a>
+          <a href="terms.html">Ketentuan</a>
         </div>
       </div>
-    </footer>
+    </div>
+  </footer>
 
-  </div><!-- #page-wrapper -->
+  <div id="toast-wrap" aria-live="polite"></div>
 
   <script src="config/data.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
-
