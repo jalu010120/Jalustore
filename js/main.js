@@ -1,3 +1,4 @@
+// main.js - UPGRADED VERSION
 (() => {
   "use strict";
 
@@ -5,6 +6,8 @@
   let activeCurrency = "idr";
   let activeCheckoutPkg = null;
   let cart = [];
+  let liveVisitorCount = Math.floor(Math.random() * (28 - 12 + 1) + 12);
+  let visitorInterval;
 
   /* ─── Helpers ─── */
   function fmt(amount, cur) {
@@ -35,13 +38,122 @@
     }, dur);
   }
 
+  /* ─── Live Visitor Counter ─── */
+  function initLiveVisitor() {
+    const container = document.createElement('div');
+    container.className = 'live-visitor';
+    container.innerHTML = `
+      <span class="live-visitor-dot"></span>
+      <span id="visitor-count">${liveVisitorCount}</span>
+      <span>orang sedang melihat halaman ini</span>
+    `;
+    document.body.appendChild(container);
+
+    // Simulate visitor count changes
+    visitorInterval = setInterval(() => {
+      const delta = Math.random() > 0.7 ? (Math.random() > 0.5 ? 1 : -1) : 0;
+      liveVisitorCount = Math.max(3, liveVisitorCount + delta);
+      const countEl = document.getElementById('visitor-count');
+      if (countEl) countEl.textContent = liveVisitorCount;
+    }, 30000);
+  }
+
+  /* ─── Floating WhatsApp Widget ─── */
+  function initWhatsAppWidget() {
+    const widget = document.createElement('div');
+    widget.className = 'floating-wa';
+    widget.innerHTML = `
+      <div class="whatsapp-button" id="floating-wa-btn">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+      </div>
+      <div class="whatsapp-tooltip">Chat dengan Admin →</div>
+    `;
+    document.body.appendChild(widget);
+
+    document.getElementById('floating-wa-btn')?.addEventListener('click', () => {
+      window.open(`https://wa.me/${STORE_CONFIG.whatsapp}?text=Halo%20BALILSTORE!%20Saya%20ingin%20bertanya%20tentang%20top-up%20Heart%20Sky%3A%20CoTL.`, '_blank', 'noopener');
+    });
+
+    // Auto popup welcome message after 5 seconds (only once per session)
+    if (!sessionStorage.getItem('wa-welcome-shown')) {
+      setTimeout(() => {
+        toast('💬', 'Ada yang bisa kami bantu? Klik tombol hijau di pojok kanan bawah untuk chat Admin!', 5000);
+        sessionStorage.setItem('wa-welcome-shown', 'true');
+      }, 5000);
+    }
+  }
+
+  /* ─── Cookie Consent ─── */
+  function initCookieConsent() {
+    if (localStorage.getItem('cookie-consent')) return;
+
+    const consent = document.createElement('div');
+    consent.className = 'cookie-consent';
+    consent.innerHTML = `
+      <span class="cookie-text">🍪 Kami menggunakan cookie untuk meningkatkan pengalaman Anda di BALILSTORE.</span>
+      <div class="cookie-buttons">
+        <button class="btn-cookie-accept" id="cookie-accept">Terima</button>
+        <button class="btn-cookie-decline" id="cookie-decline">Tolak</button>
+      </div>
+    `;
+    document.body.appendChild(consent);
+
+    document.getElementById('cookie-accept')?.addEventListener('click', () => {
+      localStorage.setItem('cookie-consent', 'accepted');
+      consent.remove();
+      toast('✅', 'Terima kasih! Pengaturan cookie tersimpan.', 2000);
+    });
+
+    document.getElementById('cookie-decline')?.addEventListener('click', () => {
+      localStorage.setItem('cookie-consent', 'declined');
+      consent.remove();
+    });
+  }
+
+  /* ─── Queue Preview ─── */
+  function renderQueuePreview() {
+    const trackingSection = document.getElementById('tracking');
+    if (!trackingSection) return;
+
+    // Check if queue preview already exists
+    if (document.querySelector('.queue-preview')) return;
+
+    const activeOrders = DEMO_ORDERS.filter(o => o.status !== 'completed').slice(0, 3);
+    if (activeOrders.length === 0) return;
+
+    const queuePreview = document.createElement('div');
+    queuePreview.className = 'queue-preview reveal';
+    queuePreview.innerHTML = `
+      <div class="queue-title">📋 Antrean Pesanan Aktif</div>
+      <div class="queue-list">
+        ${activeOrders.map(order => `
+          <div class="queue-item">
+            <div class="queue-pos">#${order.queuePosition || '?'}</div>
+            <div class="queue-info">
+              <div class="queue-order-id">${order.id}</div>
+              <div class="queue-package">${order.package}</div>
+            </div>
+            <div class="queue-progress">${order.heartsSent}/${order.heartsTotal} ♥</div>
+          </div>
+        `).join('')}
+      </div>
+      <p style="font-size:0.7rem;color:var(--c-dim);margin-top:12px;">*Pengiriman maks. 30 Heart/hari</p>
+    `;
+
+    const trackWrap = document.querySelector('.track-wrap');
+    if (trackWrap) trackWrap.appendChild(queuePreview);
+    initReveal();
+  }
+
   /* ─── Render packages ─── */
   function renderPackages() {
     const grid = document.getElementById("pkg-grid");
     if (!grid) return;
     grid.innerHTML = "";
 
-    HEART_PACKAGES.forEach((pkg) => {
+    HEART_PACKAGES.forEach((pkg, idx) => {
       const price = pkgPrice(pkg, activeCurrency);
       const totalHearts = pkg.hearts + pkg.bonus;
       const per = pkgPerHeart(pkg, activeCurrency);
@@ -51,8 +163,10 @@
       else if (pkg.tag === "HEMAT")    tagHTML = `<span class="pkg-tag tag-hemat">♻ HEMAT</span>`;
       else if (pkg.tag === "BONUS +20") tagHTML = `<span class="pkg-tag tag-bonus">+20 Bonus</span>`;
 
+      const staggerClass = `reveal-stagger${idx % 3 === 0 ? '' : idx % 3 === 1 ? '-2' : '-3'}`;
+
       const card = document.createElement("div");
-      card.className = "pkg-card reveal" + (pkg.popular ? " is-popular" : "");
+      card.className = `pkg-card reveal ${staggerClass} ${pkg.popular ? "is-popular" : ""}`;
       card.innerHTML = `
         ${tagHTML}
         <div class="pkg-label">${pkg.label}</div>
@@ -125,12 +239,13 @@
     const exists = cart.find((i) => i.id === pkgId);
     if (exists) {
       exists.qty += 1;
+      toast("🛒", `${pkg.label} (${pkg.hearts + pkg.bonus} Heart) quantity ditambah jadi ${exists.qty}!`);
     } else {
       cart.push({ id: pkgId, qty: 1 });
+      toast("🛒", `${pkg.label} (${pkg.hearts + pkg.bonus} Heart) ditambahkan ke keranjang!`);
     }
 
     updateCartBadge();
-    toast("🛒", `${pkg.label} (${pkg.hearts + pkg.bonus} Heart) ditambahkan ke keranjang!`);
   }
 
   function removeFromCart(pkgId) {
@@ -138,6 +253,7 @@
     updateCartBadge();
     renderCartItems();
     updateCartTotal();
+    toast("🗑️", "Item dihapus dari keranjang");
   }
 
   function updateCartBadge() {
@@ -244,12 +360,14 @@
       idrSec.style.display = "block";
       usdSec.style.display = "none";
       const img = document.getElementById("qris-img");
-      img.src = STORE_CONFIG.qrisImage;
+      if (img) img.src = STORE_CONFIG.qrisImage;
     } else {
       idrSec.style.display = "none";
       usdSec.style.display = "block";
-      document.getElementById("paypal-email-show").textContent = STORE_CONFIG.paypal.email;
-      document.getElementById("btn-paypal-link").href = STORE_CONFIG.paypal.link;
+      const paypalEmail = document.getElementById("paypal-email-show");
+      const paypalLink = document.getElementById("btn-paypal-link");
+      if (paypalEmail) paypalEmail.textContent = STORE_CONFIG.paypal.email;
+      if (paypalLink) paypalLink.href = STORE_CONFIG.paypal.link;
     }
 
     const waText = encodeURIComponent(
@@ -259,20 +377,27 @@
       `🎮 Game: Sky: Children of the Light\n\n` +
       `Mohon proses pesanan saya, terima kasih!`
     );
-    document.getElementById("btn-wa-checkout").href = `https://wa.me/${STORE_CONFIG.whatsapp}?text=${waText}`;
+    const waBtn = document.getElementById("btn-wa-checkout");
+    if (waBtn) waBtn.href = `https://wa.me/${STORE_CONFIG.whatsapp}?text=${waText}`;
 
     openModal("modal-checkout");
   }
 
   /* ─── Generic modal helpers ─── */
   function openModal(id) {
-    document.getElementById(id).classList.add("open");
-    document.body.style.overflow = "hidden";
+    const modal = document.getElementById(id);
+    if (modal) {
+      modal.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
   }
 
   function closeModal(id) {
-    document.getElementById(id).classList.remove("open");
-    document.body.style.overflow = "";
+    const modal = document.getElementById(id);
+    if (modal) {
+      modal.classList.remove("open");
+      document.body.style.overflow = "";
+    }
   }
 
   function initModals() {
@@ -292,17 +417,24 @@
       }
     });
 
-    document.getElementById("btn-cart-checkout").addEventListener("click", () => {
-      if (cart.length === 0) { toast("⚠", "Keranjang masih kosong!"); return; }
-      const waUrl = `https://wa.me/${STORE_CONFIG.whatsapp}?text=${buildCartWaText()}`;
-      closeModal("modal-cart");
-      window.open(waUrl, "_blank", "noopener");
-    });
+    const checkoutBtn = document.getElementById("btn-cart-checkout");
+    if (checkoutBtn) {
+      checkoutBtn.addEventListener("click", () => {
+        if (cart.length === 0) {
+          toast("⚠", "Keranjang masih kosong!");
+          return;
+        }
+        const waUrl = `https://wa.me/${STORE_CONFIG.whatsapp}?text=${buildCartWaText()}`;
+        closeModal("modal-cart");
+        window.open(waUrl, "_blank", "noopener");
+      });
+    }
   }
 
   /* ─── Cart button ─── */
   function initCartBtn() {
-    document.getElementById("btn-open-cart").addEventListener("click", openCartModal);
+    const btn = document.getElementById("btn-open-cart");
+    if (btn) btn.addEventListener("click", openCartModal);
   }
 
   /* ─── Tracking ─── */
@@ -390,10 +522,11 @@
   function renderReviews() {
     const grid = document.getElementById("reviews-grid");
     if (!grid) return;
-    REVIEWS.forEach((r) => {
+    REVIEWS.forEach((r, idx) => {
       const stars = "★".repeat(r.stars) + "☆".repeat(5 - r.stars);
+      const staggerClass = `reveal-stagger${idx % 3 === 0 ? '' : idx % 3 === 1 ? '-2' : '-3'}`;
       const el = document.createElement("div");
-      el.className = "rv-card reveal";
+      el.className = `rv-card reveal ${staggerClass}`;
       el.innerHTML = `
         <div class="rv-head">
           <div class="rv-avatar">${r.avatar}</div>
@@ -416,7 +549,7 @@
     FAQ_DATA.forEach((item) => {
       const id = "faq-" + Math.random().toString(36).slice(2, 7);
       const el = document.createElement("div");
-      el.className = "faq-item";
+      el.className = "faq-item reveal";
       el.innerHTML = `
         <button class="faq-q" aria-expanded="false" aria-controls="${id}">
           <span>${item.q}</span>
@@ -432,14 +565,47 @@
         const open = btn.getAttribute("aria-expanded") === "true";
         list.querySelectorAll(".faq-q").forEach((b) => {
           b.setAttribute("aria-expanded", "false");
-          b.querySelector(".faq-arrow").textContent = "+";
+          const arrow = b.querySelector(".faq-arrow");
+          if (arrow) arrow.textContent = "+";
         });
         if (!open) {
           btn.setAttribute("aria-expanded", "true");
-          btn.querySelector(".faq-arrow").textContent = "−";
+          const arrow = btn.querySelector(".faq-arrow");
+          if (arrow) arrow.textContent = "−";
         }
       });
     });
+  }
+
+  /* ─── Stats Animation ─── */
+  function animateStats() {
+    const customersEl = document.getElementById("stat-customers");
+    const ordersEl = document.getElementById("stat-orders");
+    
+    if (customersEl) {
+      const target = parseInt(STORE_CONFIG.stats.customers.replace(/[^0-9]/g, ''));
+      animateNumber(customersEl, 0, target, 1500);
+    }
+    
+    if (ordersEl) {
+      const target = parseInt(STORE_CONFIG.stats.orders.replace(/[^0-9]/g, ''));
+      animateNumber(ordersEl, 0, target, 1500);
+    }
+  }
+
+  function animateNumber(el, start, end, duration) {
+    const range = end - start;
+    const increment = range / (duration / 16);
+    let current = start;
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= end) {
+        el.textContent = end.toLocaleString('id-ID') + '+';
+        clearInterval(timer);
+      } else {
+        el.textContent = Math.floor(current).toLocaleString('id-ID');
+      }
+    }, 16);
   }
 
   /* ─── Navbar ─── */
@@ -470,7 +636,10 @@
     document.querySelectorAll('a[href^="#"]').forEach((a) => {
       a.addEventListener("click", (e) => {
         const target = document.querySelector(a.getAttribute("href"));
-        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: "smooth", block: "start" }); }
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
       });
     });
   }
@@ -495,6 +664,11 @@
     renderFAQ();
     initNav();
     initReveal();
+    animateStats();
+    renderQueuePreview();
+    initLiveVisitor();
+    initWhatsAppWidget();
+    initCookieConsent();
 
     const waGroupBtn = document.getElementById("btn-wa-group");
     if (waGroupBtn) waGroupBtn.href = STORE_CONFIG.waGroup;
