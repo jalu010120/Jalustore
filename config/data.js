@@ -99,7 +99,7 @@ const HEART_PACKAGES = [
     hearts: 800,
     bonus: 20,
     label: "Legend",
-    tag: "BONUS +20",
+    tag: "BONUS PROMO",
     popular: false,
     priceIDR: 65000,
     priceUSD: 5.0,
