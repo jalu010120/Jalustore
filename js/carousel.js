@@ -11,13 +11,14 @@
   // ============================================
   
   const TESTIMONIALS = [
-    { text: '"Proses cepat dan aman. Heart langsung masuk!"', author: '— Andi, Jakarta', rating: 5 },
-    { text: '"Heart masuk setiap hari sesuai paket. Recommended!"', author: '— Siti, Bandung', rating: 5 },
-    { text: '"Seller ramah dan fast response. Puas banget."', author: '— Rizki, Surabaya', rating: 5 },
-    { text: '"Harga murah, proses transparan. Langganan di sini."', author: '— Dian, Yogyakarta', rating: 5 },
-    { text: '"Pengiriman cepat, pelayanan ramah. Top banget!"', author: '— Fajar, Medan', rating: 5 },
-    { text: '"Aman dan terpercaya. Sudah 3 kali order."', author: '— Lina, Bali', rating: 5 },
-  ];
+   
+  { "name": "A***", "city": "" "text": "Proses cepat dan aman. Heart langsung masuk!", "rating": 5 },
+  { "name": "S***", "city": "" "text": "Heart masuk setiap hari sesuai paket. Recommended!", "rating": 5 },
+  { "name": "R***", "city": "" "text": "Seller ramah dan fast response. Puas banget.", "rating": 5 },
+  { "name": "D****", "city": "" "text": "Harga murah, proses transparan. Langganan di sini.", "rating": 5 },
+  { "name": "F****", "city": "" "text": "Pengiriman cepat, pelayanan ramah. Top banget!", "rating": 5 },
+  { "name": "L***", "city": "" "text": "Aman dan terpercaya. Sudah 3 kali order.", "rating": 5 }
+];
 
   const STARS = '⭐⭐⭐⭐⭐';
 
@@ -48,13 +49,13 @@
     if (!track) return;
     
     let html = '';
-    TESTIMONIALS.forEach((testimonial) => {
+    TESTIMONIALS.forEach((t) => {
       html += `
         <div class="carousel-item testimonial-card" role="listitem">
           <div class="glass-card p-5 rounded-xl h-full border border-white/5">
             <div class="stars" aria-hidden="true">${STARS}</div>
-            <p class="testimonial-text">${testimonial.text}</p>
-            <p class="testimonial-author">${testimonial.author}</p>
+            <p class="testimonial-text">"${t.text}"</p>
+            <p class="testimonial-author">— ${t.name}, ${t.city}</p>
           </div>
         </div>
       `;
