@@ -1,0 +1,141 @@
+/* ========================================
+   JALUSTORE - Responsive Styles
+   ======================================== */
+
+/* ===== TABLET & DESKTOP ===== */
+@media (min-width: 640px) {
+  .btn {
+    padding: 0.85rem 2.5rem;
+    font-size: 1.05rem;
+    min-height: 52px;
+  }
+  
+  .promo-divider {
+    display: inline;
+  }
+  
+  .howto-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+  }
+  
+  .features-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  
+  .wa-float {
+    bottom: 2rem;
+    right: 2rem;
+  }
+  
+  .wa-float-inner {
+    padding: 1rem;
+  }
+  
+  .wa-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+  
+  .trust-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .products-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+  
+  .proof-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+  
+  .carousel-item {
+    flex: 0 0 33.333%;
+  }
+  
+  .navbar-menu {
+    display: flex;
+  }
+  
+  .menu-toggle {
+    display: none;
+  }
+}
+
+/* ===== MOBILE FIRST ===== */
+@media (max-width: 767px) {
+  .navbar-menu {
+    display: none;
+  }
+  
+  .menu-toggle {
+    display: block;
+  }
+}
+
+/* ===== MOBILE OPTIMIZATION ===== */
+@media (max-width: 768px) {
+  .lens-flare,
+  .aurora,
+  .mouse-glow {
+    display: none !important;
+  }
+  
+  .sun-rays {
+    opacity: 0.3 !important;
+  }
+  
+  .island {
+    opacity: 0.4 !important;
+  }
+  
+  .cloud {
+    opacity: 0.12 !important;
+  }
+  
+  .island-1 {
+    width: 120px;
+    height: 50px;
+    bottom: 25%;
+    left: 3%;
+  }
+  
+  .island-2 {
+    width: 100px;
+    height: 40px;
+    bottom: 40%;
+    right: 3%;
+  }
+  
+  .cloud-1 {
+    width: 250px;
+    height: 70px;
+  }
+  
+  .cloud-2 {
+    width: 350px;
+    height: 90px;
+  }
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
