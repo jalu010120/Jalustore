@@ -15,7 +15,7 @@
   <meta property="og:description" content="Trusted Heart Seller untuk Sky: Children of the Light. Harga terjangkau, proses aman, pengiriman harian.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://jalustore.com/">
-  <meta property="og:image" content="https://jalustore.com/assets/images/og-image.webp">
+  <meta property="og:image" content="https://jalustore.com/assets/images/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:site_name" content="JALUSTORE">
@@ -25,7 +25,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="JALUSTORE · Heart Seller Sky">
   <meta name="twitter:description" content="Jual Heart Sky murah, aman, dan terpercaya. Proses cepat, pengiriman harian.">
-  <meta name="twitter:image" content="https://jalustore.com/assets/images/twitter-image.webp">
+  <meta name="twitter:image" content="https://jalustore.com/assets/images/twitter-image.jpg">
   
   <!-- ===== KEYWORDS ===== -->
   <meta name="keywords" content="jual heart sky, heart sky murah, heart sky indonesia, jual heart sky children of the light, jalustore, heart sky termurah">
@@ -39,7 +39,7 @@
       "description": "Layanan jual Heart Sky untuk Children of the Light. Harga murah, proses aman.",
       "brand": { "@type": "Brand", "name": "JALUSTORE" },
       "url": "https://jalustore.com/",
-      "logo": "https://jalustore.com/assets/images/favicon.svg",
+      "logo": "https://jalustore.com/assets/images/logo.png",
       "contactPoint": {
         "@type": "ContactPoint",
         "contactType": "customer service",
@@ -76,6 +76,7 @@
     }
   </script>
   
+  <!-- FAQ Schema -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -136,9 +137,9 @@
     }
   </script>
   
-  <!-- ===== FAVICON ===== -->
-  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
-  <link rel="apple-touch-icon" href="assets/images/favicon.svg">
+  <!-- ===== FAVICON PROFESSIONAL ===== -->
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/images/favicon.png">
   
   <!-- ===== PRELOAD FONTS & CSS ===== -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -149,6 +150,7 @@
   <link rel="manifest" href="manifest.json">
   
   <!-- ===== TAILWIND ===== -->
+  <!-- Untuk produksi, sebaiknya build lokal. Di sini tetap pakai CDN agar mudah -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -171,7 +173,6 @@
   <!-- ===== CUSTOM CSS ===== -->
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/animations.css">
-  <link rel="stylesheet" href="css/responsive.css">
 </head>
 
 <body class="dark">
@@ -226,7 +227,21 @@
         
         <!-- Content -->
         <div class="hero-content">
-          <div class="trust-badge" aria-label="Trusted seller badge">⭐ Trusted Seller</div>
+          <!-- Gambar Sky Kid -->
+          <img 
+            src="assets/images/skykid.webp" 
+            alt="Sky Children of the Light" 
+            class="hero-image"
+            width="200" height="200"
+            loading="lazy"
+          />
+          
+          <div class="hero-badges">
+            <span class="trust-badge">⭐ 500+ Pelanggan</span>
+            <span class="trust-badge">🛡️ Aman & Terpercaya</span>
+            <span class="trust-badge">⚡ Fast Response</span>
+          </div>
+          
           <h1 class="hero-title">JALUSTORE</h1>
           <p class="hero-subtitle">Trusted Heart Seller for Sky: Children of the Light</p>
           <p class="hero-description">Menyediakan layanan Heart Sky dengan harga terjangkau, proses aman, dan pengiriman harian.</p>
@@ -310,17 +325,25 @@
       </div>
     </section>
 
-    <!-- ===== PROOF SECTION ===== -->
+    <!-- ===== BUKTI TRANSAKSI ===== -->
     <section class="proof-section" aria-label="Transaction proof">
       <div class="container">
         <h2 class="section-title">📸 Bukti Transaksi</h2>
         <p class="section-subtitle">Ribuan pelanggan telah percaya pada kami</p>
         
         <div class="proof-grid">
-          <div class="proof-card glass-card">⭐ 5.0 Rating</div>
-          <div class="proof-card glass-card">💬 100+ Testimoni</div>
-          <div class="proof-card glass-card">📦 Pengiriman Harian</div>
-          <div class="proof-card glass-card">🛡️ Aman & Terpercaya</div>
+          <div class="proof-card glass-card">
+            <img src="assets/images/testi-1.webp" alt="Bukti transaksi 1" loading="lazy" class="proof-image">
+          </div>
+          <div class="proof-card glass-card">
+            <img src="assets/images/testi-2.webp" alt="Bukti transaksi 2" loading="lazy" class="proof-image">
+          </div>
+          <div class="proof-card glass-card">
+            <img src="assets/images/testi-3.webp" alt="Bukti transaksi 3" loading="lazy" class="proof-image">
+          </div>
+          <div class="proof-card glass-card">
+            <img src="assets/images/testi-1.webp" alt="Bukti transaksi 4" loading="lazy" class="proof-image">
+          </div>
         </div>
       </div>
     </section>
@@ -433,6 +456,20 @@
            aria-label="Follow us on Instagram">Instagram</a>
       </div>
       
+      <!-- Metode Pembayaran -->
+      <div class="footer-payment">
+        <span class="payment-label">Metode Pembayaran</span>
+        <div class="payment-icons">
+          <span>DANA</span>
+          <span>•</span>
+          <span>OVO</span>
+          <span>•</span>
+          <span>GoPay</span>
+          <span>•</span>
+          <span>QRIS</span>
+        </div>
+      </div>
+      
       <p class="footer-disclaimer">Sky: Children of the Light adalah merek milik thatgamecompany. Jalustore tidak berafiliasi dengan pihak resmi game.</p>
       <p class="footer-copy">&copy; 2026 JALUSTORE. All rights reserved.</p>
     </div>
@@ -457,11 +494,9 @@
   <button id="scrollTop" class="scroll-top" aria-label="Scroll to top">↑</button>
 
   <!-- ===== JAVASCRIPT (defer) ===== -->
-  <script src="js/darkmode.js" defer></script>
   <script src="js/products.js" defer></script>
   <script src="js/carousel.js" defer></script>
   <script src="js/faq.js" defer></script>
-  <script src="js/navbar.js" defer></script>
-  <script src="js/main.js" defer></script>
+  <script src="js/script.js" defer></script>
 </body>
 </html>
