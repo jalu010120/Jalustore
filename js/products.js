@@ -14,37 +14,27 @@
   const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
 
   // ============================================
-  // FETCH PRODUCTS
+  // PRODUCT DATA (embedded for performance)
   // ============================================
   
-  async function fetchProducts() {
-    try {
-      const response = await fetch('data/products.json');
-      if (!response.ok) throw new Error('Failed to load products');
-      return await response.json();
-    } catch (error) {
-      console.error('Error loading products:', error);
-      // Fallback data
-      return {
-        '30/hari': [
-          { qty: '100🤍', price: 'Rp10.000' },
-          { qty: '200🤍', price: 'Rp20.000' },
-          { qty: '300🤍', price: 'Rp30.000' },
-          { qty: '440🤍', price: 'Rp40.000' },
-          { qty: '560🤍', price: 'Rp50.000' },
-          { qty: '1200🤍', price: 'Rp100.000', best: true },
-        ],
-        '50/hari': [
-          { qty: '100🤍', price: 'Rp15.000' },
-          { qty: '200🤍', price: 'Rp25.000' },
-          { qty: '300🤍', price: 'Rp35.000' },
-          { qty: '440🤍', price: 'Rp45.000' },
-          { qty: '560🤍', price: 'Rp55.000' },
-          { qty: '1200🤍', price: 'Rp130.000', best: true },
-        ]
-      };
-    }
-  }
+  const PRODUCTS = {
+    '30/hari': [
+      { qty: '100🤍', price: 'Rp10.000' },
+      { qty: '200🤍', price: 'Rp20.000' },
+      { qty: '300🤍', price: 'Rp30.000' },
+      { qty: '440🤍', price: 'Rp40.000' },
+      { qty: '560🤍', price: 'Rp50.000' },
+      { qty: '1200🤍', price: 'Rp100.000', best: true },
+    ],
+    '50/hari': [
+      { qty: '100🤍', price: 'Rp15.000' },
+      { qty: '200🤍', price: 'Rp25.000' },
+      { qty: '300🤍', price: 'Rp35.000' },
+      { qty: '440🤍', price: 'Rp45.000' },
+      { qty: '560🤍', price: 'Rp55.000' },
+      { qty: '1200🤍', price: 'Rp130.000', best: true },
+    ]
+  };
 
   // ============================================
   // SANITIZATION
@@ -65,11 +55,11 @@
   // RENDER PRODUCTS
   // ============================================
   
-  function renderProducts(products, category, containerId) {
+  function renderProducts(category, containerId) {
     const container = document.getElementById(containerId);
     if (!container) return;
 
-    const items = products[category];
+    const items = PRODUCTS[category];
     if (!items || items.length === 0) {
       container.innerHTML = '<p class="text-center text-white/40">Produk tidak tersedia</p>';
       return;
@@ -118,10 +108,9 @@
   // INIT
   // ============================================
   
-  async function initProducts() {
-    const products = await fetchProducts();
-    renderProducts(products, '30/hari', 'productGrid1');
-    renderProducts(products, '50/hari', 'productGrid2');
+  function initProducts() {
+    renderProducts('30/hari', 'productGrid1');
+    renderProducts('50/hari', 'productGrid2');
   }
 
   if (document.readyState === 'loading') {
