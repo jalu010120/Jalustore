@@ -1,0 +1,7 @@
+# JALUSTORE Robots.txt
+User-agent: *
+Allow: /
+Disallow: /assets/images/
+Disallow: /data/
+
+Sitemap: https://jalustore.com/sitemap.xml
